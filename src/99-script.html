@@ -31,11 +31,11 @@ $("#themeBtn").addEventListener("click",()=>{
 
 /* ---------------- course structure ---------------- */
 const ZONES=[
-  {z:"A",name:"Foundations",desc:"What AI is, the tools, and safe use"},
-  {z:"B",name:"Talking to AI",desc:"Prompts that get useful answers"},
-  {z:"C",name:"AI for your audit work",desc:"Audit essentials, Excel, playbooks"},
-  {z:"D",name:"Communicate & automate",desc:"Reporting and automation"},
-  {z:"E",name:"Going further",desc:"Advanced AI and your 90-day plan"}
+  {z:"A",name:"Foundations",desc:"what AI is, the tools, using it safely"},
+  {z:"B",name:"Talking to AI",desc:"asking for useful work"},
+  {z:"C",name:"AI for your audit work",desc:"audit basics, Excel, routines"},
+  {z:"D",name:"Reporting and automation",desc:"writing up, then automating"},
+  {z:"E",name:"Going further",desc:"advanced topics and your plan"}
 ];
 const MODS=[
   {id:"m1",z:"A",t:"What AI actually is",s:"How chatbots work, and why they can be confidently wrong",min:20},
@@ -56,38 +56,37 @@ const ROUTES=["home",...MODS.map(m=>m.id),"library","glossary","sources"];
 
 /* sidebar */
 function buildSide(){
-  const side=$("#side");let h=`<a href="#home" data-r="home"><span class="code">HOME</span><span>Course overview</span><span></span></a><div class="side-sep"></div>`;
-  ZONES.forEach(z=>{
-    h+=`<div class="side-group"><div class="side-zone"><span>Zone ${z.z}</span><span>${esc(z.name)}</span></div>`;
-    MODS.filter(m=>m.z===z.z).forEach(m=>{h+=`<a href="#${m.id}" data-r="${m.id}" class="${S.done[m.id]?"is-done":""}"><span class="code">${m.code}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${S.done[m.id]?"Completed":"Not completed"}"></span></a>`;});
+  const side=$("#side");let h=`<a href="#home" data-r="home"><span class="code"></span><span>Introduction and contents</span><span></span></a><div class="side-sep"></div>`;
+  ZONES.forEach((z,zi)=>{
+    h+=`<div class="side-group"><div class="side-zone">Part ${zi+1}: ${esc(z.name)}</div>`;
+    MODS.filter(m=>m.z===z.z).forEach(m=>{h+=`<a href="#${m.id}" data-r="${m.id}" class="${S.done[m.id]?"is-done":""}"><span class="code">${m.n}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${S.done[m.id]?"Done":"Not done"}"></span></a>`;});
     h+=`</div>`;
   });
-  h+=`<div class="side-sep"></div><div class="side-zone"><span>Reference</span><span></span></div>
-  <a href="#library" data-r="library"><span class="code">LIB</span><span>Prompt library</span><span></span></a>
-  <a href="#glossary" data-r="glossary"><span class="code">GLO</span><span>Glossary</span><span></span></a>
-  <a href="#sources" data-r="sources"><span class="code">SRC</span><span>Sources</span><span></span></a>`;
+  h+=`<div class="side-sep"></div><div class="side-zone">Reference</div>
+  <a href="#library" data-r="library"><span class="code"></span><span>Prompt library</span><span></span></a>
+  <a href="#glossary" data-r="glossary"><span class="code"></span><span>Glossary</span><span></span></a>
+  <a href="#sources" data-r="sources"><span class="code"></span><span>Sources</span><span></span></a>`;
   side.innerHTML=h;
 }
 function buildFloor(){
-  const fp=$("#floorPlan");let h="";
-  ZONES.forEach(z=>{
+  const box=$("#contentsList");let h="";
+  ZONES.forEach((z,zi)=>{
     const ms=MODS.filter(m=>m.z===z.z);
-    h+=`<div class="zone"><div class="zone-label"><span class="z">ZONE ${z.z}</span><b>${esc(z.name)}</b><small>${esc(z.desc)}</small></div><div class="bays">`;
-    ms.forEach(m=>{h+=`<a class="bay ${S.done[m.id]?"is-done":""}" href="#${m.id}"><span class="bc"><span>AISLE ${m.code}</span><span>${m.min} min</span></span><b>${esc(m.t)}</b><small>${esc(m.s)}</small><span class="st tick" aria-hidden="true"></span></a>`;});
-    for(let i=ms.length;i<3;i++)h+=`<div class="bay-fill" aria-hidden="true"></div>`;
-    h+=`</div></div>`;
+    h+=`<li><h3>Part ${zi+1}: ${esc(z.name)} <small>${esc(z.desc)}</small></h3><ol>`;
+    ms.forEach(m=>{h+=`<li><a class="${S.done[m.id]?"is-done":""}" href="#${m.id}"><span class="cn">${m.n}.</span><span><span class="ct">${esc(m.t)}</span><span class="cs">${esc(m.s)}</span></span><span class="cm">${S.done[m.id]?"Done":m.min+" min"}</span></a></li>`;});
+    h+=`</ol></li>`;
   });
-  fp.innerHTML=h;
+  box.innerHTML=h;
 }
 function updateProgress(){
   const n=MODS.filter(m=>S.done[m.id]).length;
-  $("#progLabel").textContent=`${n} of 12 modules`;
+  $("#progLabel").textContent=`${n} of 12 modules done`;
   $("#progBar").style.width=(n/12*100)+"%";
   const next=MODS.find(m=>!S.done[m.id]);
   const sb=$("#startBtn");
-  if(n===0){sb.textContent="Start Module 1";sb.href="#m1";}
-  else if(next){sb.textContent=`Continue: Module ${next.n}`;sb.href="#"+next.id;}
-  else{sb.textContent="Course complete: view certificate";sb.href="#m12";}
+  if(n===0){sb.textContent="Start with module 1";sb.href="#m1";}
+  else if(next){sb.textContent=`Continue with module ${next.n}`;sb.href="#"+next.id;}
+  else{sb.textContent="View your certificate";sb.href="#m12";}
   updateCert();
 }
 function buildFoots(){
@@ -95,11 +94,11 @@ function buildFoots(){
     const id=f.dataset.foot, i=MODS.findIndex(m=>m.id===id), m=MODS[i];
     const prev=MODS[i-1], next=MODS[i+1];
     const done=!!S.done[id];
-    f.innerHTML=`<div class="status">${done?`<b>Aisle complete.</b> Nice work.`:`Finished reading and tried the labs?`}</div>
+    f.innerHTML=`<div class="status">${done?`<b>Marked as done.</b>`:`When you have finished the module and the exercises, mark it as done.`}</div>
     <div class="btn-row" style="margin:0">
-      ${prev?`<a class="btn ghost" href="#${prev.id}">Back: ${esc(prev.t)}</a>`:""}
-      <button class="btn ${done?"ghost":"accent"}" data-complete="${id}">${done?"Mark as not complete":"Mark aisle complete"}</button>
-      ${next?`<a class="btn" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn" href="#home">Back to course overview</a>`}
+      ${prev?`<a class="btn ghost" href="#${prev.id}">Previous</a>`:""}
+      <button class="btn ${done?"ghost":""}" data-complete="${id}">${done?"Mark as not done":"Mark as done"}</button>
+      ${next?`<a class="btn ${done?"":"ghost"}" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn ghost" href="#home">Back to contents</a>`}
     </div>`;
   });
 }
@@ -107,7 +106,7 @@ document.addEventListener("click",e=>{
   const b=e.target.closest("[data-complete]");if(!b)return;
   const id=b.dataset.complete;S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();
   buildSide();buildFloor();buildFoots();updateProgress();markNav(current);
-  const mm=MODS.find(x=>x.id===id);if(S.done[id]&&mm){const m=mm;toast(m.n===12&&MODS.every(x=>S.done[x.id])?"Course complete. Congratulations!":`Module ${m.n} complete`);}
+  const mm=MODS.find(x=>x.id===id);if(S.done[id]&&mm){const m=mm;toast(MODS.every(x=>S.done[x.id])?"All 12 modules done. Your certificate is in module 12.":`Module ${m.n} marked as done`);}
 });
 
 /* router */
@@ -121,7 +120,7 @@ function route(){
   window.scrollTo(0,0);
   const m=MODS.find(x=>x.id===r);
   const base="AI for Procurement & Warehouse Auditing";
-  document.title=m?`${m.n}. ${m.t} · ${base}`:(r==="home"?base:`${r[0].toUpperCase()+r.slice(1)} · ${base}`);
+  document.title=m?`Module ${m.n}: ${m.t} · ${base}`:(r==="home"?base:`${r[0].toUpperCase()+r.slice(1)} · ${base}`);
 }
 window.addEventListener("hashchange",route);
 
@@ -149,7 +148,7 @@ function initQuizzes(){
   $$(".quiz").forEach(qz=>{
     const qid=qz.dataset.quiz;S.quiz[qid]=S.quiz[qid]||{};
     $$(".q",qz).forEach((q,qi)=>{
-      const qt=$(".qt",q);qt.insertAdjacentHTML("afterbegin",`<span class="qn">Q${qi+1}</span>`);
+      const qt=$(".qt",q);qt.insertAdjacentHTML("afterbegin",`<span class="qn">${qi+1}.</span>`);
       const a=+q.dataset.a, opts=$$(".opt",q), why=$(".why",q);
       const show=(chosen)=>{opts.forEach((o,i)=>{o.disabled=true;if(i===a)o.classList.add("correct");if(i===chosen&&i!==a)o.classList.add("incorrect");});
         why.hidden=false;why.innerHTML=(chosen===a?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why.dataset.base;};
@@ -178,7 +177,7 @@ function cardGame(container,scoreEl,items,choices){
         c.classList.add(ok?"right":"wrong");
         const correct=choices.list.find(x=>x.k===it.a).label;
         c.appendChild(el("p",{class:"why"},(ok?"<b>Right.</b> ":`<b>Answer: ${esc(correct)}.</b> `)+it.why));
-        scoreEl.textContent=`Score: ${right} of ${answered} answered (${items.length} total)`+(answered===items.length?(right===items.length?" · Perfect.":" · Review the explanations above."):"");
+        scoreEl.textContent=`${right} of ${answered} right so far, ${items.length} in total`+(answered===items.length&&right<items.length?". Read the explanations for the ones you missed.":"");
       });
       row.appendChild(b);
     });
@@ -292,7 +291,7 @@ cardGame($("#safeCards"),$("#safeScore"),[
     plain=filled.map(p=>p[1]+p[2].trim()).join("\n\n");
     out.innerHTML=filled.length?filled.map(p=>(p[1]?`<span class="k">${p[1]}</span>`:"")+esc(p[2].trim())).join("\n\n"):'<span style="color:var(--ink-3)">Start typing in the fields to build your prompt.</span>';
     const n=filled.length;$$("#pbSegs i").forEach((s,i)=>s.classList.toggle("on",i<n));
-    $("#pbStr").textContent=["Empty","Basic","Getting there","Good","Strong","Excellent: complete Pick Ticket"][n];
+    $("#pbStr").textContent=["Nothing filled in yet","1 of 5 parts filled in","2 of 5 parts filled in","3 of 5 parts filled in","4 of 5 parts filled in","All 5 parts filled in"][n];
     const tip=$("#pbTip");
     if(n&&!f.ctx.value.trim()){tip.hidden=false;tip.textContent="Tip: add CONTEXT. It's the field that most often turns a generic answer into a useful one.";}
     else if(n&&!f.fmt.value.trim()){tip.hidden=false;tip.textContent="Tip: add FORMAT so the answer comes back ready to use (a table, bullet points, a word limit).";}
@@ -323,7 +322,7 @@ cardGame($("#safeCards"),$("#safeScore"),[
       b.addEventListener("click",()=>{if(card.dataset.done)return;card.dataset.done=1;ans++;const good=k===it.a;if(good)ok++;
         $$(".opt",row).forEach(x=>x.disabled=true);b.classList.add(good?"correct":"incorrect");
         if(!good)$$(".opt",row)[Object.keys(it.opts).indexOf(it.a)].classList.add("correct");
-        card.appendChild(el("p",{class:"why"},it.why));sc.textContent=`Score: ${ok} of ${ans} answered (${items.length} total)`;});
+        card.appendChild(el("p",{class:"why"},it.why));sc.textContent=`${ok} of ${ans} right so far, ${items.length} in total`;});
       row.appendChild(b);
     });
     card.appendChild(row);c.appendChild(card);
@@ -427,7 +426,7 @@ cardGame($("#safeCards"),$("#safeScore"),[
       else if(on){fp++;tr.classList.add("fp");res.push([n,"False alarm",CLEAN[n]]);}
     });
     const total=Object.keys(ISSUE).length;
-    $("#labScore").innerHTML=`<div class="fb ${hit===total&&fp===0?"good":hit>=4?"warn":"bad"}"><b>You found ${hit} of ${total} issue rows</b> with ${fp} false alarm${fp===1?"":"s"}. ${hit===total&&fp===0?"Excellent audit eye.":"Green rows are found issues, amber are missed, red are false alarms. Read the notes below."}</div>`;
+    $("#labScore").innerHTML=`<div class="fb ${hit===total&&fp===0?"good":hit>=4?"warn":"bad"}"><b>You found ${hit} of ${total} issue rows</b> with ${fp} false alarm${fp===1?"":"s"}. ${hit===total&&fp===0?"That\u2019s all of them.":"Green rows are issues you found, amber rows are ones you missed, red rows are false alarms. The notes below explain each one."}</div>`;
     $("#labRes").innerHTML=res.sort((a,b)=>a[0]-b[0]).map(([n,s,t])=>`<div><b class="mono">Row ${n} · ${s}</b><br>${t}</div>`).join("")+`<div><b class="mono">How AI helps</b><br>On a real register of thousands of rows, the P2 and P3 prompts surface these same patterns in minutes. Your job is exactly what you just did: confirm each one against the documents.</div>`;
   });
   $("#labReset").addEventListener("click",()=>{$$("input[type=checkbox]",tbl).forEach(c=>c.checked=false);$$("tr",tbl).forEach(t=>t.classList.remove("sel","hit","miss","fp"));$("#labScore").innerHTML="";$("#labRes").innerHTML="";});
@@ -505,7 +504,7 @@ const certName=$("#certName");certName.value=S.name||"";
 certName.addEventListener("input",()=>{S.name=certName.value;save();updateCert();});
 function updateCert(){
   const n=MODS.filter(m=>S.done[m.id]).length, all=n===12;
-  $("#certHint").innerHTML=all?"<b>All 12 modules complete.</b> Add your name below. You can take a screenshot of the certificate to keep or share.":`Mark all 12 modules complete to unlock your certificate. Progress so far: <b>${n} of 12</b>.`;
+  $("#certHint").innerHTML=all?"All 12 modules are done. Type your name below; you can take a screenshot of the certificate to keep.":`The certificate appears once all 12 modules are marked as done. So far: <b>${n} of 12</b>.`;
   $("#certBox").hidden=!all;
   $("#certNm").textContent=certName.value.trim()||"Your name";
   $("#certDate").textContent="Completed "+new Date().toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"});

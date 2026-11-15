@@ -3,38 +3,35 @@
 <meta name="description" content="A practical, self-paced course on using AI for procurement and multi-warehouse data auditing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout concept: a warehouse floor plan. The course is a building of 5 zones and 12 aisles;
-   a sticky header, a rack-style map on the left, and one readable aisle (module) at a time. */
+/* Layout concept: a printed training handbook. White pages, a quiet contents sidebar,
+   serif chapter headings, one reading column, exercises set apart on a light grey ground. */
 :root{
-  --paper:#F3F4F1; --surface:#FFFFFF; --sunk:#E9ECE7; --ink:#15202B; --ink-2:#4B5966; --ink-3:#6E7B87;
-  --line:#D6DBD5; --line-2:#C3CAC3;
-  --accent:#D9480F; --accent-ink:#B13A07; --accent-tint:#FCE9DE;
-  --good:#0D7A66; --good-tint:#DDF1EC; --warn:#A86A06; --warn-tint:#FAEFD9; --bad:#B42318; --bad-tint:#FBE3E0;
-  --info:#2A5B9C; --info-tint:#E2EBF6;
-  --shadow:0 1px 0 rgba(21,32,43,.04),0 6px 18px -10px rgba(21,32,43,.25);
-  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
-  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F4F4F2; --side-bg:#F7F7F5; --ink:#1D1F22; --ink-2:#4D525A; --ink-3:#6F747C;
+  --line:#E3E3DF; --line-2:#CBCBC6;
+  --accent:#1F5AA6; --accent-ink:#1A4C8E; --accent-tint:#EAF1FA; --mark:#FFF0A6; --on-accent:#FFFFFF;
+  --good:#1E7A4A; --good-tint:#E7F4EC; --warn:#8C5A00; --warn-tint:#FBF3DF; --bad:#B3261E; --bad-tint:#FBEAE8;
+  --info:#1F5AA6; --info-tint:#EAF1FA;
+  --f-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --r:6px; --side:288px; --head:60px;
+  --r:4px; --side:272px; --head:56px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#0E141A; --surface:#151D25; --sunk:#1B252E; --ink:#E5EAEE; --ink-2:#A3B0BC; --ink-3:#7F8E9B;
-  --line:#26313B; --line-2:#33404C;
-  --accent:#FF7A3D; --accent-ink:#FF9C6B; --accent-tint:#3A2214;
-  --good:#3EC2A6; --good-tint:#12312B; --warn:#E9B04A; --warn-tint:#352812; --bad:#FF7B6E; --bad-tint:#3B1A17;
-  --info:#7FAEEA; --info-tint:#18273A;
-  --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 22px -12px rgba(0,0,0,.7);
+  --paper:#16181B; --surface:#1C1F23; --sunk:#22262B; --side-bg:#1A1C20; --ink:#E9E7E3; --ink-2:#B3B6BB; --ink-3:#8C9097;
+  --line:#2D3137; --line-2:#3C4148;
+  --accent:#8DB6F2; --accent-ink:#A9C8F5; --accent-tint:#1E2A3A; --mark:#5A4A10; --on-accent:#10151C;
+  --good:#6CC896; --good-tint:#18301F; --warn:#E4B65A; --warn-tint:#33280F; --bad:#F08A80; --bad-tint:#3A1C1A;
+  --info:#8DB6F2; --info-tint:#1E2A3A;
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
-  --paper:#0E141A; --surface:#151D25; --sunk:#1B252E; --ink:#E5EAEE; --ink-2:#A3B0BC; --ink-3:#7F8E9B;
-  --line:#26313B; --line-2:#33404C;
-  --accent:#FF7A3D; --accent-ink:#FF9C6B; --accent-tint:#3A2214;
-  --good:#3EC2A6; --good-tint:#12312B; --warn:#E9B04A; --warn-tint:#352812; --bad:#FF7B6E; --bad-tint:#3B1A17;
-  --info:#7FAEEA; --info-tint:#18273A;
-  --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 22px -12px rgba(0,0,0,.7);
+  --paper:#16181B; --surface:#1C1F23; --sunk:#22262B; --side-bg:#1A1C20; --ink:#E9E7E3; --ink-2:#B3B6BB; --ink-3:#8C9097;
+  --line:#2D3137; --line-2:#3C4148;
+  --accent:#8DB6F2; --accent-ink:#A9C8F5; --accent-tint:#1E2A3A; --mark:#5A4A10; --on-accent:#10151C;
+  --good:#6CC896; --good-tint:#18301F; --warn:#E4B65A; --warn-tint:#33280F; --bad:#F08A80; --bad-tint:#3A1C1A;
+  --info:#8DB6F2; --info-tint:#1E2A3A;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -42,446 +39,394 @@ body{margin:0}
 [hidden]{display:none!important}
 img{max-width:100%}
 html{scroll-padding-top:calc(var(--head) + 16px)}
-body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--surface)}
-a{color:var(--accent-ink);text-underline-offset:3px}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+a{color:var(--accent-ink);text-underline-offset:2px}
 a:hover{text-decoration-thickness:2px}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:3px}
-h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;color:var(--ink)}
-h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:800;font-stretch:118%;letter-spacing:-.01em}
-h2{font-size:clamp(1.45rem,3vw,1.85rem);font-weight:750;font-stretch:112%;margin-top:2.6rem}
-h3{font-size:1.18rem;font-weight:700;font-stretch:105%;margin-top:1.8rem}
-h4{font-size:1rem;font-weight:700;margin-top:1.2rem}
-p{margin:.85rem 0}
-ul,ol{padding-left:1.3rem;margin:.8rem 0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.2;text-wrap:balance;margin:0;color:var(--ink);font-weight:600}
+h1{font-size:clamp(2rem,4.2vw,2.6rem);font-weight:700;letter-spacing:-.005em}
+h2{font-size:clamp(1.45rem,2.6vw,1.7rem);margin-top:2.6rem}
+h3{font-size:1.22rem;margin-top:1.9rem}
+h4{font-size:1.04rem;margin-top:1.2rem;font-family:var(--f-body);font-weight:700}
+p{margin:.8rem 0}
+ul,ol{padding-left:1.4rem;margin:.8rem 0}
 li{margin:.3rem 0}
-li::marker{color:var(--ink-3)}
-strong{font-weight:600}
-code,kbd,.mono{font-family:var(--f-mono);font-size:.88em}
-code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:.05em .35em;overflow-wrap:anywhere}
+strong,b{font-weight:600}
+mark{background:var(--mark);color:inherit;padding:0 .12em}
+code,kbd{font-family:var(--f-mono);font-size:.84em}
+code{background:var(--sunk);border-radius:3px;padding:.1em .35em;overflow-wrap:anywhere}
+kbd{border:1px solid var(--line-2);border-bottom-width:2px;border-radius:3px;padding:0 .3em;background:var(--surface)}
 hr{border:0;border-top:1px solid var(--line);margin:2.4rem 0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---------- header ---------- */
-.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;height:var(--head);background:var(--surface);border-bottom:1px solid var(--line);
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;height:var(--head);background:var(--paper);border-bottom:1px solid var(--line);
   display:flex;align-items:center;gap:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);min-width:0}
-.brand-mark{width:30px;height:30px;flex:none}
-.brand-name{font-family:var(--f-display);font-weight:800;font-stretch:120%;font-size:1.08rem;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.brand{text-decoration:none;color:var(--ink);min-width:0;flex:0 1 auto}
+.brand-name{font-family:var(--f-display);font-weight:600;font-size:1.06rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .bn-short{display:none}
-@media (max-width:760px){.bn-long{display:none}.bn-short{display:inline}.brand-name{font-size:.98rem;font-stretch:108%}}
-@media (max-width:420px){.brand-mark{display:none}}
-@media (max-width:480px){.top-progress{display:none}}
-#w-builder textarea{min-height:92px}
-.bar-row{grid-template-columns:130px 1fr 64px}
-.mobile-only{display:none}
-@media (max-width:760px){.mobile-only{display:block}}
-.top-progress{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:.78rem;color:var(--ink-2);white-space:nowrap}
-.meter{width:120px;height:8px;background:var(--sunk);border:1px solid var(--line);border-radius:99px;overflow:hidden}
-.meter>span{display:block;height:100%;width:0;background:var(--accent);transition:width .5s ease}
-.icon-btn{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:var(--r);height:36px;min-width:36px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;font:500 .85rem var(--f-body)}
-.icon-btn:hover{border-color:var(--line-2);background:var(--sunk)}
+@media (max-width:760px){.bn-long{display:none}.bn-short{display:inline}}
+.top-progress{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--ink-2);white-space:nowrap}
+.meter{width:110px;height:6px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.meter>span{display:block;height:100%;width:0;background:var(--good);transition:width .5s ease}
+.icon-btn{appearance:none;border:1px solid var(--line-2);background:var(--paper);color:var(--ink);border-radius:var(--r);height:34px;min-width:34px;padding:0 9px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;font:600 .88rem var(--f-body)}
+.icon-btn:hover{background:var(--sunk)}
 .icon-btn svg{width:18px;height:18px}
 .menu-btn{display:none}
+@media (max-width:480px){.top-progress{display:none}#themeBtn{margin-left:auto}}
 
 /* ---------- shell ---------- */
 .shell{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:calc(100vh - var(--head))}
-.side{position:sticky;top:calc(var(--head) + env(safe-area-inset-top,0px));height:calc(100vh - var(--head) - env(safe-area-inset-top,0px));overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);padding:18px 14px 40px max(14px,env(safe-area-inset-left,0px))}
-.side-group{margin-bottom:16px}
-.side-zone{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding:6px 10px;display:flex;justify-content:space-between}
-.side a{display:grid;grid-template-columns:44px 1fr 18px;align-items:center;gap:6px;padding:7px 10px;border-radius:var(--r);text-decoration:none;color:var(--ink-2);font-size:.92rem;line-height:1.3}
+.side{position:sticky;top:calc(var(--head) + env(safe-area-inset-top,0px));height:calc(100vh - var(--head) - env(safe-area-inset-top,0px));overflow-y:auto;border-right:1px solid var(--line);background:var(--side-bg);padding:20px 12px 40px max(12px,env(safe-area-inset-left,0px));font-size:.95rem}
+.side-group{margin-bottom:14px}
+.side-zone{font-weight:700;color:var(--ink);padding:4px 10px;font-size:.86rem}
+.side a{display:grid;grid-template-columns:22px 1fr 16px;align-items:start;gap:6px;padding:5px 10px;border-radius:var(--r);text-decoration:none;color:var(--ink-2);line-height:1.35}
 .side a:hover{background:var(--sunk);color:var(--ink)}
 .side a[aria-current="page"]{background:var(--accent-tint);color:var(--ink);font-weight:600}
-.side a .code{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3)}
-.side a[aria-current="page"] .code{color:var(--accent-ink)}
-.tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line-2);display:inline-block}
-.is-done .tick{background:var(--good);border-color:var(--good);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-size:100%}
-.side-sep{height:1px;background:var(--line);margin:14px 10px}
+.side a .code{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.tick{width:14px;height:14px;margin-top:3px;border-radius:50%;border:1.5px solid var(--line-2);display:inline-block}
+.is-done .tick{background:var(--good);border-color:var(--good);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-size:100%}
+.side-sep{height:1px;background:var(--line);margin:12px 10px}
 
-main{min-width:0;padding-block:28px 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.view{max-width:880px;margin:0 auto}
-.prose{max-width:720px}
-.wide{max-width:880px}
+main{min-width:0;padding-block:36px 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.view{max-width:760px;margin:0 auto}
 
 @media (max-width:980px){
   .shell{grid-template-columns:minmax(0,1fr)}
   .menu-btn{display:inline-flex}
-  .side{position:fixed;z-index:45;top:calc(var(--head) + env(safe-area-inset-top,0px));left:0;bottom:0;height:auto;width:min(320px,88vw);transform:translateX(-102%);transition:transform .25s ease;box-shadow:var(--shadow)}
+  .side{position:fixed;z-index:45;top:calc(var(--head) + env(safe-area-inset-top,0px));left:0;bottom:0;height:auto;width:min(310px,86vw);transform:translateX(-102%);transition:transform .22s ease;box-shadow:0 10px 30px rgba(0,0,0,.18)}
   body.nav-open .side{transform:none}
   body.nav-open .scrim{display:block}
-  .meter{width:70px}
 }
-.scrim{display:none;position:fixed;inset:0;z-index:40;background:rgba(10,15,20,.45)}
-@media (max-width:560px){ .top-progress .label{display:none} body{font-size:16px} }
+.scrim{display:none;position:fixed;inset:0;z-index:40;background:rgba(10,12,15,.4)}
+@media (max-width:560px){body{font-size:17px}main{padding-top:24px}}
 
 /* ---------- module header ---------- */
-.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);font-weight:500}
-.mod-head{padding:8px 0 22px;border-bottom:1px solid var(--line);margin-bottom:8px}
-.mod-head h1{margin-top:10px;font-size:clamp(1.9rem,4.4vw,2.8rem)}
-.mod-head .lede{font-size:1.14rem;color:var(--ink-2);max-width:680px;margin:.9rem 0 0}
-.meta-row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-family:var(--f-mono);font-size:.78rem;color:var(--ink-2)}
-.meta-row span{display:inline-flex;align-items:center;gap:6px}
-.meta-row b{color:var(--ink);font-weight:500}
-.outcomes{margin:22px 0 6px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:16px 20px}
-.outcomes h2{font-size:.78rem;font-family:var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0;font-weight:500;font-stretch:100%}
-.outcomes ul{margin:.6rem 0 0;padding:0;list-style:none;display:grid;gap:6px}
-.outcomes li{padding-left:26px;position:relative;margin:0}
-.outcomes li::before{content:"";position:absolute;left:0;top:.45em;width:14px;height:14px;border:1.5px solid var(--accent);border-radius:3px}
+.kicker{font-size:.95rem;color:var(--ink-3);margin:0}
+.mod-head{padding:0 0 10px}
+.mod-head h1{margin-top:6px}
+.mod-head .lede{font-size:1.18rem;color:var(--ink-2);margin:.8rem 0 0}
+.meta-row{margin-top:10px;font-size:.93rem;color:var(--ink-3)}
+.outcomes{margin:14px 0 4px;border-top:1px solid var(--line)}
+.outcomes h2{font-size:1rem;font-family:var(--f-body);font-weight:700;margin:14px 0 0}
+.outcomes ul{margin:.4rem 0 0}
 
 /* ---------- content components ---------- */
-.callout{border:1px solid var(--line);border-left-width:4px;border-radius:var(--r);background:var(--surface);padding:14px 18px;margin:1.3rem 0}
+.callout{border-left:3px solid var(--line-2);padding:2px 0 2px 18px;margin:1.4rem 0}
 .callout>:first-child{margin-top:0}.callout>:last-child{margin-bottom:0}
-.callout .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:4px}
-.callout.tip{border-left-color:var(--info)} .callout.tip .tag{color:var(--info)}
-.callout.warn{border-left-color:var(--warn);background:var(--warn-tint)} .callout.warn .tag{color:var(--warn)}
-.callout.rule{border-left-color:var(--accent);background:var(--accent-tint)} .callout.rule .tag{color:var(--accent-ink)}
-.callout.good{border-left-color:var(--good);background:var(--good-tint)} .callout.good .tag{color:var(--good)}
-.analogy{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--sunk);border-radius:var(--r);padding:16px 18px;margin:1.3rem 0}
-.analogy .glyph{font-family:var(--f-display);font-weight:800;font-stretch:125%;font-size:1.6rem;color:var(--accent);line-height:1}
-.analogy p{margin:.2rem 0}
+.callout .tag{display:block;font-weight:700;color:var(--ink)}
+.callout .tag+p{margin-top:.15rem}
+.callout.tip{border-left-color:var(--accent)}
+.callout.warn{border-left-color:var(--warn)}
+.callout.rule{border-left-color:var(--ink)}
+.callout.good{border-left-color:var(--good)}
+.analogy{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:6px 0;margin:1.6rem 0}
+.analogy p:first-child b{font-family:var(--f-display);font-size:1.15rem}
 
-.tbl{overflow-x:auto;margin:1.2rem 0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-size:.92rem;line-height:1.45}
-th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:500;background:var(--sunk);white-space:nowrap}
-tr:last-child td{border-bottom:0}
+.tbl{overflow-x:auto;margin:1.2rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;line-height:1.45}
+th,td{text-align:left;padding:9px 14px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--ink);border-bottom:2px solid var(--ink);white-space:nowrap}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-.tabnum{font-variant-numeric:tabular-nums}
 
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:1.2rem 0}
-.panel{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:16px 18px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:4px 32px;margin:1rem 0}
+.panel{min-width:0;padding:2px 0}
 .panel>:first-child{margin-top:0}.panel>:last-child{margin-bottom:0}
-.panel h3,.panel h4{margin-top:0}
-.panel.good{border-top:3px solid var(--good)} .panel.bad{border-top:3px solid var(--bad)} .panel.accent{border-top:3px solid var(--accent)}
-.label{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.panel h3,.panel h4{margin-top:.3rem}
+.panel p{margin:.35rem 0}
+.panel ul{margin:.4rem 0}
+.panel.good h4{color:var(--good)} .panel.bad h4{color:var(--bad)}
+.label{font-size:.88rem;color:var(--ink-3)}
 
-.steps{counter-reset:s;list-style:none;padding:0;margin:1.2rem 0;display:grid;gap:10px}
-.steps>li{counter-increment:s;position:relative;padding:12px 16px 12px 58px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin:0}
-.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:14px;top:12px;font-family:var(--f-mono);font-weight:600;font-size:.86rem;color:var(--accent-ink);background:var(--accent-tint);border-radius:4px;padding:1px 6px}
-.steps>li>strong:first-child{display:block}
+.steps{list-style:none;counter-reset:s;padding:0;margin:1.1rem 0}
+.steps>li{counter-increment:s;position:relative;padding:0 0 0 40px;margin:0 0 14px}
+.steps>li::before{content:counter(s) ".";position:absolute;left:0;top:0;font-family:var(--f-display);font-weight:700;font-size:1.1rem;line-height:1.45;color:var(--ink-3);width:28px;text-align:right}
 
-.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:1.3rem 0;padding:0;list-style:none}
-.flow li{flex:1 1 120px;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;position:relative;font-size:.88rem;line-height:1.35}
-.flow li b{display:block;font-family:var(--f-display);font-size:.95rem;font-stretch:108%}
-.flow li .mono{color:var(--ink-3);font-size:.72rem;display:block;margin-bottom:2px}
-.flow li .risk{display:block;margin-top:6px;color:var(--bad);font-size:.8rem}
+.flow{list-style:none;padding:0;margin:1.2rem 0 1.2rem 6px;border-left:2px solid var(--line-2)}
+.flow li{position:relative;margin:0;padding:4px 0 12px 22px}
+.flow li::before{content:"";position:absolute;left:-7px;top:12px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--accent)}
+.flow li b{font-weight:700;margin-right:.35em}
+.flow li .mono{display:block;font-size:.85rem;color:var(--ink-3)}
+.flow li .risk{display:block;color:var(--bad);font-size:.92rem}
 
-.nest{display:grid;place-items:center;margin:1.4rem 0}
-.nest div{border:1.5px solid var(--line-2);border-radius:14px;padding:12px 16px 16px;width:100%;background:var(--surface)}
-.nest div div{background:var(--sunk)} .nest div div div{background:var(--surface)} .nest div div div div{background:var(--accent-tint);border-color:var(--accent)}
-.nest .nl{font-family:var(--f-display);font-weight:700;font-size:.98rem;display:block}
-.nest .nd{font-size:.84rem;color:var(--ink-2);display:block;margin-bottom:10px;line-height:1.4}
+.nest{margin:1.4rem 0}
+.nest div{border-left:2px solid var(--line-2);padding:2px 0 2px 16px;margin-top:10px}
+.nest>div{margin-top:0}
+.nest div div div div{border-left-color:var(--accent)}
+.nest .nl{font-weight:700;display:block}
+.nest .nd{font-size:.97rem;color:var(--ink-2);display:block;line-height:1.45}
 
-.takeaways{margin:2.6rem 0 0;border:1.5px solid var(--ink);border-radius:var(--r);padding:18px 22px;background:var(--surface)}
-.takeaways h2{margin:0;font-size:1.15rem}
-.takeaways ul{margin:.7rem 0 0}
-.tryit{margin:1.2rem 0 0;border:1.5px dashed var(--accent);border-radius:var(--r);padding:16px 20px;background:var(--accent-tint)}
-.tryit h2{margin:0;font-size:1.1rem}
+.takeaways{margin:2.8rem 0 0;border-top:2px solid var(--ink)}
+.takeaways h2{margin:14px 0 0;font-size:1.3rem}
+.tryit{margin:1.6rem 0 0;background:var(--sunk);padding:16px 20px;border-radius:var(--r)}
+.tryit h2{margin:0;font-size:1.15rem}
 .tryit>:last-child{margin-bottom:0}
 
 /* prompt blocks */
-.prompt{position:relative;margin:1rem 0;border:1px solid var(--line);border-radius:var(--r);background:var(--sunk);overflow:hidden}
-.prompt .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 8px 6px 14px;border-bottom:1px solid var(--line);background:var(--surface)}
-.prompt .ph span{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.prompt pre{margin:0;padding:14px 16px;font-family:var(--f-mono);font-size:.84rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
-.copy{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:5px;font:500 .75rem var(--f-mono);padding:4px 10px;cursor:pointer}
-.copy:hover{color:var(--ink);border-color:var(--line-2)}
+.prompt{margin:1rem 0;border:1px solid var(--line);border-radius:var(--r);background:var(--sunk)}
+.prompt .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 8px 6px 14px;border-bottom:1px solid var(--line)}
+.prompt .ph span{font-size:.9rem;font-weight:600;color:var(--ink-2)}
+.prompt pre{margin:0;padding:12px 14px;font-family:var(--f-mono);font-size:.82rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.copy{appearance:none;border:1px solid var(--line-2);background:var(--paper);color:var(--ink);border-radius:var(--r);font:600 .85rem var(--f-body);padding:3px 10px;cursor:pointer}
+.copy:hover{background:var(--sunk)}
 .copy.ok{color:var(--good);border-color:var(--good)}
 
 /* chat */
-.chat{display:grid;gap:10px;margin:1.3rem 0;padding:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--sunk)}
-.bubble{max-width:88%;padding:10px 14px;border-radius:12px;font-size:.92rem;line-height:1.5}
-.bubble .who{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;color:var(--ink-3)}
-.bubble.you{justify-self:end;background:var(--accent-tint);border:1px solid var(--line);border-bottom-right-radius:3px}
-.bubble.ai{justify-self:start;background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:3px}
-.bubble.note{justify-self:center;max-width:100%;background:transparent;font-size:.82rem;color:var(--ink-2);font-style:italic;padding:2px}
-.bubble p{margin:.3rem 0}
+.chat{display:grid;gap:10px;margin:1.3rem 0;padding:16px;border-radius:var(--r);background:var(--sunk)}
+.bubble{max-width:88%;padding:9px 13px;border-radius:10px;font-size:.96rem;line-height:1.5}
+.bubble .who{display:block;font-size:.82rem;font-weight:700;color:var(--ink-3);margin-bottom:2px}
+.bubble.you{justify-self:end;background:var(--accent-tint)}
+.bubble.ai{justify-self:start;background:var(--paper);border:1px solid var(--line)}
+.bubble.note{justify-self:stretch;max-width:100%;background:transparent;font-size:.93rem;color:var(--ink-2);padding:0 0 0 10px;border-left:2px solid var(--warn);border-radius:0}
+.bubble p{margin:.2rem 0}
 
-/* ---------- widgets ---------- */
-.widget{margin:1.8rem 0;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
-.w-head{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--sunk)}
-.w-tag{font-family:var(--f-mono);font-size:.7rem;font-weight:600;letter-spacing:.1em;color:var(--surface);background:var(--ink);padding:3px 8px;border-radius:3px;white-space:nowrap}
-.w-title{font-family:var(--f-display);font-weight:700;font-size:1.02rem;font-stretch:106%;line-height:1.25}
-.w-body{padding:18px}
+/* ---------- exercises ---------- */
+.widget{margin:2rem 0;background:var(--sunk);border-radius:6px}
+.w-head{padding:16px 20px 0}
+.w-tag{display:block;font-size:.9rem;font-weight:600;color:var(--accent-ink)}
+.w-title{display:block;font-family:var(--f-display);font-weight:600;font-size:1.25rem;line-height:1.25}
+.w-body{padding:10px 20px 20px}
 .w-body>:first-child{margin-top:0}
-.w-hint{font-size:.9rem;color:var(--ink-2);margin:0 0 14px}
-.btn{appearance:none;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:var(--r);padding:9px 16px;font:600 .9rem var(--f-body);cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
-.btn:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+.w-hint{font-size:.98rem;color:var(--ink-2);margin:0 0 14px}
+.btn{appearance:none;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);border-radius:var(--r);padding:8px 16px;font:600 .97rem var(--f-body);cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.btn:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:var(--on-accent)}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
-.btn.ghost:hover{background:var(--sunk);color:var(--ink);border-color:var(--ink-3)}
-.btn.accent{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.accent:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.btn.ghost:hover{background:var(--sunk);color:var(--ink)}
 .btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-.chip{appearance:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:99px;padding:6px 13px;font:500 .86rem var(--f-body);cursor:pointer;line-height:1.3}
+.chip{appearance:none;border:1px solid var(--line-2);background:var(--paper);color:var(--ink);border-radius:var(--r);padding:5px 12px;font:400 .95rem var(--f-body);cursor:pointer;line-height:1.35}
 .chip:hover{border-color:var(--ink-3)}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-label.fl{display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:12px 0 5px}
-input[type=text],input[type=number],textarea,select{width:100%;font:400 .94rem var(--f-body);color:var(--ink);background:var(--paper);border:1px solid var(--line-2);border-radius:5px;padding:8px 10px}
+label.fl{display:block;font-size:.95rem;font-weight:600;color:var(--ink);margin:12px 0 4px}
+input[type=text],input[type=number],textarea,select{width:100%;font:400 .98rem var(--f-body);color:var(--ink);background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:7px 10px}
 textarea{min-height:64px;resize:vertical;line-height:1.5}
 input[type=number]{font-variant-numeric:tabular-nums}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
 input[type=range]{width:100%;accent-color:var(--accent)}
-.fb{margin-top:12px;padding:10px 14px;border-radius:5px;font-size:.92rem;line-height:1.5}
-.fb.good{background:var(--good-tint);color:var(--ink);border-left:3px solid var(--good)}
-.fb.bad{background:var(--bad-tint);color:var(--ink);border-left:3px solid var(--bad)}
-.fb.warn{background:var(--warn-tint);color:var(--ink);border-left:3px solid var(--warn)}
-.fb.info{background:var(--info-tint);color:var(--ink);border-left:3px solid var(--info)}
-.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 14px}
+.fb{margin-top:12px;padding:10px 14px;border-radius:var(--r);font-size:.98rem;line-height:1.5;background:var(--paper);border-left:3px solid var(--line-2)}
+.fb.good{border-left-color:var(--good)} .fb.bad{border-left-color:var(--bad)} .fb.warn{border-left-color:var(--warn)} .fb.info{border-left-color:var(--accent)}
+.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 14px}
 
 /* next-word */
-.nw-sentence{font-family:var(--f-mono);font-size:1rem;line-height:1.7;background:var(--sunk);border:1px solid var(--line);border-radius:5px;padding:12px 14px;min-height:56px}
-.nw-sentence .gen{color:var(--accent-ink);font-weight:600}
-.nw-sentence .cursor{display:inline-block;width:9px;height:1.1em;background:var(--accent);vertical-align:-.2em;margin-left:2px;animation:blink 1s steps(2) infinite}
+.nw-sentence{font-size:1.12rem;line-height:1.6;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-height:56px}
+.nw-sentence .gen{background:var(--mark);padding:0 .15em}
+.nw-sentence .cursor{display:inline-block;width:2px;height:1.1em;background:var(--ink);vertical-align:-.18em;margin-left:3px;animation:blink 1s steps(2) infinite}
 @keyframes blink{50%{opacity:0}}
-.nw-cands{display:grid;gap:6px;margin-top:12px}
-.nw-c{appearance:none;display:grid;grid-template-columns:150px 1fr 54px;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:5px;padding:6px 10px;cursor:pointer;font:500 .9rem var(--f-mono);color:var(--ink);text-align:left}
+.nw-cands{display:grid;gap:5px;margin-top:12px}
+.nw-c{appearance:none;display:grid;grid-template-columns:150px 1fr 54px;align-items:center;gap:10px;border:1px solid var(--line);background:var(--paper);border-radius:var(--r);padding:5px 10px;cursor:pointer;font:400 .97rem var(--f-body);color:var(--ink);text-align:left}
 .nw-c:hover{border-color:var(--accent)}
-.nw-bar{height:10px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.nw-bar{height:8px;background:var(--sunk);border-radius:99px;overflow:hidden}
 .nw-bar span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .35s ease}
-.nw-c .p{text-align:right;color:var(--ink-2);font-variant-numeric:tabular-nums;font-size:.8rem}
+.nw-c .p{text-align:right;color:var(--ink-2);font-variant-numeric:tabular-nums;font-size:.88rem}
 @media (max-width:520px){.nw-c{grid-template-columns:110px 1fr 46px}}
 
-/* sorter / game cards */
-.cards{display:grid;gap:10px}
-.gcard{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--paper)}
-.gcard p{margin:0 0 8px;font-size:.95rem}
+/* card games */
+.cards{display:grid;gap:8px}
+.gcard{border:1px solid var(--line);border-radius:var(--r);padding:11px 14px;background:var(--paper)}
+.gcard p{margin:0 0 8px}
 .gcard .chips{gap:6px}
-.gcard.right{border-color:var(--good);background:var(--good-tint)}
-.gcard.wrong{border-color:var(--bad);background:var(--bad-tint)}
-.gcard .why{font-size:.86rem;color:var(--ink-2);margin:8px 0 0}
-.score{font-family:var(--f-mono);font-size:.85rem;color:var(--ink-2);margin-top:12px}
-
-/* traffic light buttons */
+.gcard.right{border-color:var(--good)}
+.gcard.wrong{border-color:var(--bad)}
+.gcard .why{font-size:.95rem;color:var(--ink-2);margin:8px 0 0}
+.score{font-size:.95rem;color:var(--ink-2);margin-top:12px}
 .tl{display:flex;gap:6px;flex-wrap:wrap}
-.tl button{appearance:none;border:1px solid var(--line-2);background:var(--surface);border-radius:99px;padding:5px 12px 5px 9px;font:500 .84rem var(--f-body);cursor:pointer;display:inline-flex;gap:7px;align-items:center;color:var(--ink)}
-.tl button i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.tl button{appearance:none;border:1px solid var(--line-2);background:var(--paper);border-radius:var(--r);padding:4px 11px 4px 9px;font:400 .95rem var(--f-body);cursor:pointer;display:inline-flex;gap:7px;align-items:center;color:var(--ink)}
+.tl button i{width:10px;height:10px;border-radius:50%;display:inline-block}
 .tl .g i{background:var(--good)} .tl .a i{background:var(--warn)} .tl .r i{background:var(--bad)}
 .tl button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 
 /* prompt builder */
-.pb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.pb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
 @media (max-width:760px){.pb{grid-template-columns:minmax(0,1fr)}}
-.pb-out{background:var(--sunk);border:1px solid var(--line);border-radius:5px;padding:14px;font-family:var(--f-mono);font-size:.82rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;min-height:240px}
-.pb-out .k{color:var(--accent-ink);font-weight:600}
-.strength{display:flex;align-items:center;gap:10px;margin:10px 0 0;font-family:var(--f-mono);font-size:.78rem;color:var(--ink-2)}
+.pb-out{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-family:var(--f-mono);font-size:.8rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;min-height:240px}
+.pb-out .k{font-weight:600}
+.strength{display:flex;align-items:center;gap:10px;margin:10px 0 0;font-size:.93rem;color:var(--ink-2)}
 .strength .segs{display:flex;gap:3px}
-.strength .segs i{width:22px;height:8px;border-radius:2px;background:var(--line)}
+.strength .segs i{width:20px;height:6px;border-radius:2px;background:var(--line-2)}
 .strength .segs i.on{background:var(--good)}
-.field-tag{display:inline-block;font-family:var(--f-mono);font-size:.66rem;font-weight:600;letter-spacing:.08em;background:var(--ink);color:var(--paper);border-radius:3px;padding:1px 5px;margin-right:6px;vertical-align:1px}
+.field-tag{font-weight:700;margin-right:4px}
+.field-tag::after{content:":"}
+#w-builder textarea{min-height:92px}
 
 /* tabs */
-.tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--line);margin:1.4rem 0 0;padding-bottom:0}
-.tabs button{appearance:none;border:1px solid transparent;border-bottom:0;background:transparent;padding:9px 14px;font:600 .88rem var(--f-body);color:var(--ink-2);cursor:pointer;border-radius:6px 6px 0 0;margin-bottom:-1px}
+.tabs{display:flex;flex-wrap:wrap;gap:2px;border-bottom:1px solid var(--line-2);margin:1.4rem 0 0}
+.tabs button{appearance:none;border:0;border-bottom:3px solid transparent;background:transparent;padding:8px 12px 7px;font:600 .97rem var(--f-body);color:var(--ink-2);cursor:pointer;margin-bottom:-1px}
 .tabs button:hover{color:var(--ink)}
-.tabs button[aria-selected="true"]{background:var(--surface);border-color:var(--line);color:var(--ink)}
-.tabs button .mono{color:var(--accent-ink);margin-right:6px;font-size:.75rem}
-.tabpanel{border:1px solid var(--line);border-top:0;border-radius:0 0 var(--r) var(--r);background:var(--surface);padding:6px 22px 22px}
-.pbook-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:16px 0}
-.pbook-meta div{background:var(--sunk);border-radius:5px;padding:10px 12px;font-size:.88rem;line-height:1.45}
-.pbook-meta .label{display:block;margin-bottom:3px}
+.tabs button[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--ink)}
+.tabs button .mono{display:none}
+.tabpanel{padding:4px 0 8px}
+.pbook-meta{margin:14px 0;display:grid;grid-template-columns:90px 1fr;gap:4px 14px;font-size:.98rem}
+.pbook-meta div{display:contents}
+.pbook-meta .label{font-weight:700;color:var(--ink);font-size:.98rem}
 
-/* IRA chart */
-.bars{display:grid;gap:8px;margin-top:16px}
-.bar-row{display:grid;grid-template-columns:110px 1fr 64px;gap:10px;align-items:center;font-size:.86rem}
-.bar-row .nm{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bar-track{position:relative;height:18px;background:var(--sunk);border-radius:3px}
-.bar-track .fill{position:absolute;inset:0 auto 0 0;border-radius:3px;transition:width .4s ease}
-.bar-track .target{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
-.bar-row .v{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.8rem}
-.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.78rem;color:var(--ink-2);margin-top:12px;font-family:var(--f-mono)}
+/* bars */
+.bars{display:grid;gap:7px;margin-top:16px}
+.bar-row{display:grid;grid-template-columns:130px 1fr 60px;gap:10px;align-items:center;font-size:.93rem}
+.bar-row .nm{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{position:relative;height:14px;background:var(--paper);border-radius:2px}
+.bar-track .fill{position:absolute;inset:0 auto 0 0;border-radius:2px;transition:width .4s ease}
+.bar-track .target{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.bar-row .v{text-align:right;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.88rem;color:var(--ink-2);margin-top:10px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .ira-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.ira-in .cell{background:var(--sunk);border-radius:5px;padding:8px 10px}
-.ira-in .cell b{display:block;font-family:var(--f-mono);font-size:.74rem;font-weight:600;color:var(--ink-2);margin-bottom:4px}
-.ira-in .cell input{padding:5px 7px;font-size:.86rem;margin-top:3px}
-.ira-in .cell small{display:block;font-size:.7rem;color:var(--ink-3);font-family:var(--f-mono);margin-top:3px}
+.ira-in .cell{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:8px 10px}
+.ira-in .cell b{display:block;font-size:.93rem;margin-bottom:4px}
+.ira-in .cell input{padding:4px 7px;font-size:.95rem;margin-top:2px}
+.ira-in .cell small{display:block;font-size:.82rem;color:var(--ink-3);margin-top:1px}
 
-/* lab table */
+/* lab */
+.lab{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:0 10px}
 .lab td,.lab th{white-space:nowrap}
 .lab tr.sel td{background:var(--accent-tint)}
 .lab tr.hit td{background:var(--good-tint)}
 .lab tr.miss td{background:var(--warn-tint)}
 .lab tr.fp td{background:var(--bad-tint)}
-.lab input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.lab input[type=checkbox]{width:17px;height:17px;accent-color:var(--accent);cursor:pointer}
 .lab-res{display:grid;gap:8px;margin-top:14px}
-.lab-res div{font-size:.9rem;padding:8px 12px;border-radius:5px;background:var(--sunk)}
-.lab-res b.mono{color:var(--accent-ink)}
+.lab-res div{font-size:.97rem;padding:8px 12px;border-radius:var(--r);background:var(--paper)}
 
-/* formula translator */
 .ft-out{margin-top:14px}
-.formula{font-family:var(--f-mono);font-size:.9rem;background:var(--ink);color:var(--paper);border-radius:5px;padding:12px 14px;overflow-x:auto;white-space:pre;margin:8px 0}
+.formula{font-family:var(--f-mono);font-size:.86rem;background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:var(--r);padding:11px 14px;overflow-x:auto;white-space:pre;margin:6px 0}
 
-/* stat */
 .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
-.stat{background:var(--sunk);border-radius:5px;padding:12px 14px}
-.stat .n{font-family:var(--f-display);font-weight:800;font-stretch:115%;font-size:1.7rem;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink)}
-.stat .l{font-size:.8rem;color:var(--ink-2);line-height:1.35;margin-top:3px}
+.stat{background:var(--paper);border-radius:var(--r);padding:10px 14px}
+.stat .n{font-family:var(--f-display);font-weight:700;font-size:1.6rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.88rem;color:var(--ink-2);line-height:1.35;margin-top:2px}
 
 /* quiz */
-.quiz{margin:2.6rem 0 0;border-top:2px solid var(--ink);padding-top:6px}
-.quiz>h2{margin-top:1rem}
-.q{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:16px 18px;margin:12px 0}
-.q .qt{font-weight:600;margin:0 0 10px}
-.q .qn{font-family:var(--f-mono);font-size:.75rem;color:var(--accent-ink);margin-right:8px}
-.opts{display:grid;gap:7px}
-.opt{appearance:none;text-align:left;border:1px solid var(--line-2);background:var(--paper);color:var(--ink);border-radius:5px;padding:9px 12px;font:400 .94rem/1.45 var(--f-body);cursor:pointer}
-.opt:hover:not(:disabled){border-color:var(--ink-3)}
+.quiz{margin:2.8rem 0 0;border-top:1px solid var(--line)}
+.quiz>h2{margin-top:1.2rem}
+.q{margin:18px 0}
+.q .qt{font-weight:600;margin:0 0 8px}
+.q .qn{color:var(--ink-3);font-weight:400;margin-right:6px}
+.opts{display:grid;gap:6px}
+.opt{appearance:none;text-align:left;border:1px solid var(--line-2);background:var(--paper);color:var(--ink);border-radius:var(--r);padding:8px 12px;font:400 1rem/1.45 var(--f-body);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink-3);background:var(--sunk)}
 .opt:disabled{cursor:default}
-.opt.correct{border-color:var(--good);background:var(--good-tint);font-weight:500}
+.opt.correct{border-color:var(--good);background:var(--good-tint)}
 .opt.incorrect{border-color:var(--bad);background:var(--bad-tint)}
-.q .why{font-size:.9rem;color:var(--ink-2);margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line)}
+.q .why{font-size:.97rem;color:var(--ink-2);margin:8px 0 0}
 
-/* module footer */
-.mod-foot{margin-top:2.6rem;padding:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
-.mod-foot .status{font-size:.92rem;color:var(--ink-2)}
+.mod-foot{margin-top:2.6rem;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.mod-foot .status{font-size:.97rem;color:var(--ink-2)}
 .mod-foot .status b{color:var(--good)}
 
 /* ---------- home ---------- */
-.hero{padding:26px 0 30px;border-bottom:1px solid var(--line)}
-.hero h1{font-size:clamp(2.6rem,8vw,5rem);font-stretch:125%;line-height:.98;letter-spacing:-.02em}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.hero .lede{font-size:clamp(1.08rem,2.2vw,1.28rem);color:var(--ink-2);max-width:640px;margin:1.1rem 0 0}
+.hero{padding:4px 0 8px}
+.hero h1{font-size:clamp(2.1rem,5vw,2.9rem);line-height:1.12}
+.hero .lede{font-size:1.2rem;color:var(--ink-2);margin:1rem 0 0}
 .hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.hero-facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-family:var(--f-mono);font-size:.8rem;color:var(--ink-2)}
-.hero-facts b{color:var(--ink);font-weight:600}
-.floor{margin-top:28px}
-.floor-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-.floor-head h2{margin:0}
-.zones{display:grid;gap:12px;margin-top:14px}
-.zone{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:stretch}
-.zone-label{border-left:3px solid var(--accent);padding:6px 0 6px 12px}
-.zone-label .z{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;color:var(--accent-ink);font-weight:600}
-.zone-label b{display:block;font-family:var(--f-display);font-size:1rem;line-height:1.2;margin-top:2px}
-.zone-label small{display:block;color:var(--ink-3);font-size:.78rem;line-height:1.35;margin-top:3px}
-.bays{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.bay{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px 12px;position:relative;transition:border-color .15s,transform .15s;min-height:104px}
-.bay:hover{border-color:var(--ink-3);transform:translateY(-1px)}
-.bay .bc{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-3);display:flex;justify-content:space-between}
-.bay b{font-family:var(--f-display);font-size:1rem;line-height:1.25;font-stretch:104%}
-.bay small{color:var(--ink-2);font-size:.82rem;line-height:1.35}
-.bay .st{position:absolute;right:12px;bottom:12px}
-.bay.is-done{border-color:var(--good)}
-.bay.is-done .bc{color:var(--good)}
-.bay-fill{grid-column:span 1;border:1px dashed var(--line);border-radius:var(--r);background:repeating-linear-gradient(135deg,transparent 0 8px,var(--sunk) 8px 9px)}
-@media (max-width:760px){.zone{grid-template-columns:minmax(0,1fr)}.bays{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}.bay-fill{display:none}}
-.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
-.how .panel b{font-family:var(--f-display);display:block;font-size:1rem;margin-bottom:4px}
-.how .panel p{margin:0;font-size:.92rem;color:var(--ink-2)}
+.hero-facts{margin-top:12px;font-size:.95rem;color:var(--ink-3)}
+.contents{margin:8px 0 0;padding:0;list-style:none}
+.contents>li{margin:0;padding:14px 0 4px;border-top:1px solid var(--line)}
+.contents h3{margin:0 0 2px;font-size:1.12rem}
+.contents h3 small{font-family:var(--f-body);font-weight:400;color:var(--ink-3);font-size:.92rem;margin-left:6px}
+.contents ol{list-style:none;padding:0;margin:2px 0 6px}
+.contents ol li{margin:0}
+.contents a{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:baseline;padding:6px 0;text-decoration:none;color:var(--ink)}
+.contents a:hover .ct{text-decoration:underline}
+.contents .cn{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.contents .ct{font-weight:600}
+.contents .cs{display:block;color:var(--ink-2);font-size:.96rem}
+.contents .cm{color:var(--ink-3);font-size:.92rem;white-space:nowrap}
+.contents a.is-done .cm{color:var(--good);font-weight:600}
 
-/* library & glossary */
 .lib-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0}
 .lib-tools input{max-width:320px}
-.lib-item h3{margin:0 0 4px;font-size:1.02rem}
-.lib-item .label{display:block;margin-bottom:6px}
-.lib-list{display:grid;gap:14px}
-.gl-list{display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-top:14px}
-.gl-item{padding:12px 16px;border-bottom:1px solid var(--line)}
-.gl-item:last-child{border-bottom:0}
-.gl-item dt{font-family:var(--f-display);font-weight:700}
-.gl-item dd{margin:2px 0 0;color:var(--ink-2);font-size:.94rem}
-.gl-item dd .mono{color:var(--ink-3);font-size:.74rem}
-.src-list li{margin:.55rem 0;font-size:.94rem}
-.src-list .mono{color:var(--ink-3);font-size:.74rem}
+.lib-item{border-top:1px solid var(--line);padding-top:12px}
+.lib-item h3{margin:0 0 2px;font-size:1.1rem}
+.lib-item .label{display:block}
+.lib-list{display:grid;gap:18px}
+.gl-list{margin-top:14px}
+.gl-item{padding:10px 0;border-bottom:1px solid var(--line)}
+.gl-item dt{font-weight:700}
+.gl-item dd{margin:2px 0 0;color:var(--ink-2)}
+.gl-item dd .mono{font-size:.9rem;white-space:nowrap}
+.src-list li{margin:.55rem 0;font-size:.98rem}
+.src-list .mono{color:var(--ink-3);font-size:.92rem}
 
-/* plan */
-.plan-col{display:grid;gap:6px}
-.plan-col label{display:flex;gap:10px;align-items:flex-start;font-size:.93rem;line-height:1.45;padding:8px 10px;border-radius:5px;background:var(--paper);border:1px solid var(--line);cursor:pointer}
+.plan-col{display:grid;gap:2px}
+.plan-col label{display:flex;gap:10px;align-items:flex-start;font-size:.98rem;line-height:1.45;padding:4px 0;cursor:pointer}
 .plan-col input{width:17px;height:17px;margin-top:3px;accent-color:var(--good);flex:none}
-.plan-col label:has(input:checked){background:var(--good-tint);border-color:var(--good)}
-.plan-col label:has(input:checked) span{text-decoration:line-through;text-decoration-color:var(--ink-3);color:var(--ink-2)}
-.ts-row{display:grid;grid-template-columns:minmax(0,1.6fr) 90px 90px;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+.plan-col label:has(input:checked) span{text-decoration:line-through;text-decoration-color:var(--ink-3);color:var(--ink-3)}
+.ts-row{display:grid;grid-template-columns:minmax(0,1.6fr) 90px 90px;gap:10px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line);font-size:.97rem}
 .ts-row:last-of-type{border-bottom:0}
-.ts-row input{padding:5px 8px}
-.ts-head{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.ts-row input{padding:4px 8px}
+.ts-head{font-weight:700;font-size:.9rem}
 @media (max-width:520px){.ts-row{grid-template-columns:minmax(0,1fr) 70px 70px}}
-.cert{margin-top:20px;border:2px solid var(--ink);border-radius:var(--r);padding:28px;text-align:center;background:var(--surface);position:relative}
-.cert::before{content:"";position:absolute;inset:6px;border:1px solid var(--line-2);border-radius:4px;pointer-events:none}
-.cert h3{font-size:1.6rem;font-stretch:120%;margin:6px 0}
-.cert .nm{font-family:var(--f-display);font-size:1.4rem;font-weight:700;color:var(--accent-ink)}
+.cert{margin-top:20px;border:1px solid var(--ink);padding:30px 24px;text-align:center;background:var(--paper);outline:1px solid var(--line-2);outline-offset:-8px}
+.cert h3{font-size:1.5rem;margin:6px 0}
+.cert .nm{font-family:var(--f-display);font-size:1.6rem;font-style:italic;color:var(--ink)}
 
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:6px;font-size:.9rem;opacity:0;pointer-events:none;transition:all .25s ease;z-index:80;max-width:calc(100vw - 32px)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:var(--r);font-size:.96rem;opacity:0;pointer-events:none;transition:all .25s ease;z-index:80;max-width:calc(100vw - 32px)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
+.mobile-only{display:none}
+@media (max-width:760px){.mobile-only{display:block}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
 <header class="topbar">
-  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open course map" aria-expanded="false" aria-controls="side">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false" aria-controls="side">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
   <a class="brand" href="#home" aria-label="Course home">
-    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-      <rect x="2" y="2" width="28" height="28" rx="5" fill="var(--ink)"/>
-      <path d="M7 11h18M7 19h18" stroke="var(--paper)" stroke-width="1.6" opacity=".55"/>
-      <rect x="9" y="5.5" width="6" height="5" rx="1" fill="var(--paper)" opacity=".85"/>
-      <rect x="17" y="13.5" width="6" height="5" rx="1" fill="var(--accent)"/>
-      <rect x="9" y="21.5" width="6" height="5" rx="1" fill="var(--paper)" opacity=".85"/>
-      <path d="M18.4 16l1.4 1.4 2.6-2.8" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
     <span class="brand-name"><span class="bn-long">AI for Procurement &amp; Warehouse Auditing</span><span class="bn-short">AI for Procurement Auditing</span></span>
   </a>
   <div class="top-progress" aria-live="polite">
-    <span class="label" id="progLabel">0 of 12 modules</span>
+    <span id="progLabel">0 of 12 modules done</span>
     <span class="meter" aria-hidden="true"><span id="progBar"></span></span>
   </div>
-  <button class="icon-btn" id="themeBtn" aria-label="Switch colour theme" title="Switch light / dark">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+  <button class="icon-btn" id="themeBtn" aria-label="Switch between light and dark" title="Light / dark">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
   </button>
 </header>
 <div class="scrim" id="scrim"></div>
 <div class="shell">
-<nav class="side" id="side" aria-label="Course map"></nav>
+<nav class="side" id="side" aria-label="Contents"></nav>
 <main id="main">
 
 <!-- ======================= HOME ======================= -->
 <section class="view" data-route="home" id="view-home">
   <div class="hero">
-    <div class="eyebrow">A practical course in 12 modules · for procurement &amp; inventory professionals</div>
-    <h1 style="margin-top:14px">AI for Procurement<br><em>&amp;</em> Warehouse Auditing</h1>
-    <p class="lede">Learn to use AI to check stock, purchase and invoice data across seven warehouses faster and more reliably. You start from zero, and by the end you will be running repeatable audit routines and writing findings people act on.</p>
+    <p class="kicker">A self-paced course for procurement and inventory teams</p>
+    <h1 style="margin-top:8px">AI for Procurement &amp; Warehouse Auditing</h1>
+    <p class="lede">How to use AI tools to check stock, purchase order and invoice data across several warehouses: what the tools can and can't do, how to ask them for useful work, and how to check what they give you.</p>
     <div class="hero-cta">
-      <a class="btn accent" href="#m1" id="startBtn">Start Module 1</a>
-      <a class="btn ghost" href="#library">Browse the prompt library</a>
+      <a class="btn" href="#m1" id="startBtn">Start with module 1</a>
+      <a class="btn ghost" href="#library">Prompt library</a>
     </div>
-    <div class="hero-facts">
-      <span><b>12</b> modules</span><span><b>5</b> levels</span><span><b>~7 hrs</b> total, in short sittings</span><span><b>20+</b> hands-on exercises</span><span><b>No</b> coding required</span>
-    </div>
+    <p class="hero-facts">12 modules, about 7 hours in total. No coding needed.</p>
   </div>
 
-  <div class="floor">
-    <div class="floor-head">
-      <h2>The course floor plan</h2>
-      <span class="label">Each level builds on the one before it</span>
-    </div>
-    <p class="prose" style="color:var(--ink-2)">The course is laid out like a warehouse. Each level is a <b>zone</b> and each module is an <b>aisle</b>. Work through them in order: the early aisles are short and conceptual, the later ones are hands-on and specific to your audit work. Your progress is saved in this browser.</p>
-    <div class="zones" id="floorPlan"></div>
-  </div>
+  <h2>Who this is for</h2>
+  <p>The course was written for an assistant purchase manager who audits data for seven warehouses, but it works for anyone who checks procurement or inventory records and is new to AI. It starts with the basics and gets more practical as it goes. By the later modules you'll be using AI on the kind of checks you already do: count variances, invoice matching, duplicate payments, split orders and vendor records.</p>
 
-  <h2>How to get the most out of it</h2>
-  <div class="how">
-    <div class="panel"><b>One aisle per sitting</b><p>Each module takes 20–45 minutes. Two or three a week is a good pace. You will finish in about a month without it eating your week.</p></div>
-    <div class="panel"><b>Do the "Try it this week" task</b><p>Every module ends with a small real-work task. That is where the learning sticks. Reading alone won't change how you work.</p></div>
-    <div class="panel"><b>Keep the prompt library open</b><p>Over 30 ready-to-use prompts written for procurement and warehouse audit work. Copy, fill in the brackets, use.</p></div>
-    <div class="panel"><b>Use your company-approved AI tool</b><p>Everything here works in ChatGPT, Claude, Gemini or Microsoft Copilot. Module 3 explains what data is safe to share and where.</p></div>
-  </div>
+  <h2>Contents</h2>
+  <ol class="contents" id="contentsList"></ol>
 
-  <h2>Why this matters now</h2>
-  <div class="prose">
-    <p>Procurement teams are adopting AI quickly, but few use it well. Industry surveys in 2025 and 2026 found that most procurement professionals now use generative AI in some form, yet only around <b>5% of procurement organisations have truly scaled it</b> (EFESO, 2026 CPO Pulse). <b>Spend analysis</b> is the most common use case, cited by 69% of respondents.</p>
-    <p>For someone who audits data, that gap is an opportunity. The skills in this course (asking good questions of data, checking AI output properly, and turning repeat checks into routines) are the ones that separate people who play with AI from people who get real results from it.</p>
-  </div>
+  <h2>How to work through it</h2>
+  <ul>
+    <li><b>One module per sitting.</b> Each takes 20 to 45 minutes. Two or three a week gets you through in about a month.</li>
+    <li><b>Do the exercise at the end of each module.</b> Each one is a small task using your own work. It's the part that changes how you work, so don't skip it.</li>
+    <li><b>Use the AI tool your company has approved.</b> Everything here works in Microsoft Copilot, ChatGPT, Claude or Gemini. Module 3 covers what data you can and can't share.</li>
+    <li><b>Your progress is saved in this browser</b>, so you can stop and pick up later on the same device.</li>
+  </ul>
+
+  <h2>Why bother now</h2>
+  <p>Most procurement teams now use AI in some form, but very few have made it part of how work actually gets done. EFESO's 2026 survey of procurement leaders put the share that have properly scaled it at about 5%. The most common use is spend analysis. For someone who audits data, the useful skills are the unglamorous ones: asking precise questions, checking the answers, and turning a check that works into a routine. That's what this course concentrates on.</p>
 </section>
 
 <!-- ======================= M1 ======================= -->
 <section class="view" data-route="m1" id="view-m1" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone A · Foundations · Aisle 01</div>
-  <h1>What AI actually is, in plain English</h1>
-  <p class="lede">Before using any tool, you need an accurate picture of what is going on inside it. Ten minutes on this saves you months of being either over-impressed or under-impressed.</p>
-  <div class="meta-row"><span>Time <b>20 min</b></span><span>Level <b>Beginner</b></span><span>Hands-on <b>2 labs + quiz</b></span></div>
+  <p class="kicker">Module 1 of 12 · Part 1: Foundations</p>
+  <h1>What AI actually is</h1>
+  <p class="lede">This module explains what is going on inside tools like ChatGPT and Copilot. Once you understand that, it's much easier to judge what to trust them with.</p>
+  <p class="meta-row">About 20 minutes. Level: Beginner.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Explain the difference between AI, machine learning and generative AI to a colleague</li>
   <li>Describe how a chatbot like ChatGPT produces an answer, and why that sometimes goes wrong</li>
   <li>Tell the difference between a fixed rule and real AI in the systems you already use</li>
@@ -524,7 +469,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <p>Most of this course focuses on <strong>generative AI</strong>, because it is the kind you can start using tomorrow, on your own, without an IT project. Module 11 covers predictive AI so you can talk to vendors and IT about it.</p>
 
 <h2>How a chatbot actually produces an answer</h2>
-<p>This is the single most useful thing to understand. A large language model works in four steps:</p>
+<p>If you only remember one thing from this module, make it this. A large language model works in four steps:</p>
 </div>
 <ol class="steps prose">
   <li><strong>It read an enormous amount of text.</strong> During training, the model processed a large share of the public internet, books and other documents. It did not memorise them like a database. It learned the patterns of how words, ideas and facts tend to go together.</li>
@@ -535,7 +480,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <div class="prose"><p>Try it yourself. The lab below imitates step 3.</p></div>
 
 <div class="widget" id="w-nextword">
-  <div class="w-head"><span class="w-tag">LAB 1.1</span><span class="w-title">Be the language model: predict the next word</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 1.1</span><span class="w-title">Be the language model: predict the next word</span></div>
   <div class="w-body">
     <p class="w-hint">Click a word to add it, or press <b>Let the AI pick</b>. The bars show how likely each word is. Move the <b>creativity</b> slider (called "temperature") and watch the odds change.</p>
     <div class="nw-sentence" id="nwText" aria-live="polite"></div>
@@ -554,11 +499,11 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <div class="two">
   <div class="panel accent"><h4>1. Fluent is not the same as correct</h4><p>The model is optimised to produce text that <em>sounds</em> right. If it doesn't know, it often still produces a confident, plausible answer. This is called a <b>hallucination</b>. Module 3 shows you how to catch them.</p></div>
   <div class="panel accent"><h4>2. It only knows what you give it</h4><p>It has never seen your ERP, your stock ledger or your supplier contracts. Unless you paste or upload data, or your company connects it to internal systems, it is guessing about your business.</p></div>
-  <div class="panel accent"><h4>3. Words are its strength, sums are not</h4><p>It is excellent at language, structure and explaining things. Exact arithmetic across many rows is weaker, unless the tool <b>writes and runs code</b> to do the maths (Module 5 explains how to make it do that).</p></div>
+  <div class="panel accent"><h4>3. Words are its strength, sums are not</h4><p>It's good with language, structure and explanations. Exact arithmetic across many rows is weaker, unless the tool <b>writes and runs code</b> to do the maths (Module 5 explains how to make it do that).</p></div>
 </div>
 
 <div class="analogy prose">
-  <span class="glyph">≈</span>
+  
   <div><p><b>The best mental model: a brilliant new hire on their first day.</b></p>
   <p>They have read every textbook and work very fast. But they know nothing about your company, your seven warehouses or your suppliers. They rarely say "I don't know" unless you tell them it is allowed. They need clear instructions, and you check their work before it goes to your manager. Treat AI exactly like that and you will rarely be caught out.</p></div>
 </div>
@@ -587,7 +532,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 </div>
 
 <div class="widget" id="w-sorter">
-  <div class="w-head"><span class="w-tag">LAB 1.2</span><span class="w-title">Fixed rule or real AI?</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 1.2</span><span class="w-title">Fixed rule or real AI?</span></div>
   <div class="w-body">
     <p class="w-hint">Many "smart" features at work are simple rules someone set up. Sort each example. The test: did a person write the exact logic, or did the system <b>learn</b> it from data?</p>
     <div class="cards" id="sorterCards"></div>
@@ -595,17 +540,17 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>AI is software that has <b>learned</b> to do tasks needing judgement. Generative AI (chatbots) is one branch of it.</li>
   <li>A chatbot builds answers by predicting likely next words. That makes it fluent, fast and sometimes confidently wrong.</li>
   <li>It knows nothing about your company unless you give it information.</li>
   <li>Treat it like a brilliant new hire: give clear instructions and always check the work.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Open your company's approved AI assistant and type: <code>Explain three-way matching in procurement as if I'm new to the job, then give me 3 common ways it goes wrong in a multi-warehouse company.</code> Read the answer critically. Which parts do you already know are right? Is anything vague or generic? Noticing this is the core skill.</p>
 </div>
 
-<div class="quiz" data-quiz="m1"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m1"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">Your WMS automatically raises a replenishment order when a bin drops below 50 units. Is this AI?</p><div class="opts">
     <button class="opt">Yes, because the system makes a decision on its own</button>
     <button class="opt">No, it is a fixed rule a person configured</button>
@@ -633,12 +578,12 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <!-- ======================= M2 ======================= -->
 <section class="view" data-route="m2" id="view-m2" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone A · Foundations · Aisle 02</div>
-  <h1>Your AI toolbox: what exists and when to use it</h1>
-  <p class="lede">There are hundreds of AI products, but they fall into four layers. Once you see the layers, choosing the right tool for a task becomes simple.</p>
-  <div class="meta-row"><span>Time <b>20 min</b></span><span>Level <b>Beginner</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 2 of 12 · Part 1: Foundations</p>
+  <h1>Your AI toolbox</h1>
+  <p class="lede">There are hundreds of AI products. For your work they fall into four groups, and knowing which group a tool belongs to tells you what it's good for.</p>
+  <p class="meta-row">About 20 minutes. Level: Beginner.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Name the four layers of AI tools and give an example of each</li>
   <li>Choose the right tool for a given audit or procurement task</li>
   <li>Know which features matter most for data work, and what to ask IT</li>
@@ -649,10 +594,10 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <p>Think of them as moving from "general and flexible" to "specialised and automatic".</p>
 </div>
 <ol class="flow" aria-label="Four layers of AI tools">
-  <li><span class="mono">LAYER 1</span><b>Chat assistants</b>A general assistant you talk to in a browser or app. ChatGPT, Claude, Gemini, Microsoft Copilot Chat.</li>
-  <li><span class="mono">LAYER 2</span><b>AI inside your apps</b>The Copilot or Gemini button inside Excel, Outlook, Teams, Word, Google Sheets.</li>
-  <li><span class="mono">LAYER 3</span><b>AI in business systems</b>Features built into your ERP, WMS or procurement suite: invoice matching, spend classification, demand forecasts.</li>
-  <li><span class="mono">LAYER 4</span><b>Automation &amp; agents</b>Flows and agents that run multi-step tasks on a schedule or trigger, such as Power Automate.</li>
+  <li><span class="mono">Layer 1</span><b>Chat assistants</b>A general assistant you talk to in a browser or app. ChatGPT, Claude, Gemini, Microsoft Copilot Chat.</li>
+  <li><span class="mono">Layer 2</span><b>AI inside your apps</b>The Copilot or Gemini button inside Excel, Outlook, Teams, Word, Google Sheets.</li>
+  <li><span class="mono">Layer 3</span><b>AI in business systems</b>Features built into your ERP, WMS or procurement suite: invoice matching, spend classification, demand forecasts.</li>
+  <li><span class="mono">Layer 4</span><b>Automation &amp; agents</b>Flows and agents that run multi-step tasks on a schedule or trigger, such as Power Automate.</li>
 </ol>
 
 <div class="prose">
@@ -689,7 +634,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 </tbody></table></div>
 
 <div class="widget" id="w-picker">
-  <div class="w-head"><span class="w-tag">LAB 2.1</span><span class="w-title">Which tool should I use for this?</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 2.1</span><span class="w-title">Which tool should I use for this?</span></div>
   <div class="w-body">
     <p class="w-hint">Answer two questions and get a recommendation you can act on today.</p>
     <label class="fl">1 · Where does your data live?</label>
@@ -728,17 +673,17 @@ I'm planning to use AI tools to speed up my warehouse data audits. Could you hel
 Thanks,
 [Your name]</pre>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Four layers: chat assistants, AI inside apps, AI in business systems, and automation/agents.</li>
   <li>For audit work, AI inside Excel and file-analysis in a chat assistant give the fastest wins.</li>
   <li>The best tool is usually the one your company has approved and licensed.</li>
   <li>"File upload and data analysis" matters most, because the maths is done by real code.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Send the IT email above (adapted to your company). While you wait, open your approved assistant and find these three things in its menus: file upload, custom instructions (or "Projects"), and chat history. Knowing where they are now will save time later.</p>
 </div>
 
-<div class="quiz" data-quiz="m2"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m2"><h2>Quick quiz</h2>
   <div class="q" data-a="2"><p class="qt">You need to calculate total variance across 4,000 rows. Which approach gives the most reliable numbers?</p><div class="opts">
     <button class="opt">Paste the rows into a chat and ask for the total</button>
     <button class="opt">Ask the assistant to estimate from a sample</button>
@@ -761,12 +706,12 @@ Thanks,
 <!-- ======================= M3 ======================= -->
 <section class="view" data-route="m3" id="view-m3" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone A · Foundations · Aisle 03</div>
-  <h1>Using AI safely: data, accuracy and your reputation</h1>
-  <p class="lede">An auditor's credibility rests on two things: protecting sensitive data and getting numbers right. This aisle gives you simple, repeatable habits for both.</p>
-  <div class="meta-row"><span>Time <b>25 min</b></span><span>Level <b>Beginner</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 3 of 12 · Part 1: Foundations</p>
+  <h1>Using AI safely</h1>
+  <p class="lede">Two things an auditor can't get wrong are keeping sensitive data safe and making sure the numbers are correct. This module covers habits for both.</p>
+  <p class="meta-row">About 25 minutes. Level: Beginner.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Decide in seconds whether data is safe to share with an AI tool</li>
   <li>Anonymise a dataset so you can still get help without exposing anything sensitive</li>
   <li>Use a five-step check to catch AI mistakes before they reach a report</li>
@@ -774,7 +719,7 @@ Thanks,
 
 <div class="prose">
 <h2>Why this comes before everything else</h2>
-<p>Two real-world facts set the scene:</p>
+<p>Two examples:</p>
 <ul>
   <li>In a January 2025 survey of employees at large US companies (TELUS Digital), <b>57% admitted entering confidential company data</b> into public AI tools. Many used personal accounts their employers couldn't see or control.</li>
   <li>In February 2024, a Canadian tribunal ruled that <b>Air Canada was responsible</b> for incorrect refund information its website chatbot invented. "The AI said it" was not accepted as a defence.</li>
@@ -809,7 +754,7 @@ Thanks,
   </ul></div>
 </div>
 
-<div class="callout rule prose"><span class="tag">The rule</span><p>If you would not email it to someone outside the company, do not paste it into a tool your company has not approved.</p></div>
+<div class="callout rule prose"><span class="tag">A simple test</span><p>If you would not email it to someone outside the company, do not paste it into a tool your company has not approved.</p></div>
 
 <div class="prose">
 <h3>Anonymise: get the help without the risk</h3>
@@ -844,14 +789,14 @@ Thanks,
   <li><strong>Tie the totals.</strong> Does the row count match? Does the grand total match what Excel's SUM gives you? This alone catches most errors.</li>
   <li><strong>Spot-check 5–10 rows by hand.</strong> Pick a few at random, plus the biggest and smallest. Are they right?</li>
   <li><strong>Ask "how did you get this?"</strong> Make the AI show its method or formula. Vague answers are a warning sign.</li>
-  <li><strong>Ask it to check itself.</strong> "Review your answer for errors and list anything you are unsure about." It finds a surprising number of its own mistakes.</li>
+  <li><strong>Ask it to check itself.</strong> "Review your answer for errors and list anything you are unsure about." It often catches some of its own mistakes.</li>
   <li><strong>Trace to the system of record.</strong> Audit evidence must come from the ERP, WMS or source documents, never from the AI's output alone.</li>
 </ol>
 
-<div class="callout warn prose"><span class="tag">Golden rule</span><p><b>AI drafts, you decide.</b> AI can find, sort, suggest and write. A person confirms the facts and owns the conclusion. Put this on a sticky note.</p></div>
+<div class="callout warn prose"><span class="tag">Remember</span><p><b>AI drafts, you decide.</b> AI can find, sort, suggest and write. A person confirms the facts and owns the conclusion.</p></div>
 
 <div class="widget" id="w-safe">
-  <div class="w-head"><span class="w-tag">LAB 3.1</span><span class="w-title">Safe to paste? Make the call</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 3.1</span><span class="w-title">Safe to paste? Make the call</span></div>
   <div class="w-body">
     <p class="w-hint">Assume you have a company-approved AI tool and a personal free account. For each item, choose the light that fits the <b>most open</b> place it could safely go.</p>
     <div class="cards" id="safeCards"></div>
@@ -859,17 +804,17 @@ Thanks,
   </div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Use the traffic light: green anywhere approved, amber only in the company tool, red never.</li>
   <li>Anonymise or use fake data. AI usually only needs the structure.</li>
   <li>Before anything goes into a report, tie it out: totals, spot-checks, method, self-review, source.</li>
   <li>AI drafts, you decide. You own every number you present.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Find and read your company's AI or acceptable-use policy (ask IT if you can't find it). Then take one real report you use and make an anonymised copy: replace supplier names, people and exact prices. Save it as your <b>practice file</b>. You will use it in the next modules.</p>
 </div>
 
-<div class="quiz" data-quiz="m3"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m3"><h2>Quick quiz</h2>
   <div class="q" data-a="2"><p class="qt">An AI tool gives you a total variance of $48,210 for Warehouse 6. What is your first check?</p><div class="opts">
     <button class="opt">Ask a different AI tool if it agrees</button>
     <button class="opt">Trust it if the explanation sounds reasonable</button>
@@ -892,12 +837,12 @@ Thanks,
 <!-- ======================= M4 ======================= -->
 <section class="view" data-route="m4" id="view-m4" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone B · Talking to AI · Aisle 04</div>
-  <h1>Writing prompts that get useful answers</h1>
-  <p class="lede">The quality of what you get from AI depends mostly on the quality of what you ask. Here is one simple method, borrowed from the warehouse floor, that works for almost every task.</p>
-  <div class="meta-row"><span>Time <b>30 min</b></span><span>Level <b>Beginner → Intermediate</b></span><span>Hands-on <b>1 builder + quiz</b></span></div>
+  <p class="kicker">Module 4 of 12 · Part 2: Talking to AI</p>
+  <h1>Writing good prompts</h1>
+  <p class="lede">How useful an AI answer is depends mostly on how clearly you ask. This module gives you a five-part checklist for writing a request.</p>
+  <p class="meta-row">About 30 minutes. Level: Beginner to intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Write a complete prompt using the five-part Pick Ticket method</li>
   <li>Turn a weak, one-line request into one that gets a usable first answer</li>
   <li>Use follow-up questions to improve an answer rather than starting over</li>
@@ -905,7 +850,7 @@ Thanks,
 
 <div class="prose">
 <h2>Why most prompts disappoint</h2>
-<p>People type a short request like "analyse this data" and get a generic, vague answer. That isn't the AI being weak. It is doing exactly what a new hire would do with an instruction that short: guess.</p>
+<p>People type a short request like "analyse this data" and get a generic, vague answer. That isn't the AI being weak. A new hire given an instruction that short would have to guess too.</p>
 <p>A <b>prompt</b> is simply the instruction you give the AI. Good prompts don't need special tricks or magic words. They need the same things any clear work instruction needs.</p>
 
 <h2>The Pick Ticket method</h2>
@@ -914,11 +859,11 @@ Thanks,
 <div class="tbl"><table>
 <thead><tr><th>Field</th><th>Question it answers</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><span class="field-tag">ROLE</span><b>Who</b></td><td>Who should the AI act as?</td><td>"You are an experienced inventory auditor for a multi-warehouse distributor."</td></tr>
-<tr><td><span class="field-tag">TASK</span><b>What</b></td><td>What exactly do you want done?</td><td>"Identify the five SKUs with the largest stock variance and suggest likely causes."</td></tr>
-<tr><td><span class="field-tag">CONTEXT</span><b>Background</b></td><td>What does it need to know to do this well?</td><td>"We run 7 warehouses. Variance = system qty minus counted qty. Tolerance is ±2%. This is October's cycle count data."</td></tr>
-<tr><td><span class="field-tag">FORMAT</span><b>Pack as</b></td><td>What should the answer look like?</td><td>"A table with columns: SKU, Warehouse, Variance %, Likely cause, Suggested check. Then 3 bullet points of summary."</td></tr>
-<tr><td><span class="field-tag">CHECKS</span><b>Quality control</b></td><td>What rules and checks must it follow?</td><td>"Only use the data provided. If something is unclear, ask me. State the row count you analysed."</td></tr>
+<tr><td><span class="field-tag">Role</span><b>Who</b></td><td>Who should the AI act as?</td><td>"You are an experienced inventory auditor for a multi-warehouse distributor."</td></tr>
+<tr><td><span class="field-tag">Task</span><b>What</b></td><td>What exactly do you want done?</td><td>"Identify the five SKUs with the largest stock variance and suggest likely causes."</td></tr>
+<tr><td><span class="field-tag">Context</span><b>Background</b></td><td>What does it need to know to do this well?</td><td>"We run 7 warehouses. Variance = system qty minus counted qty. Tolerance is ±2%. This is October's cycle count data."</td></tr>
+<tr><td><span class="field-tag">Format</span><b>Pack as</b></td><td>What should the answer look like?</td><td>"A table with columns: SKU, Warehouse, Variance %, Likely cause, Suggested check. Then 3 bullet points of summary."</td></tr>
+<tr><td><span class="field-tag">Checks</span><b>Quality control</b></td><td>What rules and checks must it follow?</td><td>"Only use the data provided. If something is unclear, ask me. State the row count you analysed."</td></tr>
 </tbody></table></div>
 
 <div class="prose">
@@ -934,7 +879,7 @@ Thanks,
 </div>
 
 <div class="widget" id="w-builder">
-  <div class="w-head"><span class="w-tag">LAB 4.1</span><span class="w-title">Pick Ticket prompt builder</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 4.1</span><span class="w-title">Pick Ticket prompt builder</span></div>
   <div class="w-body">
     <p class="w-hint">Choose a starting example, then edit any field. The prompt on the right updates as you type and rates how complete it is. Copy it straight into your AI tool.</p>
     <div class="chips" id="pbPresets" style="margin-bottom:14px">
@@ -946,11 +891,11 @@ Thanks,
     </div>
     <div class="pb">
       <div>
-        <label class="fl" for="pbRole"><span class="field-tag">ROLE</span>Who should the AI be?</label><input type="text" id="pbRole">
-        <label class="fl" for="pbTask"><span class="field-tag">TASK</span>What exactly should it do?</label><textarea id="pbTask"></textarea>
-        <label class="fl" for="pbCtx"><span class="field-tag">CONTEXT</span>Background it needs</label><textarea id="pbCtx"></textarea>
-        <label class="fl" for="pbFmt"><span class="field-tag">FORMAT</span>How should the answer look?</label><textarea id="pbFmt"></textarea>
-        <label class="fl" for="pbChk"><span class="field-tag">CHECKS</span>Rules &amp; quality checks</label><textarea id="pbChk"></textarea>
+        <label class="fl" for="pbRole"><span class="field-tag">Role</span>Who should the AI be?</label><input type="text" id="pbRole">
+        <label class="fl" for="pbTask"><span class="field-tag">Task</span>What exactly should it do?</label><textarea id="pbTask"></textarea>
+        <label class="fl" for="pbCtx"><span class="field-tag">Context</span>Background it needs</label><textarea id="pbCtx"></textarea>
+        <label class="fl" for="pbFmt"><span class="field-tag">Format</span>How should the answer look?</label><textarea id="pbFmt"></textarea>
+        <label class="fl" for="pbChk"><span class="field-tag">Checks</span>Rules &amp; quality checks</label><textarea id="pbChk"></textarea>
       </div>
       <div>
         <div class="label" style="margin-bottom:6px">Your prompt</div>
@@ -964,12 +909,12 @@ Thanks,
 </div>
 
 <div class="prose">
-<h2>Six habits of people who get great results</h2>
+<h2>Six habits that improve results</h2>
 </div>
 <ol class="steps prose">
   <li><strong>Be specific with numbers and names.</strong> "Variance above 2%" beats "big variances". "Warehouses 1–7" beats "our sites".</li>
   <li><strong>Show an example of what you want.</strong> Paste one row of the output you expect, or a past report you liked. AI copies examples very well.</li>
-  <li><strong>Let it ask you questions first.</strong> End with: "Before you start, ask me up to 3 questions about anything unclear." This alone improves results dramatically.</li>
+  <li><strong>Let it ask you questions first.</strong> End with: "Before you start, ask me up to 3 questions about anything unclear." This usually makes the answer noticeably better.</li>
   <li><strong>Break big jobs into steps.</strong> First "summarise the data", then "find exceptions", then "draft the findings". Check each step before the next.</li>
   <li><strong>Give it permission to say "I don't know".</strong> Add: "If the data doesn't support an answer, say so rather than guessing." This reduces hallucinations.</li>
   <li><strong>Treat it as a conversation.</strong> The first answer is a draft. Improve it with follow-ups instead of starting a new chat.</li>
@@ -987,7 +932,7 @@ Thanks,
 <tr><td>Good, want to reuse</td><td><code>Turn what we just did into a reusable prompt template with [brackets] for the parts that change.</code></td></tr>
 </tbody></table></div>
 
-<div class="callout tip prose"><span class="tag">Pro move</span><p>Save your standing context once. Most assistants let you set <b>custom instructions</b> or create a <b>Project</b>. Put in: your role, your seven warehouses and their codes, your tolerance rules, your preferred report format. Every chat then starts already knowing your job.</p></div>
+<div class="callout tip prose"><span class="tag">Tip</span><p>Save your standing context once. Most assistants let you set <b>custom instructions</b> or create a <b>Project</b>. Put in: your role, your seven warehouses and their codes, your tolerance rules, your preferred report format. Every chat then starts already knowing your job.</p></div>
 <pre class="pr" data-label="Custom instructions · paste into your assistant's settings">I'm an assistant purchase manager at a supply chain company. I audit inventory, purchasing and invoice data across 7 warehouses (codes WH01–WH07).
 - Stock variance = system quantity minus physical count. Our line tolerance is ±[2]% or ±[value].
 - Key systems: [ERP name], [WMS name]. I mainly work in Excel.
@@ -995,17 +940,17 @@ Thanks,
 - Prefer tables for results and short bullet summaries. Use plain business English.
 - When suggesting Excel formulas, assume Microsoft 365 and explain each part briefly.</pre>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>A good prompt is a clear work instruction: Role, Task, Context, Format, Checks.</li>
   <li>When results disappoint, add context or specify the format.</li>
   <li>Let AI ask you questions, and give it permission to say "I don't know".</li>
   <li>Improve answers with follow-ups. Save your standing context in custom instructions.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Set up custom instructions in your assistant using the template above. Then take a real task you have this week (an email, a summary, a formula) and write it as a Pick Ticket prompt. Compare the result with what you would have got from a one-line request.</p>
 </div>
 
-<div class="quiz" data-quiz="m4"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m4"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">An AI gave you a vague, generic answer about "improving inventory accuracy". Which field was most likely missing?</p><div class="opts">
     <button class="opt">ROLE</button>
     <button class="opt">CONTEXT: details about your warehouses, data and tolerances</button>
@@ -1028,12 +973,12 @@ Thanks,
 <!-- ======================= M5 ======================= -->
 <section class="view" data-route="m5" id="view-m5" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone B · Talking to AI · Aisle 05</div>
-  <h1>Working with data: tables, files and numbers</h1>
-  <p class="lede">Prompting about data is different from prompting about words. This aisle shows you how to hand data to AI so that the numbers you get back are ones you can trust.</p>
-  <div class="meta-row"><span>Time <b>30 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 5 of 12 · Part 2: Talking to AI</p>
+  <h1>Working with data</h1>
+  <p class="lede">Asking AI about data needs more care than asking it to write an email. This module covers how to give it your data and how to check the numbers that come back.</p>
+  <p class="meta-row">About 30 minutes. Level: Intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Choose the right way to give AI your data based on its size</li>
   <li>Prepare a spreadsheet so AI (and Excel) can read it without errors</li>
   <li>Ask for the method, not just the answer, so results are checkable and reusable</li>
@@ -1075,7 +1020,7 @@ Thanks,
 
 <div class="prose">
 <h3>Give it a data dictionary</h3>
-<p>A <b>data dictionary</b> is a short description of each column. It is the single best way to stop AI misunderstanding your data. Put it at the top of your prompt.</p>
+<p>A <b>data dictionary</b> is a short description of each column. It's the most effective way to stop AI misreading your data. Put it at the top of your prompt.</p>
 </div>
 <pre class="pr" data-label="Data dictionary · example">Columns in the attached file:
 - WH: warehouse code, WH01 to WH07
@@ -1090,7 +1035,7 @@ Notes: a negative variance means stock is missing. Rows where UOM = CS must be m
 
 <div class="prose">
 <h2>Ask for the method, not only the answer</h2>
-<p>This is the most important habit in this aisle. Instead of "what's the total variance?", ask the AI to give you <b>the formula</b>, <b>the steps</b> or <b>the code</b>. Three benefits:</p>
+<p>This is the most important habit in this module. Instead of "what's the total variance?", ask the AI to give you <b>the formula</b>, <b>the steps</b> or <b>the code</b>. Three benefits:</p>
 <ul>
   <li><b>You can check it.</b> A formula is either right or wrong. A number on its own is a black box.</li>
   <li><b>You can reuse it.</b> Next month, apply the same formula to new data without AI at all.</li>
@@ -1116,7 +1061,7 @@ Show me the key steps you ran.</pre>
 
 <div class="prose">
 <h2>What a good data conversation looks like</h2>
-<p>Here is a realistic exchange. Notice how the person checks before trusting, and refines rather than restarting.</p>
+<p>Here's a realistic exchange. The person checks the totals before trusting anything, and follows up instead of starting again.</p>
 </div>
 <div class="chat">
   <div class="bubble you"><span class="who">You</span><p>[Uploads October_Counts.xlsx] Here are October cycle counts for 7 warehouses. Using code, first tell me the row count per warehouse and the total of Var_Value.</p></div>
@@ -1140,7 +1085,7 @@ Show me the key steps you ran.</pre>
 </tbody></table></div>
 
 <div class="widget" id="w-fixprompt">
-  <div class="w-head"><span class="w-tag">LAB 5.1</span><span class="w-title">Diagnose the prompt</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 5.1</span><span class="w-title">Diagnose the prompt</span></div>
   <div class="w-body">
     <p class="w-hint">Each prompt below has one main weakness. Pick the fix that would help most.</p>
     <div class="cards" id="fixCards"></div>
@@ -1148,17 +1093,17 @@ Show me the key steps you ran.</pre>
   </div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Small data: paste it. Large data: upload to a tool with data analysis, or work in Excel with Copilot.</li>
   <li>Clean tables (one header row, no merged cells, consistent units) make everything work better.</li>
   <li>Always give a data dictionary, and always check row counts and totals first.</li>
   <li>Ask for formulas and steps, not just answers. They're checkable and reusable.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Take your anonymised practice file from Module 3. Clean it using the checklist. Write a data dictionary for it. Then use the "get the method" prompt to generate variance formulas, and apply them yourself in Excel. Tie the totals.</p>
 </div>
 
-<div class="quiz" data-quiz="m5"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m5"><h2>Quick quiz</h2>
   <div class="q" data-a="0"><p class="qt">What should you ask for first after uploading a data file?</p><div class="opts">
     <button class="opt">Row count, column names and a control total, so you know it read everything</button>
     <button class="opt">The top 10 insights</button>
@@ -1181,12 +1126,12 @@ Show me the key steps you ran.</pre>
 <!-- ======================= M6 ======================= -->
 <section class="view" data-route="m6" id="view-m6" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone C · AI for your audit work · Aisle 06</div>
-  <h1>Audit essentials for a seven-warehouse network</h1>
-  <p class="lede">AI is only as useful as the questions you ask it. This aisle sharpens the audit knowledge behind those questions: where data goes wrong, which measures matter, and which red flags to hunt.</p>
-  <div class="meta-row"><span>Time <b>35 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 calculator + quiz</b></span></div>
+  <p class="kicker">Module 6 of 12 · Part 3: AI for your audit work</p>
+  <h1>Audit essentials</h1>
+  <p class="lede">Before using AI on audit data, it helps to be clear about where errors come from, what to measure, and which warning signs to look for. Most of this module is about auditing rather than AI.</p>
+  <p class="meta-row">About 35 minutes. Level: Intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Map where errors enter the procure-to-pay and inventory flow</li>
   <li>Calculate and compare inventory record accuracy across warehouses</li>
   <li>Recognise the common red flags in purchase, invoice and stock data</li>
@@ -1197,12 +1142,12 @@ Show me the key steps you ran.</pre>
 <p>Every number you audit was created at a step in this chain. When a figure looks wrong, ask <b>which step produced it</b>.</p>
 </div>
 <ol class="flow" aria-label="Procure to pay and inventory flow">
-  <li><span class="mono">01</span><b>Requisition</b>Someone asks to buy<span class="risk">Unapproved or split requests</span></li>
-  <li><span class="mono">02</span><b>Purchase order</b>Approved order to supplier<span class="risk">Wrong price, PO after invoice</span></li>
-  <li><span class="mono">03</span><b>Goods receipt</b>GRN posted at the dock<span class="risk">Late posting, wrong qty or UOM</span></li>
-  <li><span class="mono">04</span><b>Putaway &amp; stock</b>Stored in a location<span class="risk">Mis-slotting, transfers in transit</span></li>
-  <li><span class="mono">05</span><b>Invoice</b>Supplier bills you<span class="risk">Duplicates, price or qty mismatch</span></li>
-  <li><span class="mono">06</span><b>Payment</b>Money goes out<span class="risk">Paying without a match</span></li>
+  <li><b>Requisition</b>Someone asks to buy<span class="risk">Unapproved or split requests</span></li>
+  <li><b>Purchase order</b>Approved order to supplier<span class="risk">Wrong price, PO after invoice</span></li>
+  <li><b>Goods receipt</b>GRN posted at the dock<span class="risk">Late posting, wrong qty or UOM</span></li>
+  <li><b>Putaway &amp; stock</b>Stored in a location<span class="risk">Mis-slotting, transfers in transit</span></li>
+  <li><b>Invoice</b>Supplier bills you<span class="risk">Duplicates, price or qty mismatch</span></li>
+  <li><b>Payment</b>Money goes out<span class="risk">Paying without a match</span></li>
 </ol>
 <div class="prose">
 <p>Running alongside this flow are <b>cycle counts</b> and <b>stock adjustments</b>, <b>inter-warehouse transfers</b>, and <b>returns</b>. With seven warehouses, transfers and timing differences are a major source of apparent discrepancies that aren't real losses.</p>
@@ -1234,12 +1179,12 @@ Show me the key steps you ran.</pre>
 <tr><td><b>PO compliance</b></td><td>Spend with a valid PO ÷ total spend</td><td>How much buying bypasses the process</td></tr>
 </tbody></table></div>
 
-<div class="callout tip prose"><span class="tag">Benchmarks</span><p>Many customers in distribution, retail, CPG and healthcare expect inventory accuracy of <b>99% or higher</b>, and disciplined cycle-counting programmes commonly reach above 98–99%. There is no single official standard, so set targets by warehouse and item class, then track each warehouse against its own trend.</p></div>
+<div class="callout tip prose"><span class="tag">What good looks like</span><p>Many customers in distribution, retail, CPG and healthcare expect inventory accuracy of <b>99% or higher</b>, and disciplined cycle-counting programmes commonly reach above 98–99%. There is no single official standard, so set targets by warehouse and item class, then track each warehouse against its own trend.</p></div>
 
 <div class="widget" id="w-ira">
-  <div class="w-head"><span class="w-tag">LAB 6.1</span><span class="w-title">Seven-warehouse accuracy calculator</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 6.1</span><span class="w-title">Seven-warehouse accuracy calculator</span></div>
   <div class="w-body">
-    <p class="w-hint">Example figures are filled in. Replace them with your own last cycle count results to see how your network compares. The black line marks your target.</p>
+    <p class="w-hint">Example figures are filled in. Replace them with your own last cycle count results to see how your network compares. The vertical line marks your target.</p>
     <div class="ira-in" id="iraIn"></div>
     <div class="grid-form" style="margin-top:6px">
       <div><label class="fl" for="iraTarget">Target accuracy %</label><input type="number" id="iraTarget" value="98" min="50" max="100" step="0.5"></div>
@@ -1305,17 +1250,17 @@ Show me the key steps you ran.</pre>
   </ul></div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Trace every odd number back to the step that created it: PO, GRN, putaway, invoice, payment, count.</li>
   <li>Track IRA, value-weighted and gross variance per warehouse, against each warehouse's own trend.</li>
   <li>Rule out timing, UOM, transfers and mis-slotting before calling anything a loss.</li>
   <li>Red flags are leads, not conclusions.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Put your last cycle count results into the calculator above. Then ask your AI assistant: <code>I audit 7 warehouses. [Paste anonymised IRA by warehouse.] What questions should I ask the two lowest-performing warehouse managers to find the root cause? Group them by: receiving, storage, picking, counting, system.</code></p>
 </div>
 
-<div class="quiz" data-quiz="m6"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m6"><h2>Quick quiz</h2>
   <div class="q" data-a="2"><p class="qt">WH03 shows a shortage of exactly 24 units on a SKU sold in cases of 12. What is the most likely first explanation?</p><div class="opts">
     <button class="opt">Theft of two cases</button>
     <button class="opt">A random counting error</button>
@@ -1338,12 +1283,12 @@ Show me the key steps you ran.</pre>
 <!-- ======================= M7 ======================= -->
 <section class="view" data-route="m7" id="view-m7" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone C · AI for your audit work · Aisle 07</div>
-  <h1>Excel and AI: your everyday power tools</h1>
-  <p class="lede">Excel is where your audit work lives. AI doesn't replace it; it makes you much faster at it. This aisle covers formulas, Copilot, Power Query and exception reporting.</p>
-  <div class="meta-row"><span>Time <b>40 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 7 of 12 · Part 3: AI for your audit work</p>
+  <h1>Excel and AI</h1>
+  <p class="lede">Most audit work happens in Excel. This module covers where AI fits in: writing formulas, using Copilot, and combining warehouse files with Power Query.</p>
+  <p class="meta-row">About 40 minutes. Level: Intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Get AI to write, explain and fix the formulas audit work needs</li>
   <li>Know what Copilot in Excel, Agent Mode and <code>=COPILOT()</code> are each good for, and where not to use them</li>
   <li>Combine seven warehouse files into one refreshable table with Power Query</li>
@@ -1355,7 +1300,7 @@ Show me the key steps you ran.</pre>
 </div>
 
 <div class="widget" id="w-formula">
-  <div class="w-head"><span class="w-tag">LAB 7.1</span><span class="w-title">Plain English to Excel formula</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 7.1</span><span class="w-title">Plain English to Excel formula</span></div>
   <div class="w-body">
     <p class="w-hint">Pick what you need. These assume an Excel Table with sensible column names on Microsoft 365. Adjust names to match your sheet.</p>
     <label class="fl" for="ftSel">I want to…</label>
@@ -1364,7 +1309,7 @@ Show me the key steps you ran.</pre>
   </div>
 </div>
 
-<div class="callout tip prose"><span class="tag">Test every formula</span><p>Before trusting a new formula across 5,000 rows, try it on 3 rows where you already know the answer. Include an awkward case: a zero, a blank, a negative. If those work, it is probably right.</p></div>
+<div class="callout tip prose"><span class="tag">Test before you trust</span><p>Before trusting a new formula across 5,000 rows, try it on 3 rows where you already know the answer. Include an awkward case: a zero, a blank, a negative. If those work, it is probably right.</p></div>
 <pre class="pr" data-label="Prompt · fix a broken formula">This Excel formula returns [#N/A / #VALUE! / the wrong result]:
 [paste formula]
 Column [X] contains [describe], column [Y] contains [describe]. I'm on Microsoft 365.
@@ -1383,7 +1328,7 @@ Explain why it fails in plain English, then give me the corrected formula.</pre>
 <tr><td><b>Agent Mode</b></td><td>Multi-step builds: new summary sheets, models, dashboards, step by step</td><td>"Create a sheet summarising IRA, gross variance and top 10 SKUs by warehouse, with a bar chart"</td><td>Review each sheet it builds. Output consistency can vary between runs.</td></tr>
 <tr><td><b><code>=COPILOT()</code> function</b></td><td>Classifying or summarising <b>text</b> in cells</td><td><code>=COPILOT("Classify this adjustment reason as Damage, Count error, UOM, Transfer, or Other", F2)</code></td><td>Not for numbers or anything needing accuracy or repeatability</td></tr>
 </tbody></table></div>
-<div class="callout warn prose"><span class="tag">Microsoft's own warning</span><p>Microsoft states that the <code>=COPILOT()</code> function should not be used for tasks requiring accuracy or reproducibility, such as numerical calculations. It recommends native formulas (SUM, IF, XLOOKUP) for those. Use <code>=COPILOT()</code> for language tasks like sorting free-text reasons into categories, and spot-check its output.</p></div>
+<div class="callout warn prose"><span class="tag">Microsoft's guidance</span><p>Microsoft states that the <code>=COPILOT()</code> function should not be used for tasks requiring accuracy or reproducibility, such as numerical calculations. It recommends native formulas (SUM, IF, XLOOKUP) for those. Use <code>=COPILOT()</code> for language tasks like sorting free-text reasons into categories, and spot-check its output.</p></div>
 <div class="prose">
 <p><b>Practical requirements:</b> Copilot in Excel works best when your data is formatted as an Excel Table and the workbook is saved in OneDrive or SharePoint with AutoSave on. Features and availability vary by licence and update channel, so check with IT what you have.</p>
 
@@ -1401,10 +1346,10 @@ Explain why it fails in plain English, then give me the corrected formula.</pre>
 <pre class="pr" data-label="Prompt · help with Power Query">I'm combining 7 warehouse stock files in Excel Power Query (From Folder). Each file has the same columns: [list].
 Problems: [e.g. WH04's file has 2 header rows / dates are text / SKU codes lose leading zeros].
 Give me step-by-step clicks in the Power Query editor to fix each problem. If a step needs M code, give me the exact code and tell me where to paste it.</pre>
-<div class="callout good prose"><span class="tag">Why this matters</span><p>If the warehouse files use different layouts, ask each warehouse to use the same template. Show AI two different layouts and ask it to design a single template with clear column names and instructions. Standard inputs are the foundation of every later automation.</p></div>
+<div class="callout good prose"><span class="tag">Worth doing</span><p>If the warehouse files use different layouts, ask each warehouse to use the same template. Show AI two different layouts and ask it to design a single template with clear column names and instructions. Standard inputs are the foundation of every later automation.</p></div>
 
 <div class="prose">
-<h2>Part D · Make exceptions jump out</h2>
+<h2>Part D · Make exceptions easy to spot</h2>
 <p>Three Excel features turn a big table into an exception report. AI can set up any of them if you describe what you want.</p>
 <ul>
   <li><b>Conditional formatting</b>: colour rows where variance is outside tolerance, duplicates exist, or dates are on weekends. Ask: <code>Give me a conditional formatting formula that highlights the entire row when [Var_Pct] is beyond ±2%.</code></li>
@@ -1420,17 +1365,17 @@ Give me step-by-step clicks in the Power Query editor to fix each problem. If a 
 </ul>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Describe what you need in plain English and let AI write the formula. Test it on known rows.</li>
   <li>Copilot chat for quick edits, Agent Mode for multi-step builds, <code>=COPILOT()</code> only for text.</li>
   <li>Power Query combines seven warehouse files into one table that refreshes in one click.</li>
   <li>Conditional formatting, PivotTables and FILTER turn data into an exception report.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Set up a Power Query folder combine for at least two of your warehouse files (anonymised copies are fine). Add Var_Pct and Out_Of_Tolerance columns using formulas from the lab, then build a PivotTable of out-of-tolerance lines by warehouse.</p>
 </div>
 
-<div class="quiz" data-quiz="m7"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m7"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">You want to calculate total variance value per warehouse. Which tool is right?</p><div class="opts">
     <button class="opt">The <code>=COPILOT()</code> function</button>
     <button class="opt">A native formula like SUMIFS, or a PivotTable</button>
@@ -1453,12 +1398,12 @@ Give me step-by-step clicks in the Power Query editor to fix each problem. If a 
 <!-- ======================= M8 ======================= -->
 <section class="view" data-route="m8" id="view-m8" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone C · AI for your audit work · Aisle 08</div>
-  <h1>Audit playbooks: step-by-step AI routines</h1>
-  <p class="lede">This is the heart of the course. Six routines that cover the core of a multi-warehouse audit, each with the data you need, the steps, copy-ready prompts and how to verify. Then you get to practise on a sample dataset.</p>
-  <div class="meta-row"><span>Time <b>45 min</b></span><span>Level <b>Intermediate → Advanced</b></span><span>Hands-on <b>Audit lab + quiz</b></span></div>
+  <p class="kicker">Module 8 of 12 · Part 3: AI for your audit work</p>
+  <h1>Audit playbooks</h1>
+  <p class="lede">Six audit routines, each with the data you need, the steps, prompts you can copy and how to check the results. The module ends with a practice audit on sample data.</p>
+  <p class="meta-row">About 45 minutes. Level: Intermediate to advanced.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Run a monthly variance review across all seven warehouses with AI support</li>
   <li>Hunt for duplicate invoices, split POs and vendor master problems</li>
   <li>Build a risk-based cycle count list and classify free-text adjustment reasons</li>
@@ -1502,7 +1447,7 @@ Using code:
 5. List the 15 highest-value exceptions.
 Present results as tables. For each pattern, show the supporting row count. Don't draw conclusions about causes the data can't support.
 [data dictionary]</pre>
-  <div class="callout warn"><span class="tag">Verify</span><p>Tie AI's totals to your PivotTable. Open 5 of the top exceptions in the WMS to confirm system quantities at the count date.</p></div>
+  <div class="callout warn"><span class="tag">How to check it</span><p>Tie AI's totals to your PivotTable. Open 5 of the top exceptions in the WMS to confirm system quantities at the count date.</p></div>
 </div>
 
 <div class="tabpanel" role="tabpanel" id="pb2" aria-labelledby="pbt2" hidden>
@@ -1527,7 +1472,7 @@ b) Invoice numbers identical after removing spaces, dashes, leading zeros and tr
 c) Invoice numbers that differ by one character or have two adjacent digits swapped, same supplier
 d) Same amount and invoice number but different supplier IDs (possible duplicate vendor)
 Exclude negative amounts (credit notes). For each flagged pair, show both rows side by side and which rule triggered. Sort by amount, highest first. Tell me how many rows you analysed.</pre>
-  <div class="callout warn"><span class="tag">Verify</span><p>Expect false positives: monthly fixed fees and standing orders produce identical amounts legitimately. Check each against the PO and GRN.</p></div>
+  <div class="callout warn"><span class="tag">How to check it</span><p>Expect false positives: monthly fixed fees and standing orders produce identical amounts legitimately. Check each against the PO and GRN.</p></div>
 </div>
 
 <div class="tabpanel" role="tabpanel" id="pb3" aria-labelledby="pbt3" hidden>
@@ -1551,7 +1496,7 @@ Exclude negative amounts (credit notes). For each flagged pair, show both rows s
 3. For each cluster, list the POs, dates, values, combined total and the limit avoided.
 4. Rank requesters by number of clusters.
 Present as tables. These are leads for review, not conclusions.</pre>
-  <div class="callout tip"><span class="tag">About Benford's law</span><p>In many natural financial datasets, leading digits follow a known pattern (1 appears about 30% of the time, 9 under 5%). Auditors test purchase data against it. In one published case, BDO's first-two-digit test found one person processing an unusual number of POs starting 15–19, just under their $20,000 authority limit. Caveats from ISACA: use it on large datasets (sets of 500 or fewer are generally unsuitable), it doesn't fit data with built-in minimums or maximums, and a mismatch is a reason to look, not proof. Ask AI: <code>Run a first-two-digit Benford test on PO values and chart actual vs expected.</code></p></div>
+  <div class="callout tip"><span class="tag">Benford's law</span><p>In many natural financial datasets, leading digits follow a known pattern (1 appears about 30% of the time, 9 under 5%). Auditors test purchase data against it. In one published case, BDO's first-two-digit test found one person processing an unusual number of POs starting 15–19, just under their $20,000 authority limit. Caveats from ISACA: use it on large datasets (sets of 500 or fewer are generally unsuitable), it doesn't fit data with built-in minimums or maximums, and a mismatch is a reason to look, not proof. Ask AI: <code>Run a first-two-digit Benford test on PO values and chart actual vs expected.</code></p></div>
 </div>
 
 <div class="tabpanel" role="tabpanel" id="pb4" aria-labelledby="pbt4" hidden>
@@ -1562,7 +1507,7 @@ Present as tables. These are leads for review, not conclusions.</pre>
     <div><span class="label">Data</span>Vendor master: ID, name, address, tax ID, bank (masked), created date, status, last transaction</div>
     <div><span class="label">Output</span>Duplicates, incomplete records, dormant vendors, risk flags</div>
   </div>
-  <div class="callout rule"><span class="tag">Data sensitivity</span><p>Vendor master data is often red-light data (bank details, tax IDs). Mask bank accounts to the last 4 digits and use only your company-approved tool, or ask AI for the formulas and run them yourself.</p></div>
+  <div class="callout rule"><span class="tag">Careful with this data</span><p>Vendor master data is often red-light data (bank details, tax IDs). Mask bank accounts to the last 4 digits and use only your company-approved tool, or ask AI for the formulas and run them yourself.</p></div>
   <ol class="steps">
     <li><strong>Standardise names.</strong> Remove "Ltd", "Inc", "Pvt", punctuation and extra spaces, convert to upper case. AI can write this formula.</li>
     <li><strong>Find duplicates</strong> on standardised name, tax ID, address, phone and masked bank account.</li>
@@ -1608,7 +1553,7 @@ Keep it explainable to a warehouse manager in two sentences.</pre>
     <div><span class="label">Data</span>Stock adjustment log with a free-text reason column</div>
     <div><span class="label">Output</span>Adjustments by root-cause category, by warehouse</div>
   </div>
-  <p>Adjustment comments like "dmgd in rack", "recount - found in A-12", "case/each issue" are hard to analyse. Language is exactly what AI is good at.</p>
+  <p>Adjustment comments like "dmgd in rack", "recount - found in A-12", "case/each issue" are hard to analyse. Sorting text like this is something AI does well.</p>
   <ol class="steps">
     <li><strong>Agree categories</strong> such as Damage, Count error, Mis-slot found, UOM, Transfer timing, Receiving error, Unknown.</li>
     <li><strong>Classify.</strong> Use <code>=COPILOT()</code> in a new column, or upload the log to an assistant with the prompt below.</li>
@@ -1631,7 +1576,7 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
 <p>Below is a sample of purchase-to-pay records from seven warehouses. The data is invented for practice. <b>Seven rows have a real issue; the rest are clean.</b> Tick every row you would flag, then check your answers. Approval limit: <b>$5,000</b>. Pack size for SKU P-210: <b>12 per case</b>.</p>
 </div>
 <div class="widget" id="w-lab">
-  <div class="w-head"><span class="w-tag">LAB 8.1</span><span class="w-title">Purchase-to-pay audit sample · November</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 8.1</span><span class="w-title">Purchase-to-pay audit sample · November</span></div>
   <div class="w-body">
     <p class="w-hint">Look across PO, GRN and invoice columns. Think: duplicates, splits, mismatches, missing documents, odd suppliers.</p>
     <p class="w-hint mobile-only"><b>On a phone:</b> swipe the table sideways to see all columns.</p>
@@ -1642,17 +1587,17 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
   </div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Every playbook follows the same loop: prepare → AI finds candidates → you verify → record.</li>
   <li>Near-duplicates and threshold clustering are where AI adds most beyond basic system checks.</li>
-  <li>Language tasks like classifying adjustment reasons are a perfect fit for AI.</li>
+  <li>Language tasks like classifying adjustment reasons suit AI well.</li>
   <li>Treat every AI flag as a lead. Confirm against source documents before calling it a finding.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Pick the one playbook that matches your most time-consuming task. Run it once on real (anonymised where needed) data. Note how long it took compared to your usual method, and what AI got wrong. That note is the start of your Module 12 business case.</p>
 </div>
 
-<div class="quiz" data-quiz="m8"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m8"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">AI flags two invoices from the same supplier for $2,400.00 in consecutive months. What next?</p><div class="opts">
     <button class="opt">Report a duplicate payment immediately</button>
     <button class="opt">Check the POs and GRNs: it may be a legitimate monthly fee or standing order</button>
@@ -1675,12 +1620,12 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
 <!-- ======================= M9 ======================= -->
 <section class="view" data-route="m9" id="view-m9" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone D · Communicate &amp; automate · Aisle 09</div>
-  <h1>Reporting findings that people act on</h1>
-  <p class="lede">An audit is only worth what changes because of it. AI is excellent at turning your notes into clear, well-structured findings and messages. You supply the facts and the judgement.</p>
-  <div class="meta-row"><span>Time <b>30 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 builder + quiz</b></span></div>
+  <p class="kicker">Module 9 of 12 · Part 4: Communicate &amp; automate</p>
+  <h1>Reporting findings</h1>
+  <p class="lede">This module covers writing up what you find: structuring a finding, adapting it for different readers, and picking the right chart.</p>
+  <p class="meta-row">About 30 minutes. Level: Intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Write an audit finding using the five-part structure auditors use</li>
   <li>Adapt the same finding for a warehouse manager, your manager and leadership</li>
   <li>Choose the right chart for the point you're making</li>
@@ -1699,7 +1644,7 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
 </tbody></table></div>
 
 <div class="widget" id="w-finding">
-  <div class="w-head"><span class="w-tag">LAB 9.1</span><span class="w-title">Finding builder</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 9.1</span><span class="w-title">Finding builder</span></div>
   <div class="w-body">
     <p class="w-hint">Fill in the five parts in rough note form (an example is pre-filled). The builder assembles a structured finding and an AI prompt to polish it for your chosen audience.</p>
     <div class="grid-form">
@@ -1729,7 +1674,7 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
   <div class="panel"><span class="label">Leadership</span><h4>Three lines</h4><p>Network accuracy, the one or two issues that matter, the action under way. Numbers rounded.</p></div>
 </div>
 
-<div class="callout rule prose"><span class="tag">Tone matters</span><p>Findings describe <b>processes</b>, not people. "Receiving screen defaults to EA" invites a fix. "WH05 staff keep making mistakes" invites defensiveness. Add to any prompt: <code>Use neutral, factual language. Focus on process causes, not individuals.</code></p></div>
+<div class="callout rule prose"><span class="tag">On tone</span><p>Findings describe <b>processes</b>, not people. "Receiving screen defaults to EA" invites a fix. "WH05 staff keep making mistakes" invites defensiveness. Add to any prompt: <code>Use neutral, factual language. Focus on process causes, not individuals.</code></p></div>
 
 <pre class="pr" data-label="Prompt · monthly audit summary">You are helping me write the monthly inventory audit summary for my manager. Here are my notes and results for 7 warehouses:
 [paste IRA by warehouse, this month and last month]
@@ -1756,17 +1701,17 @@ Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask a
 </tbody></table></div>
 <div class="prose"><p>Ask AI: <code>I want to show [point] to [audience]. My data has [columns]. What chart should I use and how should I set it up in Excel?</code></p></div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Structure every finding: Condition, Criteria, Cause, Effect, Corrective action.</li>
   <li>Let AI adapt one finding for each audience. You keep the facts fixed.</li>
   <li>Describe processes, not people.</li>
   <li>Bar charts for comparing warehouses, lines for trends, tables for exceptions.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Take one real issue from your recent audits. Run it through the finding builder, polish it with AI, and compare it to how you would normally have written it. Use the improved version in your next report.</p>
 </div>
 
-<div class="quiz" data-quiz="m9"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m9"><h2>Quick quiz</h2>
   <div class="q" data-a="2"><p class="qt">Which element answers "why did this happen?"</p><div class="opts">
     <button class="opt">Condition</button><button class="opt">Effect</button><button class="opt">Cause</button></div>
     <p class="why" hidden>Cause is the root reason. Effect is the consequence, and Condition is what you observed.</p></div>
@@ -1785,12 +1730,12 @@ Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask a
 <!-- ======================= M10 ======================= -->
 <section class="view" data-route="m10" id="view-m10" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone D · Communicate &amp; automate · Aisle 10</div>
-  <h1>Automation: make the routine run itself</h1>
-  <p class="lede">Once a check works and you trust it, the next step is to stop doing it by hand. This aisle shows you what to automate, how, and where AI agents fit, safely.</p>
-  <div class="meta-row"><span>Time <b>35 min</b></span><span>Level <b>Advanced</b></span><span>Hands-on <b>1 scorer + quiz</b></span></div>
+  <p class="kicker">Module 10 of 12 · Part 4: Communicate &amp; automate</p>
+  <h1>Automation</h1>
+  <p class="lede">Once a check works and you trust the results, you can stop doing it by hand. This module covers what's worth automating, how to go about it, and where AI agents fit in.</p>
+  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Tell the difference between automation and AI, and when you need each</li>
   <li>Score a task to decide whether it's worth automating</li>
   <li>Sketch a simple weekly automated workflow and the guardrails it needs</li>
@@ -1812,7 +1757,7 @@ Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask a
 </ol>
 
 <div class="widget" id="w-auto">
-  <div class="w-head"><span class="w-tag">LAB 10.1</span><span class="w-title">Should I automate this task?</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 10.1</span><span class="w-title">Should I automate this task?</span></div>
   <div class="w-body">
     <p class="w-hint">Think of one recurring task. Move the sliders to describe it. The score suggests which rung of the ladder fits.</p>
     <label class="fl" for="auFreq">How often do you do it? <span id="auFreqV"></span></label><input type="range" id="auFreq" min="1" max="5" value="4">
@@ -1830,12 +1775,12 @@ Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask a
 <p>Here is a realistic first automation for a multi-warehouse auditor. Each box is one step in Power Automate.</p>
 </div>
 <ol class="flow" aria-label="Monday variance digest flow">
-  <li><span class="mono">TRIGGER</span><b>Monday 7:00</b>Scheduled start</li>
-  <li><span class="mono">STEP 1</span><b>Collect</b>Check the SharePoint folder has all 7 warehouse files<span class="risk" style="color:var(--warn)">If any missing → email that site</span></li>
-  <li><span class="mono">STEP 2</span><b>Refresh</b>Refresh the Power Query workbook</li>
-  <li><span class="mono">STEP 3</span><b>Extract</b>Read the exceptions table (out of tolerance, over $X)</li>
-  <li><span class="mono">STEP 4 · AI</span><b>Draft</b>AI writes a 5-line summary of the exceptions</li>
-  <li><span class="mono">STEP 5</span><b>Review</b>Email draft to you, not to others<span class="risk" style="color:var(--good)">You approve before sending on</span></li>
+  <li><span class="mono">Trigger</span><b>Monday 7:00</b>Scheduled start</li>
+  <li><span class="mono">Step 1</span><b>Collect</b>Check the SharePoint folder has all 7 warehouse files<span class="risk" style="color:var(--warn)">If any missing → email that site</span></li>
+  <li><span class="mono">Step 2</span><b>Refresh</b>Refresh the Power Query workbook</li>
+  <li><span class="mono">Step 3</span><b>Extract</b>Read the exceptions table (out of tolerance, over $X)</li>
+  <li><span class="mono">Step 4 (uses AI)</span><b>Draft</b>AI writes a 5-line summary of the exceptions</li>
+  <li><span class="mono">Step 5</span><b>Review</b>Email draft to you, not to others<span class="risk" style="color:var(--good)">You approve before sending on</span></li>
 </ol>
 <pre class="pr" data-label="Prompt · design your first flow">I want to automate a weekly task using Microsoft Power Automate. I'm a beginner.
 Task: [describe, e.g. collect 7 warehouse stock files from a SharePoint folder each Monday, refresh my Excel report, and email me a summary of exceptions].
@@ -1867,17 +1812,17 @@ Systems and data involved: [ERP/WMS/SharePoint, file types, sensitivity].
 Who uses the output: [people].
 Include sections: Business problem, Proposed solution, Data and access needed, Risks and controls (approvals, audit log, failure alerts), Expected time saved, Success measure. Keep it under 400 words.</pre>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Automation follows rules; AI handles judgement and language. Combine them.</li>
   <li>Climb the ladder: saved prompts → refreshable workbooks → scheduled flows → AI steps → agents.</li>
   <li>Automate frequent, rule-based tasks with standard inputs first.</li>
   <li>Approvals, thresholds, audit trails and failure alerts are non-negotiable.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Score your three most repetitive tasks in the lab above. For the highest scorer, use the "design your first flow" prompt and write down the steps. You don't need to build it yet; having the design ready is what makes the conversation with IT easy.</p>
 </div>
 
-<div class="quiz" data-quiz="m10"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m10"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">Which task is the best first candidate for automation?</p><div class="opts">
     <button class="opt">Deciding whether a warehouse manager's explanation is acceptable</button>
     <button class="opt">Collecting seven files every Monday and refreshing the same report</button>
@@ -1900,12 +1845,12 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
 <!-- ======================= M11 ======================= -->
 <section class="view" data-route="m11" id="view-m11" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone E · Going further · Aisle 11</div>
-  <h1>Advanced AI: talk confidently with IT, vendors and leadership</h1>
-  <p class="lede">You don't need to build these systems. You need to understand them well enough to ask good questions, judge vendor claims and spot opportunities. This aisle gives you that vocabulary.</p>
-  <div class="meta-row"><span>Time <b>35 min</b></span><span>Level <b>Advanced</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 11 of 12 · Part 5: Going further</p>
+  <h1>Advanced AI</h1>
+  <p class="lede">You don't need to build any of these systems, but you'll be in conversations about them with IT, vendors and your managers. This module gives you enough background to ask good questions.</p>
+  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Explain anomaly detection, forecasting, document AI and retrieval (RAG) in plain terms</li>
   <li>Judge an AI tool's accuracy using precision and recall</li>
   <li>Ask vendors the questions that reveal whether a tool will really work for you</li>
@@ -1933,7 +1878,7 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
 </div>
 
 <div class="widget" id="w-pr">
-  <div class="w-head"><span class="w-tag">LAB 11.1</span><span class="w-title">Precision vs recall: tune a duplicate-invoice detector</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 11.1</span><span class="w-title">Precision vs recall: tune a duplicate-invoice detector</span></div>
   <div class="w-body">
     <p class="w-hint">Imagine 1,000 invoices, of which 20 are true duplicates. Move the sensitivity slider. A more sensitive tool flags more invoices, catching more duplicates but raising more false alarms.</p>
     <label class="fl" for="prSens">Detector sensitivity: <span id="prSensV"></span></label>
@@ -1974,7 +1919,7 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
     <li>What does it cost in year two and three, not just year one?</li>
   </ul></div>
 </div>
-<div class="callout warn prose"><span class="tag">Read claims carefully</span><p>Much of what's written about AI in procurement comes from vendors. Figures like "99% detection" or "60% less counting labour" are often unverified or measured in ideal conditions. Ask for the source, and test on your own data.</p></div>
+<div class="callout warn prose"><span class="tag">Be careful with vendor figures</span><p>Much of what's written about AI in procurement comes from vendors. Figures like "99% detection" or "60% less counting labour" are often unverified or measured in ideal conditions. Ask for the source, and test on your own data.</p></div>
 
 <div class="prose">
 <h2>Build your own audit helper</h2>
@@ -1996,17 +1941,17 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
 </ul>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Know the main technologies: anomaly detection, forecasting, document AI, vision counting, RAG, custom assistants.</li>
   <li>Judge flagging tools on both precision (false alarms) and recall (missed issues).</li>
   <li>Ask vendors for evidence on your own data, explainability, audit trails and data handling.</li>
   <li>The skills that grow in value are supervising, verifying and interpreting AI.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Find out which AI features your ERP, WMS or AP system already has, perhaps switched off. Ask the system owner two questions from the vendor list above. If your assistant supports it, set up a first version of your audit helper with your data dictionary and finding template.</p>
 </div>
 
-<div class="quiz" data-quiz="m11"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m11"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">A tool flags 200 invoices; 10 are real duplicates. What is the problem?</p><div class="opts">
     <button class="opt">Low recall</button><button class="opt">Low precision: 95% of flags are false alarms</button><button class="opt">Nothing; more flags are always safer</button></div>
     <p class="why" hidden>Precision = 10 ÷ 200 = 5%. Your team would waste time and soon stop trusting the tool.</p></div>
@@ -2025,12 +1970,12 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
 <!-- ======================= M12 ======================= -->
 <section class="view" data-route="m12" id="view-m12" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone E · Going further · Aisle 12</div>
-  <h1>Your 90-day plan and capstone project</h1>
-  <p class="lede">Learning only counts when it changes how you work. This final aisle turns the course into a concrete plan, a measurable result and a project you can show your manager.</p>
-  <div class="meta-row"><span>Time <b>30 min</b></span><span>Level <b>All levels</b></span><span>Hands-on <b>Calculator + plan + capstone</b></span></div>
+  <p class="kicker">Module 12 of 12 · Part 5: Going further</p>
+  <h1>Your 90-day plan</h1>
+  <p class="lede">The last module turns the course into a plan: what to measure, what to do over the next 90 days, and a final project you can show your manager.</p>
+  <p class="meta-row">About 30 minutes. Suitable for all levels.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Estimate the hours AI can save you each month, task by task</li>
   <li>Follow a 30-60-90 day plan that builds habits without overload</li>
   <li>Deliver a capstone: a repeatable monthly seven-warehouse audit pack</li>
@@ -2041,7 +1986,7 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
 <p>Managers respond to time and money. Estimate how long your recurring tasks take today and what share AI and automation could realistically save. Be conservative; under-promising builds credibility.</p>
 </div>
 <div class="widget" id="w-time">
-  <div class="w-head"><span class="w-tag">LAB 12.1</span><span class="w-title">Time-savings estimator</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 12.1</span><span class="w-title">Time-savings estimator</span></div>
   <div class="w-body">
     <p class="w-hint">Example figures are filled in. Edit hours per month and the % you expect to save. The suggested savings are deliberately modest.</p>
     <div class="ts-row ts-head"><span>Task</span><span>Hrs / month</span><span>% saved</span></div>
@@ -2098,7 +2043,7 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
 </div>
 
 <div class="widget" id="w-cert">
-  <div class="w-head"><span class="w-tag">COMPLETE</span><span class="w-title">Course completion</span></div>
+  <div class="w-head"><span class="w-tag">Certificate</span><span class="w-title">Course completion</span></div>
   <div class="w-body">
     <p class="w-hint" id="certHint"></p>
     <label class="fl" for="certName">Your name, as it should appear</label>
@@ -2114,14 +2059,14 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
   </div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Measure time before and after. It turns learning into a result your manager can see.</li>
   <li>Build one habit at a time over 90 days.</li>
   <li>The capstone audit pack turns techniques into a repeatable monthly system.</li>
   <li>Keep verifying, keep the human in charge, and keep learning.</li>
 </ul></div>
 
-<div class="quiz" data-quiz="m12"><h2>Final check</h2>
+<div class="quiz" data-quiz="m12"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">What is the most convincing way to show the value of AI in your work?</p><div class="opts">
     <button class="opt">Tell people AI is the future</button>
     <button class="opt">Show before-and-after time and issues found, plus how you verify results</button>
@@ -2131,7 +2076,7 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
     <button class="opt">AI finds, sorts and drafts quickly; you verify the facts and own the decisions</button>
     <button class="opt">AI will do the audit for you</button>
     <button class="opt">AI is too risky to use for audit work</button></div>
-    <p class="why" hidden>That balance, speed from AI and judgement from you, is the whole method.</p></div>
+    <p class="why" hidden>That's the approach the whole course is built on.</p></div>
 </div>
 <div class="mod-foot" data-foot="m12"></div>
 </section>
@@ -2139,7 +2084,7 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
 <!-- ======================= LIBRARY ======================= -->
 <section class="view" data-route="library" id="view-library" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Reference · Prompt library</div>
+  <p class="kicker">Reference</p>
   <h1>Prompt library</h1>
   <p class="lede">Ready-to-use prompts for procurement and warehouse audit work. Copy one, replace the <b>[brackets]</b> with your details, and paste it into your approved AI tool. Remember Module 3: anonymise sensitive data first.</p>
 </header>
@@ -2155,7 +2100,7 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
 <!-- ======================= GLOSSARY ======================= -->
 <section class="view" data-route="glossary" id="view-glossary" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Reference · Glossary</div>
+  <p class="kicker">Reference</p>
   <h1>Glossary</h1>
   <p class="lede">Every AI and audit term used in the course, in plain English. The tag shows the module where it is explained in depth.</p>
 </header>
@@ -2166,7 +2111,7 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
 <!-- ======================= SOURCES ======================= -->
 <section class="view" data-route="sources" id="view-sources" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Reference · Sources</div>
+  <p class="kicker">Reference</p>
   <h1>Sources and further reading</h1>
   <p class="lede">The facts and figures in this course come from the sources below, researched in November 2026. Where a figure comes from a vendor or a secondary report, the course says so. AI products change quickly, so check the official pages for current features in your licence.</p>
 </header>
@@ -2213,7 +2158,7 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
   <li><a href="https://witness.ai/blog/is-chatgpt-safe-for-business-use/" target="_blank" rel="noopener">WitnessAI: Is ChatGPT safe for business use?</a></li>
   <li><a href="https://nhimg.org/articles/llm-hallucinations-can-mimic-data-leaks-in-enterprise-ai/" target="_blank" rel="noopener">NHIMG: LLM hallucinations in enterprise AI</a> <span class="mono">· Air Canada ruling context</span></li>
 </ul>
-<div class="callout tip"><span class="tag">A note on figures</span><p>Many statistics about AI in procurement come from vendors with a commercial interest. This course uses them to show direction, labels them where relevant, and does not present vendor performance claims as fact. Your own before-and-after measurements (Module 12) are the figures that matter most.</p></div>
+<div class="callout tip"><span class="tag">A note on the figures</span><p>Many statistics about AI in procurement come from vendors with a commercial interest. This course uses them to show direction, labels them where relevant, and does not present vendor performance claims as fact. Your own before-and-after measurements (Module 12) are the figures that matter most.</p></div>
 </div>
 </section>
 
@@ -2253,11 +2198,11 @@ $("#themeBtn").addEventListener("click",()=>{
 
 /* ---------------- course structure ---------------- */
 const ZONES=[
-  {z:"A",name:"Foundations",desc:"What AI is, the tools, and safe use"},
-  {z:"B",name:"Talking to AI",desc:"Prompts that get useful answers"},
-  {z:"C",name:"AI for your audit work",desc:"Audit essentials, Excel, playbooks"},
-  {z:"D",name:"Communicate & automate",desc:"Reporting and automation"},
-  {z:"E",name:"Going further",desc:"Advanced AI and your 90-day plan"}
+  {z:"A",name:"Foundations",desc:"what AI is, the tools, using it safely"},
+  {z:"B",name:"Talking to AI",desc:"asking for useful work"},
+  {z:"C",name:"AI for your audit work",desc:"audit basics, Excel, routines"},
+  {z:"D",name:"Reporting and automation",desc:"writing up, then automating"},
+  {z:"E",name:"Going further",desc:"advanced topics and your plan"}
 ];
 const MODS=[
   {id:"m1",z:"A",t:"What AI actually is",s:"How chatbots work, and why they can be confidently wrong",min:20},
@@ -2278,38 +2223,37 @@ const ROUTES=["home",...MODS.map(m=>m.id),"library","glossary","sources"];
 
 /* sidebar */
 function buildSide(){
-  const side=$("#side");let h=`<a href="#home" data-r="home"><span class="code">HOME</span><span>Course overview</span><span></span></a><div class="side-sep"></div>`;
-  ZONES.forEach(z=>{
-    h+=`<div class="side-group"><div class="side-zone"><span>Zone ${z.z}</span><span>${esc(z.name)}</span></div>`;
-    MODS.filter(m=>m.z===z.z).forEach(m=>{h+=`<a href="#${m.id}" data-r="${m.id}" class="${S.done[m.id]?"is-done":""}"><span class="code">${m.code}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${S.done[m.id]?"Completed":"Not completed"}"></span></a>`;});
+  const side=$("#side");let h=`<a href="#home" data-r="home"><span class="code"></span><span>Introduction and contents</span><span></span></a><div class="side-sep"></div>`;
+  ZONES.forEach((z,zi)=>{
+    h+=`<div class="side-group"><div class="side-zone">Part ${zi+1}: ${esc(z.name)}</div>`;
+    MODS.filter(m=>m.z===z.z).forEach(m=>{h+=`<a href="#${m.id}" data-r="${m.id}" class="${S.done[m.id]?"is-done":""}"><span class="code">${m.n}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${S.done[m.id]?"Done":"Not done"}"></span></a>`;});
     h+=`</div>`;
   });
-  h+=`<div class="side-sep"></div><div class="side-zone"><span>Reference</span><span></span></div>
-  <a href="#library" data-r="library"><span class="code">LIB</span><span>Prompt library</span><span></span></a>
-  <a href="#glossary" data-r="glossary"><span class="code">GLO</span><span>Glossary</span><span></span></a>
-  <a href="#sources" data-r="sources"><span class="code">SRC</span><span>Sources</span><span></span></a>`;
+  h+=`<div class="side-sep"></div><div class="side-zone">Reference</div>
+  <a href="#library" data-r="library"><span class="code"></span><span>Prompt library</span><span></span></a>
+  <a href="#glossary" data-r="glossary"><span class="code"></span><span>Glossary</span><span></span></a>
+  <a href="#sources" data-r="sources"><span class="code"></span><span>Sources</span><span></span></a>`;
   side.innerHTML=h;
 }
 function buildFloor(){
-  const fp=$("#floorPlan");let h="";
-  ZONES.forEach(z=>{
+  const box=$("#contentsList");let h="";
+  ZONES.forEach((z,zi)=>{
     const ms=MODS.filter(m=>m.z===z.z);
-    h+=`<div class="zone"><div class="zone-label"><span class="z">ZONE ${z.z}</span><b>${esc(z.name)}</b><small>${esc(z.desc)}</small></div><div class="bays">`;
-    ms.forEach(m=>{h+=`<a class="bay ${S.done[m.id]?"is-done":""}" href="#${m.id}"><span class="bc"><span>AISLE ${m.code}</span><span>${m.min} min</span></span><b>${esc(m.t)}</b><small>${esc(m.s)}</small><span class="st tick" aria-hidden="true"></span></a>`;});
-    for(let i=ms.length;i<3;i++)h+=`<div class="bay-fill" aria-hidden="true"></div>`;
-    h+=`</div></div>`;
+    h+=`<li><h3>Part ${zi+1}: ${esc(z.name)} <small>${esc(z.desc)}</small></h3><ol>`;
+    ms.forEach(m=>{h+=`<li><a class="${S.done[m.id]?"is-done":""}" href="#${m.id}"><span class="cn">${m.n}.</span><span><span class="ct">${esc(m.t)}</span><span class="cs">${esc(m.s)}</span></span><span class="cm">${S.done[m.id]?"Done":m.min+" min"}</span></a></li>`;});
+    h+=`</ol></li>`;
   });
-  fp.innerHTML=h;
+  box.innerHTML=h;
 }
 function updateProgress(){
   const n=MODS.filter(m=>S.done[m.id]).length;
-  $("#progLabel").textContent=`${n} of 12 modules`;
+  $("#progLabel").textContent=`${n} of 12 modules done`;
   $("#progBar").style.width=(n/12*100)+"%";
   const next=MODS.find(m=>!S.done[m.id]);
   const sb=$("#startBtn");
-  if(n===0){sb.textContent="Start Module 1";sb.href="#m1";}
-  else if(next){sb.textContent=`Continue: Module ${next.n}`;sb.href="#"+next.id;}
-  else{sb.textContent="Course complete: view certificate";sb.href="#m12";}
+  if(n===0){sb.textContent="Start with module 1";sb.href="#m1";}
+  else if(next){sb.textContent=`Continue with module ${next.n}`;sb.href="#"+next.id;}
+  else{sb.textContent="View your certificate";sb.href="#m12";}
   updateCert();
 }
 function buildFoots(){
@@ -2317,11 +2261,11 @@ function buildFoots(){
     const id=f.dataset.foot, i=MODS.findIndex(m=>m.id===id), m=MODS[i];
     const prev=MODS[i-1], next=MODS[i+1];
     const done=!!S.done[id];
-    f.innerHTML=`<div class="status">${done?`<b>Aisle complete.</b> Nice work.`:`Finished reading and tried the labs?`}</div>
+    f.innerHTML=`<div class="status">${done?`<b>Marked as done.</b>`:`When you have finished the module and the exercises, mark it as done.`}</div>
     <div class="btn-row" style="margin:0">
-      ${prev?`<a class="btn ghost" href="#${prev.id}">Back: ${esc(prev.t)}</a>`:""}
-      <button class="btn ${done?"ghost":"accent"}" data-complete="${id}">${done?"Mark as not complete":"Mark aisle complete"}</button>
-      ${next?`<a class="btn" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn" href="#home">Back to course overview</a>`}
+      ${prev?`<a class="btn ghost" href="#${prev.id}">Previous</a>`:""}
+      <button class="btn ${done?"ghost":""}" data-complete="${id}">${done?"Mark as not done":"Mark as done"}</button>
+      ${next?`<a class="btn ${done?"":"ghost"}" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn ghost" href="#home">Back to contents</a>`}
     </div>`;
   });
 }
@@ -2329,7 +2273,7 @@ document.addEventListener("click",e=>{
   const b=e.target.closest("[data-complete]");if(!b)return;
   const id=b.dataset.complete;S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();
   buildSide();buildFloor();buildFoots();updateProgress();markNav(current);
-  const mm=MODS.find(x=>x.id===id);if(S.done[id]&&mm){const m=mm;toast(m.n===12&&MODS.every(x=>S.done[x.id])?"Course complete. Congratulations!":`Module ${m.n} complete`);}
+  const mm=MODS.find(x=>x.id===id);if(S.done[id]&&mm){const m=mm;toast(MODS.every(x=>S.done[x.id])?"All 12 modules done. Your certificate is in module 12.":`Module ${m.n} marked as done`);}
 });
 
 /* router */
@@ -2343,7 +2287,7 @@ function route(){
   window.scrollTo(0,0);
   const m=MODS.find(x=>x.id===r);
   const base="AI for Procurement & Warehouse Auditing";
-  document.title=m?`${m.n}. ${m.t} · ${base}`:(r==="home"?base:`${r[0].toUpperCase()+r.slice(1)} · ${base}`);
+  document.title=m?`Module ${m.n}: ${m.t} · ${base}`:(r==="home"?base:`${r[0].toUpperCase()+r.slice(1)} · ${base}`);
 }
 window.addEventListener("hashchange",route);
 
@@ -2371,7 +2315,7 @@ function initQuizzes(){
   $$(".quiz").forEach(qz=>{
     const qid=qz.dataset.quiz;S.quiz[qid]=S.quiz[qid]||{};
     $$(".q",qz).forEach((q,qi)=>{
-      const qt=$(".qt",q);qt.insertAdjacentHTML("afterbegin",`<span class="qn">Q${qi+1}</span>`);
+      const qt=$(".qt",q);qt.insertAdjacentHTML("afterbegin",`<span class="qn">${qi+1}.</span>`);
       const a=+q.dataset.a, opts=$$(".opt",q), why=$(".why",q);
       const show=(chosen)=>{opts.forEach((o,i)=>{o.disabled=true;if(i===a)o.classList.add("correct");if(i===chosen&&i!==a)o.classList.add("incorrect");});
         why.hidden=false;why.innerHTML=(chosen===a?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why.dataset.base;};
@@ -2400,7 +2344,7 @@ function cardGame(container,scoreEl,items,choices){
         c.classList.add(ok?"right":"wrong");
         const correct=choices.list.find(x=>x.k===it.a).label;
         c.appendChild(el("p",{class:"why"},(ok?"<b>Right.</b> ":`<b>Answer: ${esc(correct)}.</b> `)+it.why));
-        scoreEl.textContent=`Score: ${right} of ${answered} answered (${items.length} total)`+(answered===items.length?(right===items.length?" · Perfect.":" · Review the explanations above."):"");
+        scoreEl.textContent=`${right} of ${answered} right so far, ${items.length} in total`+(answered===items.length&&right<items.length?". Read the explanations for the ones you missed.":"");
       });
       row.appendChild(b);
     });
@@ -2514,7 +2458,7 @@ cardGame($("#safeCards"),$("#safeScore"),[
     plain=filled.map(p=>p[1]+p[2].trim()).join("\n\n");
     out.innerHTML=filled.length?filled.map(p=>(p[1]?`<span class="k">${p[1]}</span>`:"")+esc(p[2].trim())).join("\n\n"):'<span style="color:var(--ink-3)">Start typing in the fields to build your prompt.</span>';
     const n=filled.length;$$("#pbSegs i").forEach((s,i)=>s.classList.toggle("on",i<n));
-    $("#pbStr").textContent=["Empty","Basic","Getting there","Good","Strong","Excellent: complete Pick Ticket"][n];
+    $("#pbStr").textContent=["Nothing filled in yet","1 of 5 parts filled in","2 of 5 parts filled in","3 of 5 parts filled in","4 of 5 parts filled in","All 5 parts filled in"][n];
     const tip=$("#pbTip");
     if(n&&!f.ctx.value.trim()){tip.hidden=false;tip.textContent="Tip: add CONTEXT. It's the field that most often turns a generic answer into a useful one.";}
     else if(n&&!f.fmt.value.trim()){tip.hidden=false;tip.textContent="Tip: add FORMAT so the answer comes back ready to use (a table, bullet points, a word limit).";}
@@ -2545,7 +2489,7 @@ cardGame($("#safeCards"),$("#safeScore"),[
       b.addEventListener("click",()=>{if(card.dataset.done)return;card.dataset.done=1;ans++;const good=k===it.a;if(good)ok++;
         $$(".opt",row).forEach(x=>x.disabled=true);b.classList.add(good?"correct":"incorrect");
         if(!good)$$(".opt",row)[Object.keys(it.opts).indexOf(it.a)].classList.add("correct");
-        card.appendChild(el("p",{class:"why"},it.why));sc.textContent=`Score: ${ok} of ${ans} answered (${items.length} total)`;});
+        card.appendChild(el("p",{class:"why"},it.why));sc.textContent=`${ok} of ${ans} right so far, ${items.length} in total`;});
       row.appendChild(b);
     });
     card.appendChild(row);c.appendChild(card);
@@ -2649,7 +2593,7 @@ cardGame($("#safeCards"),$("#safeScore"),[
       else if(on){fp++;tr.classList.add("fp");res.push([n,"False alarm",CLEAN[n]]);}
     });
     const total=Object.keys(ISSUE).length;
-    $("#labScore").innerHTML=`<div class="fb ${hit===total&&fp===0?"good":hit>=4?"warn":"bad"}"><b>You found ${hit} of ${total} issue rows</b> with ${fp} false alarm${fp===1?"":"s"}. ${hit===total&&fp===0?"Excellent audit eye.":"Green rows are found issues, amber are missed, red are false alarms. Read the notes below."}</div>`;
+    $("#labScore").innerHTML=`<div class="fb ${hit===total&&fp===0?"good":hit>=4?"warn":"bad"}"><b>You found ${hit} of ${total} issue rows</b> with ${fp} false alarm${fp===1?"":"s"}. ${hit===total&&fp===0?"That\u2019s all of them.":"Green rows are issues you found, amber rows are ones you missed, red rows are false alarms. The notes below explain each one."}</div>`;
     $("#labRes").innerHTML=res.sort((a,b)=>a[0]-b[0]).map(([n,s,t])=>`<div><b class="mono">Row ${n} · ${s}</b><br>${t}</div>`).join("")+`<div><b class="mono">How AI helps</b><br>On a real register of thousands of rows, the P2 and P3 prompts surface these same patterns in minutes. Your job is exactly what you just did: confirm each one against the documents.</div>`;
   });
   $("#labReset").addEventListener("click",()=>{$$("input[type=checkbox]",tbl).forEach(c=>c.checked=false);$$("tr",tbl).forEach(t=>t.classList.remove("sel","hit","miss","fp"));$("#labScore").innerHTML="";$("#labRes").innerHTML="";});
@@ -2727,7 +2671,7 @@ const certName=$("#certName");certName.value=S.name||"";
 certName.addEventListener("input",()=>{S.name=certName.value;save();updateCert();});
 function updateCert(){
   const n=MODS.filter(m=>S.done[m.id]).length, all=n===12;
-  $("#certHint").innerHTML=all?"<b>All 12 modules complete.</b> Add your name below. You can take a screenshot of the certificate to keep or share.":`Mark all 12 modules complete to unlock your certificate. Progress so far: <b>${n} of 12</b>.`;
+  $("#certHint").innerHTML=all?"All 12 modules are done. Type your name below; you can take a screenshot of the certificate to keep.":`The certificate appears once all 12 modules are marked as done. So far: <b>${n} of 12</b>.`;
   $("#certBox").hidden=!all;
   $("#certNm").textContent=certName.value.trim()||"Your name";
   $("#certDate").textContent="Completed "+new Date().toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"});

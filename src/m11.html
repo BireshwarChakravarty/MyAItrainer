@@ -2,12 +2,12 @@
 <!-- ======================= M11 ======================= -->
 <section class="view" data-route="m11" id="view-m11" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone E · Going further · Aisle 11</div>
-  <h1>Advanced AI: talk confidently with IT, vendors and leadership</h1>
-  <p class="lede">You don't need to build these systems. You need to understand them well enough to ask good questions, judge vendor claims and spot opportunities. This aisle gives you that vocabulary.</p>
-  <div class="meta-row"><span>Time <b>35 min</b></span><span>Level <b>Advanced</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 11 of 12 · Part 5: Going further</p>
+  <h1>Advanced AI</h1>
+  <p class="lede">You don't need to build any of these systems, but you'll be in conversations about them with IT, vendors and your managers. This module gives you enough background to ask good questions.</p>
+  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Explain anomaly detection, forecasting, document AI and retrieval (RAG) in plain terms</li>
   <li>Judge an AI tool's accuracy using precision and recall</li>
   <li>Ask vendors the questions that reveal whether a tool will really work for you</li>
@@ -35,7 +35,7 @@
 </div>
 
 <div class="widget" id="w-pr">
-  <div class="w-head"><span class="w-tag">LAB 11.1</span><span class="w-title">Precision vs recall: tune a duplicate-invoice detector</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 11.1</span><span class="w-title">Precision vs recall: tune a duplicate-invoice detector</span></div>
   <div class="w-body">
     <p class="w-hint">Imagine 1,000 invoices, of which 20 are true duplicates. Move the sensitivity slider. A more sensitive tool flags more invoices, catching more duplicates but raising more false alarms.</p>
     <label class="fl" for="prSens">Detector sensitivity: <span id="prSensV"></span></label>
@@ -76,7 +76,7 @@
     <li>What does it cost in year two and three, not just year one?</li>
   </ul></div>
 </div>
-<div class="callout warn prose"><span class="tag">Read claims carefully</span><p>Much of what's written about AI in procurement comes from vendors. Figures like "99% detection" or "60% less counting labour" are often unverified or measured in ideal conditions. Ask for the source, and test on your own data.</p></div>
+<div class="callout warn prose"><span class="tag">Be careful with vendor figures</span><p>Much of what's written about AI in procurement comes from vendors. Figures like "99% detection" or "60% less counting labour" are often unverified or measured in ideal conditions. Ask for the source, and test on your own data.</p></div>
 
 <div class="prose">
 <h2>Build your own audit helper</h2>
@@ -98,17 +98,17 @@
 </ul>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Know the main technologies: anomaly detection, forecasting, document AI, vision counting, RAG, custom assistants.</li>
   <li>Judge flagging tools on both precision (false alarms) and recall (missed issues).</li>
   <li>Ask vendors for evidence on your own data, explainability, audit trails and data handling.</li>
   <li>The skills that grow in value are supervising, verifying and interpreting AI.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Find out which AI features your ERP, WMS or AP system already has, perhaps switched off. Ask the system owner two questions from the vendor list above. If your assistant supports it, set up a first version of your audit helper with your data dictionary and finding template.</p>
 </div>
 
-<div class="quiz" data-quiz="m11"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m11"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">A tool flags 200 invoices; 10 are real duplicates. What is the problem?</p><div class="opts">
     <button class="opt">Low recall</button><button class="opt">Low precision: 95% of flags are false alarms</button><button class="opt">Nothing; more flags are always safer</button></div>
     <p class="why" hidden>Precision = 10 ÷ 200 = 5%. Your team would waste time and soon stop trusting the tool.</p></div>

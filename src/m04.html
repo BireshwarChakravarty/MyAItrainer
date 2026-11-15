@@ -2,12 +2,12 @@
 <!-- ======================= M4 ======================= -->
 <section class="view" data-route="m4" id="view-m4" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone B · Talking to AI · Aisle 04</div>
-  <h1>Writing prompts that get useful answers</h1>
-  <p class="lede">The quality of what you get from AI depends mostly on the quality of what you ask. Here is one simple method, borrowed from the warehouse floor, that works for almost every task.</p>
-  <div class="meta-row"><span>Time <b>30 min</b></span><span>Level <b>Beginner → Intermediate</b></span><span>Hands-on <b>1 builder + quiz</b></span></div>
+  <p class="kicker">Module 4 of 12 · Part 2: Talking to AI</p>
+  <h1>Writing good prompts</h1>
+  <p class="lede">How useful an AI answer is depends mostly on how clearly you ask. This module gives you a five-part checklist for writing a request.</p>
+  <p class="meta-row">About 30 minutes. Level: Beginner to intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Write a complete prompt using the five-part Pick Ticket method</li>
   <li>Turn a weak, one-line request into one that gets a usable first answer</li>
   <li>Use follow-up questions to improve an answer rather than starting over</li>
@@ -15,7 +15,7 @@
 
 <div class="prose">
 <h2>Why most prompts disappoint</h2>
-<p>People type a short request like "analyse this data" and get a generic, vague answer. That isn't the AI being weak. It is doing exactly what a new hire would do with an instruction that short: guess.</p>
+<p>People type a short request like "analyse this data" and get a generic, vague answer. That isn't the AI being weak. A new hire given an instruction that short would have to guess too.</p>
 <p>A <b>prompt</b> is simply the instruction you give the AI. Good prompts don't need special tricks or magic words. They need the same things any clear work instruction needs.</p>
 
 <h2>The Pick Ticket method</h2>
@@ -24,11 +24,11 @@
 <div class="tbl"><table>
 <thead><tr><th>Field</th><th>Question it answers</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><span class="field-tag">ROLE</span><b>Who</b></td><td>Who should the AI act as?</td><td>"You are an experienced inventory auditor for a multi-warehouse distributor."</td></tr>
-<tr><td><span class="field-tag">TASK</span><b>What</b></td><td>What exactly do you want done?</td><td>"Identify the five SKUs with the largest stock variance and suggest likely causes."</td></tr>
-<tr><td><span class="field-tag">CONTEXT</span><b>Background</b></td><td>What does it need to know to do this well?</td><td>"We run 7 warehouses. Variance = system qty minus counted qty. Tolerance is ±2%. This is October's cycle count data."</td></tr>
-<tr><td><span class="field-tag">FORMAT</span><b>Pack as</b></td><td>What should the answer look like?</td><td>"A table with columns: SKU, Warehouse, Variance %, Likely cause, Suggested check. Then 3 bullet points of summary."</td></tr>
-<tr><td><span class="field-tag">CHECKS</span><b>Quality control</b></td><td>What rules and checks must it follow?</td><td>"Only use the data provided. If something is unclear, ask me. State the row count you analysed."</td></tr>
+<tr><td><span class="field-tag">Role</span><b>Who</b></td><td>Who should the AI act as?</td><td>"You are an experienced inventory auditor for a multi-warehouse distributor."</td></tr>
+<tr><td><span class="field-tag">Task</span><b>What</b></td><td>What exactly do you want done?</td><td>"Identify the five SKUs with the largest stock variance and suggest likely causes."</td></tr>
+<tr><td><span class="field-tag">Context</span><b>Background</b></td><td>What does it need to know to do this well?</td><td>"We run 7 warehouses. Variance = system qty minus counted qty. Tolerance is ±2%. This is October's cycle count data."</td></tr>
+<tr><td><span class="field-tag">Format</span><b>Pack as</b></td><td>What should the answer look like?</td><td>"A table with columns: SKU, Warehouse, Variance %, Likely cause, Suggested check. Then 3 bullet points of summary."</td></tr>
+<tr><td><span class="field-tag">Checks</span><b>Quality control</b></td><td>What rules and checks must it follow?</td><td>"Only use the data provided. If something is unclear, ask me. State the row count you analysed."</td></tr>
 </tbody></table></div>
 
 <div class="prose">
@@ -44,7 +44,7 @@
 </div>
 
 <div class="widget" id="w-builder">
-  <div class="w-head"><span class="w-tag">LAB 4.1</span><span class="w-title">Pick Ticket prompt builder</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 4.1</span><span class="w-title">Pick Ticket prompt builder</span></div>
   <div class="w-body">
     <p class="w-hint">Choose a starting example, then edit any field. The prompt on the right updates as you type and rates how complete it is. Copy it straight into your AI tool.</p>
     <div class="chips" id="pbPresets" style="margin-bottom:14px">
@@ -56,11 +56,11 @@
     </div>
     <div class="pb">
       <div>
-        <label class="fl" for="pbRole"><span class="field-tag">ROLE</span>Who should the AI be?</label><input type="text" id="pbRole">
-        <label class="fl" for="pbTask"><span class="field-tag">TASK</span>What exactly should it do?</label><textarea id="pbTask"></textarea>
-        <label class="fl" for="pbCtx"><span class="field-tag">CONTEXT</span>Background it needs</label><textarea id="pbCtx"></textarea>
-        <label class="fl" for="pbFmt"><span class="field-tag">FORMAT</span>How should the answer look?</label><textarea id="pbFmt"></textarea>
-        <label class="fl" for="pbChk"><span class="field-tag">CHECKS</span>Rules &amp; quality checks</label><textarea id="pbChk"></textarea>
+        <label class="fl" for="pbRole"><span class="field-tag">Role</span>Who should the AI be?</label><input type="text" id="pbRole">
+        <label class="fl" for="pbTask"><span class="field-tag">Task</span>What exactly should it do?</label><textarea id="pbTask"></textarea>
+        <label class="fl" for="pbCtx"><span class="field-tag">Context</span>Background it needs</label><textarea id="pbCtx"></textarea>
+        <label class="fl" for="pbFmt"><span class="field-tag">Format</span>How should the answer look?</label><textarea id="pbFmt"></textarea>
+        <label class="fl" for="pbChk"><span class="field-tag">Checks</span>Rules &amp; quality checks</label><textarea id="pbChk"></textarea>
       </div>
       <div>
         <div class="label" style="margin-bottom:6px">Your prompt</div>
@@ -74,12 +74,12 @@
 </div>
 
 <div class="prose">
-<h2>Six habits of people who get great results</h2>
+<h2>Six habits that improve results</h2>
 </div>
 <ol class="steps prose">
   <li><strong>Be specific with numbers and names.</strong> "Variance above 2%" beats "big variances". "Warehouses 1–7" beats "our sites".</li>
   <li><strong>Show an example of what you want.</strong> Paste one row of the output you expect, or a past report you liked. AI copies examples very well.</li>
-  <li><strong>Let it ask you questions first.</strong> End with: "Before you start, ask me up to 3 questions about anything unclear." This alone improves results dramatically.</li>
+  <li><strong>Let it ask you questions first.</strong> End with: "Before you start, ask me up to 3 questions about anything unclear." This usually makes the answer noticeably better.</li>
   <li><strong>Break big jobs into steps.</strong> First "summarise the data", then "find exceptions", then "draft the findings". Check each step before the next.</li>
   <li><strong>Give it permission to say "I don't know".</strong> Add: "If the data doesn't support an answer, say so rather than guessing." This reduces hallucinations.</li>
   <li><strong>Treat it as a conversation.</strong> The first answer is a draft. Improve it with follow-ups instead of starting a new chat.</li>
@@ -97,7 +97,7 @@
 <tr><td>Good, want to reuse</td><td><code>Turn what we just did into a reusable prompt template with [brackets] for the parts that change.</code></td></tr>
 </tbody></table></div>
 
-<div class="callout tip prose"><span class="tag">Pro move</span><p>Save your standing context once. Most assistants let you set <b>custom instructions</b> or create a <b>Project</b>. Put in: your role, your seven warehouses and their codes, your tolerance rules, your preferred report format. Every chat then starts already knowing your job.</p></div>
+<div class="callout tip prose"><span class="tag">Tip</span><p>Save your standing context once. Most assistants let you set <b>custom instructions</b> or create a <b>Project</b>. Put in: your role, your seven warehouses and their codes, your tolerance rules, your preferred report format. Every chat then starts already knowing your job.</p></div>
 <pre class="pr" data-label="Custom instructions · paste into your assistant's settings">I'm an assistant purchase manager at a supply chain company. I audit inventory, purchasing and invoice data across 7 warehouses (codes WH01–WH07).
 - Stock variance = system quantity minus physical count. Our line tolerance is ±[2]% or ±[value].
 - Key systems: [ERP name], [WMS name]. I mainly work in Excel.
@@ -105,17 +105,17 @@
 - Prefer tables for results and short bullet summaries. Use plain business English.
 - When suggesting Excel formulas, assume Microsoft 365 and explain each part briefly.</pre>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>A good prompt is a clear work instruction: Role, Task, Context, Format, Checks.</li>
   <li>When results disappoint, add context or specify the format.</li>
   <li>Let AI ask you questions, and give it permission to say "I don't know".</li>
   <li>Improve answers with follow-ups. Save your standing context in custom instructions.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Set up custom instructions in your assistant using the template above. Then take a real task you have this week (an email, a summary, a formula) and write it as a Pick Ticket prompt. Compare the result with what you would have got from a one-line request.</p>
 </div>
 
-<div class="quiz" data-quiz="m4"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m4"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">An AI gave you a vague, generic answer about "improving inventory accuracy". Which field was most likely missing?</p><div class="opts">
     <button class="opt">ROLE</button>
     <button class="opt">CONTEXT: details about your warehouses, data and tolerances</button>

@@ -2,12 +2,12 @@
 <!-- ======================= M7 ======================= -->
 <section class="view" data-route="m7" id="view-m7" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone C · AI for your audit work · Aisle 07</div>
-  <h1>Excel and AI: your everyday power tools</h1>
-  <p class="lede">Excel is where your audit work lives. AI doesn't replace it; it makes you much faster at it. This aisle covers formulas, Copilot, Power Query and exception reporting.</p>
-  <div class="meta-row"><span>Time <b>40 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 7 of 12 · Part 3: AI for your audit work</p>
+  <h1>Excel and AI</h1>
+  <p class="lede">Most audit work happens in Excel. This module covers where AI fits in: writing formulas, using Copilot, and combining warehouse files with Power Query.</p>
+  <p class="meta-row">About 40 minutes. Level: Intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Get AI to write, explain and fix the formulas audit work needs</li>
   <li>Know what Copilot in Excel, Agent Mode and <code>=COPILOT()</code> are each good for, and where not to use them</li>
   <li>Combine seven warehouse files into one refreshable table with Power Query</li>
@@ -19,7 +19,7 @@
 </div>
 
 <div class="widget" id="w-formula">
-  <div class="w-head"><span class="w-tag">LAB 7.1</span><span class="w-title">Plain English to Excel formula</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 7.1</span><span class="w-title">Plain English to Excel formula</span></div>
   <div class="w-body">
     <p class="w-hint">Pick what you need. These assume an Excel Table with sensible column names on Microsoft 365. Adjust names to match your sheet.</p>
     <label class="fl" for="ftSel">I want to…</label>
@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<div class="callout tip prose"><span class="tag">Test every formula</span><p>Before trusting a new formula across 5,000 rows, try it on 3 rows where you already know the answer. Include an awkward case: a zero, a blank, a negative. If those work, it is probably right.</p></div>
+<div class="callout tip prose"><span class="tag">Test before you trust</span><p>Before trusting a new formula across 5,000 rows, try it on 3 rows where you already know the answer. Include an awkward case: a zero, a blank, a negative. If those work, it is probably right.</p></div>
 <pre class="pr" data-label="Prompt · fix a broken formula">This Excel formula returns [#N/A / #VALUE! / the wrong result]:
 [paste formula]
 Column [X] contains [describe], column [Y] contains [describe]. I'm on Microsoft 365.
@@ -47,7 +47,7 @@ Explain why it fails in plain English, then give me the corrected formula.</pre>
 <tr><td><b>Agent Mode</b></td><td>Multi-step builds: new summary sheets, models, dashboards, step by step</td><td>"Create a sheet summarising IRA, gross variance and top 10 SKUs by warehouse, with a bar chart"</td><td>Review each sheet it builds. Output consistency can vary between runs.</td></tr>
 <tr><td><b><code>=COPILOT()</code> function</b></td><td>Classifying or summarising <b>text</b> in cells</td><td><code>=COPILOT("Classify this adjustment reason as Damage, Count error, UOM, Transfer, or Other", F2)</code></td><td>Not for numbers or anything needing accuracy or repeatability</td></tr>
 </tbody></table></div>
-<div class="callout warn prose"><span class="tag">Microsoft's own warning</span><p>Microsoft states that the <code>=COPILOT()</code> function should not be used for tasks requiring accuracy or reproducibility, such as numerical calculations. It recommends native formulas (SUM, IF, XLOOKUP) for those. Use <code>=COPILOT()</code> for language tasks like sorting free-text reasons into categories, and spot-check its output.</p></div>
+<div class="callout warn prose"><span class="tag">Microsoft's guidance</span><p>Microsoft states that the <code>=COPILOT()</code> function should not be used for tasks requiring accuracy or reproducibility, such as numerical calculations. It recommends native formulas (SUM, IF, XLOOKUP) for those. Use <code>=COPILOT()</code> for language tasks like sorting free-text reasons into categories, and spot-check its output.</p></div>
 <div class="prose">
 <p><b>Practical requirements:</b> Copilot in Excel works best when your data is formatted as an Excel Table and the workbook is saved in OneDrive or SharePoint with AutoSave on. Features and availability vary by licence and update channel, so check with IT what you have.</p>
 
@@ -65,10 +65,10 @@ Explain why it fails in plain English, then give me the corrected formula.</pre>
 <pre class="pr" data-label="Prompt · help with Power Query">I'm combining 7 warehouse stock files in Excel Power Query (From Folder). Each file has the same columns: [list].
 Problems: [e.g. WH04's file has 2 header rows / dates are text / SKU codes lose leading zeros].
 Give me step-by-step clicks in the Power Query editor to fix each problem. If a step needs M code, give me the exact code and tell me where to paste it.</pre>
-<div class="callout good prose"><span class="tag">Why this matters</span><p>If the warehouse files use different layouts, ask each warehouse to use the same template. Show AI two different layouts and ask it to design a single template with clear column names and instructions. Standard inputs are the foundation of every later automation.</p></div>
+<div class="callout good prose"><span class="tag">Worth doing</span><p>If the warehouse files use different layouts, ask each warehouse to use the same template. Show AI two different layouts and ask it to design a single template with clear column names and instructions. Standard inputs are the foundation of every later automation.</p></div>
 
 <div class="prose">
-<h2>Part D · Make exceptions jump out</h2>
+<h2>Part D · Make exceptions easy to spot</h2>
 <p>Three Excel features turn a big table into an exception report. AI can set up any of them if you describe what you want.</p>
 <ul>
   <li><b>Conditional formatting</b>: colour rows where variance is outside tolerance, duplicates exist, or dates are on weekends. Ask: <code>Give me a conditional formatting formula that highlights the entire row when [Var_Pct] is beyond ±2%.</code></li>
@@ -84,17 +84,17 @@ Give me step-by-step clicks in the Power Query editor to fix each problem. If a 
 </ul>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Describe what you need in plain English and let AI write the formula. Test it on known rows.</li>
   <li>Copilot chat for quick edits, Agent Mode for multi-step builds, <code>=COPILOT()</code> only for text.</li>
   <li>Power Query combines seven warehouse files into one table that refreshes in one click.</li>
   <li>Conditional formatting, PivotTables and FILTER turn data into an exception report.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Set up a Power Query folder combine for at least two of your warehouse files (anonymised copies are fine). Add Var_Pct and Out_Of_Tolerance columns using formulas from the lab, then build a PivotTable of out-of-tolerance lines by warehouse.</p>
 </div>
 
-<div class="quiz" data-quiz="m7"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m7"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">You want to calculate total variance value per warehouse. Which tool is right?</p><div class="opts">
     <button class="opt">The <code>=COPILOT()</code> function</button>
     <button class="opt">A native formula like SUMIFS, or a PivotTable</button>

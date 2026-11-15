@@ -1,67 +1,51 @@
 
 <header class="topbar">
-  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open course map" aria-expanded="false" aria-controls="side">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false" aria-controls="side">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
   <a class="brand" href="#home" aria-label="Course home">
-    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-      <rect x="2" y="2" width="28" height="28" rx="5" fill="var(--ink)"/>
-      <path d="M7 11h18M7 19h18" stroke="var(--paper)" stroke-width="1.6" opacity=".55"/>
-      <rect x="9" y="5.5" width="6" height="5" rx="1" fill="var(--paper)" opacity=".85"/>
-      <rect x="17" y="13.5" width="6" height="5" rx="1" fill="var(--accent)"/>
-      <rect x="9" y="21.5" width="6" height="5" rx="1" fill="var(--paper)" opacity=".85"/>
-      <path d="M18.4 16l1.4 1.4 2.6-2.8" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
     <span class="brand-name"><span class="bn-long">AI for Procurement &amp; Warehouse Auditing</span><span class="bn-short">AI for Procurement Auditing</span></span>
   </a>
   <div class="top-progress" aria-live="polite">
-    <span class="label" id="progLabel">0 of 12 modules</span>
+    <span id="progLabel">0 of 12 modules done</span>
     <span class="meter" aria-hidden="true"><span id="progBar"></span></span>
   </div>
-  <button class="icon-btn" id="themeBtn" aria-label="Switch colour theme" title="Switch light / dark">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+  <button class="icon-btn" id="themeBtn" aria-label="Switch between light and dark" title="Light / dark">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
   </button>
 </header>
 <div class="scrim" id="scrim"></div>
 <div class="shell">
-<nav class="side" id="side" aria-label="Course map"></nav>
+<nav class="side" id="side" aria-label="Contents"></nav>
 <main id="main">
 
 <!-- ======================= HOME ======================= -->
 <section class="view" data-route="home" id="view-home">
   <div class="hero">
-    <div class="eyebrow">A practical course in 12 modules · for procurement &amp; inventory professionals</div>
-    <h1 style="margin-top:14px">AI for Procurement<br><em>&amp;</em> Warehouse Auditing</h1>
-    <p class="lede">Learn to use AI to check stock, purchase and invoice data across seven warehouses faster and more reliably. You start from zero, and by the end you will be running repeatable audit routines and writing findings people act on.</p>
+    <p class="kicker">A self-paced course for procurement and inventory teams</p>
+    <h1 style="margin-top:8px">AI for Procurement &amp; Warehouse Auditing</h1>
+    <p class="lede">How to use AI tools to check stock, purchase order and invoice data across several warehouses: what the tools can and can't do, how to ask them for useful work, and how to check what they give you.</p>
     <div class="hero-cta">
-      <a class="btn accent" href="#m1" id="startBtn">Start Module 1</a>
-      <a class="btn ghost" href="#library">Browse the prompt library</a>
+      <a class="btn" href="#m1" id="startBtn">Start with module 1</a>
+      <a class="btn ghost" href="#library">Prompt library</a>
     </div>
-    <div class="hero-facts">
-      <span><b>12</b> modules</span><span><b>5</b> levels</span><span><b>~7 hrs</b> total, in short sittings</span><span><b>20+</b> hands-on exercises</span><span><b>No</b> coding required</span>
-    </div>
+    <p class="hero-facts">12 modules, about 7 hours in total. No coding needed.</p>
   </div>
 
-  <div class="floor">
-    <div class="floor-head">
-      <h2>The course floor plan</h2>
-      <span class="label">Each level builds on the one before it</span>
-    </div>
-    <p class="prose" style="color:var(--ink-2)">The course is laid out like a warehouse. Each level is a <b>zone</b> and each module is an <b>aisle</b>. Work through them in order: the early aisles are short and conceptual, the later ones are hands-on and specific to your audit work. Your progress is saved in this browser.</p>
-    <div class="zones" id="floorPlan"></div>
-  </div>
+  <h2>Who this is for</h2>
+  <p>The course was written for an assistant purchase manager who audits data for seven warehouses, but it works for anyone who checks procurement or inventory records and is new to AI. It starts with the basics and gets more practical as it goes. By the later modules you'll be using AI on the kind of checks you already do: count variances, invoice matching, duplicate payments, split orders and vendor records.</p>
 
-  <h2>How to get the most out of it</h2>
-  <div class="how">
-    <div class="panel"><b>One aisle per sitting</b><p>Each module takes 20–45 minutes. Two or three a week is a good pace. You will finish in about a month without it eating your week.</p></div>
-    <div class="panel"><b>Do the "Try it this week" task</b><p>Every module ends with a small real-work task. That is where the learning sticks. Reading alone won't change how you work.</p></div>
-    <div class="panel"><b>Keep the prompt library open</b><p>Over 30 ready-to-use prompts written for procurement and warehouse audit work. Copy, fill in the brackets, use.</p></div>
-    <div class="panel"><b>Use your company-approved AI tool</b><p>Everything here works in ChatGPT, Claude, Gemini or Microsoft Copilot. Module 3 explains what data is safe to share and where.</p></div>
-  </div>
+  <h2>Contents</h2>
+  <ol class="contents" id="contentsList"></ol>
 
-  <h2>Why this matters now</h2>
-  <div class="prose">
-    <p>Procurement teams are adopting AI quickly, but few use it well. Industry surveys in 2025 and 2026 found that most procurement professionals now use generative AI in some form, yet only around <b>5% of procurement organisations have truly scaled it</b> (EFESO, 2026 CPO Pulse). <b>Spend analysis</b> is the most common use case, cited by 69% of respondents.</p>
-    <p>For someone who audits data, that gap is an opportunity. The skills in this course (asking good questions of data, checking AI output properly, and turning repeat checks into routines) are the ones that separate people who play with AI from people who get real results from it.</p>
-  </div>
+  <h2>How to work through it</h2>
+  <ul>
+    <li><b>One module per sitting.</b> Each takes 20 to 45 minutes. Two or three a week gets you through in about a month.</li>
+    <li><b>Do the exercise at the end of each module.</b> Each one is a small task using your own work. It's the part that changes how you work, so don't skip it.</li>
+    <li><b>Use the AI tool your company has approved.</b> Everything here works in Microsoft Copilot, ChatGPT, Claude or Gemini. Module 3 covers what data you can and can't share.</li>
+    <li><b>Your progress is saved in this browser</b>, so you can stop and pick up later on the same device.</li>
+  </ul>
+
+  <h2>Why bother now</h2>
+  <p>Most procurement teams now use AI in some form, but very few have made it part of how work actually gets done. EFESO's 2026 survey of procurement leaders put the share that have properly scaled it at about 5%. The most common use is spend analysis. For someone who audits data, the useful skills are the unglamorous ones: asking precise questions, checking the answers, and turning a check that works into a routine. That's what this course concentrates on.</p>
 </section>

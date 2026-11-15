@@ -2,12 +2,12 @@
 <!-- ======================= M5 ======================= -->
 <section class="view" data-route="m5" id="view-m5" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone B · Talking to AI · Aisle 05</div>
-  <h1>Working with data: tables, files and numbers</h1>
-  <p class="lede">Prompting about data is different from prompting about words. This aisle shows you how to hand data to AI so that the numbers you get back are ones you can trust.</p>
-  <div class="meta-row"><span>Time <b>30 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+  <p class="kicker">Module 5 of 12 · Part 2: Talking to AI</p>
+  <h1>Working with data</h1>
+  <p class="lede">Asking AI about data needs more care than asking it to write an email. This module covers how to give it your data and how to check the numbers that come back.</p>
+  <p class="meta-row">About 30 minutes. Level: Intermediate.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Choose the right way to give AI your data based on its size</li>
   <li>Prepare a spreadsheet so AI (and Excel) can read it without errors</li>
   <li>Ask for the method, not just the answer, so results are checkable and reusable</li>
@@ -49,7 +49,7 @@
 
 <div class="prose">
 <h3>Give it a data dictionary</h3>
-<p>A <b>data dictionary</b> is a short description of each column. It is the single best way to stop AI misunderstanding your data. Put it at the top of your prompt.</p>
+<p>A <b>data dictionary</b> is a short description of each column. It's the most effective way to stop AI misreading your data. Put it at the top of your prompt.</p>
 </div>
 <pre class="pr" data-label="Data dictionary · example">Columns in the attached file:
 - WH: warehouse code, WH01 to WH07
@@ -64,7 +64,7 @@ Notes: a negative variance means stock is missing. Rows where UOM = CS must be m
 
 <div class="prose">
 <h2>Ask for the method, not only the answer</h2>
-<p>This is the most important habit in this aisle. Instead of "what's the total variance?", ask the AI to give you <b>the formula</b>, <b>the steps</b> or <b>the code</b>. Three benefits:</p>
+<p>This is the most important habit in this module. Instead of "what's the total variance?", ask the AI to give you <b>the formula</b>, <b>the steps</b> or <b>the code</b>. Three benefits:</p>
 <ul>
   <li><b>You can check it.</b> A formula is either right or wrong. A number on its own is a black box.</li>
   <li><b>You can reuse it.</b> Next month, apply the same formula to new data without AI at all.</li>
@@ -90,7 +90,7 @@ Show me the key steps you ran.</pre>
 
 <div class="prose">
 <h2>What a good data conversation looks like</h2>
-<p>Here is a realistic exchange. Notice how the person checks before trusting, and refines rather than restarting.</p>
+<p>Here's a realistic exchange. The person checks the totals before trusting anything, and follows up instead of starting again.</p>
 </div>
 <div class="chat">
   <div class="bubble you"><span class="who">You</span><p>[Uploads October_Counts.xlsx] Here are October cycle counts for 7 warehouses. Using code, first tell me the row count per warehouse and the total of Var_Value.</p></div>
@@ -114,7 +114,7 @@ Show me the key steps you ran.</pre>
 </tbody></table></div>
 
 <div class="widget" id="w-fixprompt">
-  <div class="w-head"><span class="w-tag">LAB 5.1</span><span class="w-title">Diagnose the prompt</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 5.1</span><span class="w-title">Diagnose the prompt</span></div>
   <div class="w-body">
     <p class="w-hint">Each prompt below has one main weakness. Pick the fix that would help most.</p>
     <div class="cards" id="fixCards"></div>
@@ -122,17 +122,17 @@ Show me the key steps you ran.</pre>
   </div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Small data: paste it. Large data: upload to a tool with data analysis, or work in Excel with Copilot.</li>
   <li>Clean tables (one header row, no merged cells, consistent units) make everything work better.</li>
   <li>Always give a data dictionary, and always check row counts and totals first.</li>
   <li>Ask for formulas and steps, not just answers. They're checkable and reusable.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Take your anonymised practice file from Module 3. Clean it using the checklist. Write a data dictionary for it. Then use the "get the method" prompt to generate variance formulas, and apply them yourself in Excel. Tie the totals.</p>
 </div>
 
-<div class="quiz" data-quiz="m5"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m5"><h2>Quick quiz</h2>
   <div class="q" data-a="0"><p class="qt">What should you ask for first after uploading a data file?</p><div class="opts">
     <button class="opt">Row count, column names and a control total, so you know it read everything</button>
     <button class="opt">The top 10 insights</button>

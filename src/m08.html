@@ -2,12 +2,12 @@
 <!-- ======================= M8 ======================= -->
 <section class="view" data-route="m8" id="view-m8" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone C · AI for your audit work · Aisle 08</div>
-  <h1>Audit playbooks: step-by-step AI routines</h1>
-  <p class="lede">This is the heart of the course. Six routines that cover the core of a multi-warehouse audit, each with the data you need, the steps, copy-ready prompts and how to verify. Then you get to practise on a sample dataset.</p>
-  <div class="meta-row"><span>Time <b>45 min</b></span><span>Level <b>Intermediate → Advanced</b></span><span>Hands-on <b>Audit lab + quiz</b></span></div>
+  <p class="kicker">Module 8 of 12 · Part 3: AI for your audit work</p>
+  <h1>Audit playbooks</h1>
+  <p class="lede">Six audit routines, each with the data you need, the steps, prompts you can copy and how to check the results. The module ends with a practice audit on sample data.</p>
+  <p class="meta-row">About 45 minutes. Level: Intermediate to advanced.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Run a monthly variance review across all seven warehouses with AI support</li>
   <li>Hunt for duplicate invoices, split POs and vendor master problems</li>
   <li>Build a risk-based cycle count list and classify free-text adjustment reasons</li>
@@ -51,7 +51,7 @@ Using code:
 5. List the 15 highest-value exceptions.
 Present results as tables. For each pattern, show the supporting row count. Don't draw conclusions about causes the data can't support.
 [data dictionary]</pre>
-  <div class="callout warn"><span class="tag">Verify</span><p>Tie AI's totals to your PivotTable. Open 5 of the top exceptions in the WMS to confirm system quantities at the count date.</p></div>
+  <div class="callout warn"><span class="tag">How to check it</span><p>Tie AI's totals to your PivotTable. Open 5 of the top exceptions in the WMS to confirm system quantities at the count date.</p></div>
 </div>
 
 <div class="tabpanel" role="tabpanel" id="pb2" aria-labelledby="pbt2" hidden>
@@ -76,7 +76,7 @@ b) Invoice numbers identical after removing spaces, dashes, leading zeros and tr
 c) Invoice numbers that differ by one character or have two adjacent digits swapped, same supplier
 d) Same amount and invoice number but different supplier IDs (possible duplicate vendor)
 Exclude negative amounts (credit notes). For each flagged pair, show both rows side by side and which rule triggered. Sort by amount, highest first. Tell me how many rows you analysed.</pre>
-  <div class="callout warn"><span class="tag">Verify</span><p>Expect false positives: monthly fixed fees and standing orders produce identical amounts legitimately. Check each against the PO and GRN.</p></div>
+  <div class="callout warn"><span class="tag">How to check it</span><p>Expect false positives: monthly fixed fees and standing orders produce identical amounts legitimately. Check each against the PO and GRN.</p></div>
 </div>
 
 <div class="tabpanel" role="tabpanel" id="pb3" aria-labelledby="pbt3" hidden>
@@ -100,7 +100,7 @@ Exclude negative amounts (credit notes). For each flagged pair, show both rows s
 3. For each cluster, list the POs, dates, values, combined total and the limit avoided.
 4. Rank requesters by number of clusters.
 Present as tables. These are leads for review, not conclusions.</pre>
-  <div class="callout tip"><span class="tag">About Benford's law</span><p>In many natural financial datasets, leading digits follow a known pattern (1 appears about 30% of the time, 9 under 5%). Auditors test purchase data against it. In one published case, BDO's first-two-digit test found one person processing an unusual number of POs starting 15–19, just under their $20,000 authority limit. Caveats from ISACA: use it on large datasets (sets of 500 or fewer are generally unsuitable), it doesn't fit data with built-in minimums or maximums, and a mismatch is a reason to look, not proof. Ask AI: <code>Run a first-two-digit Benford test on PO values and chart actual vs expected.</code></p></div>
+  <div class="callout tip"><span class="tag">Benford's law</span><p>In many natural financial datasets, leading digits follow a known pattern (1 appears about 30% of the time, 9 under 5%). Auditors test purchase data against it. In one published case, BDO's first-two-digit test found one person processing an unusual number of POs starting 15–19, just under their $20,000 authority limit. Caveats from ISACA: use it on large datasets (sets of 500 or fewer are generally unsuitable), it doesn't fit data with built-in minimums or maximums, and a mismatch is a reason to look, not proof. Ask AI: <code>Run a first-two-digit Benford test on PO values and chart actual vs expected.</code></p></div>
 </div>
 
 <div class="tabpanel" role="tabpanel" id="pb4" aria-labelledby="pbt4" hidden>
@@ -111,7 +111,7 @@ Present as tables. These are leads for review, not conclusions.</pre>
     <div><span class="label">Data</span>Vendor master: ID, name, address, tax ID, bank (masked), created date, status, last transaction</div>
     <div><span class="label">Output</span>Duplicates, incomplete records, dormant vendors, risk flags</div>
   </div>
-  <div class="callout rule"><span class="tag">Data sensitivity</span><p>Vendor master data is often red-light data (bank details, tax IDs). Mask bank accounts to the last 4 digits and use only your company-approved tool, or ask AI for the formulas and run them yourself.</p></div>
+  <div class="callout rule"><span class="tag">Careful with this data</span><p>Vendor master data is often red-light data (bank details, tax IDs). Mask bank accounts to the last 4 digits and use only your company-approved tool, or ask AI for the formulas and run them yourself.</p></div>
   <ol class="steps">
     <li><strong>Standardise names.</strong> Remove "Ltd", "Inc", "Pvt", punctuation and extra spaces, convert to upper case. AI can write this formula.</li>
     <li><strong>Find duplicates</strong> on standardised name, tax ID, address, phone and masked bank account.</li>
@@ -157,7 +157,7 @@ Keep it explainable to a warehouse manager in two sentences.</pre>
     <div><span class="label">Data</span>Stock adjustment log with a free-text reason column</div>
     <div><span class="label">Output</span>Adjustments by root-cause category, by warehouse</div>
   </div>
-  <p>Adjustment comments like "dmgd in rack", "recount - found in A-12", "case/each issue" are hard to analyse. Language is exactly what AI is good at.</p>
+  <p>Adjustment comments like "dmgd in rack", "recount - found in A-12", "case/each issue" are hard to analyse. Sorting text like this is something AI does well.</p>
   <ol class="steps">
     <li><strong>Agree categories</strong> such as Damage, Count error, Mis-slot found, UOM, Transfer timing, Receiving error, Unknown.</li>
     <li><strong>Classify.</strong> Use <code>=COPILOT()</code> in a new column, or upload the log to an assistant with the prompt below.</li>
@@ -180,7 +180,7 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
 <p>Below is a sample of purchase-to-pay records from seven warehouses. The data is invented for practice. <b>Seven rows have a real issue; the rest are clean.</b> Tick every row you would flag, then check your answers. Approval limit: <b>$5,000</b>. Pack size for SKU P-210: <b>12 per case</b>.</p>
 </div>
 <div class="widget" id="w-lab">
-  <div class="w-head"><span class="w-tag">LAB 8.1</span><span class="w-title">Purchase-to-pay audit sample · November</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 8.1</span><span class="w-title">Purchase-to-pay audit sample · November</span></div>
   <div class="w-body">
     <p class="w-hint">Look across PO, GRN and invoice columns. Think: duplicates, splits, mismatches, missing documents, odd suppliers.</p>
     <p class="w-hint mobile-only"><b>On a phone:</b> swipe the table sideways to see all columns.</p>
@@ -191,17 +191,17 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
   </div>
 </div>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Every playbook follows the same loop: prepare → AI finds candidates → you verify → record.</li>
   <li>Near-duplicates and threshold clustering are where AI adds most beyond basic system checks.</li>
-  <li>Language tasks like classifying adjustment reasons are a perfect fit for AI.</li>
+  <li>Language tasks like classifying adjustment reasons suit AI well.</li>
   <li>Treat every AI flag as a lead. Confirm against source documents before calling it a finding.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Pick the one playbook that matches your most time-consuming task. Run it once on real (anonymised where needed) data. Note how long it took compared to your usual method, and what AI got wrong. That note is the start of your Module 12 business case.</p>
 </div>
 
-<div class="quiz" data-quiz="m8"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m8"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">AI flags two invoices from the same supplier for $2,400.00 in consecutive months. What next?</p><div class="opts">
     <button class="opt">Report a duplicate payment immediately</button>
     <button class="opt">Check the POs and GRNs: it may be a legitimate monthly fee or standing order</button>

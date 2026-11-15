@@ -2,12 +2,12 @@
 <!-- ======================= M10 ======================= -->
 <section class="view" data-route="m10" id="view-m10" hidden>
 <header class="mod-head">
-  <div class="eyebrow">Zone D · Communicate &amp; automate · Aisle 10</div>
-  <h1>Automation: make the routine run itself</h1>
-  <p class="lede">Once a check works and you trust it, the next step is to stop doing it by hand. This aisle shows you what to automate, how, and where AI agents fit, safely.</p>
-  <div class="meta-row"><span>Time <b>35 min</b></span><span>Level <b>Advanced</b></span><span>Hands-on <b>1 scorer + quiz</b></span></div>
+  <p class="kicker">Module 10 of 12 · Part 4: Communicate &amp; automate</p>
+  <h1>Automation</h1>
+  <p class="lede">Once a check works and you trust the results, you can stop doing it by hand. This module covers what's worth automating, how to go about it, and where AI agents fit in.</p>
+  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
 </header>
-<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
   <li>Tell the difference between automation and AI, and when you need each</li>
   <li>Score a task to decide whether it's worth automating</li>
   <li>Sketch a simple weekly automated workflow and the guardrails it needs</li>
@@ -29,7 +29,7 @@
 </ol>
 
 <div class="widget" id="w-auto">
-  <div class="w-head"><span class="w-tag">LAB 10.1</span><span class="w-title">Should I automate this task?</span></div>
+  <div class="w-head"><span class="w-tag">Exercise 10.1</span><span class="w-title">Should I automate this task?</span></div>
   <div class="w-body">
     <p class="w-hint">Think of one recurring task. Move the sliders to describe it. The score suggests which rung of the ladder fits.</p>
     <label class="fl" for="auFreq">How often do you do it? <span id="auFreqV"></span></label><input type="range" id="auFreq" min="1" max="5" value="4">
@@ -47,12 +47,12 @@
 <p>Here is a realistic first automation for a multi-warehouse auditor. Each box is one step in Power Automate.</p>
 </div>
 <ol class="flow" aria-label="Monday variance digest flow">
-  <li><span class="mono">TRIGGER</span><b>Monday 7:00</b>Scheduled start</li>
-  <li><span class="mono">STEP 1</span><b>Collect</b>Check the SharePoint folder has all 7 warehouse files<span class="risk" style="color:var(--warn)">If any missing → email that site</span></li>
-  <li><span class="mono">STEP 2</span><b>Refresh</b>Refresh the Power Query workbook</li>
-  <li><span class="mono">STEP 3</span><b>Extract</b>Read the exceptions table (out of tolerance, over $X)</li>
-  <li><span class="mono">STEP 4 · AI</span><b>Draft</b>AI writes a 5-line summary of the exceptions</li>
-  <li><span class="mono">STEP 5</span><b>Review</b>Email draft to you, not to others<span class="risk" style="color:var(--good)">You approve before sending on</span></li>
+  <li><span class="mono">Trigger</span><b>Monday 7:00</b>Scheduled start</li>
+  <li><span class="mono">Step 1</span><b>Collect</b>Check the SharePoint folder has all 7 warehouse files<span class="risk" style="color:var(--warn)">If any missing → email that site</span></li>
+  <li><span class="mono">Step 2</span><b>Refresh</b>Refresh the Power Query workbook</li>
+  <li><span class="mono">Step 3</span><b>Extract</b>Read the exceptions table (out of tolerance, over $X)</li>
+  <li><span class="mono">Step 4 (uses AI)</span><b>Draft</b>AI writes a 5-line summary of the exceptions</li>
+  <li><span class="mono">Step 5</span><b>Review</b>Email draft to you, not to others<span class="risk" style="color:var(--good)">You approve before sending on</span></li>
 </ol>
 <pre class="pr" data-label="Prompt · design your first flow">I want to automate a weekly task using Microsoft Power Automate. I'm a beginner.
 Task: [describe, e.g. collect 7 warehouse stock files from a SharePoint folder each Monday, refresh my Excel report, and email me a summary of exceptions].
@@ -84,17 +84,17 @@ Systems and data involved: [ERP/WMS/SharePoint, file types, sensitivity].
 Who uses the output: [people].
 Include sections: Business problem, Proposed solution, Data and access needed, Risks and controls (approvals, audit log, failure alerts), Expected time saved, Success measure. Keep it under 400 words.</pre>
 
-<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+<div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Automation follows rules; AI handles judgement and language. Combine them.</li>
   <li>Climb the ladder: saved prompts → refreshable workbooks → scheduled flows → AI steps → agents.</li>
   <li>Automate frequent, rule-based tasks with standard inputs first.</li>
   <li>Approvals, thresholds, audit trails and failure alerts are non-negotiable.</li>
 </ul></div>
-<div class="tryit prose"><h2>Try it this week</h2>
+<div class="tryit prose"><h2>This week at work</h2>
   <p>Score your three most repetitive tasks in the lab above. For the highest scorer, use the "design your first flow" prompt and write down the steps. You don't need to build it yet; having the design ready is what makes the conversation with IT easy.</p>
 </div>
 
-<div class="quiz" data-quiz="m10"><h2>Check your understanding</h2>
+<div class="quiz" data-quiz="m10"><h2>Quick quiz</h2>
   <div class="q" data-a="1"><p class="qt">Which task is the best first candidate for automation?</p><div class="opts">
     <button class="opt">Deciding whether a warehouse manager's explanation is acceptable</button>
     <button class="opt">Collecting seven files every Monday and refreshing the same report</button>
