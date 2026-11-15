@@ -7,10 +7,9 @@ const el=(tag,attrs={},html)=>{const e=document.createElement(tag);for(const k i
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* ---------------- storage ---------------- */
-const KEY="ai-proc-audit-course.v1";
-let S={done:{},quiz:{},plan:{},name:"",theme:""};
+const KEY="ai-proc-audit-course.v2";
+let S={tests:{},assign:{},plan:{},name:"",theme:""};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
-Object.keys(S.done).forEach(k=>{if(!/^m([1-9]|1[0-2])$/.test(k))delete S.done[k];});
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
 
 /* ---------------- toast & copy ---------------- */
@@ -33,81 +32,83 @@ $("#themeBtn").addEventListener("click",()=>{
 const ZONES=[
   {z:"A",name:"Foundations",desc:"what AI is, the tools, using it safely"},
   {z:"B",name:"Talking to AI",desc:"asking for useful work"},
-  {z:"C",name:"AI for your audit work",desc:"audit basics, Excel, routines"},
+  {z:"C",name:"AI for your audit work",desc:"audit basics, Excel, routines, a full case study"},
   {z:"D",name:"Reporting and automation",desc:"writing up, then automating"},
   {z:"E",name:"Going further",desc:"advanced topics and your plan"}
 ];
 const MODS=[
-  {id:"m1",z:"A",t:"What AI actually is",s:"How chatbots work, and why they can be confidently wrong",min:20},
-  {id:"m2",z:"A",t:"Your AI toolbox",s:"Four layers of tools and which to use when",min:20},
-  {id:"m3",z:"A",t:"Using AI safely",s:"Data privacy, accuracy checks, accountability",min:25},
-  {id:"m4",z:"B",t:"Writing good prompts",s:"The five-part Pick Ticket method",min:30},
-  {id:"m5",z:"B",t:"Working with data",s:"Tables, files, data dictionaries, checking numbers",min:30},
-  {id:"m6",z:"C",t:"Audit essentials",s:"Flows, accuracy measures and red flags",min:35},
-  {id:"m7",z:"C",t:"Excel and AI",s:"Formulas, Copilot, Power Query",min:40},
-  {id:"m8",z:"C",t:"Audit playbooks",s:"Six step-by-step routines and an audit lab",min:45},
-  {id:"m9",z:"D",t:"Reporting findings",s:"Five-part findings for every audience",min:30},
-  {id:"m10",z:"D",t:"Automation",s:"What to automate and how, safely",min:35},
-  {id:"m11",z:"E",t:"Advanced AI",s:"Anomaly detection, RAG, judging vendors",min:35},
-  {id:"m12",z:"E",t:"Your 90-day plan",s:"Time savings, plan, capstone, certificate",min:30}
+  {id:"m1",z:"A",t:"What AI actually is",s:"How chatbots work, and why they can be confidently wrong",min:25},
+  {id:"m2",z:"A",t:"Your AI toolbox",s:"Four layers of tools and which to use when",min:30},
+  {id:"m3",z:"A",t:"Using AI safely",s:"Data privacy, accuracy checks, accountability",min:35},
+  {id:"m4",z:"B",t:"Writing good prompts",s:"The five-part Pick Ticket method",min:40},
+  {id:"m5",z:"B",t:"Working with data",s:"Tables, files, data dictionaries, checking numbers",min:45},
+  {id:"m6",z:"C",t:"Audit essentials",s:"Flows, accuracy measures, red flags, sampling",min:50},
+  {id:"m7",z:"C",t:"Excel and AI",s:"Formulas, Copilot, Power Query",min:60},
+  {id:"m8",z:"C",t:"Audit playbooks",s:"Six control routines and an audit lab",min:60},
+  {id:"m9",z:"C",t:"Spend, stock and supplier playbooks",s:"Spend analysis, transfers, obsolete stock, OTIF",min:55},
+  {id:"m10",z:"C",t:"Case study: a month-end audit",s:"The whole audit, start to finish, on the practice data",min:50},
+  {id:"m11",z:"D",t:"Reporting findings",s:"Five-part findings, audiences, logging AI use",min:40},
+  {id:"m12",z:"D",t:"Automation",s:"What to automate and how, safely",min:40},
+  {id:"m13",z:"E",t:"Advanced AI",s:"Anomaly detection, RAG, judging vendors, what's next",min:45},
+  {id:"m14",z:"E",t:"Your 90-day plan",s:"Time savings, plan, capstone, certificate",min:35}
 ];
-MODS.forEach((m,i)=>{m.n=i+1;m.code=m.z+"-"+String(i+1).padStart(2,"0");});
-const ROUTES=["home",...MODS.map(m=>m.id),"library","glossary","sources"];
+MODS.forEach((m,i)=>{m.n=i+1;});
+const NMOD=MODS.length;
+const REF=[["progress","My progress"],["final","Final assessment"],["practice","Practice data"],["library","Prompt library"],["quickref","Quick reference"],["glossary","Glossary"],["help","Troubleshooting"],["sources","Sources"]];
+const ROUTES=["home",...MODS.map(m=>m.id),...REF.map(r=>r[0])];
+const isDone=id=>!!(S.tests[id]&&S.tests[id].passed&&assignStatus(id).complete);
+const finalPassed=()=>!!(S.tests.final&&S.tests.final.passed);
 
-/* sidebar */
+/* sidebar and contents */
 function buildSide(){
   const side=$("#side");let h=`<a href="#home" data-r="home"><span class="code"></span><span>Introduction and contents</span><span></span></a><div class="side-sep"></div>`;
   ZONES.forEach((z,zi)=>{
     h+=`<div class="side-group"><div class="side-zone">Part ${zi+1}: ${esc(z.name)}</div>`;
-    MODS.filter(m=>m.z===z.z).forEach(m=>{h+=`<a href="#${m.id}" data-r="${m.id}" class="${S.done[m.id]?"is-done":""}"><span class="code">${m.n}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${S.done[m.id]?"Done":"Not done"}"></span></a>`;});
+    MODS.filter(m=>m.z===z.z).forEach(m=>{const d=isDone(m.id);h+=`<a href="#${m.id}" data-r="${m.id}" class="${d?"is-done":""}"><span class="code">${m.n}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${d?"Done":"Not done"}"></span></a>`;});
     h+=`</div>`;
   });
-  h+=`<div class="side-sep"></div><div class="side-zone">Reference</div>
-  <a href="#library" data-r="library"><span class="code"></span><span>Prompt library</span><span></span></a>
-  <a href="#glossary" data-r="glossary"><span class="code"></span><span>Glossary</span><span></span></a>
-  <a href="#sources" data-r="sources"><span class="code"></span><span>Sources</span><span></span></a>`;
+  h+=`<div class="side-sep"></div><div class="side-zone">Reference</div>`+REF.map(([r,t])=>`<a href="#${r}" data-r="${r}" class="${r==="final"&&finalPassed()?"is-done":""}"><span class="code"></span><span>${t}</span><span class="${r==="final"?"tick":""}"></span></a>`).join("");
   side.innerHTML=h;
 }
 function buildFloor(){
   const box=$("#contentsList");let h="";
   ZONES.forEach((z,zi)=>{
-    const ms=MODS.filter(m=>m.z===z.z);
     h+=`<li><h3>Part ${zi+1}: ${esc(z.name)} <small>${esc(z.desc)}</small></h3><ol>`;
-    ms.forEach(m=>{h+=`<li><a class="${S.done[m.id]?"is-done":""}" href="#${m.id}"><span class="cn">${m.n}.</span><span><span class="ct">${esc(m.t)}</span><span class="cs">${esc(m.s)}</span></span><span class="cm">${S.done[m.id]?"Done":m.min+" min"}</span></a></li>`;});
+    MODS.filter(m=>m.z===z.z).forEach(m=>{const d=isDone(m.id);h+=`<li><a class="${d?"is-done":""}" href="#${m.id}"><span class="cn">${m.n}.</span><span><span class="ct">${esc(m.t)}</span><span class="cs">${esc(m.s)}</span></span><span class="cm">${d?"Done":m.min+" min"}</span></a></li>`;});
     h+=`</ol></li>`;
   });
+  h+=`<li><h3>Final assessment <small>20 questions across the whole course</small></h3><ol><li><a class="${finalPassed()?"is-done":""}" href="#final"><span class="cn"></span><span><span class="ct">Final assessment</span><span class="cs">Pass mark 75%. Needed for the certificate.</span></span><span class="cm">${finalPassed()?"Done":"20 min"}</span></a></li></ol></li>`;
   box.innerHTML=h;
 }
 function updateProgress(){
-  const n=MODS.filter(m=>S.done[m.id]).length;
-  $("#progLabel").textContent=`${n} of 12 modules done`;
-  $("#progBar").style.width=(n/12*100)+"%";
-  const next=MODS.find(m=>!S.done[m.id]);
+  const n=MODS.filter(m=>isDone(m.id)).length;
+  $("#progLabel").textContent=`${n} of ${NMOD} modules done`;
+  $("#progBar").style.width=(n/NMOD*100)+"%";
+  const next=MODS.find(m=>!isDone(m.id));
   const sb=$("#startBtn");
-  if(n===0){sb.textContent="Start with module 1";sb.href="#m1";}
+  const started=Object.keys(S.tests).length||Object.keys(S.assign).length;
+  if(!started){sb.textContent="Start with module 1";sb.href="#m1";}
   else if(next){sb.textContent=`Continue with module ${next.n}`;sb.href="#"+next.id;}
-  else{sb.textContent="View your certificate";sb.href="#m12";}
+  else if(!finalPassed()){sb.textContent="Take the final assessment";sb.href="#final";}
+  else{sb.textContent="View your certificate";sb.href="#m14";}
   updateCert();
+}
+function testLine(id){
+  const t=S.tests[id];if(!t||t.best==null)return "Test: not taken yet";
+  return t.passed?`Test: passed, best score ${t.best}%`:`Test: best score so far ${t.best}% (pass mark ${id==="final"?75:70}%)`;
 }
 function buildFoots(){
   $$(".mod-foot").forEach(f=>{
-    const id=f.dataset.foot, i=MODS.findIndex(m=>m.id===id), m=MODS[i];
-    const prev=MODS[i-1], next=MODS[i+1];
-    const done=!!S.done[id];
-    f.innerHTML=`<div class="status">${done?`<b>Marked as done.</b>`:`When you have finished the module and the exercises, mark it as done.`}</div>
+    const id=f.dataset.foot, i=MODS.findIndex(m=>m.id===id);
+    const prev=MODS[i-1], next=MODS[i+1], done=isDone(id), a=assignStatus(id);
+    f.innerHTML=`<div class="status">${done?`<b>Module done.</b> Test passed and assignment complete.`:`${testLine(id)} · Assignment: ${a.done} of ${a.total} parts done`}</div>
     <div class="btn-row" style="margin:0">
       ${prev?`<a class="btn ghost" href="#${prev.id}">Previous</a>`:""}
-      <button class="btn ${done?"ghost":""}" data-complete="${id}">${done?"Mark as not done":"Mark as done"}</button>
-      ${next?`<a class="btn ${done?"":"ghost"}" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn ghost" href="#home">Back to contents</a>`}
+      ${next?`<a class="btn ${done?"":"ghost"}" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn ${done?"":"ghost"}" href="#final">Final assessment</a>`}
     </div>`;
   });
 }
-document.addEventListener("click",e=>{
-  const b=e.target.closest("[data-complete]");if(!b)return;
-  const id=b.dataset.complete;S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();
-  buildSide();buildFloor();buildFoots();updateProgress();markNav(current);
-  const mm=MODS.find(x=>x.id===id);if(S.done[id]&&mm){const m=mm;toast(MODS.every(x=>S.done[x.id])?"All 12 modules done. Your certificate is in module 12.":`Module ${m.n} marked as done`);}
-});
+function refreshAll(){buildSide();buildFloor();buildFoots();updateProgress();markNav(current);renderGradebook();}
 
 /* router */
 let current="home";
@@ -140,25 +141,6 @@ function wrapPrompts(scope=document){
     const pre=el("pre");pre.textContent=p.textContent;
     w.appendChild(head);w.appendChild(pre);p.replaceWith(w);
     b.addEventListener("click",()=>copyText(pre.textContent,b));
-  });
-}
-
-/* ---------------- quizzes ---------------- */
-function initQuizzes(){
-  $$(".quiz").forEach(qz=>{
-    const qid=qz.dataset.quiz;S.quiz[qid]=S.quiz[qid]||{};
-    $$(".q",qz).forEach((q,qi)=>{
-      const qt=$(".qt",q);qt.insertAdjacentHTML("afterbegin",`<span class="qn">${qi+1}.</span>`);
-      const a=+q.dataset.a, opts=$$(".opt",q), why=$(".why",q);
-      const show=(chosen)=>{opts.forEach((o,i)=>{o.disabled=true;if(i===a)o.classList.add("correct");if(i===chosen&&i!==a)o.classList.add("incorrect");});
-        why.hidden=false;why.innerHTML=(chosen===a?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why.dataset.base;};
-      why.dataset.base=why.innerHTML;
-      opts.forEach((o,i)=>{o.type="button";o.addEventListener("click",()=>{show(i);S.quiz[qid][qi]=i;save();});});
-      if(S.quiz[qid][qi]!=null)show(S.quiz[qid][qi]);
-    });
-    const reset=el("button",{class:"btn ghost",type:"button",text:"Reset quiz"});reset.style.marginTop="6px";
-    reset.addEventListener("click",()=>{S.quiz[qid]={};save();$$(".q",qz).forEach(q=>{$$(".opt",q).forEach(o=>{o.disabled=false;o.classList.remove("correct","incorrect");});const w=$(".why",q);w.hidden=true;});});
-    qz.appendChild(reset);
   });
 }
 
@@ -250,11 +232,11 @@ cardGame($("#sorterCards"),$("#sorterScore"),[
         :where==="google"?`<b>Use Gemini in Sheets</b>, or upload an anonymised copy to your approved assistant's data analysis. Confirm row counts first.`
         :where==="erp"?`<b>Export to Excel or CSV</b>, then use Copilot in Excel or upload to your approved assistant. Also ask IT whether your ERP has built-in analytics or AI features (Module 2).`
         :`<b>You'll need data first.</b> Export the relevant report, clean it (Module 5), then come back.`;break;
-      case "write":r=`<b>Use ${tool}</b>${where==="excel"?", or Copilot in Word/Outlook":""}. Give it your facts in note form and the audience. The finding builder in Module 9 structures this for you. Check every number before sending.`;break;
-      case "repeat":r=where==="excel"?`<b>Climb the automation ladder.</b> First Power Query to combine and clean (Module 7), then Power Automate to schedule it (Module 10). AI helps you design both.`
+      case "write":r=`<b>Use ${tool}</b>${where==="excel"?", or Copilot in Word/Outlook":""}. Give it your facts in note form and the audience. The finding builder in Module 11 structures this for you. Check every number before sending.`;break;
+      case "repeat":r=where==="excel"?`<b>Climb the automation ladder.</b> First Power Query to combine and clean (Module 7), then Power Automate to schedule it (Module 12). AI helps you design both.`
         :where==="google"?`<b>Use Google Sheets' import and query functions plus scheduled scripts</b>. Ask an assistant to write the Apps Script for you, and check with IT first.`
-        :where==="erp"?`<b>Ask IT about scheduled reports</b> from your ERP into a shared folder. Then Power Query and Power Automate can take over (Modules 7 and 10).`
-        :`<b>Start by saving your best prompt as a template</b> (rung 1 of the automation ladder, Module 10).`;break;
+        :where==="erp"?`<b>Ask IT about scheduled reports</b> from your ERP into a shared folder. Then Power Query and Power Automate can take over (Modules 7 and 12).`
+        :`<b>Start by saving your best prompt as a template</b> (rung 1 of the automation ladder, Module 12).`;break;
     }
     out.hidden=false;out.innerHTML=`<span class="label">Recommendation · ${esc(W[where])}</span><br>${r}`;
   }
@@ -377,13 +359,13 @@ cardGame($("#safeCards"),$("#safeScore"),[
   sel.addEventListener("change",show);show();
 })();
 
-/* ---------------- playbook tabs ---------------- */
-(function(){
-  const tabs=$$("#pbTabs [role=tab]");
+/* ---------------- tabs ---------------- */
+$$("[role=tablist]").forEach(list=>{
+  const tabs=$$("[role=tab]",list);
   function sel(t){tabs.forEach(x=>{const on=x===t;x.setAttribute("aria-selected",on);x.tabIndex=on?0:-1;$("#"+x.getAttribute("aria-controls")).hidden=!on;});}
   tabs.forEach((t,i)=>{t.addEventListener("click",()=>sel(t));t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight")j=(i+1)%tabs.length;if(e.key==="ArrowLeft")j=(i-1+tabs.length)%tabs.length;if(j!=null){e.preventDefault();tabs[j].focus();sel(tabs[j]);}});});
   sel(tabs[0]);
-})();
+});
 
 /* ---------------- LAB 8.1 audit lab ---------------- */
 (function(){
@@ -503,8 +485,8 @@ cardGame($("#safeCards"),$("#safeScore"),[
 const certName=$("#certName");certName.value=S.name||"";
 certName.addEventListener("input",()=>{S.name=certName.value;save();updateCert();});
 function updateCert(){
-  const n=MODS.filter(m=>S.done[m.id]).length, all=n===12;
-  $("#certHint").innerHTML=all?"All 12 modules are done. Type your name below; you can take a screenshot of the certificate to keep.":`The certificate appears once all 12 modules are marked as done. So far: <b>${n} of 12</b>.`;
+  const n=MODS.filter(m=>isDone(m.id)).length, all=n===NMOD&&finalPassed();
+  $("#certHint").innerHTML=all?"All modules and the final assessment are done. Type your name below; you can take a screenshot of the certificate to keep.":`The certificate appears when all ${NMOD} modules are done (test passed and assignment complete) and you've passed the final assessment. So far: <b>${n} of ${NMOD}</b> modules${finalPassed()?", final assessment passed":""}.`;
   $("#certBox").hidden=!all;
   $("#certNm").textContent=certName.value.trim()||"Your name";
   $("#certDate").textContent="Completed "+new Date().toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"});
@@ -542,6 +524,12 @@ const LIB=[
   {c:"Automation",t:"Design a Power Automate flow",p:"I want to automate a weekly task in Microsoft Power Automate. I'm a beginner. Task: [describe]. Files are in: [location]. Give me the flow as numbered steps, the exact actions for each, what could go wrong and how to handle it, and what to ask IT for."},
   {c:"Automation",t:"Automation request for IT",p:"Help me write a one-page automation request for IT. Current task: [task, frequency, time]. Want automated: [steps]. Systems and data: [details, sensitivity]. Users: [who]. Sections: Business problem, Proposed solution, Data and access, Risks and controls, Time saved, Success measure. Under 400 words."},
   {c:"Automation",t:"Turn a chat into a reusable template",p:"Turn what we just did in this conversation into a reusable prompt template. Use [brackets] for the parts that change each time, and add a one-line note on when to use it."},
+  {c:"Audit checks",t:"Spend classification (P7)",p:"Classify each spend line into exactly one category: [your list] | Other. Use the description and supplier name; descriptions may be abbreviated. Using code, return Line_ID, Category, Confidence (High/Low). Then total spend by category, spend currently coded to [Sundry GL], and supplier count per category. Tell me the number of lines and the overall total so I can tie it out."},
+  {c:"Audit checks",t:"Transfer reconciliation (P8)",p:"Using code on the transfer log (snapshot date [date]): list transfers with no receipt shipped more than [14] days ago, transfers received short, and both summarised by route. Then check count results for SKUs short in one warehouse and over by a similar amount in another, and say whether a transfer explains it."},
+  {c:"Audit checks",t:"Stock ageing and excess (P9)",p:"Using code on the stock-on-hand file (snapshot date [date]): add days since last movement, an age bucket (0-90, 91-180, 181-365, >365) and months of supply (quantity ÷ average monthly usage). Show stock value by warehouse and age bucket, then list lines over 365 days and lines with more than [12] months of supply, largest value first."},
+  {c:"Audit checks",t:"Supplier OTIF and price variance (P10)",p:"Join POs to goods receipts on PO number. On time = receipt date on or before promised date; in full = quantity received at least quantity ordered, in the ordered unit. Give OTIF % by supplier (minimum 5 orders), worst first, and overall. Then join invoices to POs and total the price variance by supplier. Draft a review agenda for the three worst."},
+  {c:"Audit checks",t:"Design a sample",p:"I need to test [control] across [7] warehouses. The population is [number] items (attached, anonymised). Suggest what to test in full, how many to sample at random from the rest, and how to spread it across warehouses. Explain briefly, then draw the sample with code using a fixed random seed and list the selected IDs."},
+  {c:"Reporting",t:"AI use log entry",p:"Summarise what we did in this conversation as a log entry: Date, Tool, Data used (file names, row counts), What I asked, What you produced, Checks I should record, Anything you were unsure about. Keep it short and factual."},
   {c:"Productivity",t:"Custom instructions",p:"I'm an assistant purchase manager auditing inventory, purchasing and invoice data across 7 warehouses (WH01–WH07). Variance = system qty minus count; line tolerance ±[2]%. Systems: [ERP], [WMS]; I work mainly in Excel (Microsoft 365). When I share data, confirm the row count, use only the data given, and say clearly if something can't be determined. Prefer tables and short bullet summaries in plain business English."},
   {c:"Productivity",t:"Check your own answer",p:"Review your previous answer critically. List any calculations I should verify, any assumptions you made, anything you're unsure about, and anything that might be wrong."},
   {c:"Productivity",t:"Ask me first",p:"Before you start, ask me up to 3 questions about anything unclear in this request. Then wait for my answers."},
@@ -567,11 +555,11 @@ const LIB=[
 /* ---------------- glossary ---------------- */
 const GL=[
   ["ABC classification","Ranking items by annual value (or velocity or risk) so the most important ones get counted and checked most often.","M6"],
-  ["Agent (AI agent)","AI that works toward a goal by planning steps, using tools and checking results, rather than just answering one question.","M10"],
+  ["Agent (AI agent)","AI that works toward a goal by planning steps, using tools and checking results, rather than just answering one question.","M12"],
   ["Agent Mode","A Copilot feature in Excel that builds and edits workbooks through multi-step, plain-English requests.","M2"],
-  ["Anomaly detection","Machine learning that learns what normal looks like and flags things that deviate from it.","M11"],
+  ["Anomaly detection","Machine learning that learns what normal looks like and flags things that deviate from it.","M13"],
   ["Anonymise","Replace sensitive details (names, prices, IDs) with codes or scaled values before sharing data.","M3"],
-  ["Audit trail","A record of who did what, when and to which data. Essential for any automation.","M10"],
+  ["Audit trail","A record of who did what, when and to which data. Essential for any automation.","M12"],
   ["Benford's law","The pattern that leading digits follow in many natural datasets. Used as a screening test for unusual financial data.","M8"],
   ["Context window","How much text an AI model can consider at once, including your prompt, files and its answer.","M2"],
   ["Copilot","Microsoft's AI assistant, available as a chat app and inside Excel, Word, Outlook and Teams.","M2"],
@@ -580,7 +568,7 @@ const GL=[
   ["Cycle count","Counting a subset of inventory on a rolling schedule instead of a full stock-take.","M6"],
   ["Data dictionary","A short description of each column in a dataset: what it means, its units and format.","M5"],
   ["Deep learning","Machine learning using large neural networks. Powers image recognition, speech and modern language models.","M1"],
-  ["Document AI / OCR","AI that reads scanned or PDF documents, such as invoices, and extracts structured data.","M11"],
+  ["Document AI / OCR","AI that reads scanned or PDF documents, such as invoices, and extracts structured data.","M13"],
   ["Few-shot prompting","Including a few examples of the answer you want in your prompt so the AI copies the pattern.","M5"],
   ["Generative AI","AI that creates new content: text, tables, code or images.","M1"],
   ["GRN (goods receipt note)","The record that goods have been received at the warehouse.","M6"],
@@ -591,13 +579,13 @@ const GL=[
   ["Machine learning (ML)","AI that learns patterns from data rather than following hand-written rules.","M1"],
   ["Maverick spend","Buying outside approved suppliers, contracts or processes.","M6"],
   ["Near-duplicate","Two records that are the same in reality but differ slightly in the data, such as an invoice number with a suffix.","M8"],
-  ["Power Automate","Microsoft's tool for building automated workflows that run on a schedule or trigger.","M10"],
+  ["Power Automate","Microsoft's tool for building automated workflows that run on a schedule or trigger.","M12"],
   ["Power Query","Excel's built-in tool for importing, combining and cleaning data with repeatable steps.","M7"],
-  ["Precision","Of everything a tool flagged, the share that was really a problem.","M11"],
+  ["Precision","Of everything a tool flagged, the share that was really a problem.","M13"],
   ["Predictive AI","AI that learns from historical data to forecast or score, such as demand forecasts or risk scores.","M1"],
   ["Prompt","The instruction you give an AI tool.","M4"],
-  ["RAG (retrieval-augmented generation)","AI that searches your documents first and answers from them, citing sources.","M11"],
-  ["Recall","Of all the real problems, the share a tool caught.","M11"],
+  ["RAG (retrieval-augmented generation)","AI that searches your documents first and answers from them, citing sources.","M13"],
+  ["Recall","Of all the real problems, the share a tool caught.","M13"],
   ["Shrink","Inventory lost to theft, damage or error, usually measured as a share of inventory value.","M6"],
   ["Split purchase order","Breaking one purchase into several smaller POs to stay under an approval limit.","M6"],
   ["Temperature","A setting that controls how random or creative an AI's word choices are. Lower is more predictable.","M1"],
@@ -605,16 +593,213 @@ const GL=[
   ["Tie out","Confirming a figure by tracing it back to an independent source, such as matching totals to Excel.","M3"],
   ["Token","A chunk of text (roughly three-quarters of a word) that AI models read and write. Usage is measured in tokens.","M1"],
   ["Unit of measure (UOM)","The unit a quantity is recorded in, such as each (EA) or case (CS). Mismatches are a common source of variances.","M6"],
-  ["Vendor master","The list of approved suppliers and their details in the ERP.","M6"]
+  ["Vendor master","The list of approved suppliers and their details in the ERP.","M6"],
+  ["OTIF (on time, in full)","The share of orders delivered by the promised date in the quantity ordered. The standard measure of supplier delivery performance.","M9"],
+  ["Purchase price variance (PPV)","The difference between the price paid and the agreed price (PO or contract), times quantity.","M9"],
+  ["Months of supply","Quantity on hand divided by average monthly usage. Over about 12 months usually means excess stock.","M9"],
+  ["Obsolete stock","Stock with no movement or usage for a long period, typically over a year. A write-off risk.","M9"],
+  ["Spend classification","Sorting purchase lines into categories so you can see what is bought and from whom.","M9"],
+  ["Inter-warehouse transfer","Moving stock from one warehouse to another. Has a shipping half and a receiving half that must both be recorded.","M9"],
+  ["Sampling","Testing a selection of items to judge a whole population. Can be random, risk-based or stratified.","M6"],
+  ["AI use log","A simple record of when and how AI was used in a piece of work, and how its output was checked.","M11"],
+  ["Knowledge cutoff","The date up to which a model's training data runs. It knows nothing later unless it can search.","M13"],
+  ["Reasoning model","An AI mode that works through a problem step by step before answering. Slower, but better at multi-step analysis.","M13"]
 ];
 (function(){
   const list=$("#glList");
   function render(){const q=$("#glSearch").value.trim().toLowerCase();
-    list.innerHTML=GL.filter(([t,d])=>!q||(t+" "+d).toLowerCase().includes(q)).map(([t,d,m])=>`<div class="gl-item"><dt>${esc(t)}</dt><dd>${esc(d)} <a class="mono" href="#${m.toLowerCase()}">Module ${m.slice(1)}</a></dd></div>`).join("")||'<div class="gl-item"><dd>No matching terms.</dd></div>';}
+    list.innerHTML=GL.slice().sort((a,b)=>a[0].localeCompare(b[0])).filter(([t,d])=>!q||(t+" "+d).toLowerCase().includes(q)).map(([t,d,m])=>`<div class="gl-item"><dt>${esc(t)}</dt><dd>${esc(d)} <a class="mono" href="#${m.toLowerCase()}">Module ${m.slice(1)}</a></dd></div>`).join("")||'<div class="gl-item"><dd>No matching terms.</dd></div>';}
   $("#glSearch").addEventListener("input",render);render();
 })();
 
+/* ---------------- tests ---------------- */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const TYPE_HINT={mc:"Choose one answer.",tf:"True or false?",multi:"Select all that apply.",order:"Use the arrows to put these in the right order.",match:"Choose the matching item for each row.",num:"Type a number."};
+function parseNum(v){const x=parseFloat(String(v).replace(/[$,%\s]/g,""));return isNaN(x)?null:x;}
+function qWidget(q,name){
+  const wrap=el("div",{class:"q"});
+  let get,mark;
+  if(q.t==="mc"||q.t==="tf"||q.t==="multi"){
+    const opts=q.t==="tf"?["True","False"]:q.o, multi=q.t==="multi";
+    const correct=q.t==="tf"?[q.a?0:1]:(multi?q.a:[q.a]);
+    const list=el("div",{class:"opts"});
+    const labs=opts.map((o,i)=>{const l=el("label",{class:"choice"});l.innerHTML=`<input type="${multi?"checkbox":"radio"}" name="${name}" value="${i}"><span>${esc(o)}</span>`;list.appendChild(l);return l;});
+    wrap.appendChild(list);
+    get=()=>{const v=labs.map((l,i)=>$("input",l).checked?i:-1).filter(i=>i>=0);return v.length?v:null;};
+    mark=()=>{labs.forEach((l,i)=>{$("input",l).disabled=true;const chosen=$("input",l).checked;if(correct.includes(i))l.classList.add("correct");else if(chosen)l.classList.add("incorrect");});};
+    wrap._grade=v=>v&&v.length===correct.length&&v.every(i=>correct.includes(i));
+  }else if(q.t==="order"){
+    let cur=shuffle(q.o);let guard=0;while(cur.join("|")===q.o.join("|")&&guard++<10)cur=shuffle(q.o);
+    const list=el("ol",{class:"order-list"});
+    const draw=()=>{list.innerHTML="";cur.forEach((t,i)=>{const li=el("li");li.innerHTML=`<span>${esc(t)}</span><span class="ord-btns"><button type="button" class="copy" aria-label="Move up" ${i===0?"disabled":""}>↑</button><button type="button" class="copy" aria-label="Move down" ${i===cur.length-1?"disabled":""}>↓</button></span>`;
+      const [up,dn]=$$("button",li);up.onclick=()=>{[cur[i-1],cur[i]]=[cur[i],cur[i-1]];draw();};dn.onclick=()=>{[cur[i+1],cur[i]]=[cur[i],cur[i+1]];draw();};list.appendChild(li);});};
+    draw();wrap.appendChild(list);
+    get=()=>cur.slice();
+    mark=()=>{$$("button",list).forEach(b=>b.disabled=true);$$("li",list).forEach((li,i)=>li.classList.add(cur[i]===q.o[i]?"correct":"incorrect"));
+      if(cur.join("|")!==q.o.join("|"))wrap.insertBefore(el("p",{class:"why"},"<b>Correct order:</b> "+q.o.map(esc).join(" → ")),wrap.querySelector(".why"));};
+    wrap._grade=v=>v.join("|")===q.o.join("|");
+  }else if(q.t==="match"){
+    const rights=shuffle([...new Set(q.pairs.map(p=>p[1]))]);
+    const grid=el("div",{class:"match"});
+    const sels=q.pairs.map(([l],i)=>{const row=el("div",{class:"match-row"});row.innerHTML=`<span>${esc(l)}</span><select aria-label="${esc(l)}"><option value="">Choose…</option>${rights.map(r=>`<option>${esc(r)}</option>`).join("")}</select>`;grid.appendChild(row);return $("select",row);});
+    wrap.appendChild(grid);
+    get=()=>sels.some(s=>!s.value)?null:sels.map(s=>s.value);
+    mark=()=>{sels.forEach((s,i)=>{s.disabled=true;const ok=s.value===q.pairs[i][1];s.parentNode.classList.add(ok?"correct":"incorrect");if(!ok)s.insertAdjacentHTML("afterend",`<small class="fix">Correct: ${esc(q.pairs[i][1])}</small>`);});};
+    wrap._grade=v=>v.every((x,i)=>x===q.pairs[i][1]);
+  }else if(q.t==="num"){
+    const row=el("div",{class:"num-row"});row.innerHTML=`<input type="text" inputmode="decimal" aria-label="Your answer"><span>${esc(q.unit||"")}</span>`;
+    wrap.appendChild(row);const inp=$("input",row);
+    get=()=>parseNum(inp.value);
+    mark=()=>{inp.disabled=true;const ok=wrap._grade(get());row.classList.add(ok?"correct":"incorrect");if(!ok)row.insertAdjacentHTML("beforeend",`<small class="fix">Correct: ${q.a}${q.unit==="%"?"%":" "+esc(q.unit||"")}</small>`);};
+    wrap._grade=v=>v!=null&&Math.abs(v-q.a)<=(q.tol||0);
+  }
+  wrap.appendChild(el("p",{class:"why",hidden:""},esc(q.why||"")));
+  wrap._get=get;wrap._mark=mark;return wrap;
+}
+function renderTest(box){
+  const id=box.dataset.test, qs=(window.TESTS||{})[id];if(!qs)return;
+  const pass=id==="final"?75:70;
+  const intro=()=>{
+    const t=S.tests[id]||{};
+    box.innerHTML=`<div class="assess-card">
+      <span class="w-tag">${id==="final"?"Final assessment":"Module test"}</span>
+      <h2 class="assess-h">${id==="final"?"Final assessment":"Test yourself"}: ${qs.length} questions</h2>
+      <p>Pass mark ${pass}%. Questions mix several formats. You can retake the test as often as you like; your best score counts.</p>
+      <p class="assess-status ${t.passed?"ok":""}">${t.best==null?"Not taken yet.":(t.passed?`Passed. Best score ${t.best}%.`:`Best score so far ${t.best}%. Not passed yet.`)}${t.attempts?` Attempts: ${t.attempts}.`:""}</p>
+      <button class="btn" type="button">${t.best==null?"Start the test":"Retake the test"}</button></div>`;
+    $("button",box).onclick=start;
+  };
+  const start=()=>{
+    box.innerHTML="";const card=el("div",{class:"assess-card"});
+    card.innerHTML=`<span class="w-tag">${id==="final"?"Final assessment":"Module test"}</span><h2 class="assess-h">${qs.length} questions · pass mark ${pass}%</h2>`;
+    const ws=qs.map((q,i)=>{const w=qWidget(q,`${id}-q${i}-${Date.now()}`);w.insertAdjacentHTML("afterbegin",`<p class="qt"><span class="qn">${i+1}.</span>${esc(q.q)}</p><p class="qhint">${TYPE_HINT[q.t]}</p>`);card.appendChild(w);return w;});
+    const msg=el("div",{class:"fb warn",hidden:""});
+    const sub=el("button",{class:"btn",type:"button"},"Submit answers");
+    const row=el("div",{class:"btn-row"});row.appendChild(sub);
+    const cancel=el("button",{class:"btn ghost",type:"button"},"Cancel");cancel.onclick=intro;row.appendChild(cancel);
+    card.appendChild(msg);card.appendChild(row);box.appendChild(card);
+    box.scrollIntoView({block:"start"});
+    sub.onclick=()=>{
+      const missing=ws.map((w,i)=>w._get()==null?i+1:0).filter(Boolean);
+      if(missing.length){msg.hidden=false;msg.textContent=`Answer every question before submitting. Still to answer: ${missing.join(", ")}.`;return;}
+      msg.hidden=true;let right=0;
+      ws.forEach(w=>{const ok=w._grade(w._get());if(ok)right++;w._mark();const why=$(".why",w);why.hidden=false;why.innerHTML=(ok?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why.innerHTML;w.classList.add(ok?"q-ok":"q-bad");});
+      const pct=Math.round(right/qs.length*100), passed=pct>=pass;
+      const t=S.tests[id]||{best:null,attempts:0,passed:false};
+      t.attempts=(t.attempts||0)+1;t.last=pct;t.best=Math.max(t.best??0,pct);t.passed=t.passed||passed;S.tests[id]=t;save();
+      row.innerHTML="";
+      const res=el("div",{class:`fb ${passed?"good":"bad"} result`});
+      res.innerHTML=`<b>You scored ${pct}% (${right} of ${qs.length}).</b> ${passed?"Passed.":`The pass mark is ${pass}%. Read the explanations, review the module, then retake.`}`;
+      card.insertBefore(res,card.children[2]);
+      const again=el("button",{class:"btn ghost",type:"button"},"Retake the test");again.onclick=start;row.appendChild(again);
+      res.scrollIntoView({block:"center"});
+      refreshAll();
+      if(passed)toast(id==="final"?"Final assessment passed":`Module test passed: ${pct}%`);
+    };
+  };
+  intro();
+}
+
+/* ---------------- assignments ---------------- */
+function partDone(p,st,i){
+  if(p.t==="task")return !!st.tasks[i];
+  if(p.t==="check")return st.checks[i]==="correct"||st.checks[i]==="revealed";
+  if(p.t==="reflect")return (st.text[i]||"").trim().length>=20;
+  if(p.t==="rubric")return p.items.every((_,k)=>st.rubric[i+"_"+k]);
+  return false;
+}
+function assignState(id){S.assign[id]=S.assign[id]||{tasks:{},checks:{},text:{},rubric:{},tries:{}};return S.assign[id];}
+function assignStatus(id){
+  const A=(window.ASSIGN||{})[id];if(!A)return{done:0,total:0,complete:true};
+  const st=S.assign[id]||{tasks:{},checks:{},text:{},rubric:{},tries:{}};
+  const done=A.parts.filter((p,i)=>partDone(p,st,i)).length;
+  return{done,total:A.parts.length,complete:done===A.parts.length};
+}
+function renderAssign(box){
+  const id=box.dataset.assign, A=(window.ASSIGN||{})[id];if(!A)return;
+  const st=assignState(id);
+  box.innerHTML=`<div class="assess-card assign-card"><span class="w-tag">Assignment</span><h2 class="assess-h">${esc(A.title)}</h2><p>${A.intro}</p><p class="assess-status" id="as-${id}"></p><ol class="assign-parts"></ol></div>`;
+  const list=$(".assign-parts",box), status=$("#as-"+id,box);
+  const upd=()=>{const s=assignStatus(id);status.textContent=s.complete?"Assignment complete.":`${s.done} of ${s.total} parts done.`;status.classList.toggle("ok",s.complete);
+    A.parts.forEach((p,i)=>list.children[i]&&list.children[i].classList.toggle("part-done",partDone(p,st,i)));};
+  let tmr;const commit=()=>{save();upd();clearTimeout(tmr);tmr=setTimeout(refreshAll,300);};
+  A.parts.forEach((p,i)=>{
+    const li=el("li",{class:"part part-"+p.t});
+    if(p.t==="task"){
+      li.innerHTML=`<label class="task"><input type="checkbox" ${st.tasks[i]?"checked":""}><span>${p.text}</span></label><span class="part-kind">Task: tick when done</span>`;
+      $("input",li).onchange=e=>{st.tasks[i]=e.target.checked;commit();};
+    }else if(p.t==="reflect"){
+      li.innerHTML=`<p class="part-q">${esc(p.q)}</p><textarea placeholder="${esc(p.ph||"")}"></textarea><span class="part-kind">Written answer: saved in this browser as you type (at least a sentence)</span>`;
+      const ta=$("textarea",li);ta.value=st.text[i]||"";ta.oninput=()=>{st.text[i]=ta.value;commit();};
+    }else if(p.t==="rubric"){
+      li.innerHTML=`<p class="part-q">Check your work: tick each statement that's true.</p>`+p.items.map((t,k)=>`<label class="task"><input type="checkbox" data-k="${k}" ${st.rubric[i+"_"+k]?"checked":""}><span>${esc(t)}</span></label>`).join("");
+      $$("input",li).forEach(c=>c.onchange=()=>{st.rubric[i+"_"+c.dataset.k]=c.checked;commit();});
+    }else if(p.t==="check"){
+      const kind=p.kind;
+      let field;
+      if(kind==="num")field=`<span class="num-row"><input type="text" inputmode="decimal" aria-label="Your answer">${p.unit?`<span>${esc(p.unit)}</span>`:""}</span>`;
+      else if(kind==="choice")field=`<select aria-label="Your answer"><option value="">Choose…</option>${p.o.map((o,k)=>`<option value="${k}">${esc(o)}</option>`).join("")}</select>`;
+      else field=`<div class="opts">${p.o.map((o,k)=>`<label class="choice"><input type="checkbox" value="${k}"><span>${esc(o)}</span></label>`).join("")}</div>`;
+      li.innerHTML=`<p class="part-q">${esc(p.q)}</p><div class="check-row">${field}<button class="btn" type="button">Check</button></div><div class="fb" hidden></div><span class="part-kind">Checked against the practice data</span>`;
+      const fb=$(".fb",li), btn=$(".check-row>.btn",li);
+      const val=()=>{if(kind==="num")return parseNum($("input",li).value);if(kind==="choice"){const v=$("select",li).value;return v===""?null:+v;}const v=$$("input",li).filter(c=>c.checked).map(c=>+c.value);return v.length?v:null;};
+      const ok=v=>kind==="num"?Math.abs(v-p.a)<=(p.tol||0):kind==="choice"?v===p.a:(v.length===p.a.length&&v.every(x=>p.a.includes(x)));
+      const lock=(how)=>{$$("input,select",li).forEach(x=>x.disabled=true);btn.remove();fb.hidden=false;fb.className="fb "+(how==="correct"?"good":"warn");
+        fb.innerHTML=(how==="correct"?"<b>Correct.</b> ":"<b>Answer shown.</b> ")+p.why;};
+      const answerText=()=>kind==="num"?`${p.unit==="$"?"$":""}${Number(p.a).toLocaleString("en-US")}${p.unit&&p.unit!=="$"?" "+p.unit:""}`:kind==="choice"?p.o[p.a]:p.a.map(k=>p.o[k]).join("; ");
+      btn.onclick=()=>{
+        const v=val();if(v==null){fb.hidden=false;fb.className="fb warn";fb.textContent="Enter an answer first.";return;}
+        if(ok(v)){st.checks[i]="correct";commit();lock("correct");return;}
+        st.tries[i]=(st.tries[i]||0)+1;save();
+        fb.hidden=false;fb.className="fb bad";
+        fb.innerHTML=st.tries[i]>=2?`<b>Not right yet.</b> Check your method against the module and try again, or <button type="button" class="copy reveal">show the answer</button>.`:"<b>Not right yet.</b> Check your calculation (and that the AI read the whole file), then try again.";
+        const rv=$(".reveal",fb);if(rv)rv.onclick=()=>{st.checks[i]="revealed";commit();lock("revealed");fb.innerHTML="<b>Answer shown:</b> "+esc(answerText())+". "+p.why;};
+      };
+      if(st.checks[i]==="correct")lock("correct");
+      if(st.checks[i]==="revealed"){lock("revealed");fb.innerHTML="<b>Answer shown:</b> "+esc(answerText())+". "+p.why;}
+    }
+    list.appendChild(li);
+  });
+  upd();
+}
+
+/* ---------------- gradebook ---------------- */
+function renderGradebook(){
+  const tb=$("#gradebook");if(!tb)return;
+  let rows=MODS.map(m=>{const t=S.tests[m.id]||{},a=assignStatus(m.id),d=isDone(m.id);
+    return `<tr><td><a href="#${m.id}">${m.n}. ${esc(m.t)}</a></td><td class="num">${t.best==null?"–":t.best+"%"}</td><td>${t.best==null?"Not taken":t.passed?"Passed":"Not passed"}</td><td>${a.complete?"Complete":`${a.done} of ${a.total}`}</td><td>${d?"<b class='ok-txt'>Done</b>":"In progress"}</td></tr>`;}).join("");
+  const f=S.tests.final||{};
+  rows+=`<tr><td><a href="#final">Final assessment</a></td><td class="num">${f.best==null?"–":f.best+"%"}</td><td>${f.best==null?"Not taken":f.passed?"Passed":"Not passed"}</td><td>–</td><td>${f.passed?"<b class='ok-txt'>Done</b>":"Not done"}</td></tr>`;
+  tb.innerHTML=`<thead><tr><th>Module</th><th class="num">Best test score</th><th>Test</th><th>Assignment</th><th>Status</th></tr></thead><tbody>${rows}</tbody>`;
+  const scores=MODS.map(m=>(S.tests[m.id]||{}).best).filter(x=>x!=null);
+  const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0;
+  const nd=MODS.filter(m=>isDone(m.id)).length;
+  $("#gradeStats").innerHTML=`<div class="stat"><div class="n">${nd} / ${NMOD}</div><div class="l">Modules done</div></div><div class="stat"><div class="n">${scores.length?avg+"%":"–"}</div><div class="l">Average best test score</div></div><div class="stat"><div class="n">${MODS.filter(m=>assignStatus(m.id).complete).length}</div><div class="l">Assignments complete</div></div><div class="stat"><div class="n">${f.passed?"Passed":"–"}</div><div class="l">Final assessment</div></div>`;
+}
+(function(){
+  const r=$("#resetAll");if(!r)return;
+  r.onclick=()=>{$("#resetConfirm").hidden=false;};
+  $("#resetNo").onclick=()=>{$("#resetConfirm").hidden=true;};
+  $("#resetYes").onclick=()=>{const th=S.theme;S={tests:{},assign:{},plan:{},name:"",theme:th};save();location.hash="#home";location.reload();};
+})();
+
+/* ---------------- Exercise 9.1 spend ---------------- */
+(function(){
+  const box=$("#spendCards");if(!box)return;
+  const C=[["pack","Packaging"],["mhe","MHE maintenance"],["fac","Facility services"],["util","Utilities"],["lab","Temporary labour"],["frt","Freight"],["it","IT & telecoms"],["ppe","PPE & safety"]];
+  cardGame(box,$("#spendScore"),[
+    {q:"<code>FLT TYRES X 12</code> · Kestrel Equipment Inc",a:"mhe",why:"FLT means forklift truck: equipment maintenance and parts."},
+    {q:"<code>agency pickers wk 33</code> · Dunmore Services Co.",a:"lab",why:"Agency staff are temporary labour, even though the supplier's name says 'Services'."},
+    {q:"<code>pallet network Aug</code> · Quayside Freight Ltd",a:"frt",why:"A pallet network is a freight service, not a pallet purchase."},
+    {q:"<code>void fill paper</code> · Ridgeway Packaging Co.",a:"pack",why:"Void fill protects goods in cartons: packaging material."},
+    {q:"<code>LOLER INSPECTION</code> · Kestrel Equipment Inc",a:"mhe",why:"LOLER is a statutory inspection of lifting equipment such as forklifts."},
+    {q:"<code>pest control visit</code> · Apex Facility Solutions LLC",a:"fac",why:"A facility service."},
+    {q:"<code>label printer heads</code> · Vantage Industrial LLC",a:"it",why:"Printer parts for warehouse IT equipment, even though the supplier name says 'Industrial'."},
+    {q:"<code>water/sewer Sep</code> · Eastbrook Services Ltd",a:"util",why:"A utility bill."}
+  ],{list:C.map(([k,l])=>({k,label:l}))});
+})();
+
 /* ---------------- boot ---------------- */
-wrapPrompts();initQuizzes();buildSide();buildFloor();buildFoots();updateProgress();route();
+wrapPrompts();$$(".test[data-test]").forEach(renderTest);$$(".assign[data-assign]").forEach(renderAssign);refreshAll();route();
 })();
 </script>

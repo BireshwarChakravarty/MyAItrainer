@@ -1,0 +1,52 @@
+Vendor_ID,Vendor_Name,Address,City,Tax_ID,Bank_Last4,Phone,Created_Date,Status,Last_Transaction
+V001,Northline Facilities Co.,99 Dock Road,Denby,TX1529380,8669,01383 482655,2022-09-08,Active,2026-10-09
+V002,Ridgeway Pallets Inc,171 Canal Road,Ashford,TX1275979,4506,01490 286330,2016-05-29,Active,2026-10-27
+V003,Harborview Logistics Inc,30 Mill Road,Halden,TX1480330,5610,01406 509746,2021-10-18,Active,2026-09-24
+V004,Summitpack Facilities Limited,79 Canal Road,Farley,,5875,01350 332697,2021-11-21,Active,2026-10-31
+V005,Crestfield Industrial Limited,66 Quarry Road,Ashford,TX1559664,2493,01996 959717,2023-05-25,Active,2024-01-27
+V006,Bluegate Facilities Inc,202 Canal Road,Elmstead,TX5872667,2964,01562 130880,2024-01-21,Active,2026-09-22
+V007,Ironbridge Industrial Co.,82 Park Road,Ashford,TX2647643,2959,01711 613223,2015-05-08,Active,2026-10-31
+V008,Westmoor Supplies Limited,211 Mill Road,Denby,TX9937928,5933,01573 510315,2021-08-05,Active,2026-10-20
+V009,Northline Pallets Ltd,58 Canal Road,Denby,TX7759287,5819,01275 545699,2020-12-28,Active,2026-10-31
+V010,Oakhurst Plastics Ltd,91 Station Road,Halden,TX5866527,4043,01299 243943,2017-02-28,Active,2026-10-28
+V011,Silverline Labels Inc,61 Station Road,Greystone,TX1939739,6192,01060 600346,2024-02-25,Active,2026-10-29
+V012,Redbrook Labels Co.,128 Dock Road,Halden,TX8272333,8848,01024 986313,2023-01-07,Active,2026-10-30
+V013,Granitefold Industrial Limited,64 Station Road,Halden,TX9207334,9824,01160 447007,2018-01-05,Active,2026-10-29
+V014,Meridian Services Limited,215 Station Road,Greystone,TX6119764,4899,01863 739170,2022-07-03,Active,2026-10-31
+V015,Lakeshore Equipment LLC,90 Dock Road,Brookton,TX8338297,9262,01746 566920,2019-06-19,Active,2026-10-26
+V016,Pinecrest Industrial Ltd,128 Mill Road,Brookton,TX6513984,8497,01062 742384,2022-07-04,Active,2026-10-23
+V017,Stonegate Freight Inc,98 Canal Road,Greystone,TX2530594,5910,01529 522440,2015-11-24,Active,2024-08-13
+V018,Fairmont Labels Limited,169 Station Road,Halden,TX3885473,4082,01937 335993,2023-07-25,Active,2026-10-19
+V019,Brightwater Industrial Co.,99 Park Road,Greystone,TX9879506,9031,01350 223477,2024-05-10,Active,2026-10-31
+V020,Copperfield Logistics Ltd,151 Station Road,Brookton,TX5669322,3093,01380 564926,2023-11-26,Active,2026-10-25
+V021,Highmoor Labels Limited,122 Park Road,Denby,TX2604748,3580,01196 600728,2019-03-27,Active,2026-10-31
+V022,Ridgeway Packaging Co.,134 Park Road,Carlow,TX4632311,1639,01210 707712,2016-08-03,Active,2026-10-22
+V023,Eastbrook Services Limited,161 Mill Road,Carlow,TX4258096,8457,01306 288412,2017-08-19,Active,2026-10-19
+V024,Falconridge Facilities Co.,151 Dock Road,Greystone,TX9196044,5447,01772 625561,2016-07-08,Active,2024-02-22
+V025,Sterlingworth Facilities LLC,20 Canal Road,Denby,TX1831626,9448,01872 427360,2021-02-03,Active,2026-10-27
+V026,Ashcombe Industrial Co.,223 Park Road,Farley,TX3669242,8747,01765 676421,2017-10-28,Active,2026-10-28
+V027,Thornbury Supplies Ltd,141 Quarry Road,Elmstead,,5609,01607 456378,2018-09-10,Active,2026-10-24
+V028,Wexley Industrial Limited,136 Dock Road,Greystone,TX5528820,2314,01070 596494,2016-09-03,Active,2026-10-17
+V029,Calderon Pallets Limited,100 Canal Road,Halden,TX9554236,8324,01559 816792,2018-03-18,Active,2024-06-09
+V030,Marlowe Plastics LLC,73 Mill Road,Denby,TX8181932,5650,01938 397048,2015-04-14,Active,2026-10-21
+V031,Hollins Packaging Ltd,176 Station Road,Farley,TX5548045,6800,01615 344920,2019-04-20,Active,2026-10-22
+V032,Dunmore Supplies Limited,105 Dock Road,Greystone,TX5777965,5677,01937 269389,2023-12-24,Active,2026-10-26
+V033,Kingsway Logistics LLC,211 Quarry Road,Greystone,,9650,01319 482568,2022-10-23,Active,2026-10-25
+V034,Larchmont Supplies Co.,171 Quarry Road,Brookton,TX5487764,2661,01643 240072,2016-10-29,Active,2026-10-31
+V035,Moorfield Services Ltd,9 Park Road,Greystone,TX9543124,2765,01130 260489,2022-03-17,Active,2026-10-28
+V036,Newhaven Packaging Co.,44 Mill Road,Ashford,TX8708572,9184,01578 918184,2020-05-15,Active,2024-03-28
+V037,Orchard Lane Logistics Limited,49 Canal Road,Denby,TX9869564,2296,01514 766601,2018-05-13,Active,2026-10-29
+V038,Penrose Industrial Limited,179 Park Road,Denby,,1787,01753 437623,2024-05-06,Active,2026-10-27
+V039,Quayside Services Limited,193 Mill Road,Elmstead,TX8796658,5358,01097 704602,2015-02-28,Active,2026-10-16
+V040,Rosewood Logistics Co.,191 Dock Road,Ashford,TX4182694,9601,01307 638419,2021-09-17,Active,2026-10-27
+V041,Saltmarsh Safety Co.,135 Station Road,Denby,TX8798332,8887,01664 317577,2015-07-15,Active,2025-01-16
+V042,Tallis Packaging Inc,155 Mill Road,Denby,TX3364028,3329,01772 278531,2017-06-03,Active,2026-10-31
+V043,Upland Pallets Limited,103 Station Road,Greystone,TX3823076,6422,01499 932345,2017-02-24,Active,2026-10-21
+V044,Vantage Freight Inc,41 Mill Road,Greystone,TX7732135,9262,01746 566920,2024-04-23,Active,2026-01-23
+V045,Whitcombe Packaging Inc,123 Mill Road,Halden,TX7944569,9651,01234 131805,2019-02-04,Active,2026-10-31
+V046,Yardley Logistics Co.,222 Canal Road,Elmstead,TX9367164,4795,01767 810581,2023-07-05,Active,2024-02-29
+V047,Zephyr Hill Plastics Limited,212 Park Road,Ashford,TX4574986,6609,01988 615840,2021-07-12,Active,2026-10-29
+V048,Beacon Facilities Ltd,101 Mill Road,Brookton,TX1145704,8731,01009 592952,2019-05-18,Active,2026-10-26
+V049,North Line Pallet Limited,58 CANAL ROAD,Denby,TX7759287,5819,01275 545699,2025-11-03,Active,2026-08-21
+V050,RIDGEWAY PACKAGING CO,134 Park Road,Carlow,TX4632311,1445,01210 707712,2026-02-17,Active,2026-05-17
+V051,Apex Facility Solutions LLC,PO Box 4471,Denby,,8820,0700 555012,2026-09-22,Active,2026-10-28

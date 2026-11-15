@@ -2,7 +2,7 @@
 <!-- ======================= M8 ======================= -->
 <section class="view" data-route="m8" id="view-m8" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 8 of 12 · Part 3: AI for your audit work</p>
+  <p class="kicker">Module 8 of 14 · Part 3: AI for your audit work</p>
   <h1>Audit playbooks</h1>
   <p class="lede">Six audit routines, each with the data you need, the steps, prompts you can copy and how to check the results. The module ends with a practice audit on sample data.</p>
   <p class="meta-row">About 45 minutes. Level: Intermediate to advanced.</p>
@@ -40,7 +40,7 @@
     <li><strong>Ask AI to find patterns.</strong> Upload the anonymised result, or use Copilot in the workbook, with the prompt below.</li>
     <li><strong>Verify the top patterns.</strong> For each pattern AI suggests, filter the rows yourself. Does it hold? Is there an innocent cause (timing, UOM, transfer)?</li>
     <li><strong>Compare to last month.</strong> Which warehouses improved or worsened? Trend matters more than one month.</li>
-    <li><strong>Draft the summary</strong> with AI (Module 9), then edit.</li>
+    <li><strong>Draft the summary</strong> with AI (Module 11), then edit.</li>
   </ol>
   <pre class="pr" data-label="Prompt · P1 pattern finding">You are an inventory audit analyst. Attached are this month's cycle count results for 7 warehouses (data dictionary below). Tolerance is ±2% per line.
 Using code:
@@ -197,26 +197,10 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
   <li>Language tasks like classifying adjustment reasons suit AI well.</li>
   <li>Treat every AI flag as a lead. Confirm against source documents before calling it a finding.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Pick the one playbook that matches your most time-consuming task. Run it once on real (anonymised where needed) data. Note how long it took compared to your usual method, and what AI got wrong. That note is the start of your Module 12 business case.</p>
-</div>
 
-<div class="quiz" data-quiz="m8"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">AI flags two invoices from the same supplier for $2,400.00 in consecutive months. What next?</p><div class="opts">
-    <button class="opt">Report a duplicate payment immediately</button>
-    <button class="opt">Check the POs and GRNs: it may be a legitimate monthly fee or standing order</button>
-    <button class="opt">Ignore it; AI is often wrong</button></div>
-    <p class="why" hidden>Recurring charges produce identical amounts legitimately. Verify against source documents before calling it a finding.</p></div>
-  <div class="q" data-a="0"><p class="qt">Why is the "normalise invoice numbers" step important?</p><div class="opts">
-    <button class="opt">Duplicates often slip through with small differences like dashes, leading zeros or suffixes</button>
-    <button class="opt">It makes the spreadsheet look tidier</button>
-    <button class="opt">The ERP requires it</button></div>
-    <p class="why" hidden>Systems usually block exact duplicates. Near-duplicates with formatting differences are the ones that get paid twice.</p></div>
-  <div class="q" data-a="2"><p class="qt">You have 180 POs for the quarter. Should you rely on a Benford's law test?</p><div class="opts">
-    <button class="opt">Yes, it works on any size dataset</button>
-    <button class="opt">Yes, and a mismatch proves manipulation</button>
-    <button class="opt">No, the dataset is too small for reliable results. Use threshold banding and clustering instead</button></div>
-    <p class="why" hidden>Guidance published by ISACA says datasets of 500 or fewer are generally unsuitable. Even on large sets, a mismatch only signals where to look.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m8"></div>
+<div class="assign" data-assign="m8"></div>
+</section>
 <div class="mod-foot" data-foot="m8"></div>
 </section>

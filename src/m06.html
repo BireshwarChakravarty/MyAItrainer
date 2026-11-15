@@ -2,7 +2,7 @@
 <!-- ======================= M6 ======================= -->
 <section class="view" data-route="m6" id="view-m6" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 6 of 12 · Part 3: AI for your audit work</p>
+  <p class="kicker">Module 6 of 14 · Part 3: AI for your audit work</p>
   <h1>Audit essentials</h1>
   <p class="lede">Before using AI on audit data, it helps to be clear about where errors come from, what to measure, and which warning signs to look for. Most of this module is about auditing rather than AI.</p>
   <p class="meta-row">About 35 minutes. Level: Intermediate.</p>
@@ -126,32 +126,29 @@
   </ul></div>
 </div>
 
+<h2>Choosing what to test: sampling</h2>
+<p>You can't check every invoice or recount every location, so auditors test a <b>sample</b> and use it to judge the whole population. AI and Excel make drawing a sample easy. Choosing the right kind of sample is your job.</p>
+<div class="tbl"><table><thead><tr><th>Type</th><th>How it works</th><th>Use it when</th></tr></thead><tbody>
+<tr><td><b>Random</b></td><td>Every item has the same chance of being picked</td><td>You want an unbiased view of the whole, for example "what share of GRNs are posted on time?"</td></tr>
+<tr><td><b>Risk-based (targeted)</b></td><td>You pick items most likely to be wrong or most costly: high value, unusual, flagged</td><td>You want to find problems, for example the top 25 invoices by value plus every invoice without a PO</td></tr>
+<tr><td><b>Stratified</b></td><td>You split the population into groups (by warehouse, by value band) and sample from each</td><td>You need every warehouse represented, not just the biggest</td></tr>
+</tbody></table></div>
+<p>A common approach combines them: test <b>all</b> items above a value threshold, plus a <b>random</b> sample of the rest, spread across all seven warehouses. Always record how you chose the sample, so someone else could repeat it.</p>
+<pre class="pr" data-label="Excel · draw a random sample of 25 rows">=TAKE(SORTBY(Invoices, RANDARRAY(ROWS(Invoices))), 25)</pre>
+<p>This shuffles the table and keeps the first 25 rows. The sample changes every time Excel recalculates, so copy it and use <b>Paste Values</b> straight away to freeze it. Record the date and method.</p>
+<pre class="pr" data-label="Prompt · design a sample">I need to test [GRN posting timeliness / invoice approval / count accuracy] across 7 warehouses. The population is [number] items, attached (anonymised).
+Suggest a sampling approach: what to test in full (e.g. above a value threshold), how many to sample at random from the rest, and how to spread it across warehouses. Explain your reasoning in plain terms, then draw the sample using code with a fixed random seed so it can be reproduced, and list the selected item IDs.</pre>
+<div class="callout tip"><span class="tag">Why a fixed seed</span><p>If AI draws the sample with code and a fixed "random seed", running the same code again gives the same sample. That makes your work repeatable, which matters when someone reviews it.</p></div>
 <div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Trace every odd number back to the step that created it: PO, GRN, putaway, invoice, payment, count.</li>
   <li>Track IRA, value-weighted and gross variance per warehouse, against each warehouse's own trend.</li>
   <li>Rule out timing, UOM, transfers and mis-slotting before calling anything a loss.</li>
   <li>Red flags are leads, not conclusions.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Put your last cycle count results into the calculator above. Then ask your AI assistant: <code>I audit 7 warehouses. [Paste anonymised IRA by warehouse.] What questions should I ask the two lowest-performing warehouse managers to find the root cause? Group them by: receiving, storage, picking, counting, system.</code></p>
-</div>
 
-<div class="quiz" data-quiz="m6"><h2>Quick quiz</h2>
-  <div class="q" data-a="2"><p class="qt">WH03 shows a shortage of exactly 24 units on a SKU sold in cases of 12. What is the most likely first explanation?</p><div class="opts">
-    <button class="opt">Theft of two cases</button>
-    <button class="opt">A random counting error</button>
-    <button class="opt">A unit-of-measure mismatch between cases and eaches</button></div>
-    <p class="why" hidden>Variances that are exact multiples of a pack size strongly suggest a UOM problem. Check before assuming loss.</p></div>
-  <div class="q" data-a="0"><p class="qt">Net variance for a warehouse is close to zero. Does that mean its records are accurate?</p><div class="opts">
-    <button class="opt">Not necessarily: large overages and shortages can cancel out. Check gross variance too</button>
-    <button class="opt">Yes, net variance is the definitive measure</button>
-    <button class="opt">Yes, as long as the count was done on time</button></div>
-    <p class="why" hidden>Offsetting errors hide in net figures. Gross variance and line-level accuracy show the real picture.</p></div>
-  <div class="q" data-a="1"><p class="qt">Four POs to one supplier on the same day, each between $4,900 and $4,990, with a $5,000 approval limit. What is this?</p><div class="opts">
-    <button class="opt">Normal ordering behaviour</button>
-    <button class="opt">A possible split purchase to avoid higher approval: a red flag worth investigating</button>
-    <button class="opt">Proof of fraud</button></div>
-    <p class="why" hidden>Clustering just under a limit is a classic split-PO pattern. Investigate, but it may have an innocent explanation.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m6"></div>
+<div class="assign" data-assign="m6"></div>
+</section>
 <div class="mod-foot" data-foot="m6"></div>
 </section>

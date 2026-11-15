@@ -1,0 +1,155 @@
+Line_ID,Vendor_Name,Description,Amount,GL_Code
+SP0001,Ridgeway Packaging Co.,cartons 600x400 dbl wall,2835.09,6200 Consumables
+SP0002,Kestrel Equipment Inc,LOLER INSPECTION,1151.48,6300 Services
+SP0003,Apex Facility Solutions LLC,PEST CONTROL VISIT,1853.64,6999 Sundry
+SP0004,Apex Facility Solutions LLC,pest control visit,5796.62,6300 Services
+SP0005,Ridgeway Packaging Co.,stretch wrap 23mic x 20 rolls,2642.03,6300 Services
+SP0006,Dunmore Services Co.,AGENCY PICKERS WK 38,4541.32,6300 Services
+SP0007,Kestrel Equipment Inc,reach truck repair - mast chain,1698.76,6200 Consumables
+SP0008,Dunmore Services Co.,temp drivers wk 31,2240.2,6200 Consumables
+SP0009,Apex Facility Solutions LLC,SECURITY GUARD COVER SEP,3725.74,6200 Consumables
+SP0010,Vantage Industrial LLC,scanner repairs x 31,1510.65,6300 Services
+SP0011,Quayside Freight Ltd,courier same day,7927.98,6300 Services
+SP0012,Saltmarsh Safety Ltd,HI-VIS VESTS,1071.37,6999 Sundry
+SP0013,Saltmarsh Safety Ltd,first aid restock,2492.88,6100 Repairs
+SP0014,Apex Facility Solutions LLC,waste skip exchange,3435.05,6200 Consumables
+SP0015,Kestrel Equipment Inc,forklift service Jul,4073.83,6999 Sundry
+SP0016,Saltmarsh Safety Ltd,first aid restock,770.64,6300 Services
+SP0017,Dunmore Services Co.,peak cover Aug,10616.72,6999 Sundry
+SP0018,Vantage Industrial LLC,wifi access points,4192.46,6999 Sundry
+SP0019,Ridgeway Packaging Co.,cartons 600x400 dbl wall,4160.18,6999 Sundry
+SP0020,Saltmarsh Safety Ltd,gloves cut resistant,1966.17,6300 Services
+SP0021,Kestrel Equipment Inc,LOLER INSPECTION,6452.58,6200 Consumables
+SP0022,Saltmarsh Safety Ltd,first aid restock,1973.16,6999 Sundry
+SP0023,Apex Facility Solutions LLC,pest control visit,7875.46,6100 Repairs
+SP0024,Saltmarsh Safety Ltd,hi-vis vests,1286.81,6300 Services
+SP0025,Dunmore Services Co.,TEMP DRIVERS WK 33,10755.22,6200 Consumables
+SP0026,Apex Facility Solutions LLC,security guard cover Sep,7337.35,6999 Sundry
+SP0027,Vantage Industrial LLC,label printer heads,2470.5,6200 Consumables
+SP0028,Apex Facility Solutions LLC,pest control visit,3379.86,6300 Services
+SP0029,Kestrel Equipment Inc,LOLER inspection,4388.65,6100 Repairs
+SP0030,Quayside Freight Ltd,inbound haulage Sep,7323.69,6300 Services
+SP0031,Vantage Industrial LLC,wifi access points,2095.19,6200 Consumables
+SP0032,Kestrel Equipment Inc,reach truck repair - mast chain,3915.81,6999 Sundry
+SP0033,Saltmarsh Safety Ltd,FIRST AID RESTOCK,732.11,6200 Consumables
+SP0034,Dunmore Services Co.,TEMP DRIVERS WK 35,9039.62,6100 Repairs
+SP0035,Apex Facility Solutions LLC,waste skip exchange,5286.38,6300 Services
+SP0036,Eastbrook Services Ltd,ELECTRICITY SEP WH05,7190.57,6200 Consumables
+SP0037,Kestrel Equipment Inc,FLT TYRES X 31,4936.91,6100 Repairs
+SP0038,Ridgeway Packaging Co.,tape 48mm brown x 32,632.35,6200 Consumables
+SP0039,Kestrel Equipment Inc,LOLER inspection,797.66,6100 Repairs
+SP0040,Kestrel Equipment Inc,forklift service Aug,2966.59,6999 Sundry
+SP0041,Dunmore Services Co.,agency pickers wk 33,10467.16,6100 Repairs
+SP0042,Vantage Industrial LLC,MOBILE DATA JUL,1373.63,6100 Repairs
+SP0043,Eastbrook Services Ltd,water/sewer Aug,9745.12,6999 Sundry
+SP0044,Dunmore Services Co.,AGENCY PICKERS WK 35,4391.0,6300 Services
+SP0045,Vantage Industrial LLC,scanner repairs x 27,3270.58,6300 Services
+SP0046,Eastbrook Services Ltd,ELECTRICITY SEP WH03,1192.63,6100 Repairs
+SP0047,Ridgeway Packaging Co.,stretch wrap 23mic x 39 rolls,1795.51,6999 Sundry
+SP0048,Saltmarsh Safety Ltd,HI-VIS VESTS,2269.7,6100 Repairs
+SP0049,Quayside Freight Ltd,PALLET NETWORK AUG,7377.3,6100 Repairs
+SP0050,Saltmarsh Safety Ltd,first aid restock,2371.79,6999 Sundry
+SP0051,Eastbrook Services Ltd,GAS SEP,1464.31,6300 Services
+SP0052,Ridgeway Packaging Co.,void fill paper,3848.93,6300 Services
+SP0053,Ridgeway Packaging Co.,tape 48mm brown x 8,2267.65,6200 Consumables
+SP0054,Ridgeway Packaging Co.,tape 48mm brown x 33,2959.34,6200 Consumables
+SP0055,Eastbrook Services Ltd,gas Jul,11173.35,6999 Sundry
+SP0056,Vantage Industrial LLC,WIFI ACCESS POINTS,4369.69,6100 Repairs
+SP0057,Quayside Freight Ltd,courier same day,5575.5,6200 Consumables
+SP0058,Dunmore Services Co.,temp drivers wk 27,2958.63,6300 Services
+SP0059,Dunmore Services Co.,temp drivers wk 34,12678.1,6200 Consumables
+SP0060,Dunmore Services Co.,temp drivers wk 33,12656.79,6200 Consumables
+SP0061,Quayside Freight Ltd,PALLET NETWORK SEP,5609.37,6300 Services
+SP0062,Ridgeway Packaging Co.,stretch wrap 23mic x 38 rolls,1110.28,6300 Services
+SP0063,Dunmore Services Co.,peak cover Jul,10294.27,6100 Repairs
+SP0064,Vantage Industrial LLC,MOBILE DATA AUG,4048.88,6300 Services
+SP0065,Kestrel Equipment Inc,FLT tyres x 39,2936.24,6999 Sundry
+SP0066,Apex Facility Solutions LLC,cleaning contract Aug,861.98,6999 Sundry
+SP0067,Dunmore Services Co.,peak cover Jul,5116.32,6100 Repairs
+SP0068,Ridgeway Packaging Co.,cartons 600x400 dbl wall,2494.94,6100 Repairs
+SP0069,Saltmarsh Safety Ltd,GLOVES CUT RESISTANT,1478.41,6100 Repairs
+SP0070,Quayside Freight Ltd,pallet network Aug,7476.92,6100 Repairs
+SP0071,Quayside Freight Ltd,FUEL SURCHARGE,7096.52,6200 Consumables
+SP0072,Ridgeway Packaging Co.,tape 48mm brown x 23,2447.95,6999 Sundry
+SP0073,Apex Facility Solutions LLC,pest control visit,1156.89,6200 Consumables
+SP0074,Apex Facility Solutions LLC,SECURITY GUARD COVER AUG,5792.06,6100 Repairs
+SP0075,Saltmarsh Safety Ltd,safety boots x 30,1690.78,6200 Consumables
+SP0076,Vantage Industrial LLC,mobile data Sep,265.87,6999 Sundry
+SP0077,Apex Facility Solutions LLC,WASTE SKIP EXCHANGE,589.61,6100 Repairs
+SP0078,Kestrel Equipment Inc,LOLER inspection,4051.59,6300 Services
+SP0079,Ridgeway Packaging Co.,void fill paper,2043.31,6200 Consumables
+SP0080,Quayside Freight Ltd,COURIER SAME DAY,3442.09,6200 Consumables
+SP0081,Eastbrook Services Ltd,gas Sep,10615.87,6999 Sundry
+SP0082,Vantage Industrial LLC,label printer heads,2489.49,6300 Services
+SP0083,Quayside Freight Ltd,fuel surcharge,4797.74,6300 Services
+SP0084,Vantage Industrial LLC,wifi access points,1827.88,6300 Services
+SP0085,Vantage Industrial LLC,label printer heads,2595.89,6300 Services
+SP0086,Ridgeway Packaging Co.,cartons 600x400 dbl wall,1259.7,6100 Repairs
+SP0087,Kestrel Equipment Inc,FLT tyres x 36,5401.45,6300 Services
+SP0088,Ridgeway Packaging Co.,CARTONS 600X400 DBL WALL,1283.63,6100 Repairs
+SP0089,Eastbrook Services Ltd,water/sewer Aug,2053.55,6100 Repairs
+SP0090,Saltmarsh Safety Ltd,GLOVES CUT RESISTANT,2145.65,6300 Services
+SP0091,Quayside Freight Ltd,pallet network Jul,5739.15,6100 Repairs
+SP0092,Kestrel Equipment Inc,FLT tyres x 10,3584.99,6999 Sundry
+SP0093,Apex Facility Solutions LLC,pest control visit,5775.27,6999 Sundry
+SP0094,Quayside Freight Ltd,pallet network Aug,1544.27,6100 Repairs
+SP0095,Quayside Freight Ltd,PALLET NETWORK SEP,6921.09,6300 Services
+SP0096,Vantage Industrial LLC,wifi access points,2927.32,6999 Sundry
+SP0097,Vantage Industrial LLC,scanner repairs x 19,2516.1,6300 Services
+SP0098,Saltmarsh Safety Ltd,hi-vis vests,1380.19,6300 Services
+SP0099,Kestrel Equipment Inc,LOLER inspection,6138.82,6999 Sundry
+SP0100,Eastbrook Services Ltd,WATER/SEWER JUL,7587.87,6100 Repairs
+SP0101,Vantage Industrial LLC,wifi access points,3830.87,6300 Services
+SP0102,Ridgeway Packaging Co.,CARTONS 600X400 DBL WALL,1660.46,6999 Sundry
+SP0103,Vantage Industrial LLC,WIFI ACCESS POINTS,679.35,6200 Consumables
+SP0104,Ridgeway Packaging Co.,stretch wrap 23mic x 19 rolls,3768.92,6999 Sundry
+SP0105,Apex Facility Solutions LLC,WASTE SKIP EXCHANGE,3891.76,6100 Repairs
+SP0106,Eastbrook Services Ltd,ELECTRICITY AUG WH07,4256.36,6300 Services
+SP0107,Vantage Industrial LLC,mobile data Jul,3836.58,6999 Sundry
+SP0108,Saltmarsh Safety Ltd,first aid restock,2035.34,6100 Repairs
+SP0109,Kestrel Equipment Inc,LOLER INSPECTION,4173.43,6300 Services
+SP0110,Eastbrook Services Ltd,electricity Jul WH02,9600.06,6200 Consumables
+SP0111,Saltmarsh Safety Ltd,first aid restock,345.9,6999 Sundry
+SP0112,Apex Facility Solutions LLC,PEST CONTROL VISIT,1077.2,6300 Services
+SP0113,Vantage Industrial LLC,WIFI ACCESS POINTS,3118.12,6300 Services
+SP0114,Apex Facility Solutions LLC,CLEANING CONTRACT SEP,4876.81,6999 Sundry
+SP0115,Eastbrook Services Ltd,electricity Sep WH04,10349.39,6999 Sundry
+SP0116,Apex Facility Solutions LLC,waste skip exchange,4996.71,6100 Repairs
+SP0117,Eastbrook Services Ltd,gas Jul,10824.86,6999 Sundry
+SP0118,Eastbrook Services Ltd,gas Sep,6377.18,6300 Services
+SP0119,Dunmore Services Co.,agency pickers wk 33,4455.22,6999 Sundry
+SP0120,Quayside Freight Ltd,inbound haulage Sep,1144.52,6100 Repairs
+SP0121,Vantage Industrial LLC,wifi access points,4946.65,6100 Repairs
+SP0122,Kestrel Equipment Inc,LOLER inspection,4223.17,6300 Services
+SP0123,Saltmarsh Safety Ltd,HI-VIS VESTS,825.88,6200 Consumables
+SP0124,Quayside Freight Ltd,FUEL SURCHARGE,1791.85,6200 Consumables
+SP0125,Eastbrook Services Ltd,ELECTRICITY JUL WH01,5295.89,6300 Services
+SP0126,Eastbrook Services Ltd,gas Jul,4479.98,6300 Services
+SP0127,Eastbrook Services Ltd,electricity Jul WH07,1943.2,6300 Services
+SP0128,Kestrel Equipment Inc,LOLER INSPECTION,4475.03,6999 Sundry
+SP0129,Eastbrook Services Ltd,GAS JUL,9428.62,6100 Repairs
+SP0130,Dunmore Services Co.,agency pickers wk 30,7749.71,6200 Consumables
+SP0131,Quayside Freight Ltd,inbound haulage Sep,1970.29,6999 Sundry
+SP0132,Ridgeway Packaging Co.,stretch wrap 23mic x 35 rolls,2731.93,6200 Consumables
+SP0133,Apex Facility Solutions LLC,security guard cover Jul,2693.67,6300 Services
+SP0134,Apex Facility Solutions LLC,pest control visit,4734.6,6200 Consumables
+SP0135,Vantage Industrial LLC,WIFI ACCESS POINTS,1129.06,6100 Repairs
+SP0136,Kestrel Equipment Inc,REACH TRUCK REPAIR - MAST CHAIN,6473.8,6200 Consumables
+SP0137,Saltmarsh Safety Ltd,first aid restock,430.1,6300 Services
+SP0138,Dunmore Services Co.,temp drivers wk 29,8164.93,6100 Repairs
+SP0139,Dunmore Services Co.,PEAK COVER SEP,11676.7,6100 Repairs
+SP0140,Dunmore Services Co.,TEMP DRIVERS WK 39,8866.5,6300 Services
+SP0141,Kestrel Equipment Inc,forklift service Sep,4299.32,6300 Services
+SP0142,Apex Facility Solutions LLC,PEST CONTROL VISIT,2017.95,6999 Sundry
+SP0143,Eastbrook Services Ltd,ELECTRICITY AUG WH05,5132.88,6100 Repairs
+SP0144,Kestrel Equipment Inc,LOLER inspection,4906.29,6999 Sundry
+SP0145,Ridgeway Packaging Co.,tape 48mm brown x 21,2429.57,6999 Sundry
+SP0146,Dunmore Services Co.,TEMP DRIVERS WK 33,8632.17,6300 Services
+SP0147,Apex Facility Solutions LLC,WASTE SKIP EXCHANGE,2842.95,6100 Repairs
+SP0148,Saltmarsh Safety Ltd,HI-VIS VESTS,1770.66,6300 Services
+SP0149,Saltmarsh Safety Ltd,FIRST AID RESTOCK,2473.41,6200 Consumables
+SP0150,Ridgeway Packaging Co.,cartons 600x400 dbl wall,3879.98,6300 Services
+SP0151,Vantage Industrial LLC,wifi access points,1714.73,6100 Repairs
+SP0152,Quayside Freight Ltd,courier same day,5562.5,6300 Services
+SP0153,Apex Facility Solutions LLC,SECURITY GUARD COVER SEP,4950.03,6200 Consumables
+SP0154,Quayside Freight Ltd,inbound haulage Jul,2881.68,6999 Sundry

@@ -1,0 +1,122 @@
+
+<!-- ======================= M11 ======================= -->
+<section class="view" data-route="m13" id="view-m13" hidden>
+<header class="mod-head">
+  <p class="kicker">Module 13 of 14 · Part 5: Going further</p>
+  <h1>Advanced AI</h1>
+  <p class="lede">You don't need to build any of these systems, but you'll be in conversations about them with IT, vendors and your managers. This module gives you enough background to ask good questions.</p>
+  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
+</header>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
+  <li>Explain anomaly detection, forecasting, document AI and retrieval (RAG) in plain terms</li>
+  <li>Judge an AI tool's accuracy using precision and recall</li>
+  <li>Ask vendors the questions that reveal whether a tool will really work for you</li>
+</ul></div>
+
+<div class="prose">
+<h2>Six technologies worth understanding</h2>
+</div>
+<div class="two">
+  <div class="panel"><span class="label">Predictive</span><h4>Anomaly detection</h4><p>The system learns what "normal" looks like (typical receipts per day, typical adjustments per shift, a supplier's usual invoice pattern) and flags what deviates. No one writes a rule for each case. Good tools present flags as <b>leads for review</b>, not accusations.</p></div>
+  <div class="panel"><span class="label">Predictive</span><h4>Demand forecasting</h4><p>Learns patterns such as seasonality, trends and promotions from sales history to predict future demand per SKU and warehouse. Directly affects purchasing quantities and safety stock.</p></div>
+  <div class="panel"><span class="label">Vision &amp; documents</span><h4>Document AI (OCR+)</h4><p>Reads scanned invoices, delivery notes and GRNs, and extracts fields like invoice number, date, lines and totals. This powers automatic three-way matching.</p></div>
+  <div class="panel"><span class="label">Vision</span><h4>Computer vision counting</h4><p>Cameras, drones or robots scan racks and count stock continuously rather than in periodic cycle counts. Gives a near-live view of inventory, mostly in large or high-value sites.</p></div>
+  <div class="panel"><span class="label">Generative</span><h4>RAG: AI that reads your documents</h4><p>"Retrieval-augmented generation": before answering, the AI searches your company documents (SOPs, contracts, policies) and answers from them, citing sources. This is how "ask our procurement policy" assistants work, and it greatly reduces made-up answers.</p></div>
+  <div class="panel"><span class="label">Generative</span><h4>Custom assistants and agents</h4><p>An assistant preconfigured with your instructions and files (a Custom GPT, Claude Project, Copilot agent or Gemini Gem). For example, an "Audit helper" loaded with your SOPs, data dictionary and report template.</p></div>
+</div>
+
+<div class="prose">
+<h2>Six more things worth knowing</h2>
+<div class="two">
+  <div class="panel"><h4>Knowledge cutoff</h4><p>A model learns from data up to a certain date and knows nothing after it unless it can search the web. Ask about this year's regulations or a supplier's latest news without web search and you may get an out-of-date or invented answer. Check whether the tool searched, and open its sources.</p></div>
+  <div class="panel"><h4>Reasoning ("thinking") models</h4><p>Many assistants now offer a mode that works through a problem step by step before answering. It's slower but noticeably better at multi-step analysis, such as reconciling two files or checking a calculation. Use it for analysis; use the fast mode for drafting and simple questions.</p></div>
+  <div class="panel"><h4>Images and documents</h4><p>Most assistants can read photos, scans and PDFs: a photo of a damaged delivery note, a scanned invoice, a screenshot of an ERP screen. Useful for extracting fields quickly. Check extracted numbers carefully, especially handwriting and faint scans.</p></div>
+  <div class="panel"><h4>Why answers vary</h4><p>Ask the same question twice and you may get different wording, or occasionally different numbers. For audit work that needs to be repeatable, keep the calculation in Excel formulas or in code the AI writes and you save, not in the chat answer.</p></div>
+  <div class="panel"><h4>Bias in, bias out</h4><p>Models and predictive tools learn from past data. If past decisions were skewed (say, one supplier always favoured, or one warehouse audited more than others), a model trained on them can repeat the skew. Ask what data a tool learned from.</p></div>
+  <div class="panel"><h4>Rules and governance</h4><p>Regulation of AI is growing. The EU AI Act, in force since 2024, applies its requirements in phases and is stricter for higher-risk uses. ISO/IEC 42001 is a management standard for organisations using AI. Day to day, your company's AI policy is the rulebook that matters most; regulations mostly shape what that policy says.</p></div>
+</div>
+<h2>How to judge whether an AI tool is accurate</h2>
+<p>Vendors often quote one accuracy figure. For audit tools that flag problems, you need two:</p>
+</div>
+<div class="two">
+  <div class="panel accent"><h4>Precision</h4><p><b>Of everything it flagged, how much was really a problem?</b> Low precision means your team wastes time on false alarms and starts ignoring the tool.</p></div>
+  <div class="panel accent"><h4>Recall</h4><p><b>Of all the real problems, how many did it catch?</b> Low recall means real issues slip through while everyone assumes they're covered.</p></div>
+</div>
+
+<div class="widget" id="w-pr">
+  <div class="w-head"><span class="w-tag">Exercise 11.1</span><span class="w-title">Precision vs recall: tune a duplicate-invoice detector</span></div>
+  <div class="w-body">
+    <p class="w-hint">Imagine 1,000 invoices, of which 20 are true duplicates. Move the sensitivity slider. A more sensitive tool flags more invoices, catching more duplicates but raising more false alarms.</p>
+    <label class="fl" for="prSens">Detector sensitivity: <span id="prSensV"></span></label>
+    <input type="range" id="prSens" min="1" max="9" value="5">
+    <div class="stat-row">
+      <div class="stat"><div class="n" id="prFlag">0</div><div class="l">Invoices flagged</div></div>
+      <div class="stat"><div class="n" id="prTP">0</div><div class="l">Real duplicates caught (of 20)</div></div>
+      <div class="stat"><div class="n" id="prPrec">0%</div><div class="l">Precision</div></div>
+      <div class="stat"><div class="n" id="prRec">0%</div><div class="l">Recall</div></div>
+    </div>
+    <div class="fb info" id="prOut"></div>
+  </div>
+</div>
+
+<div class="prose">
+<h2>Questions to ask any AI vendor</h2>
+<p>Whether it's a new procurement platform, a WMS add-on or an AP automation tool, these questions separate real capability from marketing:</p>
+</div>
+<div class="two">
+  <div class="panel"><h4>Accuracy</h4><ul>
+    <li>What are the precision and recall on data like ours? How was it measured?</li>
+    <li>How much historical data does it need? (Some invoice-matching tools cite 6–12 months.)</li>
+    <li>Can we run a pilot on our own data before committing?</li>
+  </ul></div>
+  <div class="panel"><h4>Explainability &amp; control</h4><ul>
+    <li>When it flags something, does it show why?</li>
+    <li>Can we set thresholds and approval rules?</li>
+    <li>Is every automated action logged in an audit trail?</li>
+  </ul></div>
+  <div class="panel"><h4>Data &amp; security</h4><ul>
+    <li>Where is our data stored? Is it used to train models for other customers?</li>
+    <li>What security certifications do you hold?</li>
+    <li>Who can access our data on your side?</li>
+  </ul></div>
+  <div class="panel"><h4>Fit</h4><ul>
+    <li>Does it integrate with our ERP and WMS? How?</li>
+    <li>What does our team have to do differently day to day?</li>
+    <li>What does it cost in year two and three, not just year one?</li>
+  </ul></div>
+</div>
+<div class="callout warn prose"><span class="tag">Be careful with vendor figures</span><p>Much of what's written about AI in procurement comes from vendors. Figures like "99% detection" or "60% less counting labour" are often unverified or measured in ideal conditions. Ask for the source, and test on your own data.</p></div>
+
+<div class="prose">
+<h2>Build your own audit helper</h2>
+<p>A practical advanced step: create a custom assistant (if your tool supports Projects, GPTs, Gems or Copilot agents) that already knows your audit work.</p>
+</div>
+<ol class="steps prose">
+  <li><strong>Gather files</strong> (anonymised where needed): your data dictionary, audit SOPs, tolerance rules, finding template, a good past report.</li>
+  <li><strong>Write instructions</strong> combining your Module 4 custom instructions with: "Answer from the attached documents where possible and say which document. If the documents don't cover it, say so."</li>
+  <li><strong>Test it</strong> with 5 questions you already know the answers to. Fix the instructions where it goes wrong.</li>
+  <li><strong>Share it</strong> with colleagues if your tool allows. Consistent methods across the team are valuable.</li>
+</ol>
+
+<div class="prose">
+<h2>Where things are heading</h2>
+<ul>
+  <li><b>Adoption is broad but shallow.</b> EFESO's 2026 research found only about 5% of procurement organisations have truly scaled generative AI. People who can turn experiments into reliable routines are in demand.</li>
+  <li><b>Agents are arriving in procurement.</b> Gartner forecasts agentic AI spending in supply chain software rising from under $2 billion in 2025 to about $53 billion by 2030 (as reported in trade press).</li>
+  <li><b>Roles are shifting.</b> In a Gartner survey of supply chain leaders, 55% expect agentic AI to reduce hiring for entry-level positions. Routine checking will be automated; supervising, verifying and interpreting will be valued more.</li>
+</ul>
+</div>
+
+<div class="takeaways prose"><h2>Summary</h2><ul>
+  <li>Know the main technologies: anomaly detection, forecasting, document AI, vision counting, RAG, custom assistants.</li>
+  <li>Judge flagging tools on both precision (false alarms) and recall (missed issues).</li>
+  <li>Ask vendors for evidence on your own data, explainability, audit trails and data handling.</li>
+  <li>The skills that grow in value are supervising, verifying and interpreting AI.</li>
+</ul></div>
+
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m13"></div>
+<div class="assign" data-assign="m13"></div>
+</section>
+<div class="mod-foot" data-foot="m13"></div>
+</section>

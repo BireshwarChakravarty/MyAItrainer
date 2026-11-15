@@ -4,7 +4,7 @@
 #   index.html        - full standalone HTML document (open locally or host on GitHub Pages)
 set -euo pipefail
 cd "$(dirname "$0")"
-PARTS=(src/00-head.html src/01-shell.html src/m01.html src/m02.html src/m03.html src/m04.html src/m05.html src/m06.html src/m07.html src/m08.html src/m09.html src/m10.html src/m11.html src/m12.html src/90-extras.html src/99-script.html)
+PARTS=(src/00-head.html src/01-shell.html src/m01.html src/m02.html src/m03.html src/m04.html src/m05.html src/m06.html src/m07.html src/m08.html src/m09.html src/m10.html src/m11.html src/m12.html src/m13.html src/m14.html src/90-extras.html src/95-answers.html src/96-assess.html src/99-script.html)
 mkdir -p dist
 cat "${PARTS[@]}" > dist/course.html
 {

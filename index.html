@@ -365,6 +365,52 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .cert h3{font-size:1.5rem;margin:6px 0}
 .cert .nm{font-family:var(--f-display);font-size:1.6rem;font-style:italic;color:var(--ink)}
 
+
+/* ---------- tests and assignments ---------- */
+.assess{margin-top:3rem;display:grid;gap:22px}
+.assess-card{background:var(--sunk);border-radius:6px;padding:18px 20px 20px;border-top:3px solid var(--accent)}
+.assign-card{border-top-color:var(--good)}
+.assess-h{margin:2px 0 6px;font-size:1.35rem}
+.assess-card>p{margin:.4rem 0}
+.assess-status{font-weight:600;color:var(--ink-2)}
+.assess-status.ok{color:var(--good)}
+.assess-card .q{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin:12px 0}
+.assess-card .q.q-ok{border-left:3px solid var(--good)} .assess-card .q.q-bad{border-left:3px solid var(--bad)}
+.qhint{font-size:.88rem;color:var(--ink-3);margin:-4px 0 8px}
+.choice{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper);cursor:pointer;line-height:1.45}
+.choice:hover{border-color:var(--ink-3)}
+.choice input{margin-top:4px;accent-color:var(--accent);flex:none}
+.choice.correct{border-color:var(--good);background:var(--good-tint)}
+.choice.incorrect{border-color:var(--bad);background:var(--bad-tint)}
+.order-list{list-style:decimal;padding-left:1.6rem;margin:4px 0}
+.order-list li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 8px;margin:4px 0;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+.order-list li.correct{border-color:var(--good);background:var(--good-tint)} .order-list li.incorrect{border-color:var(--bad);background:var(--bad-tint)}
+.ord-btns{display:flex;gap:4px;flex:none}
+.ord-btns button{min-width:30px}
+.ord-btns button:disabled{opacity:.35;cursor:default}
+.match{display:grid;gap:8px}
+.match-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:center;padding:4px 6px;border-radius:var(--r)}
+.match-row.correct{background:var(--good-tint)} .match-row.incorrect{background:var(--bad-tint)}
+@media (max-width:600px){.match-row{grid-template-columns:minmax(0,1fr)}}
+.num-row{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.num-row input{width:180px}
+.num-row.correct input{border-color:var(--good)} .num-row.incorrect input{border-color:var(--bad)}
+.fix{display:block;color:var(--good);font-weight:600;margin-top:4px}
+.assign-parts{margin:10px 0 0;padding-left:1.5rem}
+.assign-parts>li{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin:10px 0}
+.assign-parts>li.part-done{border-left:3px solid var(--good)}
+.part-q{margin:0 0 8px;font-weight:600}
+.part-kind{display:block;font-size:.82rem;color:var(--ink-3);margin-top:6px}
+.part-done .part-kind::before{content:"Done · ";color:var(--good);font-weight:600}
+.task{display:flex;gap:10px;align-items:flex-start;cursor:pointer;margin:4px 0}
+.task input{width:17px;height:17px;margin-top:4px;accent-color:var(--good);flex:none}
+.check-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.check-row select{width:100%;max-width:100%;min-width:0;flex:1 1 220px}
+.match-row select{min-width:0}
+.check-row .opts{flex-basis:100%}
+.assign-parts textarea{min-height:90px}
+.ok-txt{color:var(--good)}
+.fb .copy{margin-left:2px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:var(--r);font-size:.96rem;opacity:0;pointer-events:none;transition:all .25s ease;z-index:80;max-width:calc(100vw - 32px)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .mobile-only{display:none}
@@ -382,7 +428,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
     <span class="brand-name"><span class="bn-long">AI for Procurement &amp; Warehouse Auditing</span><span class="bn-short">AI for Procurement Auditing</span></span>
   </a>
   <div class="top-progress" aria-live="polite">
-    <span id="progLabel">0 of 12 modules done</span>
+    <span id="progLabel">0 of 14 modules done</span>
     <span class="meter" aria-hidden="true"><span id="progBar"></span></span>
   </div>
   <button class="icon-btn" id="themeBtn" aria-label="Switch between light and dark" title="Light / dark">
@@ -404,7 +450,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
       <a class="btn" href="#m1" id="startBtn">Start with module 1</a>
       <a class="btn ghost" href="#library">Prompt library</a>
     </div>
-    <p class="hero-facts">12 modules, about 7 hours in total. No coding needed.</p>
+    <p class="hero-facts">14 modules, about 10 hours in total, each with a test and a hands-on assignment. Practice data included. No coding needed.</p>
   </div>
 
   <h2>Who this is for</h2>
@@ -416,7 +462,8 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   <h2>How to work through it</h2>
   <ul>
     <li><b>One module per sitting.</b> Each takes 20 to 45 minutes. Two or three a week gets you through in about a month.</li>
-    <li><b>Do the exercise at the end of each module.</b> Each one is a small task using your own work. It's the part that changes how you work, so don't skip it.</li>
+    <li><b>Finish each module with its test and assignment.</b> The test checks you understood it (pass mark 70%, retake as often as you like). The assignment has you do the work, mostly on the practice data, with answers checked as you go. A module counts as done when both are complete.</li>
+    <li><b>Download the <a href="#practice">practice data</a> before module 2.</b> It's a fictional set of warehouse, purchasing and supplier files with problems planted in it, so you can practise safely in any AI tool.</li>
     <li><b>Use the AI tool your company has approved.</b> Everything here works in Microsoft Copilot, ChatGPT, Claude or Gemini. Module 3 covers what data you can and can't share.</li>
     <li><b>Your progress is saved in this browser</b>, so you can stop and pick up later on the same device.</li>
   </ul>
@@ -428,7 +475,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <!-- ======================= M1 ======================= -->
 <section class="view" data-route="m1" id="view-m1" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 1 of 12 · Part 1: Foundations</p>
+  <p class="kicker">Module 1 of 14 · Part 1: Foundations</p>
   <h1>What AI actually is</h1>
   <p class="lede">This module explains what is going on inside tools like ChatGPT and Copilot. Once you understand that, it's much easier to judge what to trust them with.</p>
   <p class="meta-row">About 20 minutes. Level: Beginner.</p>
@@ -473,7 +520,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </tbody>
 </table></div>
 <div class="prose">
-<p>Most of this course focuses on <strong>generative AI</strong>, because it is the kind you can start using tomorrow, on your own, without an IT project. Module 11 covers predictive AI so you can talk to vendors and IT about it.</p>
+<p>Most of this course focuses on <strong>generative AI</strong>, because it is the kind you can start using tomorrow, on your own, without an IT project. Module 13 covers predictive AI so you can talk to vendors and IT about it.</p>
 
 <h2>How a chatbot actually produces an answer</h2>
 <p>If you only remember one thing from this module, make it this. A large language model works in four steps:</p>
@@ -553,39 +600,18 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   <li>It knows nothing about your company unless you give it information.</li>
   <li>Treat it like a brilliant new hire: give clear instructions and always check the work.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Open your company's approved AI assistant and type: <code>Explain three-way matching in procurement as if I'm new to the job, then give me 3 common ways it goes wrong in a multi-warehouse company.</code> Read the answer critically. Which parts do you already know are right? Is anything vague or generic? Noticing this is the core skill.</p>
-</div>
 
-<div class="quiz" data-quiz="m1"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">Your WMS automatically raises a replenishment order when a bin drops below 50 units. Is this AI?</p><div class="opts">
-    <button class="opt">Yes, because the system makes a decision on its own</button>
-    <button class="opt">No, it is a fixed rule a person configured</button>
-    <button class="opt">Yes, because it uses data</button></div>
-    <p class="why" hidden>A threshold someone typed in is a rule, not learning. If the system had worked out the right reorder point from demand history by itself, that would be machine learning.</p></div>
-  <div class="q" data-a="2"><p class="qt">Why can a chatbot give a confident but wrong answer?</p><div class="opts">
-    <button class="opt">It is deliberately trying to mislead you</button>
-    <button class="opt">It looks up facts in a database that has errors</button>
-    <button class="opt">It generates the most likely-sounding text, which is not always the true answer</button></div>
-    <p class="why" hidden>LLMs predict plausible text. They do not check facts against a source unless they are given documents, data or a search tool.</p></div>
-  <div class="q" data-a="0"><p class="qt">You ask an AI assistant "What was Warehouse 4's stock variance last month?" without giving it any data. What should you expect?</p><div class="opts">
-    <button class="opt">It cannot know. Any number it gives would be invented</button>
-    <button class="opt">It will pull the figure from your ERP</button>
-    <button class="opt">It will give an accurate industry-average estimate</button></div>
-    <p class="why" hidden>Unless your company has connected it to your systems, it has no access to your data. A good assistant will say so; a careless one may make something up.</p></div>
-  <div class="q" data-a="1"><p class="qt">Which task is the best fit for generative AI?</p><div class="opts">
-    <button class="opt">Deciding whether a supplier committed fraud</button>
-    <button class="opt">Drafting a clear summary of 15 audit exceptions for your manager</button>
-    <button class="opt">Approving a write-off of missing stock</button></div>
-    <p class="why" hidden>Drafting and summarising are language tasks where AI shines, and you review the result. Judgement calls and approvals stay with people.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m1"></div>
+<div class="assign" data-assign="m1"></div>
+</section>
 <div class="mod-foot" data-foot="m1"></div>
 </section>
 
 <!-- ======================= M2 ======================= -->
 <section class="view" data-route="m2" id="view-m2" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 2 of 12 · Part 1: Foundations</p>
+  <p class="kicker">Module 2 of 14 · Part 1: Foundations</p>
   <h1>Your AI toolbox</h1>
   <p class="lede">There are hundreds of AI products. For your work they fall into four groups, and knowing which group a tool belongs to tells you what it's good for.</p>
   <p class="meta-row">About 20 minutes. Level: Beginner.</p>
@@ -625,7 +651,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 <p>ERP, WMS and procurement platforms (SAP, Oracle, Microsoft Dynamics, Coupa and others) increasingly include AI features: automatic three-way matching, duplicate invoice detection, spend classification, risk-based cycle count suggestions. You typically don't configure these yourself, but you should know whether your company has them, because they change what you need to check manually.</p>
 
 <h3>Layer 4 · Automation and agents</h3>
-<p>Tools like <b>Microsoft Power Automate</b> run a sequence of steps on a schedule ("every Monday at 7am, collect the seven warehouse files, refresh the report, email me the exceptions"). <b>AI agents</b> go a step further and can plan and carry out multi-step tasks with some independence. You'll build up to this in Module 10.</p>
+<p>Tools like <b>Microsoft Power Automate</b> run a sequence of steps on a schedule ("every Monday at 7am, collect the seven warehouse files, refresh the report, email me the exceptions"). <b>AI agents</b> go a step further and can plan and carry out multi-step tasks with some independence. You'll build up to this in Module 12.</p>
 
 <h2>Features that matter for data work</h2>
 <p>When you look at any assistant, these are the features that make the biggest difference to an auditor:</p>
@@ -686,34 +712,18 @@ Thanks,
   <li>The best tool is usually the one your company has approved and licensed.</li>
   <li>"File upload and data analysis" matters most, because the maths is done by real code.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Send the IT email above (adapted to your company). While you wait, open your approved assistant and find these three things in its menus: file upload, custom instructions (or "Projects"), and chat history. Knowing where they are now will save time later.</p>
-</div>
 
-<div class="quiz" data-quiz="m2"><h2>Quick quiz</h2>
-  <div class="q" data-a="2"><p class="qt">You need to calculate total variance across 4,000 rows. Which approach gives the most reliable numbers?</p><div class="opts">
-    <button class="opt">Paste the rows into a chat and ask for the total</button>
-    <button class="opt">Ask the assistant to estimate from a sample</button>
-    <button class="opt">Upload the file to an assistant with data analysis, or ask AI to write the Excel formula</button></div>
-    <p class="why" hidden>Both options in the correct answer use real calculation (code or a formula) rather than word prediction. Pasting thousands of rows into a chat invites mistakes.</p></div>
-  <div class="q" data-a="0"><p class="qt">What does Excel's Agent Mode do?</p><div class="opts">
-    <button class="opt">Carries out multi-step workbook tasks you describe in plain English</button>
-    <button class="opt">Automatically emails reports to your manager</button>
-    <button class="opt">Connects Excel directly to every company system</button></div>
-    <p class="why" hidden>Agent Mode builds and edits workbooks through multi-step, natural-language requests. You still review what it built.</p></div>
-  <div class="q" data-a="1"><p class="qt">Why prefer your company's approved AI tool over a personal account?</p><div class="opts">
-    <button class="opt">Personal accounts are always less intelligent</button>
-    <button class="opt">Approved business versions come with data protections and are covered by company policy</button>
-    <button class="opt">There is no real difference</button></div>
-    <p class="why" hidden>Business and enterprise versions typically include contractual data protections and admin controls. Personal accounts may handle your data differently.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m2"></div>
+<div class="assign" data-assign="m2"></div>
+</section>
 <div class="mod-foot" data-foot="m2"></div>
 </section>
 
 <!-- ======================= M3 ======================= -->
 <section class="view" data-route="m3" id="view-m3" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 3 of 12 · Part 1: Foundations</p>
+  <p class="kicker">Module 3 of 14 · Part 1: Foundations</p>
   <h1>Using AI safely</h1>
   <p class="lede">Two things an auditor can't get wrong are keeping sensitive data safe and making sure the numbers are correct. This module covers habits for both.</p>
   <p class="meta-row">About 25 minutes. Level: Beginner.</p>
@@ -817,34 +827,18 @@ Thanks,
   <li>Before anything goes into a report, tie it out: totals, spot-checks, method, self-review, source.</li>
   <li>AI drafts, you decide. You own every number you present.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Find and read your company's AI or acceptable-use policy (ask IT if you can't find it). Then take one real report you use and make an anonymised copy: replace supplier names, people and exact prices. Save it as your <b>practice file</b>. You will use it in the next modules.</p>
-</div>
 
-<div class="quiz" data-quiz="m3"><h2>Quick quiz</h2>
-  <div class="q" data-a="2"><p class="qt">An AI tool gives you a total variance of $48,210 for Warehouse 6. What is your first check?</p><div class="opts">
-    <button class="opt">Ask a different AI tool if it agrees</button>
-    <button class="opt">Trust it if the explanation sounds reasonable</button>
-    <button class="opt">Compare it to a SUM of the same data in Excel and check the row count</button></div>
-    <p class="why" hidden>Tying totals to an independent calculation is the fastest, most reliable check. Two AIs agreeing doesn't make a number correct.</p></div>
-  <div class="q" data-a="0"><p class="qt">You want help building a formula for supplier price variance. Which is the safest approach?</p><div class="opts">
-    <button class="opt">Describe the columns with fake supplier names and sample values, get the formula, apply it to the real file yourself</button>
-    <button class="opt">Paste the full supplier price list into a free personal chatbot</button>
-    <button class="opt">Email the file to a friend who is good at Excel</button></div>
-    <p class="why" hidden>AI only needs the structure to write a formula. The real prices never leave your computer.</p></div>
-  <div class="q" data-a="1"><p class="qt">What does "AI drafts, you decide" mean in practice?</p><div class="opts">
-    <button class="opt">Never let AI write anything</button>
-    <button class="opt">AI can produce the first version, but a person verifies facts and owns the conclusion</button>
-    <button class="opt">Only managers can use AI</button></div>
-    <p class="why" hidden>It keeps the speed benefits of AI while keeping accountability with a person.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m3"></div>
+<div class="assign" data-assign="m3"></div>
+</section>
 <div class="mod-foot" data-foot="m3"></div>
 </section>
 
 <!-- ======================= M4 ======================= -->
 <section class="view" data-route="m4" id="view-m4" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 4 of 12 · Part 2: Talking to AI</p>
+  <p class="kicker">Module 4 of 14 · Part 2: Talking to AI</p>
   <h1>Writing good prompts</h1>
   <p class="lede">How useful an AI answer is depends mostly on how clearly you ask. This module gives you a five-part checklist for writing a request.</p>
   <p class="meta-row">About 30 minutes. Level: Beginner to intermediate.</p>
@@ -953,34 +947,18 @@ Thanks,
   <li>Let AI ask you questions, and give it permission to say "I don't know".</li>
   <li>Improve answers with follow-ups. Save your standing context in custom instructions.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Set up custom instructions in your assistant using the template above. Then take a real task you have this week (an email, a summary, a formula) and write it as a Pick Ticket prompt. Compare the result with what you would have got from a one-line request.</p>
-</div>
 
-<div class="quiz" data-quiz="m4"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">An AI gave you a vague, generic answer about "improving inventory accuracy". Which field was most likely missing?</p><div class="opts">
-    <button class="opt">ROLE</button>
-    <button class="opt">CONTEXT: details about your warehouses, data and tolerances</button>
-    <button class="opt">None. AI just gives generic answers</button></div>
-    <p class="why" hidden>Without context, AI can only give general advice. Specific background gets specific answers.</p></div>
-  <div class="q" data-a="2"><p class="qt">Which line most reduces the chance of a made-up answer?</p><div class="opts">
-    <button class="opt">"Be as detailed as possible."</button>
-    <button class="opt">"You are a world-class expert."</button>
-    <button class="opt">"Use only the data provided. If it can't be determined, say so."</button></div>
-    <p class="why" hidden>Explicitly allowing "I don't know" and restricting it to your data are the most effective ways to reduce hallucinations.</p></div>
-  <div class="q" data-a="0"><p class="qt">The first answer is 80% right. What should you do?</p><div class="opts">
-    <button class="opt">Tell it what to change in a follow-up message</button>
-    <button class="opt">Start a brand-new chat and retype everything</button>
-    <button class="opt">Accept it and fix the rest later</button></div>
-    <p class="why" hidden>The AI remembers the conversation. Targeted follow-ups are faster and usually better than starting over.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m4"></div>
+<div class="assign" data-assign="m4"></div>
+</section>
 <div class="mod-foot" data-foot="m4"></div>
 </section>
 
 <!-- ======================= M5 ======================= -->
 <section class="view" data-route="m5" id="view-m5" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 5 of 12 · Part 2: Talking to AI</p>
+  <p class="kicker">Module 5 of 14 · Part 2: Talking to AI</p>
   <h1>Working with data</h1>
   <p class="lede">Asking AI about data needs more care than asking it to write an email. This module covers how to give it your data and how to check the numbers that come back.</p>
   <p class="meta-row">About 30 minutes. Level: Intermediate.</p>
@@ -1106,34 +1084,18 @@ Show me the key steps you ran.</pre>
   <li>Always give a data dictionary, and always check row counts and totals first.</li>
   <li>Ask for formulas and steps, not just answers. They're checkable and reusable.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Take your anonymised practice file from Module 3. Clean it using the checklist. Write a data dictionary for it. Then use the "get the method" prompt to generate variance formulas, and apply them yourself in Excel. Tie the totals.</p>
-</div>
 
-<div class="quiz" data-quiz="m5"><h2>Quick quiz</h2>
-  <div class="q" data-a="0"><p class="qt">What should you ask for first after uploading a data file?</p><div class="opts">
-    <button class="opt">Row count, column names and a control total, so you know it read everything</button>
-    <button class="opt">The top 10 insights</button>
-    <button class="opt">A chart</button></div>
-    <p class="why" hidden>Confirming the AI loaded the full, correct data is the foundation. Everything after depends on it.</p></div>
-  <div class="q" data-a="2"><p class="qt">Why ask for a formula rather than an answer?</p><div class="opts">
-    <button class="opt">Formulas are more impressive in reports</button>
-    <button class="opt">AI cannot calculate at all</button>
-    <button class="opt">You can verify it, reuse it next month, and keep sensitive data out of the AI</button></div>
-    <p class="why" hidden>The method is checkable and repeatable. A number alone is neither.</p></div>
-  <div class="q" data-a="1"><p class="qt">Your seven warehouses send stock files with different layouts. What's the best first step?</p><div class="opts">
-    <button class="opt">Paste all seven into a chat and hope it figures it out</button>
-    <button class="opt">Standardise them into one clean table with a warehouse column</button>
-    <button class="opt">Analyse each one separately forever</button></div>
-    <p class="why" hidden>One clean, consistent table makes AI, formulas and PivotTables reliable. Module 7 shows how Power Query does this automatically.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m5"></div>
+<div class="assign" data-assign="m5"></div>
+</section>
 <div class="mod-foot" data-foot="m5"></div>
 </section>
 
 <!-- ======================= M6 ======================= -->
 <section class="view" data-route="m6" id="view-m6" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 6 of 12 · Part 3: AI for your audit work</p>
+  <p class="kicker">Module 6 of 14 · Part 3: AI for your audit work</p>
   <h1>Audit essentials</h1>
   <p class="lede">Before using AI on audit data, it helps to be clear about where errors come from, what to measure, and which warning signs to look for. Most of this module is about auditing rather than AI.</p>
   <p class="meta-row">About 35 minutes. Level: Intermediate.</p>
@@ -1257,40 +1219,37 @@ Show me the key steps you ran.</pre>
   </ul></div>
 </div>
 
+<h2>Choosing what to test: sampling</h2>
+<p>You can't check every invoice or recount every location, so auditors test a <b>sample</b> and use it to judge the whole population. AI and Excel make drawing a sample easy. Choosing the right kind of sample is your job.</p>
+<div class="tbl"><table><thead><tr><th>Type</th><th>How it works</th><th>Use it when</th></tr></thead><tbody>
+<tr><td><b>Random</b></td><td>Every item has the same chance of being picked</td><td>You want an unbiased view of the whole, for example "what share of GRNs are posted on time?"</td></tr>
+<tr><td><b>Risk-based (targeted)</b></td><td>You pick items most likely to be wrong or most costly: high value, unusual, flagged</td><td>You want to find problems, for example the top 25 invoices by value plus every invoice without a PO</td></tr>
+<tr><td><b>Stratified</b></td><td>You split the population into groups (by warehouse, by value band) and sample from each</td><td>You need every warehouse represented, not just the biggest</td></tr>
+</tbody></table></div>
+<p>A common approach combines them: test <b>all</b> items above a value threshold, plus a <b>random</b> sample of the rest, spread across all seven warehouses. Always record how you chose the sample, so someone else could repeat it.</p>
+<pre class="pr" data-label="Excel · draw a random sample of 25 rows">=TAKE(SORTBY(Invoices, RANDARRAY(ROWS(Invoices))), 25)</pre>
+<p>This shuffles the table and keeps the first 25 rows. The sample changes every time Excel recalculates, so copy it and use <b>Paste Values</b> straight away to freeze it. Record the date and method.</p>
+<pre class="pr" data-label="Prompt · design a sample">I need to test [GRN posting timeliness / invoice approval / count accuracy] across 7 warehouses. The population is [number] items, attached (anonymised).
+Suggest a sampling approach: what to test in full (e.g. above a value threshold), how many to sample at random from the rest, and how to spread it across warehouses. Explain your reasoning in plain terms, then draw the sample using code with a fixed random seed so it can be reproduced, and list the selected item IDs.</pre>
+<div class="callout tip"><span class="tag">Why a fixed seed</span><p>If AI draws the sample with code and a fixed "random seed", running the same code again gives the same sample. That makes your work repeatable, which matters when someone reviews it.</p></div>
 <div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Trace every odd number back to the step that created it: PO, GRN, putaway, invoice, payment, count.</li>
   <li>Track IRA, value-weighted and gross variance per warehouse, against each warehouse's own trend.</li>
   <li>Rule out timing, UOM, transfers and mis-slotting before calling anything a loss.</li>
   <li>Red flags are leads, not conclusions.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Put your last cycle count results into the calculator above. Then ask your AI assistant: <code>I audit 7 warehouses. [Paste anonymised IRA by warehouse.] What questions should I ask the two lowest-performing warehouse managers to find the root cause? Group them by: receiving, storage, picking, counting, system.</code></p>
-</div>
 
-<div class="quiz" data-quiz="m6"><h2>Quick quiz</h2>
-  <div class="q" data-a="2"><p class="qt">WH03 shows a shortage of exactly 24 units on a SKU sold in cases of 12. What is the most likely first explanation?</p><div class="opts">
-    <button class="opt">Theft of two cases</button>
-    <button class="opt">A random counting error</button>
-    <button class="opt">A unit-of-measure mismatch between cases and eaches</button></div>
-    <p class="why" hidden>Variances that are exact multiples of a pack size strongly suggest a UOM problem. Check before assuming loss.</p></div>
-  <div class="q" data-a="0"><p class="qt">Net variance for a warehouse is close to zero. Does that mean its records are accurate?</p><div class="opts">
-    <button class="opt">Not necessarily: large overages and shortages can cancel out. Check gross variance too</button>
-    <button class="opt">Yes, net variance is the definitive measure</button>
-    <button class="opt">Yes, as long as the count was done on time</button></div>
-    <p class="why" hidden>Offsetting errors hide in net figures. Gross variance and line-level accuracy show the real picture.</p></div>
-  <div class="q" data-a="1"><p class="qt">Four POs to one supplier on the same day, each between $4,900 and $4,990, with a $5,000 approval limit. What is this?</p><div class="opts">
-    <button class="opt">Normal ordering behaviour</button>
-    <button class="opt">A possible split purchase to avoid higher approval: a red flag worth investigating</button>
-    <button class="opt">Proof of fraud</button></div>
-    <p class="why" hidden>Clustering just under a limit is a classic split-PO pattern. Investigate, but it may have an innocent explanation.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m6"></div>
+<div class="assign" data-assign="m6"></div>
+</section>
 <div class="mod-foot" data-foot="m6"></div>
 </section>
 
 <!-- ======================= M7 ======================= -->
 <section class="view" data-route="m7" id="view-m7" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 7 of 12 · Part 3: AI for your audit work</p>
+  <p class="kicker">Module 7 of 14 · Part 3: AI for your audit work</p>
   <h1>Excel and AI</h1>
   <p class="lede">Most audit work happens in Excel. This module covers where AI fits in: writing formulas, using Copilot, and combining warehouse files with Power Query.</p>
   <p class="meta-row">About 40 minutes. Level: Intermediate.</p>
@@ -1350,6 +1309,7 @@ Explain why it fails in plain English, then give me the corrected formula.</pre>
   <li><strong>Close &amp; Load.</strong> You now have one table of all seven warehouses.</li>
   <li><strong>Next month: refresh.</strong> Replace the files in the folder, open the workbook and click <b>Data → Refresh All</b>. Every cleaning step reruns automatically.</li>
 </ol>
+<div class="callout good"><span class="tag">Practise on the training files first</span><p>The <a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/warehouse_files.zip" target="_blank" rel="noopener">warehouse files download</a> contains seven count files, one per warehouse, like the ones you receive each month. One of them (WH04) has a title row and a blank row above the headers, which is common in real files. In the Power Query editor, fix it in the sample-file query with <b>Remove Rows → Remove Top Rows</b> and <b>Use First Row as Headers</b>, or ask AI how to handle a file that's laid out differently from the rest. The combined table should have 829 rows.</p></div>
 <pre class="pr" data-label="Prompt · help with Power Query">I'm combining 7 warehouse stock files in Excel Power Query (From Folder). Each file has the same columns: [list].
 Problems: [e.g. WH04's file has 2 header rows / dates are text / SKU codes lose leading zeros].
 Give me step-by-step clicks in the Power Query editor to fix each problem. If a step needs M code, give me the exact code and tell me where to paste it.</pre>
@@ -1378,34 +1338,18 @@ Give me step-by-step clicks in the Power Query editor to fix each problem. If a 
   <li>Power Query combines seven warehouse files into one table that refreshes in one click.</li>
   <li>Conditional formatting, PivotTables and FILTER turn data into an exception report.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Set up a Power Query folder combine for at least two of your warehouse files (anonymised copies are fine). Add Var_Pct and Out_Of_Tolerance columns using formulas from the lab, then build a PivotTable of out-of-tolerance lines by warehouse.</p>
-</div>
 
-<div class="quiz" data-quiz="m7"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">You want to calculate total variance value per warehouse. Which tool is right?</p><div class="opts">
-    <button class="opt">The <code>=COPILOT()</code> function</button>
-    <button class="opt">A native formula like SUMIFS, or a PivotTable</button>
-    <button class="opt">Ask a chatbot to add it up from a pasted table</button></div>
-    <p class="why" hidden>Numerical work needs exact, repeatable calculation. Microsoft specifically advises against <code>=COPILOT()</code> for this.</p></div>
-  <div class="q" data-a="0"><p class="qt">What is the main benefit of combining warehouse files with Power Query?</p><div class="opts">
-    <button class="opt">Next month, you drop in new files and click Refresh. All cleaning steps rerun</button>
-    <button class="opt">It makes the files smaller</button>
-    <button class="opt">It uses AI to find fraud</button></div>
-    <p class="why" hidden>Power Query records your steps once and repeats them every refresh. That's what makes monthly audits fast and consistent.</p></div>
-  <div class="q" data-a="2"><p class="qt">A good use of <code>=COPILOT()</code> is…</p><div class="opts">
-    <button class="opt">Calculating unit price variance</button>
-    <button class="opt">Summing invoice totals</button>
-    <button class="opt">Sorting 800 free-text adjustment comments into five categories, then spot-checking</button></div>
-    <p class="why" hidden>Language tasks like classification are what it's designed for. Always spot-check a sample of results.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m7"></div>
+<div class="assign" data-assign="m7"></div>
+</section>
 <div class="mod-foot" data-foot="m7"></div>
 </section>
 
 <!-- ======================= M8 ======================= -->
 <section class="view" data-route="m8" id="view-m8" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 8 of 12 · Part 3: AI for your audit work</p>
+  <p class="kicker">Module 8 of 14 · Part 3: AI for your audit work</p>
   <h1>Audit playbooks</h1>
   <p class="lede">Six audit routines, each with the data you need, the steps, prompts you can copy and how to check the results. The module ends with a practice audit on sample data.</p>
   <p class="meta-row">About 45 minutes. Level: Intermediate to advanced.</p>
@@ -1443,7 +1387,7 @@ Give me step-by-step clicks in the Power Query editor to fix each problem. If a 
     <li><strong>Ask AI to find patterns.</strong> Upload the anonymised result, or use Copilot in the workbook, with the prompt below.</li>
     <li><strong>Verify the top patterns.</strong> For each pattern AI suggests, filter the rows yourself. Does it hold? Is there an innocent cause (timing, UOM, transfer)?</li>
     <li><strong>Compare to last month.</strong> Which warehouses improved or worsened? Trend matters more than one month.</li>
-    <li><strong>Draft the summary</strong> with AI (Module 9), then edit.</li>
+    <li><strong>Draft the summary</strong> with AI (Module 11), then edit.</li>
   </ol>
   <pre class="pr" data-label="Prompt · P1 pattern finding">You are an inventory audit analyst. Attached are this month's cycle count results for 7 warehouses (data dictionary below). Tolerance is ±2% per line.
 Using code:
@@ -1600,34 +1544,278 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
   <li>Language tasks like classifying adjustment reasons suit AI well.</li>
   <li>Treat every AI flag as a lead. Confirm against source documents before calling it a finding.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Pick the one playbook that matches your most time-consuming task. Run it once on real (anonymised where needed) data. Note how long it took compared to your usual method, and what AI got wrong. That note is the start of your Module 12 business case.</p>
-</div>
 
-<div class="quiz" data-quiz="m8"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">AI flags two invoices from the same supplier for $2,400.00 in consecutive months. What next?</p><div class="opts">
-    <button class="opt">Report a duplicate payment immediately</button>
-    <button class="opt">Check the POs and GRNs: it may be a legitimate monthly fee or standing order</button>
-    <button class="opt">Ignore it; AI is often wrong</button></div>
-    <p class="why" hidden>Recurring charges produce identical amounts legitimately. Verify against source documents before calling it a finding.</p></div>
-  <div class="q" data-a="0"><p class="qt">Why is the "normalise invoice numbers" step important?</p><div class="opts">
-    <button class="opt">Duplicates often slip through with small differences like dashes, leading zeros or suffixes</button>
-    <button class="opt">It makes the spreadsheet look tidier</button>
-    <button class="opt">The ERP requires it</button></div>
-    <p class="why" hidden>Systems usually block exact duplicates. Near-duplicates with formatting differences are the ones that get paid twice.</p></div>
-  <div class="q" data-a="2"><p class="qt">You have 180 POs for the quarter. Should you rely on a Benford's law test?</p><div class="opts">
-    <button class="opt">Yes, it works on any size dataset</button>
-    <button class="opt">Yes, and a mismatch proves manipulation</button>
-    <button class="opt">No, the dataset is too small for reliable results. Use threshold banding and clustering instead</button></div>
-    <p class="why" hidden>Guidance published by ISACA says datasets of 500 or fewer are generally unsuitable. Even on large sets, a mismatch only signals where to look.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m8"></div>
+<div class="assign" data-assign="m8"></div>
+</section>
 <div class="mod-foot" data-foot="m8"></div>
 </section>
 
 <!-- ======================= M9 ======================= -->
 <section class="view" data-route="m9" id="view-m9" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 9 of 12 · Part 4: Communicate &amp; automate</p>
+  <p class="kicker">Module 9 of 14 · Part 3: AI for your audit work</p>
+  <h1>Spend, stock and supplier playbooks</h1>
+  <p class="lede">Module 8 covered control checks: duplicates, splits, vendor records. This module covers the other half of a purchasing auditor's job: where the money goes, whether stock moving between warehouses arrives, what's sitting unused, and which suppliers deliver as promised.</p>
+  <p class="meta-row">About 40 minutes. Level: Intermediate.</p>
+</header>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
+  <li>Classify messy spend data and find spend that is coded to the wrong account</li>
+  <li>Reconcile transfers between warehouses and explain stock "lost in transit"</li>
+  <li>Identify slow-moving, obsolete and excess stock by warehouse</li>
+  <li>Measure supplier delivery performance (OTIF) and price variance</li>
+</ul></div>
+
+<p>All four playbooks use the <b>practice data pack</b>: fictional data for seven warehouses with problems planted in it. If you haven't downloaded it yet, get it from the <a href="#practice">Practice data</a> page. The assignment at the end of this module checks your answers against it.</p>
+
+<div class="tabs" role="tablist" id="pb2Tabs">
+  <button role="tab" aria-selected="true" aria-controls="pb7" id="pbt7">Spend analysis</button>
+  <button role="tab" aria-selected="false" aria-controls="pb8" id="pbt8">Transfers</button>
+  <button role="tab" aria-selected="false" aria-controls="pb9" id="pbt9">Slow and obsolete stock</button>
+  <button role="tab" aria-selected="false" aria-controls="pb10" id="pbt10">Supplier performance</button>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb7" aria-labelledby="pbt7">
+  <h3>P7 · Spend classification and analysis</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Know what you buy, from whom, and whether it's coded correctly</div>
+    <div><span class="label">When</span>Quarterly</div>
+    <div><span class="label">Data</span>AP lines with supplier, description, amount and GL code (<code>spend_lines.csv</code>)</div>
+    <div><span class="label">Output</span>Spend by category and supplier, miscoding list, savings ideas</div>
+  </div>
+  <p>Spend analysis is the most common use of AI in procurement. Indirect spend (things you buy that aren't stock: services, repairs, utilities, labour) is usually the messiest, because descriptions are free text and people pick whatever GL code gets the invoice paid. A large "Sundry" or "Miscellaneous" balance is a sign that nobody really knows what was bought.</p>
+  <ol class="steps">
+    <li><strong>Agree a short category list.</strong> 8 to 15 categories that mean something to your business, for example Packaging, MHE (forklift) maintenance, Facility services, Utilities, Temporary labour, Freight, IT, PPE. Keep it short enough to remember.</li>
+    <li><strong>Classify every line with AI.</strong> Use the prompt below. Ask for a confidence level, and review every "Low".</li>
+    <li><strong>Spot-check 20 lines</strong> across categories. If more than two are wrong, refine the category definitions and run again.</li>
+    <li><strong>Pivot.</strong> Spend by category, by supplier within category, and by GL code against category.</li>
+    <li><strong>Look for the stories:</strong> spend coded to Sundry; one category spread across many small suppliers (a chance to consolidate); categories with no contract; month-on-month jumps.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P7 spend classification">Classify each spend line into exactly one of these categories:
+Packaging materials | MHE maintenance &amp; parts | Facility services | Utilities | Temporary labour | Freight &amp; courier | IT &amp; telecoms | PPE &amp; safety | Other
+Use the description and supplier name. Descriptions are messy and may be in capitals or abbreviated (e.g. "FLT" = forklift, "LOLER" = lifting equipment inspection).
+Using code, return: Line_ID, Category, Confidence (High/Low). Then give me:
+1. Total spend by category, largest first.
+2. Total spend currently coded to GL 6999 Sundry, and how it splits across categories.
+3. For each category, the number of suppliers and their share of spend.
+Tell me how many lines you classified and the overall total so I can tie it out.</pre>
+  <div class="callout tip"><span class="tag">Why ask for a total</span><p>Classification can silently drop lines. If the category totals don't add up to the file total, something was missed.</p></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb8" aria-labelledby="pbt8" hidden>
+  <h3>P8 · Inter-warehouse transfer reconciliation</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Make sure stock sent between warehouses arrives, in full</div>
+    <div><span class="label">When</span>Weekly or monthly</div>
+    <div><span class="label">Data</span>Transfer log (<code>transfers.csv</code>) plus count results</div>
+    <div><span class="label">Output</span>Open and short transfers, by route and age</div>
+  </div>
+  <p>With seven warehouses, stock moves around constantly. Each transfer has two halves: the sending site ships it and the receiving site books it in. Problems show up in three ways:</p>
+  <ul>
+    <li><b>Shipped but never received.</b> Stock is "in transit" in the system for weeks. It may be lost, or received physically but not booked.</li>
+    <li><b>Received short.</b> Fewer units booked in than were shipped.</li>
+    <li><b>Moved but never recorded.</b> Someone moves stock without a transfer at all. The counts then show a shortage at one site and a matching surplus at another, for the same SKU, with no transfer record. This is the "opposite variances" pattern from Module 6.</li>
+  </ul>
+  <ol class="steps">
+    <li><strong>Age the open transfers.</strong> Days since ship date for every transfer without a receipt. Anything over your normal transit time (say 7 days) needs chasing; over 14 days is an exception.</li>
+    <li><strong>Compare shipped vs received</strong> quantities for completed transfers.</li>
+    <li><strong>Cross-check counts.</strong> For SKUs short at one site and over at another, check whether a transfer explains it.</li>
+    <li><strong>Summarise by route</strong> (from → to). Repeated problems on one route usually point to one site's receiving process.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P8 transfers">Using code on transfers.csv (snapshot date 31 October 2026):
+1. List transfers with no Receipt_Date that were shipped more than 14 days before the snapshot date, with days outstanding.
+2. List completed transfers where Qty_Received is less than Qty_Shipped, with the shortfall.
+3. Summarise both by route (From_WH to To_WH).
+Then, using cycle_counts.csv: find SKUs that are short in one warehouse and over by a similar quantity in another within 3 days, and say whether a transfer in transfers.csv explains it.</pre>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb9" aria-labelledby="pbt9" hidden>
+  <h3>P9 · Slow-moving, obsolete and excess stock</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Find money tied up in stock that isn't being used</div>
+    <div><span class="label">When</span>Quarterly, and before year end</div>
+    <div><span class="label">Data</span>Stock on hand with last movement date and usage (<code>stock_on_hand.csv</code>)</div>
+    <div><span class="label">Output</span>Ageing by warehouse, obsolete list, excess list, actions</div>
+  </div>
+  <p>Stock that doesn't move costs money: storage space, handling, insurance, and eventually a write-off. It is also a purchasing issue, because excess usually starts with buying too much. Two measures matter:</p>
+  <div class="tbl"><table><thead><tr><th>Measure</th><th>How to calculate</th><th>Typical rule</th></tr></thead><tbody>
+  <tr><td><b>Age since last movement</b></td><td>Snapshot date minus last movement date, in days</td><td>Buckets: 0–90, 91–180, 181–365, over 365 days. Over 365 with no usage is usually treated as obsolete.</td></tr>
+  <tr><td><b>Months of supply</b></td><td>Quantity on hand ÷ average monthly usage</td><td>Over 12 months is usually treated as excess (set your own threshold)</td></tr>
+  </tbody></table></div>
+  <ol class="steps">
+    <li><strong>Add the two calculated columns</strong> (ask AI for the formulas, or have it do it with code).</li>
+    <li><strong>Value each bucket by warehouse.</strong> A PivotTable of Stock_Value by WH and age bucket.</li>
+    <li><strong>List the top items</strong> by value in the over-365 and excess groups.</li>
+    <li><strong>Agree actions</strong> with warehouse and category managers: transfer to a site that uses it, return to supplier, sell, or write off. Also stop re-ordering it.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P9 ageing">Using code on stock_on_hand.csv (snapshot date 31 October 2026):
+1. Add Age_Days (snapshot minus Last_Movement_Date) and Age_Bucket (0-90, 91-180, 181-365, >365).
+2. Add Months_Of_Supply = Qty_On_Hand / Avg_Monthly_Usage (show "No usage" when usage is 0).
+3. Table: Stock_Value by WH and Age_Bucket, with totals.
+4. List lines over 365 days, largest value first, and lines with more than 12 months of supply.
+5. Which warehouse has the most value over 365 days?
+Give me the total Stock_Value so I can tie it out.</pre>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb10" aria-labelledby="pbt10" hidden>
+  <h3>P10 · Supplier delivery performance and price variance</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Know which suppliers deliver as promised, at the agreed price</div>
+    <div><span class="label">When</span>Monthly or quarterly supplier reviews</div>
+    <div><span class="label">Data</span>POs with promised dates, goods receipts, invoices</div>
+    <div><span class="label">Output</span>OTIF by supplier, price variance list, review agenda</div>
+  </div>
+  <p><b>OTIF</b> means "on time, in full": the share of orders delivered by the promised date, in the quantity ordered (and, for this course, in the unit ordered). It's the standard supplier delivery measure. <b>Purchase price variance (PPV)</b> is the difference between what you paid and what you agreed, either the PO price or the contract price.</p>
+  <ol class="steps">
+    <li><strong>Join POs to goods receipts</strong> on PO number. A line is on time if GRN date ≤ promised date, and in full if quantity received ≥ quantity ordered.</li>
+    <li><strong>Calculate OTIF by supplier.</strong> Ignore suppliers with very few orders (fewer than 5), where one late delivery swings the figure.</li>
+    <li><strong>Join invoices to POs</strong> and calculate price variance per line and in total by supplier.</li>
+    <li><strong>Prepare a review agenda</strong> for the worst performers: facts first, then questions.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P10 OTIF and price variance">Using code on po_register.csv, grn_register.csv and invoice_register.csv:
+1. Join POs to GRNs on PO_No. A PO is On_Time if GRN_Date &lt;= Promised_Date, In_Full if Qty_Received &gt;= Qty and the GRN UOM equals Order_UOM.
+2. OTIF % by Vendor_ID for vendors with at least 5 received POs, worst first. Also overall OTIF.
+3. Join invoices to POs and calculate price variance per line ((Invoice Unit_Price − PO Unit_Price) × Qty) and the total by vendor.
+4. For the three worst OTIF vendors, draft a short supplier review agenda with the facts and 5 questions.</pre>
+</div>
+
+<div class="widget" id="w-spend">
+  <div class="w-head"><span class="w-tag">Exercise 9.1</span><span class="w-title">Classify the spend line</span></div>
+  <div class="w-body">
+    <p class="w-hint">These descriptions come from the practice data. Choose the category for each one. This is the same judgement you'll ask AI to make on hundreds of lines, so you need to be able to check it.</p>
+    <div class="cards" id="spendCards"></div>
+    <div class="score" id="spendScore"></div>
+  </div>
+</div>
+
+<div class="takeaways"><h2>Summary</h2><ul>
+  <li>Spend analysis: short category list, AI classification with confidence, spot-check, then pivot. Watch the Sundry balance.</li>
+  <li>Transfers have two halves. Age the open ones, and match opposite count variances to transfers.</li>
+  <li>Age since last movement and months of supply find obsolete and excess stock.</li>
+  <li>OTIF and price variance make supplier reviews factual.</li>
+</ul></div>
+
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m9"></div>
+<div class="assign" data-assign="m9"></div>
+</section>
+<div class="mod-foot" data-foot="m9"></div>
+</section>
+
+<!-- ======================= M10 ======================= -->
+<section class="view" data-route="m10" id="view-m10" hidden>
+<header class="mod-head">
+  <p class="kicker">Module 10 of 14 · Part 3: AI for your audit work</p>
+  <h1>Case study: a month-end audit</h1>
+  <p class="lede">A walk-through of one complete October audit of the practice data, from receiving the files to sending the summary. It shows how the pieces from modules 3 to 9 fit together, and the points where AI got things wrong and how they were caught.</p>
+  <p class="meta-row">About 45 minutes. Level: Intermediate to advanced.</p>
+</header>
+<div class="outcomes"><h2>After this module you should be able to:</h2><ul>
+  <li>Plan a month-end audit across seven warehouses as a sequence of steps</li>
+  <li>Recognise the typical ways AI output goes wrong on real files, and catch them</li>
+  <li>Decide which findings matter most and present them in order</li>
+</ul></div>
+
+<p>The setting: it's the first week of November 2026. You have October's data from seven warehouses and five working days to produce the monthly audit pack. Every number below comes from the practice data, so you can reproduce each step yourself. The assignment at the end asks you to.</p>
+
+<h2>Day 1 · Collect, combine and tie out</h2>
+<p>The seven warehouses send their count files. You put them in one folder and combine them with Power Query (Module 7).</p>
+<div class="chat">
+  <div class="bubble you"><span class="who">You</span><p>[Uploads the 7 warehouse files] Combine these and tell me the row count per warehouse.</p></div>
+  <div class="bubble ai"><span class="who">AI</span><p>Combined 7 files, 832 rows. WH04 has 113 rows…</p></div>
+  <div class="bubble note">Your Power Query result says 829. WH04's file has a title line and a blank row above the headers, and the AI counted them as data. If you had accepted 832, every later percentage for WH04 would have been slightly wrong. This is why step one is always a control total from a source you trust.</div>
+  <div class="bubble you"><span class="who">You</span><p>WH04's file has a title row and a blank row above the header. Skip them and recount.</p></div>
+  <div class="bubble ai"><span class="who">AI</span><p>Corrected: 829 rows. WH04 has 110.</p></div>
+</div>
+<div class="callout good"><span class="tag">Lesson</span><p>AI handles the common case well and the messy case badly. One file in seven with a slightly different layout is normal in real life. Tie out every time.</p></div>
+
+<h2>Day 2 · Stock accuracy</h2>
+<p>With the formulas from Module 7 you calculate variance and tolerance for every line, then run Playbook P1 (Module 8).</p>
+<div class="tbl"><table><thead><tr><th>Warehouse</th><th class="num">Accuracy</th><th class="num">Gross variance</th><th>What the patterns show</th></tr></thead><tbody>
+<tr><td>WH05 Port</td><td class="num">87.1%</td><td class="num">$19,216</td><td>14 variances are exact multiples of the case size: a unit-of-measure problem</td></tr>
+<tr><td>WH03 East</td><td class="num">92.3%</td><td class="num">$15,898</td><td>Counter C17 has 9 of 30 lines out of tolerance; everyone else at WH03 is close to target</td></tr>
+<tr><td>WH07 Cold Store</td><td class="num">94.0%</td><td class="num">$22,224</td><td>Four high-value A items short, all in the same direction</td></tr>
+<tr><td>WH06 West</td><td class="num">94.7%</td><td class="num">$41,348</td><td>Surpluses on three SKUs that match shortages at WH02</td></tr>
+<tr><td>WH04 South</td><td class="num">95.5%</td><td class="num">$30,757</td><td>One SKU short 40 in A-12-03 and over 40 in A-21-03: mis-slotted</td></tr>
+<tr><td>WH02 North</td><td class="num">95.8%</td><td class="num">$41,449</td><td>The matching shortages for WH06's surpluses</td></tr>
+<tr><td>WH01 Central DC</td><td class="num">96.7%</td><td class="num">$11,092</td><td>Scattered small errors, no pattern</td></tr>
+</tbody></table></div>
+<p>The network is at <b>93.5%</b> (54 of 829 lines outside tolerance) against a 98% target. Gross variance is <b>$181,984</b>, but net variance is only <b>−$13,405</b>. Most of the gross figure is stock in the wrong place rather than stock that's gone.</p>
+<div class="chat">
+  <div class="bubble ai"><span class="who">AI</span><p>WH07 shows shortages on high-value items, suggesting possible theft.</p></div>
+  <div class="bubble note">The pattern is real, but "theft" is a conclusion the data can't support. Four one-directional shortages on portable, high-value items is a red flag for a recount and a security review, not an accusation. The finding should say what the data shows.</div>
+  <div class="bubble ai"><span class="who">AI</span><p>WH04 has a net variance close to zero for SKU-10219, so it's accurate.</p></div>
+  <div class="bubble note">Net zero hides two large errors that cancel out. Gross variance and line-level accuracy show what's going on, which is why Module 6 told you to track both.</div>
+</div>
+
+<h2>Day 3 · Purchase to pay</h2>
+<p>You run Playbooks P2 (duplicates), P3 (split POs) and a three-way match check on the PO, GRN and invoice registers.</p>
+<ul>
+  <li><b>Five near-duplicate invoices</b> worth $26,100: a letter suffix (33071 / 33071A), leading zeros (INV-00451 / 451), transposed digits (88213 / 88231), the same invoice entered under a duplicate supplier record (V009 / V049), and the same amount three days apart.</li>
+  <li><b>Four split-PO clusters</b>, all by requester R07 at WH03: 11 POs between $4,600 and $4,990, $52,332 in total, against a $5,000 approval limit.</li>
+  <li><b>Six invoices with no PO</b> totalling $51,950. Three, worth $43,950, are from V051, a supplier created on 22 September.</li>
+  <li><b>Four invoices</b> charging for more than was received, <b>five</b> priced more than 2% above the PO, <b>two</b> dated before their PO, and one PO for 10 cases received as 120 eaches.</li>
+</ul>
+<div class="chat">
+  <div class="bubble ai"><span class="who">AI</span><p>I also found 11 further pairs with the same supplier and amount within 30 days.</p></div>
+  <div class="bubble note">You check a sample: they are repeat orders with their own POs and receipts. The prompt's rule (a) was too broad on its own. You refine it: same supplier and amount, AND the same PO or no PO. The real list drops to the five.</div>
+</div>
+
+<h2>Day 4 · Vendors, transfers, stock health, suppliers</h2>
+<ul>
+  <li><b>Vendor master:</b> three duplicate pairs (V009/V049, V022/V050, V015/V044), five records without a tax ID, seven dormant suppliers. V051 stands out: new, no tax ID, PO box address, $43,950 invoiced, none of it on a PO. That combination goes to your manager today, not in the monthly pack.</li>
+  <li><b>Transfers:</b> five shipped more than 14 days ago and never received; three received short. The WH02/WH06 opposite variances have no transfer record at all, so stock was moved without one.</li>
+  <li><b>Stock health:</b> 34 lines worth $539,007 haven't moved in over a year, most of it in WH07. 26 lines hold more than 12 months of supply.</li>
+  <li><b>Suppliers:</b> overall OTIF is 88.1%; V012 is at 31.2%.</li>
+  <li><b>Spend:</b> $161,600 of $645,161 indirect spend is coded to 6999 Sundry. Temporary labour is the largest category.</li>
+</ul>
+
+<h2>Day 5 · Prioritise and write up</h2>
+<p>You have more than fifteen issues. A pack that lists them all equally will be skimmed. You rank them by <b>money at risk</b>, <b>control weakness</b> (could it happen again?) and <b>urgency</b>.</p>
+<div class="tbl"><table><thead><tr><th>Priority</th><th>Finding</th><th>Why it ranks here</th></tr></thead><tbody>
+<tr><td>Escalate now</td><td>V051: new supplier, no tax ID, PO box, $43,950 paid without POs</td><td>Several fraud indicators together; money still going out</td></tr>
+<tr><td>1</td><td>Split POs by R07, $52,332</td><td>Approval control bypassed repeatedly</td></tr>
+<tr><td>2</td><td>Duplicate invoices, $26,100</td><td>Recoverable cash; matching control has gaps</td></tr>
+<tr><td>3</td><td>WH05 unit-of-measure errors, accuracy 87.1%</td><td>System setting; will keep happening until fixed</td></tr>
+<tr><td>4</td><td>$539,007 of stock unmoved for a year</td><td>Large value; write-off risk at year end</td></tr>
+<tr><td>5</td><td>Transfers not received; stock moved without transfers</td><td>Explains much of the gross variance; process gap</td></tr>
+</tbody></table></div>
+<p>The other items (counter retraining, mis-slot, OTIF review with V012, Sundry coding, vendor clean-up) go in a "for action by site and category owners" table.</p>
+<pre class="pr" data-label="The management summary you send (AI-drafted, then edited)">October inventory and purchasing audit: 7 warehouses
+
+Network stock accuracy was 93.5% against a 98% target (54 of 829 count lines outside tolerance). Most of the $181,984 gross variance is stock in the wrong place: net variance is −$13,405.
+
+Escalated separately today: supplier V051 (created 22 Sep, no tax ID, PO box address) has been paid $43,950 on three invoices with no purchase orders.
+
+Top findings
+1. Approval limit bypassed: 11 POs by one requester at WH03, each just under $5,000, total $52,332.
+2. Duplicate invoices: 5 pairs, $26,100, recoverable. Matching rules need tightening for suffixes and duplicate supplier records.
+3. WH05 accuracy 87.1%: 14 errors are case/each mix-ups. Fix: receiving screen default unit.
+4. $539,007 of stock (34 lines, mostly WH07) has not moved for over a year.
+5. 5 transfers not received after 14+ days; 3 SKUs moved WH02→WH06 with no transfer posted.
+
+Decisions needed: approve recount at WH07 and supplier review with V012 (OTIF 31.2%).</pre>
+<div class="callout rule"><span class="tag">What made this work</span><p>AI did the searching, joining and first drafts in minutes. You caught four AI errors: a miscounted file, an unsupported "theft" conclusion, a net figure hiding errors, and 11 false duplicates. Each was caught by the same habit: check totals, look at the underlying rows, and only state what the data supports.</p></div>
+
+<div class="takeaways"><h2>Summary</h2><ul>
+  <li>A month-end audit is a sequence: tie out, accuracy, purchase-to-pay, vendors and stock health, prioritise, write up.</li>
+  <li>Expect AI to stumble on messy files, overreach on conclusions and over-flag. Your checks catch it.</li>
+  <li>Rank findings by money, control weakness and urgency. Escalate urgent fraud indicators immediately.</li>
+  <li>A one-page summary with decisions needed beats a long list.</li>
+</ul></div>
+
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m10"></div>
+<div class="assign" data-assign="m10"></div>
+</section>
+<div class="mod-foot" data-foot="m10"></div>
+</section>
+
+<!-- ======================= M9 ======================= -->
+<section class="view" data-route="m11" id="view-m11" hidden>
+<header class="mod-head">
+  <p class="kicker">Module 11 of 14 · Part 4: Reporting and automation</p>
   <h1>Reporting findings</h1>
   <p class="lede">This module covers writing up what you find: structuring a finding, adapting it for different readers, and picking the right chart.</p>
   <p class="meta-row">About 30 minutes. Level: Intermediate.</p>
@@ -1708,36 +1896,36 @@ Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask a
 </tbody></table></div>
 <div class="prose"><p>Ask AI: <code>I want to show [point] to [audience]. My data has [columns]. What chart should I use and how should I set it up in Excel?</code></p></div>
 
+<h2>Recording your use of AI</h2>
+<p>When AI helps with audit work, someone may later ask how a number or a conclusion was reached. "The AI said so" isn't an answer an auditor can give. Keep a simple log and make sure every finding traces back to system records, not to AI output.</p>
+<div class="tbl"><table><thead><tr><th>Record</th><th>Example</th></tr></thead><tbody>
+<tr><td>Date, tool and version</td><td>4 Nov 2026, Microsoft 365 Copilot (company licence)</td></tr>
+<tr><td>Data used</td><td>October cycle counts, 829 rows, anonymised supplier names</td></tr>
+<tr><td>What you asked</td><td>The prompt, or a link to where it's saved</td></tr>
+<tr><td>What AI produced</td><td>Exception list of 54 lines; draft summary</td></tr>
+<tr><td>How you checked it</td><td>Row count and gross variance tied to Excel; 10 lines checked against the WMS</td></tr>
+<tr><td>What you changed</td><td>Removed "possible theft" wording; corrected WH04 row count</td></tr>
+</tbody></table></div>
+<p>A spreadsheet with these six columns is enough. It protects you, helps a reviewer, and makes the same work quicker to repeat next month. Follow your company's policy on whether to state in reports that AI was used; when in doubt, a short line such as "Analysis prepared with AI assistance and verified against system records" is honest and sufficient.</p>
+<pre class="pr" data-label="Prompt · end-of-task log entry">Summarise what we did in this conversation as a log entry with these fields: Date, Tool, Data used (file names, row counts), What I asked, What you produced, Checks I should record, Anything you were unsure about. Keep it short and factual.</pre>
 <div class="takeaways prose"><h2>Summary</h2><ul>
   <li>Structure every finding: Condition, Criteria, Cause, Effect, Corrective action.</li>
   <li>Let AI adapt one finding for each audience. You keep the facts fixed.</li>
   <li>Describe processes, not people.</li>
   <li>Bar charts for comparing warehouses, lines for trends, tables for exceptions.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Take one real issue from your recent audits. Run it through the finding builder, polish it with AI, and compare it to how you would normally have written it. Use the improved version in your next report.</p>
-</div>
 
-<div class="quiz" data-quiz="m9"><h2>Quick quiz</h2>
-  <div class="q" data-a="2"><p class="qt">Which element answers "why did this happen?"</p><div class="opts">
-    <button class="opt">Condition</button><button class="opt">Effect</button><button class="opt">Cause</button></div>
-    <p class="why" hidden>Cause is the root reason. Effect is the consequence, and Condition is what you observed.</p></div>
-  <div class="q" data-a="0"><p class="qt">Which phrasing is better in a finding?</p><div class="opts">
-    <button class="opt">"Receiving at WH05 does not confirm unit of measure, leading to case/each errors."</button>
-    <button class="opt">"The WH05 receiving team is careless with units."</button>
-    <button class="opt">"Somebody at WH05 is getting UOM wrong."</button></div>
-    <p class="why" hidden>Process-focused language is factual and invites a fix rather than defensiveness.</p></div>
-  <div class="q" data-a="1"><p class="qt">Best chart to compare accuracy across seven warehouses?</p><div class="opts">
-    <button class="opt">A pie chart</button><button class="opt">A sorted bar chart with a target line</button><button class="opt">A 3D column chart</button></div>
-    <p class="why" hidden>Sorted bars make ranking obvious, and the target line shows who is on or off track instantly.</p></div>
-</div>
-<div class="mod-foot" data-foot="m9"></div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m11"></div>
+<div class="assign" data-assign="m11"></div>
+</section>
+<div class="mod-foot" data-foot="m11"></div>
 </section>
 
 <!-- ======================= M10 ======================= -->
-<section class="view" data-route="m10" id="view-m10" hidden>
+<section class="view" data-route="m12" id="view-m12" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 10 of 12 · Part 4: Communicate &amp; automate</p>
+  <p class="kicker">Module 12 of 14 · Part 4: Reporting and automation</p>
   <h1>Automation</h1>
   <p class="lede">Once a check works and you trust the results, you can stop doing it by hand. This module covers what's worth automating, how to go about it, and where AI agents fit in.</p>
   <p class="meta-row">About 35 minutes. Level: Advanced.</p>
@@ -1825,34 +2013,18 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
   <li>Automate frequent, rule-based tasks with standard inputs first.</li>
   <li>Approvals, thresholds, audit trails and failure alerts are non-negotiable.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Score your three most repetitive tasks in the lab above. For the highest scorer, use the "design your first flow" prompt and write down the steps. You don't need to build it yet; having the design ready is what makes the conversation with IT easy.</p>
-</div>
 
-<div class="quiz" data-quiz="m10"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">Which task is the best first candidate for automation?</p><div class="opts">
-    <button class="opt">Deciding whether a warehouse manager's explanation is acceptable</button>
-    <button class="opt">Collecting seven files every Monday and refreshing the same report</button>
-    <button class="opt">A one-off investigation into a supplier</button></div>
-    <p class="why" hidden>Frequent, rule-based, standard-input tasks are ideal. Judgement calls and one-offs are not.</p></div>
-  <div class="q" data-a="0"><p class="qt">An AI agent proposes a stock write-off of $3,200. What should happen?</p><div class="opts">
-    <button class="opt">A person reviews and approves it before it is posted</button>
-    <button class="opt">It posts automatically if the agent is confident</button>
-    <button class="opt">It is ignored</button></div>
-    <p class="why" hidden>Anything that changes records or money needs human approval and an audit trail.</p></div>
-  <div class="q" data-a="2"><p class="qt">In the Monday digest, why is the AI summary emailed to you first, not straight to managers?</p><div class="opts">
-    <button class="opt">Email systems require it</button>
-    <button class="opt">AI cannot send emails</button>
-    <button class="opt">So you can check the AI-written summary before others rely on it</button></div>
-    <p class="why" hidden>AI drafts, you decide. The review step keeps accuracy and accountability with you.</p></div>
-</div>
-<div class="mod-foot" data-foot="m10"></div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m12"></div>
+<div class="assign" data-assign="m12"></div>
+</section>
+<div class="mod-foot" data-foot="m12"></div>
 </section>
 
 <!-- ======================= M11 ======================= -->
-<section class="view" data-route="m11" id="view-m11" hidden>
+<section class="view" data-route="m13" id="view-m13" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 11 of 12 · Part 5: Going further</p>
+  <p class="kicker">Module 13 of 14 · Part 5: Going further</p>
   <h1>Advanced AI</h1>
   <p class="lede">You don't need to build any of these systems, but you'll be in conversations about them with IT, vendors and your managers. This module gives you enough background to ask good questions.</p>
   <p class="meta-row">About 35 minutes. Level: Advanced.</p>
@@ -1876,6 +2048,15 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
 </div>
 
 <div class="prose">
+<h2>Six more things worth knowing</h2>
+<div class="two">
+  <div class="panel"><h4>Knowledge cutoff</h4><p>A model learns from data up to a certain date and knows nothing after it unless it can search the web. Ask about this year's regulations or a supplier's latest news without web search and you may get an out-of-date or invented answer. Check whether the tool searched, and open its sources.</p></div>
+  <div class="panel"><h4>Reasoning ("thinking") models</h4><p>Many assistants now offer a mode that works through a problem step by step before answering. It's slower but noticeably better at multi-step analysis, such as reconciling two files or checking a calculation. Use it for analysis; use the fast mode for drafting and simple questions.</p></div>
+  <div class="panel"><h4>Images and documents</h4><p>Most assistants can read photos, scans and PDFs: a photo of a damaged delivery note, a scanned invoice, a screenshot of an ERP screen. Useful for extracting fields quickly. Check extracted numbers carefully, especially handwriting and faint scans.</p></div>
+  <div class="panel"><h4>Why answers vary</h4><p>Ask the same question twice and you may get different wording, or occasionally different numbers. For audit work that needs to be repeatable, keep the calculation in Excel formulas or in code the AI writes and you save, not in the chat answer.</p></div>
+  <div class="panel"><h4>Bias in, bias out</h4><p>Models and predictive tools learn from past data. If past decisions were skewed (say, one supplier always favoured, or one warehouse audited more than others), a model trained on them can repeat the skew. Ask what data a tool learned from.</p></div>
+  <div class="panel"><h4>Rules and governance</h4><p>Regulation of AI is growing. The EU AI Act, in force since 2024, applies its requirements in phases and is stricter for higher-risk uses. ISO/IEC 42001 is a management standard for organisations using AI. Day to day, your company's AI policy is the rulebook that matters most; regulations mostly shape what that policy says.</p></div>
+</div>
 <h2>How to judge whether an AI tool is accurate</h2>
 <p>Vendors often quote one accuracy figure. For audit tools that flag problems, you need two:</p>
 </div>
@@ -1954,30 +2135,18 @@ Include sections: Business problem, Proposed solution, Data and access needed, R
   <li>Ask vendors for evidence on your own data, explainability, audit trails and data handling.</li>
   <li>The skills that grow in value are supervising, verifying and interpreting AI.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Find out which AI features your ERP, WMS or AP system already has, perhaps switched off. Ask the system owner two questions from the vendor list above. If your assistant supports it, set up a first version of your audit helper with your data dictionary and finding template.</p>
-</div>
 
-<div class="quiz" data-quiz="m11"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">A tool flags 200 invoices; 10 are real duplicates. What is the problem?</p><div class="opts">
-    <button class="opt">Low recall</button><button class="opt">Low precision: 95% of flags are false alarms</button><button class="opt">Nothing; more flags are always safer</button></div>
-    <p class="why" hidden>Precision = 10 ÷ 200 = 5%. Your team would waste time and soon stop trusting the tool.</p></div>
-  <div class="q" data-a="2"><p class="qt">What does RAG let an AI assistant do?</p><div class="opts">
-    <button class="opt">Run faster</button><button class="opt">Work offline</button><button class="opt">Answer from your company's documents and cite them</button></div>
-    <p class="why" hidden>Retrieval-augmented generation searches your documents first and grounds the answer in them, reducing made-up answers.</p></div>
-  <div class="q" data-a="0"><p class="qt">A vendor claims "99% accuracy". What's the best response?</p><div class="opts">
-    <button class="opt">Ask how it was measured, what precision and recall are, and whether you can pilot on your data</button>
-    <button class="opt">Accept it; vendors are regulated</button>
-    <button class="opt">Reject the vendor</button></div>
-    <p class="why" hidden>A single accuracy figure can hide a lot. Evidence on your own data is what counts.</p></div>
-</div>
-<div class="mod-foot" data-foot="m11"></div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m13"></div>
+<div class="assign" data-assign="m13"></div>
+</section>
+<div class="mod-foot" data-foot="m13"></div>
 </section>
 
 <!-- ======================= M12 ======================= -->
-<section class="view" data-route="m12" id="view-m12" hidden>
+<section class="view" data-route="m14" id="view-m14" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 12 of 12 · Part 5: Going further</p>
+  <p class="kicker">Module 14 of 14 · Part 5: Going further</p>
   <h1>Your 90-day plan</h1>
   <p class="lede">The last module turns the course into a plan: what to measure, what to do over the next 90 days, and a final project you can show your manager.</p>
   <p class="meta-row">About 30 minutes. Suitable for all levels.</p>
@@ -2060,7 +2229,7 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
       <h3>AI for Procurement &amp; Warehouse Auditing</h3>
       <p style="margin:.4rem 0">This confirms that</p>
       <div class="nm" id="certNm">Your name</div>
-      <p style="margin:.6rem 0 0;color:var(--ink-2)">completed all 12 modules: AI foundations, safe use, prompting, data work, audit playbooks, reporting, automation and advanced AI.</p>
+      <p style="margin:.6rem 0 0;color:var(--ink-2)">completed all 14 modules, their tests and assignments, and the final assessment: AI foundations, safe use, prompting, data work, audit playbooks, a full case study, reporting, automation and advanced AI.</p>
       <p class="label" style="margin-top:14px" id="certDate"></p>
     </div>
   </div>
@@ -2073,19 +2242,11 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
   <li>Keep verifying, keep the human in charge, and keep learning.</li>
 </ul></div>
 
-<div class="quiz" data-quiz="m12"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">What is the most convincing way to show the value of AI in your work?</p><div class="opts">
-    <button class="opt">Tell people AI is the future</button>
-    <button class="opt">Show before-and-after time and issues found, plus how you verify results</button>
-    <button class="opt">Use AI for every task, visibly</button></div>
-    <p class="why" hidden>Measured results and a clear control process earn trust much faster than enthusiasm.</p></div>
-  <div class="q" data-a="0"><p class="qt">Which statement best sums up this course?</p><div class="opts">
-    <button class="opt">AI finds, sorts and drafts quickly; you verify the facts and own the decisions</button>
-    <button class="opt">AI will do the audit for you</button>
-    <button class="opt">AI is too risky to use for audit work</button></div>
-    <p class="why" hidden>That's the approach the whole course is built on.</p></div>
-</div>
-<div class="mod-foot" data-foot="m12"></div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m14"></div>
+<div class="assign" data-assign="m14"></div>
+</section>
+<div class="mod-foot" data-foot="m14"></div>
 </section>
 
 <!-- ======================= LIBRARY ======================= -->
@@ -2165,13 +2326,428 @@ Tone: factual and modest, numbers first. Under 300 words with a short table of b
   <li><a href="https://witness.ai/blog/is-chatgpt-safe-for-business-use/" target="_blank" rel="noopener">WitnessAI: Is ChatGPT safe for business use?</a></li>
   <li><a href="https://nhimg.org/articles/llm-hallucinations-can-mimic-data-leaks-in-enterprise-ai/" target="_blank" rel="noopener">NHIMG: LLM hallucinations in enterprise AI</a> <span class="mono">· Air Canada ruling context</span></li>
 </ul>
-<div class="callout tip"><span class="tag">A note on the figures</span><p>Many statistics about AI in procurement come from vendors with a commercial interest. This course uses them to show direction, labels them where relevant, and does not present vendor performance claims as fact. Your own before-and-after measurements (Module 12) are the figures that matter most.</p></div>
+<div class="callout tip"><span class="tag">A note on the figures</span><p>Many statistics about AI in procurement come from vendors with a commercial interest. This course uses them to show direction, labels them where relevant, and does not present vendor performance claims as fact. Your own before-and-after measurements (Module 14) are the figures that matter most.</p></div>
 </div>
+</section>
+
+<!-- ======================= PRACTICE DATA ======================= -->
+<section class="view" data-route="practice" id="view-practice" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Practice data</h1>
+  <p class="lede">A complete set of fictional audit data for a distributor with seven warehouses, August to October 2026. Problems have been planted in it on purpose. The assignments in modules 2 to 10 ask you to find them and check your answers.</p>
+</header>
+<div class="callout rule"><span class="tag">All invented</span><p>Every supplier, person, code and number in these files is made up. That makes the pack safe to use in any AI tool, including ones your company hasn't approved for real data.</p></div>
+<h2>Download</h2>
+<ul>
+  <li><a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/practice_pack.xlsx" target="_blank" rel="noopener"><b>practice_pack.xlsx</b></a>: everything in one Excel workbook, one sheet per file. Best for Excel and Copilot.</li>
+  <li><a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/practice_pack.zip" target="_blank" rel="noopener"><b>practice_pack.zip</b></a>: the same data as separate CSV files, plus the workbook. Best for uploading to an AI assistant.</li>
+  <li><a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/warehouse_files.zip" target="_blank" rel="noopener"><b>warehouse_files.zip</b></a>: October counts split into seven files, one per warehouse, for the Power Query exercise in Module 7.</li>
+</ul>
+<p>If a link opens the file in your browser instead of downloading it, right-click it and choose "Save link as".</p>
+<h2>What's in the pack</h2>
+<div class="tbl"><table><thead><tr><th>File</th><th class="num">Rows</th><th>Contents</th><th>Used in</th></tr></thead><tbody>
+<tr><td><code>cycle_counts</code></td><td class="num">829</td><td>October counts: warehouse, location, SKU, case size, ABC class, unit cost, system and counted quantity, counter</td><td>Modules 5–7, 10</td></tr>
+<tr><td><code>po_register</code></td><td class="num">422</td><td>Purchase orders with requester, order unit, value, promised date and approver</td><td>Modules 8–10</td></tr>
+<tr><td><code>grn_register</code></td><td class="num">419</td><td>Goods receipts against POs, with the unit they were posted in</td><td>Modules 8–10</td></tr>
+<tr><td><code>invoice_register</code></td><td class="num">430</td><td>Supplier invoices; a blank PO number means no purchase order</td><td>Modules 3, 8, 10</td></tr>
+<tr><td><code>vendor_master</code></td><td class="num">51</td><td>Supplier records with masked bank details, tax ID, created date and last transaction</td><td>Modules 8, 10</td></tr>
+<tr><td><code>transfers</code></td><td class="num">120</td><td>Inter-warehouse transfers; a blank receipt date means not received</td><td>Modules 9, 10</td></tr>
+<tr><td><code>stock_on_hand</code></td><td class="num">595</td><td>Stock by warehouse at 31 October with last movement date and monthly usage</td><td>Modules 9, 10</td></tr>
+<tr><td><code>spend_lines</code></td><td class="num">154</td><td>Indirect spend from accounts payable, with messy descriptions and GL codes</td><td>Module 9</td></tr>
+</tbody></table></div>
+<h2>Rules used in the data</h2>
+<ul>
+  <li>Count tolerance is ±2% per line. Variance = counted minus system (negative means stock is missing).</li>
+  <li>PO approval limit is $5,000 for a manager and $20,000 for a director.</li>
+  <li>Snapshot date for stock and open items is 31 October 2026. Dates are written YYYY-MM-DD.</li>
+  <li>Unit costs are per each (EA). Case_Size is the number of eaches in a case.</li>
+</ul>
+<p>An answer key is included in the download (<code>ANSWER_KEY.md</code>). Try the assignments before you open it.</p>
+</section>
+
+<!-- ======================= QUICK REFERENCE ======================= -->
+<section class="view" data-route="quickref" id="view-quickref" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Quick reference</h1>
+  <p class="lede">The course on one page: the checklists you'll use most often once you've finished the modules.</p>
+</header>
+<div class="two">
+  <div class="panel"><h3>Writing a request (Module 4)</h3><ul>
+    <li><b>Role:</b> who the AI should act as</li>
+    <li><b>Task:</b> exactly what to do</li>
+    <li><b>Context:</b> your data, rules, tolerances</li>
+    <li><b>Format:</b> table, bullets, length</li>
+    <li><b>Checks:</b> use only my data; say if unsure; give row counts</li>
+  </ul></div>
+  <div class="panel"><h3>Before sharing data (Module 3)</h3><ul>
+    <li><b>Green:</b> general questions, made-up or public data. Any approved tool.</li>
+    <li><b>Amber:</b> internal data. Company-approved tool only.</li>
+    <li><b>Red:</b> prices, bank details, personal data, NDA material. Never, unless policy allows.</li>
+    <li>When unsure: anonymise, or ask for the method and apply it yourself.</li>
+  </ul></div>
+  <div class="panel"><h3>Checking AI output (Module 3)</h3><ol>
+    <li>Tie row counts and totals to Excel</li>
+    <li>Spot-check 5–10 rows by hand</li>
+    <li>Ask how it got the answer</li>
+    <li>Ask it to review its own answer</li>
+    <li>Trace findings to system records</li>
+  </ol></div>
+  <div class="panel"><h3>Clean data (Module 5)</h3><ul>
+    <li>One header row, no merged cells</li>
+    <li>One row per record, one type per column</li>
+    <li>Units stated in headers</li>
+    <li>A warehouse column</li>
+    <li>A data dictionary in the prompt</li>
+  </ul></div>
+  <div class="panel"><h3>Audit routines (Modules 8–9)</h3><ul>
+    <li>P1 Monthly variance review</li>
+    <li>P2 Duplicate invoices</li>
+    <li>P3 Split POs</li>
+    <li>P4 Vendor master</li>
+    <li>P5 Risk-based counts</li>
+    <li>P6 Adjustment reasons</li>
+    <li>P7 Spend · P8 Transfers · P9 Stock age · P10 Suppliers</li>
+  </ul></div>
+  <div class="panel"><h3>Writing a finding (Module 11)</h3><ul>
+    <li><b>Condition:</b> what you found</li>
+    <li><b>Criteria:</b> what it should be</li>
+    <li><b>Cause:</b> why it happened</li>
+    <li><b>Effect:</b> why it matters</li>
+    <li><b>Corrective action:</b> who, what, by when</li>
+  </ul></div>
+</div>
+<h2>Formulas you'll use most</h2>
+<div class="tbl"><table><thead><tr><th>Need</th><th>Formula</th></tr></thead><tbody>
+<tr><td>Variance %</td><td><code>=IF([@Sys_Qty]=0,IF([@Cnt_Qty]=0,0,1),([@Cnt_Qty]-[@Sys_Qty])/[@Sys_Qty])</code></td></tr>
+<tr><td>Outside ±2%</td><td><code>=IF(ABS([@Var_Pct])&gt;2%,"YES","NO")</code></td></tr>
+<tr><td>Case-size multiple</td><td><code>=AND([@Var_Qty]&lt;&gt;0,MOD(ABS([@Var_Qty]),[@Case_Size])=0)</code></td></tr>
+<tr><td>Gross variance for a warehouse</td><td><code>=SUMPRODUCT((Counts[WH]="WH05")*ABS(Counts[Var_Value]))</code></td></tr>
+<tr><td>Possible duplicate</td><td><code>=COUNTIFS(Inv[Vendor_ID],[@Vendor_ID],Inv[Amount],[@Amount])&gt;1</code></td></tr>
+<tr><td>Invoice with no PO</td><td><code>=IF([@PO_No]="","NO PO","")</code></td></tr>
+<tr><td>Days since last movement</td><td><code>=DATE(2026,10,31)-[@Last_Movement_Date]</code></td></tr>
+<tr><td>Random sample of 25</td><td><code>=TAKE(SORTBY(Tbl,RANDARRAY(ROWS(Tbl))),25)</code></td></tr>
+</tbody></table></div>
+</section>
+
+<!-- ======================= TROUBLESHOOTING ======================= -->
+<section class="view" data-route="help" id="view-help" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Troubleshooting</h1>
+  <p class="lede">Common problems when using AI for data work, and what to do about them.</p>
+</header>
+<div class="tbl"><table><thead><tr><th>Problem</th><th>What to try</th></tr></thead><tbody>
+<tr><td>The Copilot button in Excel is missing or greyed out</td><td>Copilot needs a Microsoft 365 Copilot licence, and the file saved in OneDrive or SharePoint with AutoSave on. Format the data as a table (Ctrl+T). If it's still missing, ask IT whether your licence includes it.</td></tr>
+<tr><td>"I can't open that file" or the upload fails</td><td>Check the file size limit of your tool. Save as CSV instead of XLSX, remove unused sheets, or split the file. Some tools only analyse files when a data-analysis feature is switched on.</td></tr>
+<tr><td>The AI analysed only part of the data</td><td>Ask for row counts per group first. If they don't match, tell it the expected total and ask it to reload the whole file using code.</td></tr>
+<tr><td>Numbers are different each time I ask</td><td>Ask it to use code for every calculation and show the code. Better still, ask for the Excel formula and calculate it yourself.</td></tr>
+<tr><td>A formula returns #NAME?</td><td>The function may not exist in your Excel version (TAKE, FILTER and XLOOKUP need Microsoft 365). Tell the AI your version and ask for an alternative.</td></tr>
+<tr><td>Dates are wrong or treated as text</td><td>State the date format in your prompt (for example YYYY-MM-DD or DD/MM/YYYY). In Excel, use Data → Text to Columns or Power Query to convert.</td></tr>
+<tr><td>Product codes lost their leading zeros</td><td>Tell the AI that code columns are text, not numbers. In Power Query, set the column type to Text before loading.</td></tr>
+<tr><td>The AI refuses or gives a very cautious answer</td><td>Explain the business context: "I'm an internal auditor reviewing our own purchase data for duplicate payments." Remove personal data that isn't needed.</td></tr>
+<tr><td>The answer is generic</td><td>Add context (warehouses, tolerances, columns) and a specific format. See Module 4.</td></tr>
+<tr><td>The AI states a conclusion the data can't support ("theft", "fraud")</td><td>Ask "which rows support this?" and rewrite the finding to say only what the data shows.</td></tr>
+<tr><td>I lost my progress in this course</td><td>Progress is saved in your browser on this device. It's lost if you clear browsing data or use a private window, and it doesn't move between devices.</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- ======================= PROGRESS ======================= -->
+<section class="view" data-route="progress" id="view-progress" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>My progress</h1>
+  <p class="lede">Your test scores and assignments for every module. A module counts as done when you've passed its test (70% or more) and completed its assignment.</p>
+</header>
+<div class="tbl"><table id="gradebook"></table></div>
+<div class="stat-row" id="gradeStats"></div>
+<p style="margin-top:18px">Results are saved in this browser only. <button class="btn ghost" type="button" id="resetAll">Reset all progress</button></p>
+<div class="fb warn" id="resetConfirm" hidden>This clears every score, assignment answer and note in this browser. <button class="btn" type="button" id="resetYes">Yes, reset everything</button> <button class="btn ghost" type="button" id="resetNo">Cancel</button></div>
+</section>
+
+<!-- ======================= FINAL ASSESSMENT ======================= -->
+<section class="view" data-route="final" id="view-final" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Final assessment</h1>
+  <p class="lede">Twenty questions drawn from the whole course. Pass mark 75%. You can take it at any time, but it's designed for after Module 14. Passing it is required for the certificate.</p>
+</header>
+<div class="test" data-test="final"></div>
 </section>
 
 </main>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>window.PRACTICE={"count_rows": 829, "oot_lines": 54, "ira": {"WH01": 96.7, "WH02": 95.8, "WH03": 92.3, "WH04": 95.5, "WH05": 87.1, "WH06": 94.7, "WH07": 94.0}, "network_ira": 93.5, "gross_var": {"WH01": 11092.42, "WH02": 41448.73, "WH03": 15898.34, "WH04": 30757.09, "WH05": 19216.16, "WH06": 41347.57, "WH07": 22224.06}, "net_var": {"WH01": 9487.36, "WH02": -38997.83, "WH03": -8311.12, "WH04": 23980.29, "WH05": -17155.98, "WH06": 38680.05, "WH07": -21088.14}, "gross_total": 181984.37, "net_total": -13405.37, "lowest_wh": "WH05", "uom_lines": 14, "uom_wh": "WH05", "counter_worst": "C17", "c17_lines": 30, "c17_oot": 9, "misslot_sku": "SKU-10219", "transit_skus": ["SKU-10126", "SKU-10173", "SKU-10216"], "hv_skus": ["SKU-10161", "SKU-10176", "SKU-10170", "SKU-10165"], "wh07_gross": 22224.06, "po_rows": 422, "split_requester": "R07", "split_po_count": 11, "split_clusters": 4, "split_total": 52331.94, "dup_pairs": 5, "dup_value": 26099.91, "nopo_count": 6, "nopo_total": 51950.0, "over_qty": ["AP00322", "AP00193", "AP00153", "AP00020"], "over_price": ["AP00228", "AP00168", "AP00351", "AP00359", "AP00117"], "before_po": ["AP00118", "AP00398"], "uom_po": "PO-70422", "vendor_rows": 51, "vendor_missing_tax": 5, "vendor_dormant": 7, "vendor_dup_pairs": 3, "new_vendor": "V051", "new_vendor_paid": 43950.0, "transfers_unreceived_14d": 5, "transfers_short": 3, "transfers_unrec_ids": ["TR-4100", "TR-4061", "TR-4074", "TR-4078", "TR-4077"], "soh_rows": 595, "soh_value": 12262591.38, "aged365_value": 539007.21, "aged365_lines": 34, "aged365_top_wh": "WH07", "excess_lines": 26, "otif_worst": "V012", "otif_worst_pct": 31.2, "otif_overall": 88.1, "spend_total": 645160.91, "spend_top_cat": "Temporary labour", "spend_by_cat": {"Temporary labour": 145300.58, "Utilities": 118711.69, "Facility services": 84947.59, "Freight & courier": 84182.46, "MHE maintenance & parts": 81046.4, "IT & telecoms": 55209.49, "Packaging materials": 46251.75, "PPE & safety": 29510.95}, "spend_sundry": 161600.14, "spend_lines": 154, "invoice_total": 1252116.54, "invoice_rows": 430, "dup_refs": ["AP00420", "AP00421", "AP00422", "AP00423", "AP00424"], "otif_by_vendor": {"V039": 87.5, "V047": 100.0, "V033": 66.7, "V008": 89.5, "V014": 86.7, "V022": 84.6, "V038": 70.0, "V020": 84.6, "V025": 88.9, "V010": 100.0, "V037": 90.0, "V023": 100.0, "V026": 100.0, "V013": 88.9, "V015": 88.9, "V028": 75.0, "V043": 100.0, "V018": 90.5, "V011": 75.0, "V042": 100.0, "V045": 100.0, "V021": 81.8, "V048": 100.0, "V009": 75.0, "V007": 81.8, "V001": 100.0, "V019": 88.9, "V002": 100.0, "V035": 100.0, "V027": 100.0, "V012": 31.2, "V004": 100.0, "V032": 77.8, "V040": 90.9, "V034": 100.0, "V030": 100.0, "V031": 91.7, "V006": 85.7}};</script>
+<script>
+/* Tests and assignments. Question types:
+   mc {o,a}  multi {o,a:[...]}  tf {a:true|false}  order {o: items in correct order}
+   match {pairs:[[left,right],...]}  num {a, tol, unit}
+   Assignment parts: task {text}  check {q, kind:"num"|"choice", a, tol, o, unit, why}
+   reflect {q, ph}  rubric {items:[...]} */
+(function(){
+const P = window.PRACTICE;
+const DATA = "https://bireshwarchakravarty.github.io/MyAItrainer/data/";
+const money = x => "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const PACK = `<a href="${DATA}practice_pack.xlsx" target="_blank" rel="noopener">practice_pack.xlsx</a> (or the <a href="${DATA}practice_pack.zip" target="_blank" rel="noopener">CSV zip</a>)`;
+
+window.TESTS = {
+m1:[
+ {t:"mc",q:"Your WMS raises a replenishment order whenever a bin drops below 50 units. Is that AI?",o:["Yes, because the system makes a decision by itself","No, it is a fixed rule a person configured","Yes, because it uses data"],a:1,why:"A threshold someone typed in is a rule. If the system had worked out the reorder point from demand history, that would be machine learning."},
+ {t:"tf",q:"A chatbot like ChatGPT looks facts up in a database before it answers.",a:false,why:"It generates likely text based on patterns it learned. It only looks things up if it has been given documents, data or a search tool."},
+ {t:"order",q:"Put these in the order they happen for a large language model.",o:["It learns patterns from huge amounts of text","People coach it to follow instructions helpfully","Your message is split into tokens","It predicts the next token, one at a time, to build the answer"],why:"Training (learning patterns, then coaching) happens before you ever use it. When you send a message, it is tokenised and the answer is built one token at a time."},
+ {t:"match",q:"Match each task to the kind of AI that does it.",pairs:[["Forecasting next month's demand per SKU","Predictive AI"],["Drafting an email about missing GRNs","Generative AI"],["Scoring invoices by how unusual they are","Predictive AI"],["Summarising a supplier contract","Generative AI"]],why:"Predictive AI produces numbers, scores and flags from historical data. Generative AI reads and writes language."},
+ {t:"mc",q:"You ask an assistant for Warehouse 4's stock variance last month without giving it any data. What should you expect?",o:["It can't know; any figure it gives would be invented","It will pull the number from your ERP","It will give an accurate industry estimate"],a:0,why:"Unless your company has connected it to your systems, it has no access to your data."},
+ {t:"multi",q:"Which of these are good tasks to give generative AI? Select all that apply.",o:["Drafting a summary of 15 audit exceptions","Writing an Excel formula","Approving a stock write-off","Sorting free-text adjustment reasons into categories","Deciding whether a supplier committed fraud"],a:[0,1,3],why:"Drafting, formulas and classification are language tasks you can check. Approvals and judgements about wrongdoing stay with people."},
+ {t:"mc",q:"For factual audit work, where should the 'creativity' (temperature) setting be?",o:["Low, so the model sticks to the most likely words","High, so it considers more possibilities","It makes no difference"],a:0,why:"Higher creativity makes unlikely words more likely to be chosen. That's fine for brainstorming but not for facts and figures."}
+],
+m2:[
+ {t:"match",q:"Match each example to its layer of AI tools.",pairs:[["ChatGPT, Claude or Gemini in a browser","Chat assistant"],["The Copilot pane inside Excel","AI inside your apps"],["Automatic invoice matching in the AP system","AI in business systems"],["A Power Automate flow that runs every Monday","Automation and agents"]],why:"The four layers move from general and flexible to specialised and automatic."},
+ {t:"mc",q:"You need total variance across 4,000 rows. Which approach gives the most reliable number?",o:["Paste the rows into a chat and ask for the total","Upload the file to an assistant with data analysis, or ask AI for the Excel formula","Ask the assistant to estimate from a sample"],a:1,why:"Both use real calculation (code or a formula), not word prediction."},
+ {t:"mc",q:"What does Agent Mode in Excel do?",o:["Builds and edits a workbook through several steps you describe in plain English","Emails reports to your manager automatically","Connects Excel to every company system"],a:0,why:"It carries out multi-step workbook tasks. You still review what it built."},
+ {t:"tf",q:"The =COPILOT() function is a good way to calculate total variance value per warehouse.",a:false,why:"Microsoft advises against using it where accuracy or reproducibility matter. Use SUMIFS, SUMPRODUCT or a PivotTable."},
+ {t:"multi",q:"Which features matter most when using an assistant for data work? Select all that apply.",o:["File upload with data analysis (it runs code)","Custom instructions or Projects","Image generation","Being able to handle long documents and large tables"],a:[0,1,3],why:"Code-based analysis, saved context and long context make the biggest difference for audit data. Image generation doesn't help here."},
+ {t:"mc",q:"Why use your company-approved AI tool instead of a personal account?",o:["Personal accounts are always less capable","Business versions come with data protections and are covered by company policy","There is no real difference"],a:1,why:"Enterprise versions typically include contractual data protections and admin controls."},
+ {t:"mc",q:"What's the sensible first step before using AI tools on work data?",o:["Try every tool on real data to compare them","Find out which tools are approved and what licences you have","Wait until IT announces an AI programme"],a:1,why:"Knowing what's approved and licensed tells you what you can safely use, and shows initiative."}
+],
+m3:[
+ {t:"order",q:"Put the five 'tie it out' checks in order.",o:["Tie row counts and totals to Excel","Spot-check 5 to 10 rows by hand","Ask the AI how it got the answer","Ask it to review its own answer for errors","Trace findings back to the system of record"],why:"Start with the quickest, strongest check (totals) and finish by tracing to source."},
+ {t:"multi",q:"Which of these are red-light data that should never go into an unapproved tool? Select all that apply.",o:["Supplier contract prices","Bank account details","Warehouse codes WH01 to WH07","Counters' names with their error rates","A published news article about a supplier"],a:[0,1,3],why:"Commercial terms, payment data and personal data linked to performance are red. Warehouse codes are internal (amber); public news is green."},
+ {t:"mc",q:"An AI tool tells you Warehouse 6's total variance is $48,210. What's your first check?",o:["Ask another AI tool if it agrees","Compare it to a SUM of the same data in Excel and check the row count","Accept it if the explanation sounds reasonable"],a:1,why:"An independent calculation is the fastest and most reliable check."},
+ {t:"tf",q:"In the 2024 Air Canada case, the company was held responsible for incorrect information its chatbot gave a customer.",a:true,why:"The tribunal didn't accept 'the chatbot said it' as a defence. You own what your AI tools produce."},
+ {t:"mc",q:"You want to anonymise supplier prices but keep the patterns visible. What's the best approach?",o:["Delete the price column","Replace prices with random numbers","Multiply every price by the same factor"],a:2,why:"Scaling by one factor keeps relative differences, so the AI can still spot outliers, without revealing real prices."},
+ {t:"mc",q:"Which approach to getting formula help is safest?",o:["Paste the real supplier price list into a free chatbot","Describe the columns with made-up sample values, get the formula, apply it yourself","Email the file to a friend who knows Excel"],a:1,why:"AI only needs the structure to write a formula. The real data never leaves your computer."},
+ {t:"mc",q:"What does 'AI drafts, you decide' mean?",o:["Never let AI write anything","AI can produce the first version, but a person checks the facts and owns the conclusion","Only managers may use AI"],a:1,why:"You keep the speed of AI and keep accountability with a person."}
+],
+m4:[
+ {t:"match",q:"Match each part of the Pick Ticket method to an example.",pairs:[["Role","You are an experienced inventory auditor"],["Task","Rank lines outside tolerance by value"],["Context","We run 7 warehouses; tolerance is ±2%"],["Format","A table, then 3 bullet points"],["Checks","Use only this data; say if unsure"]],why:"Role, Task, Context, Format, Checks: the five fields of a complete request."},
+ {t:"mc",q:"An AI gives you a vague, generic answer about improving inventory accuracy. Which part was most likely missing?",o:["Role","Context about your warehouses, data and tolerances","Nothing; AI always gives generic answers"],a:1,why:"Specific background gets specific answers."},
+ {t:"mc",q:"Which line most reduces the chance of a made-up answer?",o:["Be as detailed as possible.","You are a world-class expert.","Use only the data provided. If it can't be determined, say so."],a:2,why:"Restricting it to your data and allowing 'I don't know' are the most effective ways to reduce invented answers."},
+ {t:"mc",q:"The first answer is about 80% right. What should you do?",o:["Say what to change in a follow-up message","Start a new chat and retype everything","Accept it and fix the rest by hand later"],a:0,why:"The AI remembers the conversation. Targeted follow-ups are faster and usually better."},
+ {t:"multi",q:"Which habits improve results? Select all that apply.",o:["Letting the AI ask you questions before it starts","Showing an example of the output you want","Putting six unrelated tasks in one long prompt","Giving it permission to say it doesn't know","Starting a new chat for every follow-up"],a:[0,1,3],why:"Questions first, examples and permission to say 'I don't know' all help. Cramming tasks together and losing the conversation history don't."},
+ {t:"tf",q:"Custom instructions (or a Project) let the assistant remember your role and rules so you don't repeat them in every chat.",a:true,why:"Save your role, warehouses, tolerances and preferred format once."},
+ {t:"mc",q:"You suspect an answer has an error. Which follow-up is most useful?",o:["Are you sure?","What assumptions did you make, and what could be wrong with this answer?","Please try harder."],a:1,why:"Asking for assumptions and weaknesses makes the AI examine its own reasoning."}
+],
+m5:[
+ {t:"mc",q:"What should you ask for first after uploading a data file?",o:["The top 10 insights","Row count, column names and a control total","A chart"],a:1,why:"Confirm it loaded everything before trusting any analysis."},
+ {t:"mc",q:"Why ask for a formula rather than just an answer?",o:["Formulas look more professional","You can check it, reuse it next month and keep sensitive data out of the AI","AI can't do arithmetic at all"],a:1,why:"The method is checkable and repeatable; a number on its own is neither."},
+ {t:"multi",q:"Which of these belong in a clean table? Select all that apply.",o:["One header row","Merged cells for group headings","Subtotal rows between the data","Units stated in column names (Qty_EA)","A column saying which warehouse each row belongs to"],a:[0,3,4],why:"Merged cells and subtotal rows confuse AI, formulas and PivotTables alike."},
+ {t:"mc",q:"You have a 40-row table and a quick question about it. What's the simplest approach?",o:["Paste it into the chat","Build a Power Query connection","Upload it to a data warehouse"],a:0,why:"Small tables can be pasted. Larger ones should be uploaded or kept in Excel."},
+ {t:"mc",q:"SKU '00451' became 451 in the AI's output. What's the fix?",o:["Ignore it","Tell the AI that code columns are text, not numbers","Delete the leading zeros in your system"],a:1,why:"State in the data dictionary which columns are codes."},
+ {t:"tf",q:"A data dictionary describes what each column means, its units and its format.",a:true,why:"It's the most effective way to stop the AI misreading your data."},
+ {t:"mc",q:"The AI says 'Warehouse 3 has a theft problem.' What do you do?",o:["Report it to security","Ask which rows support that, and look at them yourself","Delete the chat"],a:1,why:"Conclusions need evidence. Look at the underlying rows before anything else."}
+],
+m6:[
+ {t:"mc",q:"WH03 shows a shortage of exactly 24 units on a SKU packed 12 to a case. The most likely first explanation?",o:["Theft of two cases","A random counting error","A unit-of-measure mix-up between cases and eaches"],a:2,why:"Variances that are exact multiples of the pack size point to UOM problems."},
+ {t:"mc",q:"A warehouse's net variance is close to zero. Does that mean its records are accurate?",o:["Yes, net variance is the key measure","Not necessarily: overages and shortages can cancel out, so check gross variance too","Yes, if the counts were done on time"],a:1,why:"Offsetting errors hide in net figures."},
+ {t:"num",q:"380 of 418 counted lines at a warehouse are within tolerance. What is its inventory record accuracy, in percent (one decimal place)?",a:90.9,tol:0.1,unit:"%",why:"380 ÷ 418 = 0.909, so 90.9%."},
+ {t:"match",q:"Match each cause to what it looks like in the data.",pairs:[["Unit-of-measure mismatch","Variance is an exact multiple of the case size"],["Unposted transfer","Short at one site, over by the same amount at another"],["Mis-slotting","Short in one location, over in a nearby location, same SKU"],["Timing gap","Variance reverses the next day once postings catch up"]],why:"Rule these innocent causes out before calling something a loss."},
+ {t:"mc",q:"You want to find as many problem invoices as possible with limited time. Which sample?",o:["A random sample","A risk-based sample: high value, unusual and flagged items","The first 25 invoices of the month"],a:1,why:"Random samples estimate the overall error rate; risk-based samples find problems."},
+ {t:"order",q:"Put the procure-to-pay steps in order.",o:["Requisition","Purchase order","Goods receipt","Supplier invoice","Payment"],why:"When a figure looks wrong, ask which of these steps produced it."},
+ {t:"tf",q:"A red flag, such as several POs just under the approval limit, proves wrongdoing.",a:false,why:"Red flags are leads for review. Many turn out to be process errors."}
+],
+m7:[
+ {t:"mc",q:"You want total variance value per warehouse. Which tool is right?",o:["The =COPILOT() function","SUMIFS, SUMPRODUCT or a PivotTable","Ask a chatbot to add up a pasted table"],a:1,why:"Numbers need exact, repeatable calculation."},
+ {t:"mc",q:"What's the main benefit of combining warehouse files with Power Query?",o:["Next month you replace the files and click Refresh; every cleaning step reruns","It makes the files smaller","It uses AI to find fraud"],a:0,why:"Power Query records your steps once and repeats them."},
+ {t:"mc",q:"Why does a gross variance formula use SUMPRODUCT with ABS instead of SUMIFS?",o:["SUMIFS is slower","SUMIFS can't add up absolute values","SUMPRODUCT is newer"],a:1,why:"SUMIFS adds values as they are, so shortages and overages cancel."},
+ {t:"mc",q:"A formula using TAKE returns #NAME?. What's the likely reason?",o:["The data has blanks","Your Excel version doesn't have the function","The file is too large"],a:1,why:"TAKE, FILTER and XLOOKUP need a recent Microsoft 365 version. Tell the AI your version."},
+ {t:"tf",q:"You should save your report workbook in the same folder as the warehouse files Power Query combines.",a:false,why:"Power Query would try to combine the report too. Keep the source folder for source files only."},
+ {t:"order",q:"Put the Power Query steps in order.",o:["Put the warehouse files in one folder","Data → Get Data → From Folder","Combine & Transform","Clean the data in the editor","Close & Load","Next month: replace files and Refresh All"],why:"Set it up once, then refresh each month."},
+ {t:"mc",q:"Which is a good use of =COPILOT()?",o:["Calculating price variance","Sorting 800 free-text adjustment comments into categories, then spot-checking","Summing invoice totals"],a:1,why:"Language tasks like classification are what it's designed for."}
+],
+m8:[
+ {t:"mc",q:"AI flags two invoices from the same supplier for $2,400.00 in consecutive months. What next?",o:["Report a duplicate payment","Check the POs and receipts: it may be a legitimate monthly charge","Ignore it"],a:1,why:"Recurring charges produce identical amounts legitimately."},
+ {t:"multi",q:"Which of these are near-duplicate invoice patterns? Select all that apply.",o:["An invoice number with a letter suffix (4471 / 4471A)","Leading zeros or dashes (INV-00451 / 451)","Two adjacent digits swapped (88213 / 88231)","The same invoice entered under a duplicate supplier record","Different supplier, different amount, different month"],a:[0,1,2,3],why:"The last one has nothing in common, so it isn't a duplicate pattern."},
+ {t:"mc",q:"You have 180 POs for the quarter. Should you rely on a Benford's law test?",o:["Yes, it works on any data","No, the dataset is too small; use threshold banding and clustering","Yes, and a mismatch proves manipulation"],a:1,why:"ISACA guidance: datasets of 500 or fewer are generally unsuitable."},
+ {t:"match",q:"Match each playbook to its goal.",pairs:[["P2 Duplicate invoices","Stop paying the same bill twice"],["P3 Split POs","Find orders broken up to avoid approval"],["P4 Vendor master","Keep the supplier list clean and trustworthy"],["P6 Adjustment reasons","Turn free-text comments into countable causes"]],why:"Each playbook targets one control."},
+ {t:"mc",q:"Which factor would NOT help a risk score for cycle counts?",o:["Past variance count","Item value (ABC class)","The SKU's position in alphabetical order"],a:2,why:"Risk factors should relate to the chance or cost of error."},
+ {t:"tf",q:"Systems usually block exact duplicate invoices; the ones that get paid twice tend to be near-duplicates.",a:true,why:"That's why normalising invoice numbers matters."},
+ {t:"mc",q:"Every playbook follows the same loop. Which?",o:["AI finds and fixes problems automatically","Prepare data → AI finds candidates → you verify → record","Ask AI for a report → send it"],a:1,why:"AI searches and sorts; you confirm."}
+],
+m9:[
+ {t:"mc",q:"What does OTIF measure?",o:["Orders delivered on time and in full","Overall transport and inventory fees","Open transfers in flight"],a:0,why:"On time, in full: the standard supplier delivery measure."},
+ {t:"num",q:"A supplier delivered 40 orders. 30 were on time and in full. What's its OTIF, in percent?",a:75,tol:0.1,unit:"%",why:"30 ÷ 40 = 75%."},
+ {t:"num",q:"A SKU has 600 units on hand and uses 25 a month. How many months of supply is that?",a:24,tol:0.1,unit:"months",why:"600 ÷ 25 = 24 months, well above a 12-month excess threshold."},
+ {t:"mc",q:"A SKU is short 50 at WH02 and over 50 at WH06, with no transfer record. Most likely?",o:["Theft at WH02","Stock moved between sites without a transfer being posted","A unit-of-measure error"],a:1,why:"Opposite variances with no transfer record point to an unposted move."},
+ {t:"mc",q:"A large balance coded to 'Sundry' usually tells you…",o:["Spend is well controlled","Spend is being coded to whatever gets it paid, so nobody really knows what was bought","Suppliers are overcharging"],a:1,why:"Classifying the lines shows what's really in there."},
+ {t:"tf",q:"After AI classifies spend lines, the category totals should add up to the file total.",a:true,why:"If they don't, lines were dropped."},
+ {t:"mc",q:"A transfer shipped 20 days ago still has no receipt. Normal transit is 2 to 3 days. What is it?",o:["Normal","An exception to chase: possibly lost, or received but not booked","A timing gap that will fix itself"],a:1,why:"Anything well beyond normal transit time needs chasing."}
+],
+m10:[
+ {t:"order",q:"Put the month-end audit steps in order.",o:["Collect files, combine and tie out","Stock accuracy review","Purchase-to-pay checks","Vendors, transfers, stock health and suppliers","Prioritise findings and write up"],why:"Tie out first; prioritise last."},
+ {t:"mc",q:"The AI counted 832 rows; Power Query says 829. In the case study, why?",o:["The AI was wrong about the arithmetic","WH04's file had a title row and a blank row above the headers that the AI counted as data","Power Query drops rows"],a:1,why:"Messy layouts trip AI up. Tie out every time."},
+ {t:"mc",q:"A new supplier has no tax ID, a PO box address and $43,950 of invoices with no POs. What do you do?",o:["Include it as item 6 in the monthly pack","Escalate to your manager the same day","Wait for next month's data"],a:1,why:"Several fraud indicators together, with money still going out, need immediate escalation."},
+ {t:"multi",q:"Which criteria were used to rank the findings? Select all that apply.",o:["Money at risk","Control weakness (could it happen again?)","Urgency","Alphabetical order of warehouse"],a:[0,1,2],why:"Money, control weakness and urgency decide what leadership sees first."},
+ {t:"mc",q:"The AI wrote 'possible theft at WH07'. What's the better finding?",o:["Keep it; it's probably right","Four high-value A items short in the same direction; recount and security review recommended","Remove WH07 from the report"],a:1,why:"State what the data shows and what should happen next."},
+ {t:"tf",q:"Gross variance of $181,984 with net variance of −$13,405 suggests much of the variance is stock in the wrong place rather than stock that's gone.",a:true,why:"Large offsetting errors (mis-slots, unposted transfers) inflate gross but cancel in net."},
+ {t:"mc",q:"The duplicate check returned 11 extra pairs that turned out to be repeat orders. Best fix?",o:["Drop the duplicate check","Tighten the rule: same supplier and amount AND the same PO (or no PO)","Report all of them anyway"],a:1,why:"Refine the rule so flags are worth reviewing."}
+],
+m11:[
+ {t:"mc",q:"Which element of a finding answers 'why did this happen?'",o:["Condition","Effect","Cause"],a:2,why:"Cause is the root reason; Effect is the consequence."},
+ {t:"mc",q:"Which phrasing belongs in a finding?",o:["Receiving at WH05 does not confirm the unit of measure, leading to case/each errors.","The WH05 receiving team is careless.","Somebody at WH05 keeps getting units wrong."],a:0,why:"Describe processes, not people."},
+ {t:"mc",q:"Best chart to compare accuracy across seven warehouses?",o:["A pie chart","A sorted bar chart with a target line","A 3D column chart"],a:1,why:"Sorted bars show ranking; the target line shows who's off track."},
+ {t:"order",q:"Put the five parts of a finding in order.",o:["Condition","Criteria","Cause","Effect","Corrective action"],why:"What you found, what it should be, why, why it matters, what to do."},
+ {t:"multi",q:"What belongs in your AI use log? Select all that apply.",o:["Date and tool","The data you used","How you checked the output","Your system password","What you changed in the AI's draft"],a:[0,1,2,4],why:"Never record passwords anywhere like this."},
+ {t:"tf",q:"Well-written AI output can serve as audit evidence on its own.",a:false,why:"Evidence must trace to system records and source documents."},
+ {t:"mc",q:"Writing for leadership, what's the right length?",o:["A full page per finding","Three sentences: the issue, the impact in rounded numbers, the action","Just the raw data"],a:1,why:"Leadership needs the point and the decision."}
+],
+m12:[
+ {t:"mc",q:"Which task is the best first candidate for automation?",o:["Judging whether a warehouse manager's explanation is acceptable","Collecting seven files every Monday and refreshing the same report","A one-off investigation into one supplier"],a:1,why:"Frequent, rule-based, standard-input tasks are ideal."},
+ {t:"mc",q:"An AI agent proposes a stock write-off of $3,200. What should happen?",o:["A person reviews and approves it before it's posted","It posts automatically if the agent is confident","It's ignored"],a:0,why:"Anything that changes records or money needs human approval and an audit trail."},
+ {t:"order",q:"Put the automation ladder in order, from first rung to last.",o:["Saved prompts and templates","Refreshable workbooks (Power Query)","Scheduled flows","AI steps inside flows","Agents with approvals"],why:"Each rung builds on the one before."},
+ {t:"multi",q:"Which guardrails should every automation have? Select all that apply.",o:["Human approval for changes to records or money","Value thresholds","An audit trail","Failure alerts","Permission for the agent to change supplier bank details"],a:[0,1,2,3],why:"Bank detail changes are a classic fraud route and must never be automated without strict controls."},
+ {t:"tf",q:"Automation follows rules you define; AI handles judgement and language.",a:true,why:"The best workflows combine both."},
+ {t:"mc",q:"In the Monday digest, why is the AI summary sent to you first?",o:["Email systems require it","So you can check it before others rely on it","AI can't send email"],a:1,why:"AI drafts, you decide."},
+ {t:"mc",q:"A task is frequent but its input files change layout every week. What first?",o:["Automate it anyway","Standardise the input template with the senders","Give up on it"],a:1,why:"Automation breaks when layouts keep changing."}
+],
+m13:[
+ {t:"num",q:"A tool flags 200 invoices; 10 are real duplicates. What's its precision, in percent?",a:5,tol:0.1,unit:"%",why:"10 ÷ 200 = 5%. 95% of flags are false alarms."},
+ {t:"num",q:"There are 20 real duplicates and the tool catches 16 of them. What's its recall, in percent?",a:80,tol:0.1,unit:"%",why:"16 ÷ 20 = 80%."},
+ {t:"mc",q:"What does RAG let an assistant do?",o:["Run faster","Answer from your company's documents and cite them","Work offline"],a:1,why:"Retrieval-augmented generation grounds answers in your documents."},
+ {t:"mc",q:"A vendor claims '99% accuracy'. Your best response?",o:["Accept it","Ask how it was measured, for precision and recall, and to pilot on your own data","Reject the vendor"],a:1,why:"Evidence on your data is what counts."},
+ {t:"mc",q:"You ask about a regulation introduced this year and the tool hasn't searched the web. The risk?",o:["None","Its knowledge cutoff may predate it, so the answer may be out of date or invented","It will refuse"],a:1,why:"Turn on web search and open the sources."},
+ {t:"mc",q:"When are reasoning ('thinking') modes most useful?",o:["Quick email drafts","Multi-step analysis such as reconciling two files","Translating a single word"],a:1,why:"They're slower but better at working through several steps."},
+ {t:"tf",q:"Asking the same question twice always produces identical numbers.",a:false,why:"Answers can vary. Keep calculations in formulas or saved code."}
+],
+m14:[
+ {t:"mc",q:"What's the most convincing way to show the value of AI in your work?",o:["Say AI is the future","Show measured before-and-after time and issues found, plus how you verify results","Use AI visibly for every task"],a:1,why:"Measured results and a clear control process earn trust."},
+ {t:"multi",q:"Which belong in the capstone audit pack? Select all that apply.",o:["A standard input template for the warehouses","A refreshable workbook","A written verification checklist","A list of every AI product on the market","A one-page report template"],a:[0,1,2,4],why:"The pack is a repeatable system for your monthly audit."},
+ {t:"mc",q:"Which time-savings figure is most credible to a manager?",o:["A vendor's published average","Your own measured times over three months","A rough guess"],a:1,why:"Your own data beats any estimate."},
+ {t:"tf",q:"The 30-60-90 plan builds one habit at a time rather than changing everything at once.",a:true,why:"Gradual change sticks and doesn't feel like a second job."},
+ {t:"mc",q:"Which statement best sums up the course?",o:["AI finds, sorts and drafts quickly; you verify the facts and own the decisions","AI will do the audit for you","AI is too risky for audit work"],a:0,why:"Speed from AI, judgement from you."}
+],
+final:[
+ {t:"mc",q:"Which statement about large language models is correct?",o:["They retrieve verified facts from a database","They generate likely text, so they can be fluent and wrong","They can't make mistakes with numbers"],a:1,why:"Module 1."},
+ {t:"tf",q:"A fixed reorder-point rule in your WMS is an example of machine learning.",a:false,why:"It's a rule a person set. Module 1."},
+ {t:"mc",q:"For calculating totals across thousands of rows, the most reliable option is…",o:["Pasting the rows into a chat","AI data analysis that runs code, or an Excel formula","The =COPILOT() function"],a:1,why:"Module 2."},
+ {t:"multi",q:"Which data should stay out of an unapproved AI tool? Select all that apply.",o:["Supplier contract prices","Bank details","Made-up sample data","Employee names with error rates"],a:[0,1,3],why:"Module 3."},
+ {t:"order",q:"Order the five parts of a Pick Ticket prompt.",o:["Role","Task","Context","Format","Checks"],why:"Module 4."},
+ {t:"mc",q:"After uploading a file, what do you confirm first?",o:["The top insights","Row count, columns and a control total","The chart style"],a:1,why:"Module 5."},
+ {t:"num",q:"A warehouse counted 250 lines; 235 were within tolerance. Accuracy in percent?",a:94,tol:0.1,unit:"%",why:"235 ÷ 250 = 94%. Module 6."},
+ {t:"mc",q:"A variance of exactly 36 units on a SKU packed 12 per case most likely means…",o:["Theft","A case/each unit-of-measure mix-up","A timing gap"],a:1,why:"Module 6."},
+ {t:"mc",q:"Which formula approach gives gross variance for one warehouse?",o:["SUMIFS on the variance column","SUMPRODUCT of a warehouse test times ABS of variance value","COUNTIFS"],a:1,why:"Module 7."},
+ {t:"tf",q:"Power Query reruns every cleaning step when you click Refresh.",a:true,why:"Module 7."},
+ {t:"multi",q:"Which suggest a split purchase? Select all that apply.",o:["Several POs just under the approval limit","Same supplier and requester","Within a few days","Different suppliers months apart"],a:[0,1,2],why:"Module 8."},
+ {t:"mc",q:"Why normalise invoice numbers before checking for duplicates?",o:["To make them shorter","Because duplicates often differ only by dashes, zeros or suffixes","The ERP requires it"],a:1,why:"Module 8."},
+ {t:"num",q:"20 orders delivered, 17 on time and in full. OTIF in percent?",a:85,tol:0.1,unit:"%",why:"17 ÷ 20 = 85%. Module 9."},
+ {t:"mc",q:"Stock with no movement for over a year and no usage is usually treated as…",o:["Fast-moving","Obsolete","Safety stock"],a:1,why:"Module 9."},
+ {t:"mc",q:"In the case study, which finding was escalated immediately?",o:["WH01's scattered errors","A new supplier paid without POs, with no tax ID and a PO box address","The OTIF of V012"],a:1,why:"Module 10."},
+ {t:"mc",q:"Which element of a finding says what should happen, by whom and by when?",o:["Criteria","Effect","Corrective action"],a:2,why:"Module 11."},
+ {t:"tf",q:"Your AI use log should record how you checked the AI's output.",a:true,why:"Module 11."},
+ {t:"mc",q:"An agent wants to change a supplier's bank details. What's required?",o:["Nothing if it's confident","Human approval, with an audit trail","A second agent's approval"],a:1,why:"Module 12."},
+ {t:"num",q:"A tool flags 50 items; 40 are real problems. Precision in percent?",a:80,tol:0.1,unit:"%",why:"40 ÷ 50 = 80%. Module 13."},
+ {t:"mc",q:"Which is the strongest evidence for a finding?",o:["The AI's summary","System records and source documents you have checked","A colleague's opinion"],a:1,why:"Modules 3 and 11."}
+]
+};
+
+window.ASSIGN = {
+m1:{title:"Meet your assistant",intro:"Use your company-approved AI tool. This takes about 15 minutes.",parts:[
+ {t:"task",text:"Ask: <code>Explain three-way matching in procurement as if I'm new to the job, then give me 3 common ways it goes wrong in a company with several warehouses.</code>"},
+ {t:"reflect",q:"Write one thing in the answer that was correct and specific, and one thing that was vague or generic.",ph:"Correct and specific: … Vague or generic: …"},
+ {t:"task",text:"Now ask: <code>What is the latest date your knowledge covers, and can you search the web?</code> Note the answer; it tells you how current its facts are."},
+ {t:"check",q:"You asked the assistant for your company's stock figures without giving it any data. What should a good assistant do?",kind:"choice",o:["Give a reasonable estimate","Say it doesn't have access to that data","Quote an industry average"],a:1,why:"It has no access to your systems unless your company has connected it."},
+ {t:"rubric",items:["I used my company-approved tool, not a personal account","I checked at least one claim against what I already know"]}
+]},
+m2:{title:"Map your toolkit and get the practice data",intro:"Find out what you have, and set up the practice data you'll use from now on.",parts:[
+ {t:"reflect",q:"Which AI tools are approved at your company, and do you have Copilot in Excel? (If you don't know yet, write who you've asked.)",ph:"Approved tools: … Copilot in Excel: yes / no / asked IT on …"},
+ {t:"task",text:"Send the 'what AI tools do we have?' email from this module to IT or your manager, adapted to your company."},
+ {t:"task",text:`Download the practice data: ${PACK}. All of it is fictional, so it's safe in any tool.`},
+ {t:"check",q:"Open the cycle_counts sheet (or CSV). How many data rows does it have, not counting the header row?",kind:"num",a:P.count_rows,tol:0,unit:"rows",why:`It has ${P.count_rows} rows. In Excel, click a cell in the data and look at the Count in the status bar, or use =ROWS() on the table.`},
+ {t:"check",q:"In your AI tool, find the file upload button. Upload invoice_register and ask how many rows it has. What does it say?",kind:"num",a:P.invoice_rows,tol:0,unit:"rows",why:`${P.invoice_rows} rows. If your tool gave a different number, it didn't read the whole file. That's exactly what Module 3 teaches you to catch.`}
+]},
+m3:{title:"Tie out and make a safe practice file",intro:"Practise the first 'tie it out' check, then prepare a safe version of a real report.",parts:[
+ {t:"check",q:"Using Excel only (no AI), what is the total of the Amount column in invoice_register? Round to the cent.",kind:"num",a:P.invoice_total,tol:1,unit:"$",why:`The total is ${money(P.invoice_total)}. This is your control total: any AI analysis of this file should agree with it.`},
+ {t:"task",text:"Upload invoice_register to your AI tool and ask for the total of Amount using code. Compare it with your Excel figure."},
+ {t:"check",q:"If vendor_master were your company's real supplier list (it has tax IDs and bank details), which traffic light applies?",kind:"choice",o:["Green: any tool","Amber: company-approved tool only","Red: not unless policy explicitly allows, and masked"],a:2,why:"Tax IDs and bank details are red-light data."},
+ {t:"task",text:"Find and read your company's AI or acceptable-use policy."},
+ {t:"reflect",q:"Make an anonymised copy of one real report you use. List the columns you removed or replaced, and why.",ph:"Supplier name → Supplier A/B because … Prices × 1.37 because …"}
+]},
+m4:{title:"Rewrite a prompt with the Pick Ticket method",intro:"Turn the way you normally ask into a complete request and compare the results.",parts:[
+ {t:"task",text:"Set up custom instructions (or a Project) in your assistant using the template in this module."},
+ {t:"reflect",q:"Paste a short request you'd normally type for a real task this week.",ph:"e.g. summarise this for my manager"},
+ {t:"reflect",q:"Now rewrite it with all five parts: Role, Task, Context, Format, Checks.",ph:"Role: … Task: … Context: … Format: … Checks: …"},
+ {t:"task",text:"Run both versions in your assistant."},
+ {t:"reflect",q:"What was different about the second answer?",ph:"More specific because … Format was … It still got wrong …"},
+ {t:"rubric",items:["My rewritten request says who the AI should act as","It states the format I want back","It tells the AI to use only my data and say if unsure"]}
+]},
+m5:{title:"Your first AI data analysis",intro:"Upload cycle_counts to your AI tool (or open it in Excel with Copilot). Start by asking for the row count and a control total, as this module showed. Then answer from what you find, checking each figure.",parts:[
+ {t:"task",text:"Give the AI a data dictionary for cycle_counts (use the one in this module as a model) and ask it to confirm the row count."},
+ {t:"check",q:"Using a ±2% tolerance per line (variance = counted minus system, divided by system), how many lines across all warehouses are outside tolerance?",kind:"num",a:P.oot_lines,tol:0,unit:"lines",why:`${P.oot_lines} lines. If you got a slightly different number, check how lines with a system quantity of 0 were treated: they count as outside tolerance if anything was found.`},
+ {t:"check",q:"What is the network's inventory record accuracy (lines within tolerance ÷ all lines), in percent to one decimal place?",kind:"num",a:P.network_ira,tol:0.15,unit:"%",why:`${P.network_ira}%.`},
+ {t:"check",q:"What is the total gross variance value (sum of the absolute value of variance quantity × unit cost)? Round to the dollar.",kind:"num",a:P.gross_total,tol:5,unit:"$",why:`${money(P.gross_total)}. A common mistake is summing the signed values, which gives the net figure (${money(P.net_total)}).`},
+ {t:"reflect",q:"Did the AI's first answers match? What did you have to check or correct?",ph:"It first said … I checked … It corrected …"}
+]},
+m6:{title:"Diagnose the seven warehouses",intro:"Use the practice cycle counts (and your AI tool or Excel) to find out what's going wrong where.",parts:[
+ {t:"check",q:"Which warehouse has the lowest inventory record accuracy?",kind:"choice",o:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"],a:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"].indexOf(P.lowest_wh),why:`${P.lowest_wh}, at ${P.ira[P.lowest_wh]}%.`},
+ {t:"check",q:`What is ${P.lowest_wh}'s accuracy, in percent to one decimal place?`,kind:"num",a:P.ira[P.lowest_wh],tol:0.15,unit:"%",why:`${P.ira[P.lowest_wh]}%.`},
+ {t:"check",q:`Most of ${P.uom_wh}'s errors share a pattern. What is it?`,kind:"choice",o:["They are all on C-class items","The variance is an exact multiple of the case size","They were all counted on one day","They are all overages"],a:1,why:"A unit-of-measure (case versus each) problem."},
+ {t:"check",q:"At WH03, one counter's lines are far more often outside tolerance than anyone else's. Which counter?",kind:"choice",o:["C03","C11","C17","C21"],a:2,why:`C17: ${P.c17_oot} of ${P.c17_lines} lines outside tolerance. A training or process issue, not necessarily a person problem.`},
+ {t:"check",q:`At WH04, ${P.misslot_sku} is short 40 in one location and over 40 in another. What's the most likely cause?`,kind:"choice",o:["Theft","Mis-slotting","A UOM error","A supplier short delivery"],a:1,why:"Stock in the wrong location. Net variance is zero, which is why gross variance matters."},
+ {t:"task",text:"Enter your own warehouses' last count results into the accuracy calculator in this module."},
+ {t:"reflect",q:"Write three questions you'd ask the manager of your lowest-accuracy warehouse (real or practice).",ph:"1. … 2. … 3. …"}
+]},
+m7:{title:"Build the formulas and combine the files",intro:"Hands-on Excel work with the practice data.",parts:[
+ {t:"task",text:"In the cycle_counts sheet of the practice workbook, format the data as a table (Ctrl+T) and add Var_Qty, Var_Pct, Var_Value and Out_Of_Tolerance columns using formulas from the formula exercise."},
+ {t:"check",q:"How many rows show Out_Of_Tolerance = YES?",kind:"num",a:P.oot_lines,tol:0,unit:"rows",why:`${P.oot_lines}. If you have a different number, check your Var_Pct formula handles a system quantity of zero.`},
+ {t:"check",q:"What is WH02's gross variance value (use SUMPRODUCT with ABS)? Round to the dollar.",kind:"num",a:P.gross_var.WH02,tol:2,unit:"$",why:`${money(P.gross_var.WH02)}.`},
+ {t:"check",q:"How many out-of-tolerance lines have a variance that is an exact multiple of the case size (case size above 1)?",kind:"num",a:P.uom_lines,tol:0,unit:"lines",why:`${P.uom_lines}, all in ${P.uom_wh}.`},
+ {t:"task",text:`Download the <a href="${DATA}warehouse_files.zip" target="_blank" rel="noopener">seven warehouse files</a>, unzip them into a folder, and combine them with Power Query (From Folder). Fix WH04's title rows.`},
+ {t:"check",q:"How many rows does your combined Power Query table have?",kind:"num",a:P.count_rows,tol:0,unit:"rows",why:`${P.count_rows}. If you got 832, WH04's title and blank rows are still in.`},
+ {t:"reflect",q:"Which formula or step went wrong first, and how did you fix it?",ph:"My first … returned … I asked the AI … and changed …"}
+]},
+m8:{title:"Run the control playbooks on the practice data",intro:"Use playbooks P2, P3 and P4 with your AI tool on the practice registers. Verify each finding against the rows before answering.",parts:[
+ {t:"check",q:"How many near-duplicate invoice pairs are there?",kind:"num",a:P.dup_pairs,tol:0,unit:"pairs",why:`${P.dup_pairs} pairs: letter suffix, leading zeros, transposed digits, duplicate vendor record, same amount days apart.`},
+ {t:"check",q:"What's the total value of the duplicate invoices (the second invoice of each pair)? Round to the dollar.",kind:"num",a:P.dup_value,tol:2,unit:"$",why:`${money(P.dup_value)}.`},
+ {t:"check",q:"Which requester raised the split-PO clusters?",kind:"choice",o:["R02","R04","R07","R09"],a:2,why:`${P.split_requester}: ${P.split_clusters} clusters, ${P.split_po_count} POs, ${money(P.split_total)} in total.`},
+ {t:"check",q:"How many invoices have no PO number?",kind:"num",a:P.nopo_count,tol:0,unit:"invoices",why:`${P.nopo_count}, totalling ${money(P.nopo_total)}.`},
+ {t:"check",q:"Which supplier is new, has no tax ID, uses a PO box and has been invoiced without POs?",kind:"choice",o:["V009","V022","V044","V051"],a:3,why:`V051: ${money(P.new_vendor_paid)} invoiced. Several red flags together.`},
+ {t:"check",q:"How many duplicate supplier pairs are there in vendor_master?",kind:"num",a:P.vendor_dup_pairs,tol:0,unit:"pairs",why:"Three: V009/V049, V022/V050, V015/V044."},
+ {t:"reflect",q:"Which of these did the AI miss or get wrong on the first try, and how did you catch it?",ph:"The first duplicate run flagged … I tightened the rule to …"}
+]},
+m9:{title:"Spend, transfers, stock health and suppliers",intro:"Run playbooks P7 to P10 on the practice data.",parts:[
+ {t:"check",q:"After classifying spend_lines, which category has the largest spend?",kind:"choice",o:Object.keys(P.spend_by_cat).sort(),a:Object.keys(P.spend_by_cat).sort().indexOf(P.spend_top_cat),why:`${P.spend_top_cat}. Full split: ${Object.entries(P.spend_by_cat).map(([k,v])=>k+" "+money(v)).join("; ")}.`},
+ {t:"check",q:"How much spend is coded to GL 6999 Sundry? Round to the dollar.",kind:"num",a:P.spend_sundry,tol:2,unit:"$",why:`${money(P.spend_sundry)}, a quarter of the total, which is why classification matters.`},
+ {t:"check",q:"How many transfers were shipped more than 14 days before 31 October and still have no receipt?",kind:"num",a:P.transfers_unreceived_14d,tol:0,unit:"transfers",why:`${P.transfers_unreceived_14d}.`},
+ {t:"check",q:"What is the value of stock with no movement for more than 365 days at 31 October 2026? Round to the dollar.",kind:"num",a:P.aged365_value,tol:50,unit:"$",why:`${money(P.aged365_value)} across ${P.aged365_lines} lines.`},
+ {t:"check",q:"Which warehouse holds the most stock value that hasn't moved for over a year?",kind:"choice",o:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"],a:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"].indexOf(P.aged365_top_wh),why:`${P.aged365_top_wh}.`},
+ {t:"check",q:"Which supplier (with at least 5 received POs) has the worst OTIF?",kind:"choice",o:["V008","V012","V018","V026"],a:1,why:`${P.otif_worst} at ${P.otif_worst_pct}%, against ${P.otif_overall}% overall.`},
+ {t:"reflect",q:"Pick one of these four results and write the first two actions you'd take.",ph:"For the obsolete stock in … I would …"}
+]},
+m10:{title:"Write your own month-end summary",intro:"Use what you found in the assignments for modules 5 to 9 (or the case study figures) to produce the deliverable.",parts:[
+ {t:"check",q:"Which of these are real issues in the October practice data?",kind:"multi",o:["Split POs by one requester at WH03","Unit-of-measure errors at WH05","A supplier paid without POs, with no tax ID","Duplicate payments to WH01's cleaning contractor","Transfers shipped but not received"],a:[0,1,2,4],why:"There is no WH01 cleaning duplicate in the data. Don't report what you haven't verified."},
+ {t:"check",q:"Which item should be escalated the same day rather than waiting for the monthly pack?",kind:"choice",o:["WH01's scattered count errors","V051's invoices without POs","V012's late deliveries","The Sundry coding"],a:1,why:"Several fraud indicators together, with money still going out."},
+ {t:"reflect",q:"Write your management summary: two sentences of headline, then your top three findings in one line each.",ph:"October audit, 7 warehouses: … 1. … 2. … 3. …"},
+ {t:"rubric",items:["Every number in my summary ties to the data","My findings describe processes, not people","I stated what decision I need from my manager"]}
+]},
+m11:{title:"Write a finding and log your AI use",intro:"Write a formal finding from the practice data and create your AI use log.",parts:[
+ {t:"check",q:"For the WH05 accuracy finding, which is the best Cause statement?",kind:"choice",o:["WH05 staff are careless","Case-pack items are being counted or received as eaches, and the receiving screen defaults to EA","Accuracy was 87.1%","Stock-outs may result"],a:1,why:"The others are a judgement about people, the Condition and the Effect."},
+ {t:"reflect",q:"Use the finding builder to write the WH05 finding (or one from your real work), polish it with AI, and paste the final version here.",ph:"Condition: … Criteria: … Cause: … Effect: … Corrective action: …"},
+ {t:"task",text:"Create an AI use log (a spreadsheet with the six columns from this module) and add an entry for one piece of work you did with AI this week."},
+ {t:"rubric",items:["My finding has all five parts","Every number in it ties to the data","It names who does what by when"]}
+]},
+m12:{title:"Design your first automation",intro:"Choose a real recurring task and design its automation, ready to discuss with IT.",parts:[
+ {t:"reflect",q:"List your three most repetitive tasks and the score each got in the automation scorer.",ph:"1. … score … 2. … 3. …"},
+ {t:"reflect",q:"For the top scorer, write the flow as numbered steps (trigger, collect, refresh, extract, AI step if any, review).",ph:"Trigger: every Monday 7:00. 1. …"},
+ {t:"check",q:"In your flow, which step must always stay with a person?",kind:"choice",o:["Collecting the files","Refreshing the workbook","Approving anything that changes records or money, or goes to others","Saving the output"],a:2,why:"Human approval, thresholds and an audit trail are non-negotiable."},
+ {t:"rubric",items:["My flow has a failure alert","Anything sent to others is reviewed by me first","I know what access I'd need from IT"]}
+]},
+m13:{title:"Judge AI tools like a buyer",intro:"Apply the advanced concepts to tools at your company.",parts:[
+ {t:"check",q:"A duplicate-detection tool flags 40 invoices; 8 are real duplicates. In total there were 10 real duplicates. What's its precision, in percent?",kind:"num",a:20,tol:0.1,unit:"%",why:"8 ÷ 40 = 20%."},
+ {t:"check",q:"Same tool: what's its recall, in percent?",kind:"num",a:80,tol:0.1,unit:"%",why:"8 ÷ 10 = 80%. It catches most duplicates but wastes a lot of review time."},
+ {t:"task",text:"Ask the owner of your ERP, WMS or AP system which AI features it has, including any that are switched off."},
+ {t:"reflect",q:"Write the five vendor questions you'd ask first about one AI tool your company uses or is considering.",ph:"1. … 2. … 3. … 4. … 5. …"},
+ {t:"task",text:"If your assistant supports it, set up a first version of your audit helper with your data dictionary and finding template (practice versions are fine)."}
+]},
+m14:{title:"Commit to your plan",intro:"Turn the course into a plan you'll follow.",parts:[
+ {t:"task",text:"Fill in the time-savings estimator in this module with your own tasks."},
+ {t:"reflect",q:"Write the three things you'll do in the next 30 days, each with a date.",ph:"1. By … I will … 2. … 3. …"},
+ {t:"reflect",q:"Write the one-paragraph update you'll send your manager (use the prompt in this module).",ph:"Over the last … I …"},
+ {t:"rubric",items:["My plan has dates","I know how I'll measure time before and after","I've booked a check-in with my manager"]}
+]}
+};
+})();
+</script>
 
 <script>
 (function(){
@@ -2181,10 +2757,9 @@ const el=(tag,attrs={},html)=>{const e=document.createElement(tag);for(const k i
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* ---------------- storage ---------------- */
-const KEY="ai-proc-audit-course.v1";
-let S={done:{},quiz:{},plan:{},name:"",theme:""};
+const KEY="ai-proc-audit-course.v2";
+let S={tests:{},assign:{},plan:{},name:"",theme:""};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
-Object.keys(S.done).forEach(k=>{if(!/^m([1-9]|1[0-2])$/.test(k))delete S.done[k];});
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
 
 /* ---------------- toast & copy ---------------- */
@@ -2207,81 +2782,83 @@ $("#themeBtn").addEventListener("click",()=>{
 const ZONES=[
   {z:"A",name:"Foundations",desc:"what AI is, the tools, using it safely"},
   {z:"B",name:"Talking to AI",desc:"asking for useful work"},
-  {z:"C",name:"AI for your audit work",desc:"audit basics, Excel, routines"},
+  {z:"C",name:"AI for your audit work",desc:"audit basics, Excel, routines, a full case study"},
   {z:"D",name:"Reporting and automation",desc:"writing up, then automating"},
   {z:"E",name:"Going further",desc:"advanced topics and your plan"}
 ];
 const MODS=[
-  {id:"m1",z:"A",t:"What AI actually is",s:"How chatbots work, and why they can be confidently wrong",min:20},
-  {id:"m2",z:"A",t:"Your AI toolbox",s:"Four layers of tools and which to use when",min:20},
-  {id:"m3",z:"A",t:"Using AI safely",s:"Data privacy, accuracy checks, accountability",min:25},
-  {id:"m4",z:"B",t:"Writing good prompts",s:"The five-part Pick Ticket method",min:30},
-  {id:"m5",z:"B",t:"Working with data",s:"Tables, files, data dictionaries, checking numbers",min:30},
-  {id:"m6",z:"C",t:"Audit essentials",s:"Flows, accuracy measures and red flags",min:35},
-  {id:"m7",z:"C",t:"Excel and AI",s:"Formulas, Copilot, Power Query",min:40},
-  {id:"m8",z:"C",t:"Audit playbooks",s:"Six step-by-step routines and an audit lab",min:45},
-  {id:"m9",z:"D",t:"Reporting findings",s:"Five-part findings for every audience",min:30},
-  {id:"m10",z:"D",t:"Automation",s:"What to automate and how, safely",min:35},
-  {id:"m11",z:"E",t:"Advanced AI",s:"Anomaly detection, RAG, judging vendors",min:35},
-  {id:"m12",z:"E",t:"Your 90-day plan",s:"Time savings, plan, capstone, certificate",min:30}
+  {id:"m1",z:"A",t:"What AI actually is",s:"How chatbots work, and why they can be confidently wrong",min:25},
+  {id:"m2",z:"A",t:"Your AI toolbox",s:"Four layers of tools and which to use when",min:30},
+  {id:"m3",z:"A",t:"Using AI safely",s:"Data privacy, accuracy checks, accountability",min:35},
+  {id:"m4",z:"B",t:"Writing good prompts",s:"The five-part Pick Ticket method",min:40},
+  {id:"m5",z:"B",t:"Working with data",s:"Tables, files, data dictionaries, checking numbers",min:45},
+  {id:"m6",z:"C",t:"Audit essentials",s:"Flows, accuracy measures, red flags, sampling",min:50},
+  {id:"m7",z:"C",t:"Excel and AI",s:"Formulas, Copilot, Power Query",min:60},
+  {id:"m8",z:"C",t:"Audit playbooks",s:"Six control routines and an audit lab",min:60},
+  {id:"m9",z:"C",t:"Spend, stock and supplier playbooks",s:"Spend analysis, transfers, obsolete stock, OTIF",min:55},
+  {id:"m10",z:"C",t:"Case study: a month-end audit",s:"The whole audit, start to finish, on the practice data",min:50},
+  {id:"m11",z:"D",t:"Reporting findings",s:"Five-part findings, audiences, logging AI use",min:40},
+  {id:"m12",z:"D",t:"Automation",s:"What to automate and how, safely",min:40},
+  {id:"m13",z:"E",t:"Advanced AI",s:"Anomaly detection, RAG, judging vendors, what's next",min:45},
+  {id:"m14",z:"E",t:"Your 90-day plan",s:"Time savings, plan, capstone, certificate",min:35}
 ];
-MODS.forEach((m,i)=>{m.n=i+1;m.code=m.z+"-"+String(i+1).padStart(2,"0");});
-const ROUTES=["home",...MODS.map(m=>m.id),"library","glossary","sources"];
+MODS.forEach((m,i)=>{m.n=i+1;});
+const NMOD=MODS.length;
+const REF=[["progress","My progress"],["final","Final assessment"],["practice","Practice data"],["library","Prompt library"],["quickref","Quick reference"],["glossary","Glossary"],["help","Troubleshooting"],["sources","Sources"]];
+const ROUTES=["home",...MODS.map(m=>m.id),...REF.map(r=>r[0])];
+const isDone=id=>!!(S.tests[id]&&S.tests[id].passed&&assignStatus(id).complete);
+const finalPassed=()=>!!(S.tests.final&&S.tests.final.passed);
 
-/* sidebar */
+/* sidebar and contents */
 function buildSide(){
   const side=$("#side");let h=`<a href="#home" data-r="home"><span class="code"></span><span>Introduction and contents</span><span></span></a><div class="side-sep"></div>`;
   ZONES.forEach((z,zi)=>{
     h+=`<div class="side-group"><div class="side-zone">Part ${zi+1}: ${esc(z.name)}</div>`;
-    MODS.filter(m=>m.z===z.z).forEach(m=>{h+=`<a href="#${m.id}" data-r="${m.id}" class="${S.done[m.id]?"is-done":""}"><span class="code">${m.n}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${S.done[m.id]?"Done":"Not done"}"></span></a>`;});
+    MODS.filter(m=>m.z===z.z).forEach(m=>{const d=isDone(m.id);h+=`<a href="#${m.id}" data-r="${m.id}" class="${d?"is-done":""}"><span class="code">${m.n}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${d?"Done":"Not done"}"></span></a>`;});
     h+=`</div>`;
   });
-  h+=`<div class="side-sep"></div><div class="side-zone">Reference</div>
-  <a href="#library" data-r="library"><span class="code"></span><span>Prompt library</span><span></span></a>
-  <a href="#glossary" data-r="glossary"><span class="code"></span><span>Glossary</span><span></span></a>
-  <a href="#sources" data-r="sources"><span class="code"></span><span>Sources</span><span></span></a>`;
+  h+=`<div class="side-sep"></div><div class="side-zone">Reference</div>`+REF.map(([r,t])=>`<a href="#${r}" data-r="${r}" class="${r==="final"&&finalPassed()?"is-done":""}"><span class="code"></span><span>${t}</span><span class="${r==="final"?"tick":""}"></span></a>`).join("");
   side.innerHTML=h;
 }
 function buildFloor(){
   const box=$("#contentsList");let h="";
   ZONES.forEach((z,zi)=>{
-    const ms=MODS.filter(m=>m.z===z.z);
     h+=`<li><h3>Part ${zi+1}: ${esc(z.name)} <small>${esc(z.desc)}</small></h3><ol>`;
-    ms.forEach(m=>{h+=`<li><a class="${S.done[m.id]?"is-done":""}" href="#${m.id}"><span class="cn">${m.n}.</span><span><span class="ct">${esc(m.t)}</span><span class="cs">${esc(m.s)}</span></span><span class="cm">${S.done[m.id]?"Done":m.min+" min"}</span></a></li>`;});
+    MODS.filter(m=>m.z===z.z).forEach(m=>{const d=isDone(m.id);h+=`<li><a class="${d?"is-done":""}" href="#${m.id}"><span class="cn">${m.n}.</span><span><span class="ct">${esc(m.t)}</span><span class="cs">${esc(m.s)}</span></span><span class="cm">${d?"Done":m.min+" min"}</span></a></li>`;});
     h+=`</ol></li>`;
   });
+  h+=`<li><h3>Final assessment <small>20 questions across the whole course</small></h3><ol><li><a class="${finalPassed()?"is-done":""}" href="#final"><span class="cn"></span><span><span class="ct">Final assessment</span><span class="cs">Pass mark 75%. Needed for the certificate.</span></span><span class="cm">${finalPassed()?"Done":"20 min"}</span></a></li></ol></li>`;
   box.innerHTML=h;
 }
 function updateProgress(){
-  const n=MODS.filter(m=>S.done[m.id]).length;
-  $("#progLabel").textContent=`${n} of 12 modules done`;
-  $("#progBar").style.width=(n/12*100)+"%";
-  const next=MODS.find(m=>!S.done[m.id]);
+  const n=MODS.filter(m=>isDone(m.id)).length;
+  $("#progLabel").textContent=`${n} of ${NMOD} modules done`;
+  $("#progBar").style.width=(n/NMOD*100)+"%";
+  const next=MODS.find(m=>!isDone(m.id));
   const sb=$("#startBtn");
-  if(n===0){sb.textContent="Start with module 1";sb.href="#m1";}
+  const started=Object.keys(S.tests).length||Object.keys(S.assign).length;
+  if(!started){sb.textContent="Start with module 1";sb.href="#m1";}
   else if(next){sb.textContent=`Continue with module ${next.n}`;sb.href="#"+next.id;}
-  else{sb.textContent="View your certificate";sb.href="#m12";}
+  else if(!finalPassed()){sb.textContent="Take the final assessment";sb.href="#final";}
+  else{sb.textContent="View your certificate";sb.href="#m14";}
   updateCert();
+}
+function testLine(id){
+  const t=S.tests[id];if(!t||t.best==null)return "Test: not taken yet";
+  return t.passed?`Test: passed, best score ${t.best}%`:`Test: best score so far ${t.best}% (pass mark ${id==="final"?75:70}%)`;
 }
 function buildFoots(){
   $$(".mod-foot").forEach(f=>{
-    const id=f.dataset.foot, i=MODS.findIndex(m=>m.id===id), m=MODS[i];
-    const prev=MODS[i-1], next=MODS[i+1];
-    const done=!!S.done[id];
-    f.innerHTML=`<div class="status">${done?`<b>Marked as done.</b>`:`When you have finished the module and the exercises, mark it as done.`}</div>
+    const id=f.dataset.foot, i=MODS.findIndex(m=>m.id===id);
+    const prev=MODS[i-1], next=MODS[i+1], done=isDone(id), a=assignStatus(id);
+    f.innerHTML=`<div class="status">${done?`<b>Module done.</b> Test passed and assignment complete.`:`${testLine(id)} · Assignment: ${a.done} of ${a.total} parts done`}</div>
     <div class="btn-row" style="margin:0">
       ${prev?`<a class="btn ghost" href="#${prev.id}">Previous</a>`:""}
-      <button class="btn ${done?"ghost":""}" data-complete="${id}">${done?"Mark as not done":"Mark as done"}</button>
-      ${next?`<a class="btn ${done?"":"ghost"}" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn ghost" href="#home">Back to contents</a>`}
+      ${next?`<a class="btn ${done?"":"ghost"}" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn ${done?"":"ghost"}" href="#final">Final assessment</a>`}
     </div>`;
   });
 }
-document.addEventListener("click",e=>{
-  const b=e.target.closest("[data-complete]");if(!b)return;
-  const id=b.dataset.complete;S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();
-  buildSide();buildFloor();buildFoots();updateProgress();markNav(current);
-  const mm=MODS.find(x=>x.id===id);if(S.done[id]&&mm){const m=mm;toast(MODS.every(x=>S.done[x.id])?"All 12 modules done. Your certificate is in module 12.":`Module ${m.n} marked as done`);}
-});
+function refreshAll(){buildSide();buildFloor();buildFoots();updateProgress();markNav(current);renderGradebook();}
 
 /* router */
 let current="home";
@@ -2314,25 +2891,6 @@ function wrapPrompts(scope=document){
     const pre=el("pre");pre.textContent=p.textContent;
     w.appendChild(head);w.appendChild(pre);p.replaceWith(w);
     b.addEventListener("click",()=>copyText(pre.textContent,b));
-  });
-}
-
-/* ---------------- quizzes ---------------- */
-function initQuizzes(){
-  $$(".quiz").forEach(qz=>{
-    const qid=qz.dataset.quiz;S.quiz[qid]=S.quiz[qid]||{};
-    $$(".q",qz).forEach((q,qi)=>{
-      const qt=$(".qt",q);qt.insertAdjacentHTML("afterbegin",`<span class="qn">${qi+1}.</span>`);
-      const a=+q.dataset.a, opts=$$(".opt",q), why=$(".why",q);
-      const show=(chosen)=>{opts.forEach((o,i)=>{o.disabled=true;if(i===a)o.classList.add("correct");if(i===chosen&&i!==a)o.classList.add("incorrect");});
-        why.hidden=false;why.innerHTML=(chosen===a?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why.dataset.base;};
-      why.dataset.base=why.innerHTML;
-      opts.forEach((o,i)=>{o.type="button";o.addEventListener("click",()=>{show(i);S.quiz[qid][qi]=i;save();});});
-      if(S.quiz[qid][qi]!=null)show(S.quiz[qid][qi]);
-    });
-    const reset=el("button",{class:"btn ghost",type:"button",text:"Reset quiz"});reset.style.marginTop="6px";
-    reset.addEventListener("click",()=>{S.quiz[qid]={};save();$$(".q",qz).forEach(q=>{$$(".opt",q).forEach(o=>{o.disabled=false;o.classList.remove("correct","incorrect");});const w=$(".why",q);w.hidden=true;});});
-    qz.appendChild(reset);
   });
 }
 
@@ -2424,11 +2982,11 @@ cardGame($("#sorterCards"),$("#sorterScore"),[
         :where==="google"?`<b>Use Gemini in Sheets</b>, or upload an anonymised copy to your approved assistant's data analysis. Confirm row counts first.`
         :where==="erp"?`<b>Export to Excel or CSV</b>, then use Copilot in Excel or upload to your approved assistant. Also ask IT whether your ERP has built-in analytics or AI features (Module 2).`
         :`<b>You'll need data first.</b> Export the relevant report, clean it (Module 5), then come back.`;break;
-      case "write":r=`<b>Use ${tool}</b>${where==="excel"?", or Copilot in Word/Outlook":""}. Give it your facts in note form and the audience. The finding builder in Module 9 structures this for you. Check every number before sending.`;break;
-      case "repeat":r=where==="excel"?`<b>Climb the automation ladder.</b> First Power Query to combine and clean (Module 7), then Power Automate to schedule it (Module 10). AI helps you design both.`
+      case "write":r=`<b>Use ${tool}</b>${where==="excel"?", or Copilot in Word/Outlook":""}. Give it your facts in note form and the audience. The finding builder in Module 11 structures this for you. Check every number before sending.`;break;
+      case "repeat":r=where==="excel"?`<b>Climb the automation ladder.</b> First Power Query to combine and clean (Module 7), then Power Automate to schedule it (Module 12). AI helps you design both.`
         :where==="google"?`<b>Use Google Sheets' import and query functions plus scheduled scripts</b>. Ask an assistant to write the Apps Script for you, and check with IT first.`
-        :where==="erp"?`<b>Ask IT about scheduled reports</b> from your ERP into a shared folder. Then Power Query and Power Automate can take over (Modules 7 and 10).`
-        :`<b>Start by saving your best prompt as a template</b> (rung 1 of the automation ladder, Module 10).`;break;
+        :where==="erp"?`<b>Ask IT about scheduled reports</b> from your ERP into a shared folder. Then Power Query and Power Automate can take over (Modules 7 and 12).`
+        :`<b>Start by saving your best prompt as a template</b> (rung 1 of the automation ladder, Module 12).`;break;
     }
     out.hidden=false;out.innerHTML=`<span class="label">Recommendation · ${esc(W[where])}</span><br>${r}`;
   }
@@ -2551,13 +3109,13 @@ cardGame($("#safeCards"),$("#safeScore"),[
   sel.addEventListener("change",show);show();
 })();
 
-/* ---------------- playbook tabs ---------------- */
-(function(){
-  const tabs=$$("#pbTabs [role=tab]");
+/* ---------------- tabs ---------------- */
+$$("[role=tablist]").forEach(list=>{
+  const tabs=$$("[role=tab]",list);
   function sel(t){tabs.forEach(x=>{const on=x===t;x.setAttribute("aria-selected",on);x.tabIndex=on?0:-1;$("#"+x.getAttribute("aria-controls")).hidden=!on;});}
   tabs.forEach((t,i)=>{t.addEventListener("click",()=>sel(t));t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight")j=(i+1)%tabs.length;if(e.key==="ArrowLeft")j=(i-1+tabs.length)%tabs.length;if(j!=null){e.preventDefault();tabs[j].focus();sel(tabs[j]);}});});
   sel(tabs[0]);
-})();
+});
 
 /* ---------------- LAB 8.1 audit lab ---------------- */
 (function(){
@@ -2677,8 +3235,8 @@ cardGame($("#safeCards"),$("#safeScore"),[
 const certName=$("#certName");certName.value=S.name||"";
 certName.addEventListener("input",()=>{S.name=certName.value;save();updateCert();});
 function updateCert(){
-  const n=MODS.filter(m=>S.done[m.id]).length, all=n===12;
-  $("#certHint").innerHTML=all?"All 12 modules are done. Type your name below; you can take a screenshot of the certificate to keep.":`The certificate appears once all 12 modules are marked as done. So far: <b>${n} of 12</b>.`;
+  const n=MODS.filter(m=>isDone(m.id)).length, all=n===NMOD&&finalPassed();
+  $("#certHint").innerHTML=all?"All modules and the final assessment are done. Type your name below; you can take a screenshot of the certificate to keep.":`The certificate appears when all ${NMOD} modules are done (test passed and assignment complete) and you've passed the final assessment. So far: <b>${n} of ${NMOD}</b> modules${finalPassed()?", final assessment passed":""}.`;
   $("#certBox").hidden=!all;
   $("#certNm").textContent=certName.value.trim()||"Your name";
   $("#certDate").textContent="Completed "+new Date().toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"});
@@ -2716,6 +3274,12 @@ const LIB=[
   {c:"Automation",t:"Design a Power Automate flow",p:"I want to automate a weekly task in Microsoft Power Automate. I'm a beginner. Task: [describe]. Files are in: [location]. Give me the flow as numbered steps, the exact actions for each, what could go wrong and how to handle it, and what to ask IT for."},
   {c:"Automation",t:"Automation request for IT",p:"Help me write a one-page automation request for IT. Current task: [task, frequency, time]. Want automated: [steps]. Systems and data: [details, sensitivity]. Users: [who]. Sections: Business problem, Proposed solution, Data and access, Risks and controls, Time saved, Success measure. Under 400 words."},
   {c:"Automation",t:"Turn a chat into a reusable template",p:"Turn what we just did in this conversation into a reusable prompt template. Use [brackets] for the parts that change each time, and add a one-line note on when to use it."},
+  {c:"Audit checks",t:"Spend classification (P7)",p:"Classify each spend line into exactly one category: [your list] | Other. Use the description and supplier name; descriptions may be abbreviated. Using code, return Line_ID, Category, Confidence (High/Low). Then total spend by category, spend currently coded to [Sundry GL], and supplier count per category. Tell me the number of lines and the overall total so I can tie it out."},
+  {c:"Audit checks",t:"Transfer reconciliation (P8)",p:"Using code on the transfer log (snapshot date [date]): list transfers with no receipt shipped more than [14] days ago, transfers received short, and both summarised by route. Then check count results for SKUs short in one warehouse and over by a similar amount in another, and say whether a transfer explains it."},
+  {c:"Audit checks",t:"Stock ageing and excess (P9)",p:"Using code on the stock-on-hand file (snapshot date [date]): add days since last movement, an age bucket (0-90, 91-180, 181-365, >365) and months of supply (quantity ÷ average monthly usage). Show stock value by warehouse and age bucket, then list lines over 365 days and lines with more than [12] months of supply, largest value first."},
+  {c:"Audit checks",t:"Supplier OTIF and price variance (P10)",p:"Join POs to goods receipts on PO number. On time = receipt date on or before promised date; in full = quantity received at least quantity ordered, in the ordered unit. Give OTIF % by supplier (minimum 5 orders), worst first, and overall. Then join invoices to POs and total the price variance by supplier. Draft a review agenda for the three worst."},
+  {c:"Audit checks",t:"Design a sample",p:"I need to test [control] across [7] warehouses. The population is [number] items (attached, anonymised). Suggest what to test in full, how many to sample at random from the rest, and how to spread it across warehouses. Explain briefly, then draw the sample with code using a fixed random seed and list the selected IDs."},
+  {c:"Reporting",t:"AI use log entry",p:"Summarise what we did in this conversation as a log entry: Date, Tool, Data used (file names, row counts), What I asked, What you produced, Checks I should record, Anything you were unsure about. Keep it short and factual."},
   {c:"Productivity",t:"Custom instructions",p:"I'm an assistant purchase manager auditing inventory, purchasing and invoice data across 7 warehouses (WH01–WH07). Variance = system qty minus count; line tolerance ±[2]%. Systems: [ERP], [WMS]; I work mainly in Excel (Microsoft 365). When I share data, confirm the row count, use only the data given, and say clearly if something can't be determined. Prefer tables and short bullet summaries in plain business English."},
   {c:"Productivity",t:"Check your own answer",p:"Review your previous answer critically. List any calculations I should verify, any assumptions you made, anything you're unsure about, and anything that might be wrong."},
   {c:"Productivity",t:"Ask me first",p:"Before you start, ask me up to 3 questions about anything unclear in this request. Then wait for my answers."},
@@ -2741,11 +3305,11 @@ const LIB=[
 /* ---------------- glossary ---------------- */
 const GL=[
   ["ABC classification","Ranking items by annual value (or velocity or risk) so the most important ones get counted and checked most often.","M6"],
-  ["Agent (AI agent)","AI that works toward a goal by planning steps, using tools and checking results, rather than just answering one question.","M10"],
+  ["Agent (AI agent)","AI that works toward a goal by planning steps, using tools and checking results, rather than just answering one question.","M12"],
   ["Agent Mode","A Copilot feature in Excel that builds and edits workbooks through multi-step, plain-English requests.","M2"],
-  ["Anomaly detection","Machine learning that learns what normal looks like and flags things that deviate from it.","M11"],
+  ["Anomaly detection","Machine learning that learns what normal looks like and flags things that deviate from it.","M13"],
   ["Anonymise","Replace sensitive details (names, prices, IDs) with codes or scaled values before sharing data.","M3"],
-  ["Audit trail","A record of who did what, when and to which data. Essential for any automation.","M10"],
+  ["Audit trail","A record of who did what, when and to which data. Essential for any automation.","M12"],
   ["Benford's law","The pattern that leading digits follow in many natural datasets. Used as a screening test for unusual financial data.","M8"],
   ["Context window","How much text an AI model can consider at once, including your prompt, files and its answer.","M2"],
   ["Copilot","Microsoft's AI assistant, available as a chat app and inside Excel, Word, Outlook and Teams.","M2"],
@@ -2754,7 +3318,7 @@ const GL=[
   ["Cycle count","Counting a subset of inventory on a rolling schedule instead of a full stock-take.","M6"],
   ["Data dictionary","A short description of each column in a dataset: what it means, its units and format.","M5"],
   ["Deep learning","Machine learning using large neural networks. Powers image recognition, speech and modern language models.","M1"],
-  ["Document AI / OCR","AI that reads scanned or PDF documents, such as invoices, and extracts structured data.","M11"],
+  ["Document AI / OCR","AI that reads scanned or PDF documents, such as invoices, and extracts structured data.","M13"],
   ["Few-shot prompting","Including a few examples of the answer you want in your prompt so the AI copies the pattern.","M5"],
   ["Generative AI","AI that creates new content: text, tables, code or images.","M1"],
   ["GRN (goods receipt note)","The record that goods have been received at the warehouse.","M6"],
@@ -2765,13 +3329,13 @@ const GL=[
   ["Machine learning (ML)","AI that learns patterns from data rather than following hand-written rules.","M1"],
   ["Maverick spend","Buying outside approved suppliers, contracts or processes.","M6"],
   ["Near-duplicate","Two records that are the same in reality but differ slightly in the data, such as an invoice number with a suffix.","M8"],
-  ["Power Automate","Microsoft's tool for building automated workflows that run on a schedule or trigger.","M10"],
+  ["Power Automate","Microsoft's tool for building automated workflows that run on a schedule or trigger.","M12"],
   ["Power Query","Excel's built-in tool for importing, combining and cleaning data with repeatable steps.","M7"],
-  ["Precision","Of everything a tool flagged, the share that was really a problem.","M11"],
+  ["Precision","Of everything a tool flagged, the share that was really a problem.","M13"],
   ["Predictive AI","AI that learns from historical data to forecast or score, such as demand forecasts or risk scores.","M1"],
   ["Prompt","The instruction you give an AI tool.","M4"],
-  ["RAG (retrieval-augmented generation)","AI that searches your documents first and answers from them, citing sources.","M11"],
-  ["Recall","Of all the real problems, the share a tool caught.","M11"],
+  ["RAG (retrieval-augmented generation)","AI that searches your documents first and answers from them, citing sources.","M13"],
+  ["Recall","Of all the real problems, the share a tool caught.","M13"],
   ["Shrink","Inventory lost to theft, damage or error, usually measured as a share of inventory value.","M6"],
   ["Split purchase order","Breaking one purchase into several smaller POs to stay under an approval limit.","M6"],
   ["Temperature","A setting that controls how random or creative an AI's word choices are. Lower is more predictable.","M1"],
@@ -2779,17 +3343,214 @@ const GL=[
   ["Tie out","Confirming a figure by tracing it back to an independent source, such as matching totals to Excel.","M3"],
   ["Token","A chunk of text (roughly three-quarters of a word) that AI models read and write. Usage is measured in tokens.","M1"],
   ["Unit of measure (UOM)","The unit a quantity is recorded in, such as each (EA) or case (CS). Mismatches are a common source of variances.","M6"],
-  ["Vendor master","The list of approved suppliers and their details in the ERP.","M6"]
+  ["Vendor master","The list of approved suppliers and their details in the ERP.","M6"],
+  ["OTIF (on time, in full)","The share of orders delivered by the promised date in the quantity ordered. The standard measure of supplier delivery performance.","M9"],
+  ["Purchase price variance (PPV)","The difference between the price paid and the agreed price (PO or contract), times quantity.","M9"],
+  ["Months of supply","Quantity on hand divided by average monthly usage. Over about 12 months usually means excess stock.","M9"],
+  ["Obsolete stock","Stock with no movement or usage for a long period, typically over a year. A write-off risk.","M9"],
+  ["Spend classification","Sorting purchase lines into categories so you can see what is bought and from whom.","M9"],
+  ["Inter-warehouse transfer","Moving stock from one warehouse to another. Has a shipping half and a receiving half that must both be recorded.","M9"],
+  ["Sampling","Testing a selection of items to judge a whole population. Can be random, risk-based or stratified.","M6"],
+  ["AI use log","A simple record of when and how AI was used in a piece of work, and how its output was checked.","M11"],
+  ["Knowledge cutoff","The date up to which a model's training data runs. It knows nothing later unless it can search.","M13"],
+  ["Reasoning model","An AI mode that works through a problem step by step before answering. Slower, but better at multi-step analysis.","M13"]
 ];
 (function(){
   const list=$("#glList");
   function render(){const q=$("#glSearch").value.trim().toLowerCase();
-    list.innerHTML=GL.filter(([t,d])=>!q||(t+" "+d).toLowerCase().includes(q)).map(([t,d,m])=>`<div class="gl-item"><dt>${esc(t)}</dt><dd>${esc(d)} <a class="mono" href="#${m.toLowerCase()}">Module ${m.slice(1)}</a></dd></div>`).join("")||'<div class="gl-item"><dd>No matching terms.</dd></div>';}
+    list.innerHTML=GL.slice().sort((a,b)=>a[0].localeCompare(b[0])).filter(([t,d])=>!q||(t+" "+d).toLowerCase().includes(q)).map(([t,d,m])=>`<div class="gl-item"><dt>${esc(t)}</dt><dd>${esc(d)} <a class="mono" href="#${m.toLowerCase()}">Module ${m.slice(1)}</a></dd></div>`).join("")||'<div class="gl-item"><dd>No matching terms.</dd></div>';}
   $("#glSearch").addEventListener("input",render);render();
 })();
 
+/* ---------------- tests ---------------- */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const TYPE_HINT={mc:"Choose one answer.",tf:"True or false?",multi:"Select all that apply.",order:"Use the arrows to put these in the right order.",match:"Choose the matching item for each row.",num:"Type a number."};
+function parseNum(v){const x=parseFloat(String(v).replace(/[$,%\s]/g,""));return isNaN(x)?null:x;}
+function qWidget(q,name){
+  const wrap=el("div",{class:"q"});
+  let get,mark;
+  if(q.t==="mc"||q.t==="tf"||q.t==="multi"){
+    const opts=q.t==="tf"?["True","False"]:q.o, multi=q.t==="multi";
+    const correct=q.t==="tf"?[q.a?0:1]:(multi?q.a:[q.a]);
+    const list=el("div",{class:"opts"});
+    const labs=opts.map((o,i)=>{const l=el("label",{class:"choice"});l.innerHTML=`<input type="${multi?"checkbox":"radio"}" name="${name}" value="${i}"><span>${esc(o)}</span>`;list.appendChild(l);return l;});
+    wrap.appendChild(list);
+    get=()=>{const v=labs.map((l,i)=>$("input",l).checked?i:-1).filter(i=>i>=0);return v.length?v:null;};
+    mark=()=>{labs.forEach((l,i)=>{$("input",l).disabled=true;const chosen=$("input",l).checked;if(correct.includes(i))l.classList.add("correct");else if(chosen)l.classList.add("incorrect");});};
+    wrap._grade=v=>v&&v.length===correct.length&&v.every(i=>correct.includes(i));
+  }else if(q.t==="order"){
+    let cur=shuffle(q.o);let guard=0;while(cur.join("|")===q.o.join("|")&&guard++<10)cur=shuffle(q.o);
+    const list=el("ol",{class:"order-list"});
+    const draw=()=>{list.innerHTML="";cur.forEach((t,i)=>{const li=el("li");li.innerHTML=`<span>${esc(t)}</span><span class="ord-btns"><button type="button" class="copy" aria-label="Move up" ${i===0?"disabled":""}>↑</button><button type="button" class="copy" aria-label="Move down" ${i===cur.length-1?"disabled":""}>↓</button></span>`;
+      const [up,dn]=$$("button",li);up.onclick=()=>{[cur[i-1],cur[i]]=[cur[i],cur[i-1]];draw();};dn.onclick=()=>{[cur[i+1],cur[i]]=[cur[i],cur[i+1]];draw();};list.appendChild(li);});};
+    draw();wrap.appendChild(list);
+    get=()=>cur.slice();
+    mark=()=>{$$("button",list).forEach(b=>b.disabled=true);$$("li",list).forEach((li,i)=>li.classList.add(cur[i]===q.o[i]?"correct":"incorrect"));
+      if(cur.join("|")!==q.o.join("|"))wrap.insertBefore(el("p",{class:"why"},"<b>Correct order:</b> "+q.o.map(esc).join(" → ")),wrap.querySelector(".why"));};
+    wrap._grade=v=>v.join("|")===q.o.join("|");
+  }else if(q.t==="match"){
+    const rights=shuffle([...new Set(q.pairs.map(p=>p[1]))]);
+    const grid=el("div",{class:"match"});
+    const sels=q.pairs.map(([l],i)=>{const row=el("div",{class:"match-row"});row.innerHTML=`<span>${esc(l)}</span><select aria-label="${esc(l)}"><option value="">Choose…</option>${rights.map(r=>`<option>${esc(r)}</option>`).join("")}</select>`;grid.appendChild(row);return $("select",row);});
+    wrap.appendChild(grid);
+    get=()=>sels.some(s=>!s.value)?null:sels.map(s=>s.value);
+    mark=()=>{sels.forEach((s,i)=>{s.disabled=true;const ok=s.value===q.pairs[i][1];s.parentNode.classList.add(ok?"correct":"incorrect");if(!ok)s.insertAdjacentHTML("afterend",`<small class="fix">Correct: ${esc(q.pairs[i][1])}</small>`);});};
+    wrap._grade=v=>v.every((x,i)=>x===q.pairs[i][1]);
+  }else if(q.t==="num"){
+    const row=el("div",{class:"num-row"});row.innerHTML=`<input type="text" inputmode="decimal" aria-label="Your answer"><span>${esc(q.unit||"")}</span>`;
+    wrap.appendChild(row);const inp=$("input",row);
+    get=()=>parseNum(inp.value);
+    mark=()=>{inp.disabled=true;const ok=wrap._grade(get());row.classList.add(ok?"correct":"incorrect");if(!ok)row.insertAdjacentHTML("beforeend",`<small class="fix">Correct: ${q.a}${q.unit==="%"?"%":" "+esc(q.unit||"")}</small>`);};
+    wrap._grade=v=>v!=null&&Math.abs(v-q.a)<=(q.tol||0);
+  }
+  wrap.appendChild(el("p",{class:"why",hidden:""},esc(q.why||"")));
+  wrap._get=get;wrap._mark=mark;return wrap;
+}
+function renderTest(box){
+  const id=box.dataset.test, qs=(window.TESTS||{})[id];if(!qs)return;
+  const pass=id==="final"?75:70;
+  const intro=()=>{
+    const t=S.tests[id]||{};
+    box.innerHTML=`<div class="assess-card">
+      <span class="w-tag">${id==="final"?"Final assessment":"Module test"}</span>
+      <h2 class="assess-h">${id==="final"?"Final assessment":"Test yourself"}: ${qs.length} questions</h2>
+      <p>Pass mark ${pass}%. Questions mix several formats. You can retake the test as often as you like; your best score counts.</p>
+      <p class="assess-status ${t.passed?"ok":""}">${t.best==null?"Not taken yet.":(t.passed?`Passed. Best score ${t.best}%.`:`Best score so far ${t.best}%. Not passed yet.`)}${t.attempts?` Attempts: ${t.attempts}.`:""}</p>
+      <button class="btn" type="button">${t.best==null?"Start the test":"Retake the test"}</button></div>`;
+    $("button",box).onclick=start;
+  };
+  const start=()=>{
+    box.innerHTML="";const card=el("div",{class:"assess-card"});
+    card.innerHTML=`<span class="w-tag">${id==="final"?"Final assessment":"Module test"}</span><h2 class="assess-h">${qs.length} questions · pass mark ${pass}%</h2>`;
+    const ws=qs.map((q,i)=>{const w=qWidget(q,`${id}-q${i}-${Date.now()}`);w.insertAdjacentHTML("afterbegin",`<p class="qt"><span class="qn">${i+1}.</span>${esc(q.q)}</p><p class="qhint">${TYPE_HINT[q.t]}</p>`);card.appendChild(w);return w;});
+    const msg=el("div",{class:"fb warn",hidden:""});
+    const sub=el("button",{class:"btn",type:"button"},"Submit answers");
+    const row=el("div",{class:"btn-row"});row.appendChild(sub);
+    const cancel=el("button",{class:"btn ghost",type:"button"},"Cancel");cancel.onclick=intro;row.appendChild(cancel);
+    card.appendChild(msg);card.appendChild(row);box.appendChild(card);
+    box.scrollIntoView({block:"start"});
+    sub.onclick=()=>{
+      const missing=ws.map((w,i)=>w._get()==null?i+1:0).filter(Boolean);
+      if(missing.length){msg.hidden=false;msg.textContent=`Answer every question before submitting. Still to answer: ${missing.join(", ")}.`;return;}
+      msg.hidden=true;let right=0;
+      ws.forEach(w=>{const ok=w._grade(w._get());if(ok)right++;w._mark();const why=$(".why",w);why.hidden=false;why.innerHTML=(ok?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why.innerHTML;w.classList.add(ok?"q-ok":"q-bad");});
+      const pct=Math.round(right/qs.length*100), passed=pct>=pass;
+      const t=S.tests[id]||{best:null,attempts:0,passed:false};
+      t.attempts=(t.attempts||0)+1;t.last=pct;t.best=Math.max(t.best??0,pct);t.passed=t.passed||passed;S.tests[id]=t;save();
+      row.innerHTML="";
+      const res=el("div",{class:`fb ${passed?"good":"bad"} result`});
+      res.innerHTML=`<b>You scored ${pct}% (${right} of ${qs.length}).</b> ${passed?"Passed.":`The pass mark is ${pass}%. Read the explanations, review the module, then retake.`}`;
+      card.insertBefore(res,card.children[2]);
+      const again=el("button",{class:"btn ghost",type:"button"},"Retake the test");again.onclick=start;row.appendChild(again);
+      res.scrollIntoView({block:"center"});
+      refreshAll();
+      if(passed)toast(id==="final"?"Final assessment passed":`Module test passed: ${pct}%`);
+    };
+  };
+  intro();
+}
+
+/* ---------------- assignments ---------------- */
+function partDone(p,st,i){
+  if(p.t==="task")return !!st.tasks[i];
+  if(p.t==="check")return st.checks[i]==="correct"||st.checks[i]==="revealed";
+  if(p.t==="reflect")return (st.text[i]||"").trim().length>=20;
+  if(p.t==="rubric")return p.items.every((_,k)=>st.rubric[i+"_"+k]);
+  return false;
+}
+function assignState(id){S.assign[id]=S.assign[id]||{tasks:{},checks:{},text:{},rubric:{},tries:{}};return S.assign[id];}
+function assignStatus(id){
+  const A=(window.ASSIGN||{})[id];if(!A)return{done:0,total:0,complete:true};
+  const st=S.assign[id]||{tasks:{},checks:{},text:{},rubric:{},tries:{}};
+  const done=A.parts.filter((p,i)=>partDone(p,st,i)).length;
+  return{done,total:A.parts.length,complete:done===A.parts.length};
+}
+function renderAssign(box){
+  const id=box.dataset.assign, A=(window.ASSIGN||{})[id];if(!A)return;
+  const st=assignState(id);
+  box.innerHTML=`<div class="assess-card assign-card"><span class="w-tag">Assignment</span><h2 class="assess-h">${esc(A.title)}</h2><p>${A.intro}</p><p class="assess-status" id="as-${id}"></p><ol class="assign-parts"></ol></div>`;
+  const list=$(".assign-parts",box), status=$("#as-"+id,box);
+  const upd=()=>{const s=assignStatus(id);status.textContent=s.complete?"Assignment complete.":`${s.done} of ${s.total} parts done.`;status.classList.toggle("ok",s.complete);
+    A.parts.forEach((p,i)=>list.children[i]&&list.children[i].classList.toggle("part-done",partDone(p,st,i)));};
+  let tmr;const commit=()=>{save();upd();clearTimeout(tmr);tmr=setTimeout(refreshAll,300);};
+  A.parts.forEach((p,i)=>{
+    const li=el("li",{class:"part part-"+p.t});
+    if(p.t==="task"){
+      li.innerHTML=`<label class="task"><input type="checkbox" ${st.tasks[i]?"checked":""}><span>${p.text}</span></label><span class="part-kind">Task: tick when done</span>`;
+      $("input",li).onchange=e=>{st.tasks[i]=e.target.checked;commit();};
+    }else if(p.t==="reflect"){
+      li.innerHTML=`<p class="part-q">${esc(p.q)}</p><textarea placeholder="${esc(p.ph||"")}"></textarea><span class="part-kind">Written answer: saved in this browser as you type (at least a sentence)</span>`;
+      const ta=$("textarea",li);ta.value=st.text[i]||"";ta.oninput=()=>{st.text[i]=ta.value;commit();};
+    }else if(p.t==="rubric"){
+      li.innerHTML=`<p class="part-q">Check your work: tick each statement that's true.</p>`+p.items.map((t,k)=>`<label class="task"><input type="checkbox" data-k="${k}" ${st.rubric[i+"_"+k]?"checked":""}><span>${esc(t)}</span></label>`).join("");
+      $$("input",li).forEach(c=>c.onchange=()=>{st.rubric[i+"_"+c.dataset.k]=c.checked;commit();});
+    }else if(p.t==="check"){
+      const kind=p.kind;
+      let field;
+      if(kind==="num")field=`<span class="num-row"><input type="text" inputmode="decimal" aria-label="Your answer">${p.unit?`<span>${esc(p.unit)}</span>`:""}</span>`;
+      else if(kind==="choice")field=`<select aria-label="Your answer"><option value="">Choose…</option>${p.o.map((o,k)=>`<option value="${k}">${esc(o)}</option>`).join("")}</select>`;
+      else field=`<div class="opts">${p.o.map((o,k)=>`<label class="choice"><input type="checkbox" value="${k}"><span>${esc(o)}</span></label>`).join("")}</div>`;
+      li.innerHTML=`<p class="part-q">${esc(p.q)}</p><div class="check-row">${field}<button class="btn" type="button">Check</button></div><div class="fb" hidden></div><span class="part-kind">Checked against the practice data</span>`;
+      const fb=$(".fb",li), btn=$(".check-row>.btn",li);
+      const val=()=>{if(kind==="num")return parseNum($("input",li).value);if(kind==="choice"){const v=$("select",li).value;return v===""?null:+v;}const v=$$("input",li).filter(c=>c.checked).map(c=>+c.value);return v.length?v:null;};
+      const ok=v=>kind==="num"?Math.abs(v-p.a)<=(p.tol||0):kind==="choice"?v===p.a:(v.length===p.a.length&&v.every(x=>p.a.includes(x)));
+      const lock=(how)=>{$$("input,select",li).forEach(x=>x.disabled=true);btn.remove();fb.hidden=false;fb.className="fb "+(how==="correct"?"good":"warn");
+        fb.innerHTML=(how==="correct"?"<b>Correct.</b> ":"<b>Answer shown.</b> ")+p.why;};
+      const answerText=()=>kind==="num"?`${p.unit==="$"?"$":""}${Number(p.a).toLocaleString("en-US")}${p.unit&&p.unit!=="$"?" "+p.unit:""}`:kind==="choice"?p.o[p.a]:p.a.map(k=>p.o[k]).join("; ");
+      btn.onclick=()=>{
+        const v=val();if(v==null){fb.hidden=false;fb.className="fb warn";fb.textContent="Enter an answer first.";return;}
+        if(ok(v)){st.checks[i]="correct";commit();lock("correct");return;}
+        st.tries[i]=(st.tries[i]||0)+1;save();
+        fb.hidden=false;fb.className="fb bad";
+        fb.innerHTML=st.tries[i]>=2?`<b>Not right yet.</b> Check your method against the module and try again, or <button type="button" class="copy reveal">show the answer</button>.`:"<b>Not right yet.</b> Check your calculation (and that the AI read the whole file), then try again.";
+        const rv=$(".reveal",fb);if(rv)rv.onclick=()=>{st.checks[i]="revealed";commit();lock("revealed");fb.innerHTML="<b>Answer shown:</b> "+esc(answerText())+". "+p.why;};
+      };
+      if(st.checks[i]==="correct")lock("correct");
+      if(st.checks[i]==="revealed"){lock("revealed");fb.innerHTML="<b>Answer shown:</b> "+esc(answerText())+". "+p.why;}
+    }
+    list.appendChild(li);
+  });
+  upd();
+}
+
+/* ---------------- gradebook ---------------- */
+function renderGradebook(){
+  const tb=$("#gradebook");if(!tb)return;
+  let rows=MODS.map(m=>{const t=S.tests[m.id]||{},a=assignStatus(m.id),d=isDone(m.id);
+    return `<tr><td><a href="#${m.id}">${m.n}. ${esc(m.t)}</a></td><td class="num">${t.best==null?"–":t.best+"%"}</td><td>${t.best==null?"Not taken":t.passed?"Passed":"Not passed"}</td><td>${a.complete?"Complete":`${a.done} of ${a.total}`}</td><td>${d?"<b class='ok-txt'>Done</b>":"In progress"}</td></tr>`;}).join("");
+  const f=S.tests.final||{};
+  rows+=`<tr><td><a href="#final">Final assessment</a></td><td class="num">${f.best==null?"–":f.best+"%"}</td><td>${f.best==null?"Not taken":f.passed?"Passed":"Not passed"}</td><td>–</td><td>${f.passed?"<b class='ok-txt'>Done</b>":"Not done"}</td></tr>`;
+  tb.innerHTML=`<thead><tr><th>Module</th><th class="num">Best test score</th><th>Test</th><th>Assignment</th><th>Status</th></tr></thead><tbody>${rows}</tbody>`;
+  const scores=MODS.map(m=>(S.tests[m.id]||{}).best).filter(x=>x!=null);
+  const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0;
+  const nd=MODS.filter(m=>isDone(m.id)).length;
+  $("#gradeStats").innerHTML=`<div class="stat"><div class="n">${nd} / ${NMOD}</div><div class="l">Modules done</div></div><div class="stat"><div class="n">${scores.length?avg+"%":"–"}</div><div class="l">Average best test score</div></div><div class="stat"><div class="n">${MODS.filter(m=>assignStatus(m.id).complete).length}</div><div class="l">Assignments complete</div></div><div class="stat"><div class="n">${f.passed?"Passed":"–"}</div><div class="l">Final assessment</div></div>`;
+}
+(function(){
+  const r=$("#resetAll");if(!r)return;
+  r.onclick=()=>{$("#resetConfirm").hidden=false;};
+  $("#resetNo").onclick=()=>{$("#resetConfirm").hidden=true;};
+  $("#resetYes").onclick=()=>{const th=S.theme;S={tests:{},assign:{},plan:{},name:"",theme:th};save();location.hash="#home";location.reload();};
+})();
+
+/* ---------------- Exercise 9.1 spend ---------------- */
+(function(){
+  const box=$("#spendCards");if(!box)return;
+  const C=[["pack","Packaging"],["mhe","MHE maintenance"],["fac","Facility services"],["util","Utilities"],["lab","Temporary labour"],["frt","Freight"],["it","IT & telecoms"],["ppe","PPE & safety"]];
+  cardGame(box,$("#spendScore"),[
+    {q:"<code>FLT TYRES X 12</code> · Kestrel Equipment Inc",a:"mhe",why:"FLT means forklift truck: equipment maintenance and parts."},
+    {q:"<code>agency pickers wk 33</code> · Dunmore Services Co.",a:"lab",why:"Agency staff are temporary labour, even though the supplier's name says 'Services'."},
+    {q:"<code>pallet network Aug</code> · Quayside Freight Ltd",a:"frt",why:"A pallet network is a freight service, not a pallet purchase."},
+    {q:"<code>void fill paper</code> · Ridgeway Packaging Co.",a:"pack",why:"Void fill protects goods in cartons: packaging material."},
+    {q:"<code>LOLER INSPECTION</code> · Kestrel Equipment Inc",a:"mhe",why:"LOLER is a statutory inspection of lifting equipment such as forklifts."},
+    {q:"<code>pest control visit</code> · Apex Facility Solutions LLC",a:"fac",why:"A facility service."},
+    {q:"<code>label printer heads</code> · Vantage Industrial LLC",a:"it",why:"Printer parts for warehouse IT equipment, even though the supplier name says 'Industrial'."},
+    {q:"<code>water/sewer Sep</code> · Eastbrook Services Ltd",a:"util",why:"A utility bill."}
+  ],{list:C.map(([k,l])=>({k,label:l}))});
+})();
+
 /* ---------------- boot ---------------- */
-wrapPrompts();initQuizzes();buildSide();buildFloor();buildFoots();updateProgress();route();
+wrapPrompts();$$(".test[data-test]").forEach(renderTest);$$(".assign[data-assign]").forEach(renderAssign);refreshAll();route();
 })();
 </script>
 </body>

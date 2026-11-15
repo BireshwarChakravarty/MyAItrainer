@@ -76,8 +76,154 @@
   <li><a href="https://witness.ai/blog/is-chatgpt-safe-for-business-use/" target="_blank" rel="noopener">WitnessAI: Is ChatGPT safe for business use?</a></li>
   <li><a href="https://nhimg.org/articles/llm-hallucinations-can-mimic-data-leaks-in-enterprise-ai/" target="_blank" rel="noopener">NHIMG: LLM hallucinations in enterprise AI</a> <span class="mono">· Air Canada ruling context</span></li>
 </ul>
-<div class="callout tip"><span class="tag">A note on the figures</span><p>Many statistics about AI in procurement come from vendors with a commercial interest. This course uses them to show direction, labels them where relevant, and does not present vendor performance claims as fact. Your own before-and-after measurements (Module 12) are the figures that matter most.</p></div>
+<div class="callout tip"><span class="tag">A note on the figures</span><p>Many statistics about AI in procurement come from vendors with a commercial interest. This course uses them to show direction, labels them where relevant, and does not present vendor performance claims as fact. Your own before-and-after measurements (Module 14) are the figures that matter most.</p></div>
 </div>
+</section>
+
+<!-- ======================= PRACTICE DATA ======================= -->
+<section class="view" data-route="practice" id="view-practice" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Practice data</h1>
+  <p class="lede">A complete set of fictional audit data for a distributor with seven warehouses, August to October 2026. Problems have been planted in it on purpose. The assignments in modules 2 to 10 ask you to find them and check your answers.</p>
+</header>
+<div class="callout rule"><span class="tag">All invented</span><p>Every supplier, person, code and number in these files is made up. That makes the pack safe to use in any AI tool, including ones your company hasn't approved for real data.</p></div>
+<h2>Download</h2>
+<ul>
+  <li><a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/practice_pack.xlsx" target="_blank" rel="noopener"><b>practice_pack.xlsx</b></a>: everything in one Excel workbook, one sheet per file. Best for Excel and Copilot.</li>
+  <li><a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/practice_pack.zip" target="_blank" rel="noopener"><b>practice_pack.zip</b></a>: the same data as separate CSV files, plus the workbook. Best for uploading to an AI assistant.</li>
+  <li><a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/warehouse_files.zip" target="_blank" rel="noopener"><b>warehouse_files.zip</b></a>: October counts split into seven files, one per warehouse, for the Power Query exercise in Module 7.</li>
+</ul>
+<p>If a link opens the file in your browser instead of downloading it, right-click it and choose "Save link as".</p>
+<h2>What's in the pack</h2>
+<div class="tbl"><table><thead><tr><th>File</th><th class="num">Rows</th><th>Contents</th><th>Used in</th></tr></thead><tbody>
+<tr><td><code>cycle_counts</code></td><td class="num">829</td><td>October counts: warehouse, location, SKU, case size, ABC class, unit cost, system and counted quantity, counter</td><td>Modules 5–7, 10</td></tr>
+<tr><td><code>po_register</code></td><td class="num">422</td><td>Purchase orders with requester, order unit, value, promised date and approver</td><td>Modules 8–10</td></tr>
+<tr><td><code>grn_register</code></td><td class="num">419</td><td>Goods receipts against POs, with the unit they were posted in</td><td>Modules 8–10</td></tr>
+<tr><td><code>invoice_register</code></td><td class="num">430</td><td>Supplier invoices; a blank PO number means no purchase order</td><td>Modules 3, 8, 10</td></tr>
+<tr><td><code>vendor_master</code></td><td class="num">51</td><td>Supplier records with masked bank details, tax ID, created date and last transaction</td><td>Modules 8, 10</td></tr>
+<tr><td><code>transfers</code></td><td class="num">120</td><td>Inter-warehouse transfers; a blank receipt date means not received</td><td>Modules 9, 10</td></tr>
+<tr><td><code>stock_on_hand</code></td><td class="num">595</td><td>Stock by warehouse at 31 October with last movement date and monthly usage</td><td>Modules 9, 10</td></tr>
+<tr><td><code>spend_lines</code></td><td class="num">154</td><td>Indirect spend from accounts payable, with messy descriptions and GL codes</td><td>Module 9</td></tr>
+</tbody></table></div>
+<h2>Rules used in the data</h2>
+<ul>
+  <li>Count tolerance is ±2% per line. Variance = counted minus system (negative means stock is missing).</li>
+  <li>PO approval limit is $5,000 for a manager and $20,000 for a director.</li>
+  <li>Snapshot date for stock and open items is 31 October 2026. Dates are written YYYY-MM-DD.</li>
+  <li>Unit costs are per each (EA). Case_Size is the number of eaches in a case.</li>
+</ul>
+<p>An answer key is included in the download (<code>ANSWER_KEY.md</code>). Try the assignments before you open it.</p>
+</section>
+
+<!-- ======================= QUICK REFERENCE ======================= -->
+<section class="view" data-route="quickref" id="view-quickref" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Quick reference</h1>
+  <p class="lede">The course on one page: the checklists you'll use most often once you've finished the modules.</p>
+</header>
+<div class="two">
+  <div class="panel"><h3>Writing a request (Module 4)</h3><ul>
+    <li><b>Role:</b> who the AI should act as</li>
+    <li><b>Task:</b> exactly what to do</li>
+    <li><b>Context:</b> your data, rules, tolerances</li>
+    <li><b>Format:</b> table, bullets, length</li>
+    <li><b>Checks:</b> use only my data; say if unsure; give row counts</li>
+  </ul></div>
+  <div class="panel"><h3>Before sharing data (Module 3)</h3><ul>
+    <li><b>Green:</b> general questions, made-up or public data. Any approved tool.</li>
+    <li><b>Amber:</b> internal data. Company-approved tool only.</li>
+    <li><b>Red:</b> prices, bank details, personal data, NDA material. Never, unless policy allows.</li>
+    <li>When unsure: anonymise, or ask for the method and apply it yourself.</li>
+  </ul></div>
+  <div class="panel"><h3>Checking AI output (Module 3)</h3><ol>
+    <li>Tie row counts and totals to Excel</li>
+    <li>Spot-check 5–10 rows by hand</li>
+    <li>Ask how it got the answer</li>
+    <li>Ask it to review its own answer</li>
+    <li>Trace findings to system records</li>
+  </ol></div>
+  <div class="panel"><h3>Clean data (Module 5)</h3><ul>
+    <li>One header row, no merged cells</li>
+    <li>One row per record, one type per column</li>
+    <li>Units stated in headers</li>
+    <li>A warehouse column</li>
+    <li>A data dictionary in the prompt</li>
+  </ul></div>
+  <div class="panel"><h3>Audit routines (Modules 8–9)</h3><ul>
+    <li>P1 Monthly variance review</li>
+    <li>P2 Duplicate invoices</li>
+    <li>P3 Split POs</li>
+    <li>P4 Vendor master</li>
+    <li>P5 Risk-based counts</li>
+    <li>P6 Adjustment reasons</li>
+    <li>P7 Spend · P8 Transfers · P9 Stock age · P10 Suppliers</li>
+  </ul></div>
+  <div class="panel"><h3>Writing a finding (Module 11)</h3><ul>
+    <li><b>Condition:</b> what you found</li>
+    <li><b>Criteria:</b> what it should be</li>
+    <li><b>Cause:</b> why it happened</li>
+    <li><b>Effect:</b> why it matters</li>
+    <li><b>Corrective action:</b> who, what, by when</li>
+  </ul></div>
+</div>
+<h2>Formulas you'll use most</h2>
+<div class="tbl"><table><thead><tr><th>Need</th><th>Formula</th></tr></thead><tbody>
+<tr><td>Variance %</td><td><code>=IF([@Sys_Qty]=0,IF([@Cnt_Qty]=0,0,1),([@Cnt_Qty]-[@Sys_Qty])/[@Sys_Qty])</code></td></tr>
+<tr><td>Outside ±2%</td><td><code>=IF(ABS([@Var_Pct])&gt;2%,"YES","NO")</code></td></tr>
+<tr><td>Case-size multiple</td><td><code>=AND([@Var_Qty]&lt;&gt;0,MOD(ABS([@Var_Qty]),[@Case_Size])=0)</code></td></tr>
+<tr><td>Gross variance for a warehouse</td><td><code>=SUMPRODUCT((Counts[WH]="WH05")*ABS(Counts[Var_Value]))</code></td></tr>
+<tr><td>Possible duplicate</td><td><code>=COUNTIFS(Inv[Vendor_ID],[@Vendor_ID],Inv[Amount],[@Amount])&gt;1</code></td></tr>
+<tr><td>Invoice with no PO</td><td><code>=IF([@PO_No]="","NO PO","")</code></td></tr>
+<tr><td>Days since last movement</td><td><code>=DATE(2026,10,31)-[@Last_Movement_Date]</code></td></tr>
+<tr><td>Random sample of 25</td><td><code>=TAKE(SORTBY(Tbl,RANDARRAY(ROWS(Tbl))),25)</code></td></tr>
+</tbody></table></div>
+</section>
+
+<!-- ======================= TROUBLESHOOTING ======================= -->
+<section class="view" data-route="help" id="view-help" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Troubleshooting</h1>
+  <p class="lede">Common problems when using AI for data work, and what to do about them.</p>
+</header>
+<div class="tbl"><table><thead><tr><th>Problem</th><th>What to try</th></tr></thead><tbody>
+<tr><td>The Copilot button in Excel is missing or greyed out</td><td>Copilot needs a Microsoft 365 Copilot licence, and the file saved in OneDrive or SharePoint with AutoSave on. Format the data as a table (Ctrl+T). If it's still missing, ask IT whether your licence includes it.</td></tr>
+<tr><td>"I can't open that file" or the upload fails</td><td>Check the file size limit of your tool. Save as CSV instead of XLSX, remove unused sheets, or split the file. Some tools only analyse files when a data-analysis feature is switched on.</td></tr>
+<tr><td>The AI analysed only part of the data</td><td>Ask for row counts per group first. If they don't match, tell it the expected total and ask it to reload the whole file using code.</td></tr>
+<tr><td>Numbers are different each time I ask</td><td>Ask it to use code for every calculation and show the code. Better still, ask for the Excel formula and calculate it yourself.</td></tr>
+<tr><td>A formula returns #NAME?</td><td>The function may not exist in your Excel version (TAKE, FILTER and XLOOKUP need Microsoft 365). Tell the AI your version and ask for an alternative.</td></tr>
+<tr><td>Dates are wrong or treated as text</td><td>State the date format in your prompt (for example YYYY-MM-DD or DD/MM/YYYY). In Excel, use Data → Text to Columns or Power Query to convert.</td></tr>
+<tr><td>Product codes lost their leading zeros</td><td>Tell the AI that code columns are text, not numbers. In Power Query, set the column type to Text before loading.</td></tr>
+<tr><td>The AI refuses or gives a very cautious answer</td><td>Explain the business context: "I'm an internal auditor reviewing our own purchase data for duplicate payments." Remove personal data that isn't needed.</td></tr>
+<tr><td>The answer is generic</td><td>Add context (warehouses, tolerances, columns) and a specific format. See Module 4.</td></tr>
+<tr><td>The AI states a conclusion the data can't support ("theft", "fraud")</td><td>Ask "which rows support this?" and rewrite the finding to say only what the data shows.</td></tr>
+<tr><td>I lost my progress in this course</td><td>Progress is saved in your browser on this device. It's lost if you clear browsing data or use a private window, and it doesn't move between devices.</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- ======================= PROGRESS ======================= -->
+<section class="view" data-route="progress" id="view-progress" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>My progress</h1>
+  <p class="lede">Your test scores and assignments for every module. A module counts as done when you've passed its test (70% or more) and completed its assignment.</p>
+</header>
+<div class="tbl"><table id="gradebook"></table></div>
+<div class="stat-row" id="gradeStats"></div>
+<p style="margin-top:18px">Results are saved in this browser only. <button class="btn ghost" type="button" id="resetAll">Reset all progress</button></p>
+<div class="fb warn" id="resetConfirm" hidden>This clears every score, assignment answer and note in this browser. <button class="btn" type="button" id="resetYes">Yes, reset everything</button> <button class="btn ghost" type="button" id="resetNo">Cancel</button></div>
+</section>
+
+<!-- ======================= FINAL ASSESSMENT ======================= -->
+<section class="view" data-route="final" id="view-final" hidden>
+<header class="mod-head">
+  <p class="kicker">Reference</p>
+  <h1>Final assessment</h1>
+  <p class="lede">Twenty questions drawn from the whole course. Pass mark 75%. You can take it at any time, but it's designed for after Module 14. Passing it is required for the certificate.</p>
+</header>
+<div class="test" data-test="final"></div>
 </section>
 
 </main>

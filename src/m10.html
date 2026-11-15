@@ -2,114 +2,108 @@
 <!-- ======================= M10 ======================= -->
 <section class="view" data-route="m10" id="view-m10" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 10 of 12 · Part 4: Communicate &amp; automate</p>
-  <h1>Automation</h1>
-  <p class="lede">Once a check works and you trust the results, you can stop doing it by hand. This module covers what's worth automating, how to go about it, and where AI agents fit in.</p>
-  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
+  <p class="kicker">Module 10 of 14 · Part 3: AI for your audit work</p>
+  <h1>Case study: a month-end audit</h1>
+  <p class="lede">A walk-through of one complete October audit of the practice data, from receiving the files to sending the summary. It shows how the pieces from modules 3 to 9 fit together, and the points where AI got things wrong and how they were caught.</p>
+  <p class="meta-row">About 45 minutes. Level: Intermediate to advanced.</p>
 </header>
 <div class="outcomes"><h2>After this module you should be able to:</h2><ul>
-  <li>Tell the difference between automation and AI, and when you need each</li>
-  <li>Score a task to decide whether it's worth automating</li>
-  <li>Sketch a simple weekly automated workflow and the guardrails it needs</li>
+  <li>Plan a month-end audit across seven warehouses as a sequence of steps</li>
+  <li>Recognise the typical ways AI output goes wrong on real files, and catch them</li>
+  <li>Decide which findings matter most and present them in order</li>
 </ul></div>
 
-<div class="prose">
-<h2>Automation and AI are different things</h2>
-<p><b>Automation</b> follows rules you define: "every Monday, copy these files, refresh this report, email it". It is exact and predictable. <b>AI</b> handles judgement and language: "classify these comments", "summarise these exceptions". The most useful workflows combine both: automation moves and calculates the data, AI handles the parts that need reading or writing, and you review the result.</p>
+<p>The setting: it's the first week of November 2026. You have October's data from seven warehouses and five working days to produce the monthly audit pack. Every number below comes from the practice data, so you can reproduce each step yourself. The assignment at the end asks you to.</p>
 
-<h2>The automation ladder</h2>
-<p>Climb one rung at a time. Each rung is valuable on its own, and each one makes the next easier.</p>
+<h2>Day 1 · Collect, combine and tie out</h2>
+<p>The seven warehouses send their count files. You put them in one folder and combine them with Power Query (Module 7).</p>
+<div class="chat">
+  <div class="bubble you"><span class="who">You</span><p>[Uploads the 7 warehouse files] Combine these and tell me the row count per warehouse.</p></div>
+  <div class="bubble ai"><span class="who">AI</span><p>Combined 7 files, 832 rows. WH04 has 113 rows…</p></div>
+  <div class="bubble note">Your Power Query result says 829. WH04's file has a title line and a blank row above the headers, and the AI counted them as data. If you had accepted 832, every later percentage for WH04 would have been slightly wrong. This is why step one is always a control total from a source you trust.</div>
+  <div class="bubble you"><span class="who">You</span><p>WH04's file has a title row and a blank row above the header. Skip them and recount.</p></div>
+  <div class="bubble ai"><span class="who">AI</span><p>Corrected: 829 rows. WH04 has 110.</p></div>
 </div>
-<ol class="steps prose">
-  <li><strong>Saved prompts and templates.</strong> Your best prompts saved and reused (the prompt library is a start). Zero setup.</li>
-  <li><strong>Refreshable workbooks.</strong> Power Query combine plus formulas and PivotTables. Monthly work drops from hours to a refresh and a review.</li>
-  <li><strong>Scheduled flows.</strong> Power Automate (or similar) moves files, triggers refreshes and sends emails on a schedule or when a file arrives.</li>
-  <li><strong>AI steps inside flows.</strong> A flow that also asks AI to classify, summarise or draft, such as writing the first draft of the weekly exception email.</li>
-  <li><strong>Agents with approvals.</strong> AI that plans and carries out several steps toward a goal, pausing for your approval before anything important happens.</li>
-</ol>
+<div class="callout good"><span class="tag">Lesson</span><p>AI handles the common case well and the messy case badly. One file in seven with a slightly different layout is normal in real life. Tie out every time.</p></div>
 
-<div class="widget" id="w-auto">
-  <div class="w-head"><span class="w-tag">Exercise 10.1</span><span class="w-title">Should I automate this task?</span></div>
-  <div class="w-body">
-    <p class="w-hint">Think of one recurring task. Move the sliders to describe it. The score suggests which rung of the ladder fits.</p>
-    <label class="fl" for="auFreq">How often do you do it? <span id="auFreqV"></span></label><input type="range" id="auFreq" min="1" max="5" value="4">
-    <label class="fl" for="auTime">How long does it take each time? <span id="auTimeV"></span></label><input type="range" id="auTime" min="1" max="5" value="3">
-    <label class="fl" for="auRule">How rule-based is it? <span id="auRuleV"></span></label><input type="range" id="auRule" min="1" max="5" value="4">
-    <label class="fl" for="auStd">How standard is the input data? <span id="auStdV"></span></label><input type="range" id="auStd" min="1" max="5" value="3">
-    <label class="fl" for="auRisk">How bad is a mistake? <span id="auRiskV"></span></label><input type="range" id="auRisk" min="1" max="5" value="3">
-    <div class="stat-row"><div class="stat"><div class="n" id="auScore">0</div><div class="l">Automation score / 100</div></div><div class="stat"><div class="n" id="auHours">0</div><div class="l">Approx. hours per year spent on it</div></div></div>
-    <div class="fb info" id="auOut"></div>
-  </div>
-</div>
-
-<div class="prose">
-<h2>Example: the Monday variance digest</h2>
-<p>Here is a realistic first automation for a multi-warehouse auditor. Each box is one step in Power Automate.</p>
-</div>
-<ol class="flow" aria-label="Monday variance digest flow">
-  <li><span class="mono">Trigger</span><b>Monday 7:00</b>Scheduled start</li>
-  <li><span class="mono">Step 1</span><b>Collect</b>Check the SharePoint folder has all 7 warehouse files<span class="risk" style="color:var(--warn)">If any missing → email that site</span></li>
-  <li><span class="mono">Step 2</span><b>Refresh</b>Refresh the Power Query workbook</li>
-  <li><span class="mono">Step 3</span><b>Extract</b>Read the exceptions table (out of tolerance, over $X)</li>
-  <li><span class="mono">Step 4 (uses AI)</span><b>Draft</b>AI writes a 5-line summary of the exceptions</li>
-  <li><span class="mono">Step 5</span><b>Review</b>Email draft to you, not to others<span class="risk" style="color:var(--good)">You approve before sending on</span></li>
-</ol>
-<pre class="pr" data-label="Prompt · design your first flow">I want to automate a weekly task using Microsoft Power Automate. I'm a beginner.
-Task: [describe, e.g. collect 7 warehouse stock files from a SharePoint folder each Monday, refresh my Excel report, and email me a summary of exceptions].
-Files are in: [SharePoint / OneDrive / email attachments].
-Give me: 1) the flow design as numbered steps, 2) the exact Power Automate actions to use for each step, 3) what could go wrong and how to handle it, 4) what I need to ask IT for (permissions, connectors).</pre>
-
-<div class="prose">
-<h2>AI agents: what they are and what's coming</h2>
-<p>An <b>AI agent</b> is AI that doesn't just answer a question but works toward a goal: it plans steps, uses tools (files, systems, email), checks results and continues. Excel's Agent Mode, which builds a workbook in several steps, is a simple example you can use today.</p>
-<p>Analysts expect agents to spread quickly in procurement. Gartner's 2026 outlook describes procurement moving toward an "AI-first" model in which agents carry out tasks such as compliance checks and payments within strict governance guardrails. It also forecasts that by 2030, half of cross-functional supply chain management solutions will use intelligent agents to execute decisions autonomously. Treat such forecasts as direction, not certainty, but the direction is clear: knowing how to supervise AI will become part of your job.</p>
-
-<h3>Guardrails for any automation or agent</h3>
-</div>
-<div class="two">
-  <div class="panel"><h4>Human approval for anything that changes records</h4><p>Stock adjustments, payments, vendor changes and emails to suppliers always need a person to approve. Inventory specialists specifically caution against autonomous adjustments without policy controls.</p></div>
-  <div class="panel"><h4>Thresholds</h4><p>Let automation handle small, clear-cut items; route anything above a value or below a confidence level to a person.</p></div>
-  <div class="panel"><h4>Audit trail</h4><p>Every automated action should be logged: what it did, when, on what data, and who approved. As an auditor, you will appreciate this more than most.</p></div>
-  <div class="panel"><h4>Failure alerts</h4><p>A flow that silently stops is worse than no flow. Make sure failures email you.</p></div>
+<h2>Day 2 · Stock accuracy</h2>
+<p>With the formulas from Module 7 you calculate variance and tolerance for every line, then run Playbook P1 (Module 8).</p>
+<div class="tbl"><table><thead><tr><th>Warehouse</th><th class="num">Accuracy</th><th class="num">Gross variance</th><th>What the patterns show</th></tr></thead><tbody>
+<tr><td>WH05 Port</td><td class="num">87.1%</td><td class="num">$19,216</td><td>14 variances are exact multiples of the case size: a unit-of-measure problem</td></tr>
+<tr><td>WH03 East</td><td class="num">92.3%</td><td class="num">$15,898</td><td>Counter C17 has 9 of 30 lines out of tolerance; everyone else at WH03 is close to target</td></tr>
+<tr><td>WH07 Cold Store</td><td class="num">94.0%</td><td class="num">$22,224</td><td>Four high-value A items short, all in the same direction</td></tr>
+<tr><td>WH06 West</td><td class="num">94.7%</td><td class="num">$41,348</td><td>Surpluses on three SKUs that match shortages at WH02</td></tr>
+<tr><td>WH04 South</td><td class="num">95.5%</td><td class="num">$30,757</td><td>One SKU short 40 in A-12-03 and over 40 in A-21-03: mis-slotted</td></tr>
+<tr><td>WH02 North</td><td class="num">95.8%</td><td class="num">$41,449</td><td>The matching shortages for WH06's surpluses</td></tr>
+<tr><td>WH01 Central DC</td><td class="num">96.7%</td><td class="num">$11,092</td><td>Scattered small errors, no pattern</td></tr>
+</tbody></table></div>
+<p>The network is at <b>93.5%</b> (54 of 829 lines outside tolerance) against a 98% target. Gross variance is <b>$181,984</b>, but net variance is only <b>−$13,405</b>. Most of the gross figure is stock in the wrong place rather than stock that's gone.</p>
+<div class="chat">
+  <div class="bubble ai"><span class="who">AI</span><p>WH07 shows shortages on high-value items, suggesting possible theft.</p></div>
+  <div class="bubble note">The pattern is real, but "theft" is a conclusion the data can't support. Four one-directional shortages on portable, high-value items is a red flag for a recount and a security review, not an accusation. The finding should say what the data shows.</div>
+  <div class="bubble ai"><span class="who">AI</span><p>WH04 has a net variance close to zero for SKU-10219, so it's accurate.</p></div>
+  <div class="bubble note">Net zero hides two large errors that cancel out. Gross variance and line-level accuracy show what's going on, which is why Module 6 told you to track both.</div>
 </div>
 
-<div class="prose">
-<h2>Working with IT</h2>
-<p>For anything beyond your own workbooks, involve IT early. They will want to know: what data, which systems, who has access, and what happens if it fails. Have AI help you write a clear one-page request.</p>
+<h2>Day 3 · Purchase to pay</h2>
+<p>You run Playbooks P2 (duplicates), P3 (split POs) and a three-way match check on the PO, GRN and invoice registers.</p>
+<ul>
+  <li><b>Five near-duplicate invoices</b> worth $26,100: a letter suffix (33071 / 33071A), leading zeros (INV-00451 / 451), transposed digits (88213 / 88231), the same invoice entered under a duplicate supplier record (V009 / V049), and the same amount three days apart.</li>
+  <li><b>Four split-PO clusters</b>, all by requester R07 at WH03: 11 POs between $4,600 and $4,990, $52,332 in total, against a $5,000 approval limit.</li>
+  <li><b>Six invoices with no PO</b> totalling $51,950. Three, worth $43,950, are from V051, a supplier created on 22 September.</li>
+  <li><b>Four invoices</b> charging for more than was received, <b>five</b> priced more than 2% above the PO, <b>two</b> dated before their PO, and one PO for 10 cases received as 120 eaches.</li>
+</ul>
+<div class="chat">
+  <div class="bubble ai"><span class="who">AI</span><p>I also found 11 further pairs with the same supplier and amount within 30 days.</p></div>
+  <div class="bubble note">You check a sample: they are repeat orders with their own POs and receipts. The prompt's rule (a) was too broad on its own. You refine it: same supplier and amount, AND the same PO or no PO. The real list drops to the five.</div>
 </div>
-<pre class="pr" data-label="Prompt · automation request for IT">Help me write a one-page automation request for our IT team.
-What I do now: [task, frequency, time taken].
-What I want automated: [steps].
-Systems and data involved: [ERP/WMS/SharePoint, file types, sensitivity].
-Who uses the output: [people].
-Include sections: Business problem, Proposed solution, Data and access needed, Risks and controls (approvals, audit log, failure alerts), Expected time saved, Success measure. Keep it under 400 words.</pre>
 
-<div class="takeaways prose"><h2>Summary</h2><ul>
-  <li>Automation follows rules; AI handles judgement and language. Combine them.</li>
-  <li>Climb the ladder: saved prompts → refreshable workbooks → scheduled flows → AI steps → agents.</li>
-  <li>Automate frequent, rule-based tasks with standard inputs first.</li>
-  <li>Approvals, thresholds, audit trails and failure alerts are non-negotiable.</li>
+<h2>Day 4 · Vendors, transfers, stock health, suppliers</h2>
+<ul>
+  <li><b>Vendor master:</b> three duplicate pairs (V009/V049, V022/V050, V015/V044), five records without a tax ID, seven dormant suppliers. V051 stands out: new, no tax ID, PO box address, $43,950 invoiced, none of it on a PO. That combination goes to your manager today, not in the monthly pack.</li>
+  <li><b>Transfers:</b> five shipped more than 14 days ago and never received; three received short. The WH02/WH06 opposite variances have no transfer record at all, so stock was moved without one.</li>
+  <li><b>Stock health:</b> 34 lines worth $539,007 haven't moved in over a year, most of it in WH07. 26 lines hold more than 12 months of supply.</li>
+  <li><b>Suppliers:</b> overall OTIF is 88.1%; V012 is at 31.2%.</li>
+  <li><b>Spend:</b> $161,600 of $645,161 indirect spend is coded to 6999 Sundry. Temporary labour is the largest category.</li>
+</ul>
+
+<h2>Day 5 · Prioritise and write up</h2>
+<p>You have more than fifteen issues. A pack that lists them all equally will be skimmed. You rank them by <b>money at risk</b>, <b>control weakness</b> (could it happen again?) and <b>urgency</b>.</p>
+<div class="tbl"><table><thead><tr><th>Priority</th><th>Finding</th><th>Why it ranks here</th></tr></thead><tbody>
+<tr><td>Escalate now</td><td>V051: new supplier, no tax ID, PO box, $43,950 paid without POs</td><td>Several fraud indicators together; money still going out</td></tr>
+<tr><td>1</td><td>Split POs by R07, $52,332</td><td>Approval control bypassed repeatedly</td></tr>
+<tr><td>2</td><td>Duplicate invoices, $26,100</td><td>Recoverable cash; matching control has gaps</td></tr>
+<tr><td>3</td><td>WH05 unit-of-measure errors, accuracy 87.1%</td><td>System setting; will keep happening until fixed</td></tr>
+<tr><td>4</td><td>$539,007 of stock unmoved for a year</td><td>Large value; write-off risk at year end</td></tr>
+<tr><td>5</td><td>Transfers not received; stock moved without transfers</td><td>Explains much of the gross variance; process gap</td></tr>
+</tbody></table></div>
+<p>The other items (counter retraining, mis-slot, OTIF review with V012, Sundry coding, vendor clean-up) go in a "for action by site and category owners" table.</p>
+<pre class="pr" data-label="The management summary you send (AI-drafted, then edited)">October inventory and purchasing audit: 7 warehouses
+
+Network stock accuracy was 93.5% against a 98% target (54 of 829 count lines outside tolerance). Most of the $181,984 gross variance is stock in the wrong place: net variance is −$13,405.
+
+Escalated separately today: supplier V051 (created 22 Sep, no tax ID, PO box address) has been paid $43,950 on three invoices with no purchase orders.
+
+Top findings
+1. Approval limit bypassed: 11 POs by one requester at WH03, each just under $5,000, total $52,332.
+2. Duplicate invoices: 5 pairs, $26,100, recoverable. Matching rules need tightening for suffixes and duplicate supplier records.
+3. WH05 accuracy 87.1%: 14 errors are case/each mix-ups. Fix: receiving screen default unit.
+4. $539,007 of stock (34 lines, mostly WH07) has not moved for over a year.
+5. 5 transfers not received after 14+ days; 3 SKUs moved WH02→WH06 with no transfer posted.
+
+Decisions needed: approve recount at WH07 and supplier review with V012 (OTIF 31.2%).</pre>
+<div class="callout rule"><span class="tag">What made this work</span><p>AI did the searching, joining and first drafts in minutes. You caught four AI errors: a miscounted file, an unsupported "theft" conclusion, a net figure hiding errors, and 11 false duplicates. Each was caught by the same habit: check totals, look at the underlying rows, and only state what the data supports.</p></div>
+
+<div class="takeaways"><h2>Summary</h2><ul>
+  <li>A month-end audit is a sequence: tie out, accuracy, purchase-to-pay, vendors and stock health, prioritise, write up.</li>
+  <li>Expect AI to stumble on messy files, overreach on conclusions and over-flag. Your checks catch it.</li>
+  <li>Rank findings by money, control weakness and urgency. Escalate urgent fraud indicators immediately.</li>
+  <li>A one-page summary with decisions needed beats a long list.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Score your three most repetitive tasks in the lab above. For the highest scorer, use the "design your first flow" prompt and write down the steps. You don't need to build it yet; having the design ready is what makes the conversation with IT easy.</p>
-</div>
 
-<div class="quiz" data-quiz="m10"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">Which task is the best first candidate for automation?</p><div class="opts">
-    <button class="opt">Deciding whether a warehouse manager's explanation is acceptable</button>
-    <button class="opt">Collecting seven files every Monday and refreshing the same report</button>
-    <button class="opt">A one-off investigation into a supplier</button></div>
-    <p class="why" hidden>Frequent, rule-based, standard-input tasks are ideal. Judgement calls and one-offs are not.</p></div>
-  <div class="q" data-a="0"><p class="qt">An AI agent proposes a stock write-off of $3,200. What should happen?</p><div class="opts">
-    <button class="opt">A person reviews and approves it before it is posted</button>
-    <button class="opt">It posts automatically if the agent is confident</button>
-    <button class="opt">It is ignored</button></div>
-    <p class="why" hidden>Anything that changes records or money needs human approval and an audit trail.</p></div>
-  <div class="q" data-a="2"><p class="qt">In the Monday digest, why is the AI summary emailed to you first, not straight to managers?</p><div class="opts">
-    <button class="opt">Email systems require it</button>
-    <button class="opt">AI cannot send emails</button>
-    <button class="opt">So you can check the AI-written summary before others rely on it</button></div>
-    <p class="why" hidden>AI drafts, you decide. The review step keeps accuracy and accountability with you.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m10"></div>
+<div class="assign" data-assign="m10"></div>
+</section>
 <div class="mod-foot" data-foot="m10"></div>
 </section>

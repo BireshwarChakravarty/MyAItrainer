@@ -2,109 +2,150 @@
 <!-- ======================= M9 ======================= -->
 <section class="view" data-route="m9" id="view-m9" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 9 of 12 · Part 4: Communicate &amp; automate</p>
-  <h1>Reporting findings</h1>
-  <p class="lede">This module covers writing up what you find: structuring a finding, adapting it for different readers, and picking the right chart.</p>
-  <p class="meta-row">About 30 minutes. Level: Intermediate.</p>
+  <p class="kicker">Module 9 of 14 · Part 3: AI for your audit work</p>
+  <h1>Spend, stock and supplier playbooks</h1>
+  <p class="lede">Module 8 covered control checks: duplicates, splits, vendor records. This module covers the other half of a purchasing auditor's job: where the money goes, whether stock moving between warehouses arrives, what's sitting unused, and which suppliers deliver as promised.</p>
+  <p class="meta-row">About 40 minutes. Level: Intermediate.</p>
 </header>
 <div class="outcomes"><h2>After this module you should be able to:</h2><ul>
-  <li>Write an audit finding using the five-part structure auditors use</li>
-  <li>Adapt the same finding for a warehouse manager, your manager and leadership</li>
-  <li>Choose the right chart for the point you're making</li>
+  <li>Classify messy spend data and find spend that is coded to the wrong account</li>
+  <li>Reconcile transfers between warehouses and explain stock "lost in transit"</li>
+  <li>Identify slow-moving, obsolete and excess stock by warehouse</li>
+  <li>Measure supplier delivery performance (OTIF) and price variance</li>
 </ul></div>
 
-<div class="prose">
-<h2>The five parts of a finding</h2>
-<p>Internal auditors structure findings around five elements. Using them makes your findings complete, fair and hard to argue with.</p>
-</div>
-<div class="tbl"><table><thead><tr><th>Element</th><th>Question</th><th>Example</th></tr></thead><tbody>
-<tr><td><b>Condition</b></td><td>What did you find?</td><td>38 of 418 count lines at WH05 (9.1%) were outside ±2% tolerance in October.</td></tr>
-<tr><td><b>Criteria</b></td><td>What should it be?</td><td>Network target is 98% accuracy; company SOP requires UOM confirmation at receiving.</td></tr>
-<tr><td><b>Cause</b></td><td>Why did it happen?</td><td>22 of the 38 lines were case-pack SKUs received as eaches; WH05's receiving screen defaults to EA.</td></tr>
-<tr><td><b>Effect</b></td><td>Why does it matter?</td><td>Gross variance of $14,300; risk of stock-outs and over-ordering on affected SKUs.</td></tr>
-<tr><td><b>Corrective action</b></td><td>What should happen, by whom, by when?</td><td>WMS team to change default UOM by 30 Nov; WH05 supervisor to recount the 22 SKUs this week.</td></tr>
-</tbody></table></div>
+<p>All four playbooks use the <b>practice data pack</b>: fictional data for seven warehouses with problems planted in it. If you haven't downloaded it yet, get it from the <a href="#practice">Practice data</a> page. The assignment at the end of this module checks your answers against it.</p>
 
-<div class="widget" id="w-finding">
-  <div class="w-head"><span class="w-tag">Exercise 9.1</span><span class="w-title">Finding builder</span></div>
+<div class="tabs" role="tablist" id="pb2Tabs">
+  <button role="tab" aria-selected="true" aria-controls="pb7" id="pbt7">Spend analysis</button>
+  <button role="tab" aria-selected="false" aria-controls="pb8" id="pbt8">Transfers</button>
+  <button role="tab" aria-selected="false" aria-controls="pb9" id="pbt9">Slow and obsolete stock</button>
+  <button role="tab" aria-selected="false" aria-controls="pb10" id="pbt10">Supplier performance</button>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb7" aria-labelledby="pbt7">
+  <h3>P7 · Spend classification and analysis</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Know what you buy, from whom, and whether it's coded correctly</div>
+    <div><span class="label">When</span>Quarterly</div>
+    <div><span class="label">Data</span>AP lines with supplier, description, amount and GL code (<code>spend_lines.csv</code>)</div>
+    <div><span class="label">Output</span>Spend by category and supplier, miscoding list, savings ideas</div>
+  </div>
+  <p>Spend analysis is the most common use of AI in procurement. Indirect spend (things you buy that aren't stock: services, repairs, utilities, labour) is usually the messiest, because descriptions are free text and people pick whatever GL code gets the invoice paid. A large "Sundry" or "Miscellaneous" balance is a sign that nobody really knows what was bought.</p>
+  <ol class="steps">
+    <li><strong>Agree a short category list.</strong> 8 to 15 categories that mean something to your business, for example Packaging, MHE (forklift) maintenance, Facility services, Utilities, Temporary labour, Freight, IT, PPE. Keep it short enough to remember.</li>
+    <li><strong>Classify every line with AI.</strong> Use the prompt below. Ask for a confidence level, and review every "Low".</li>
+    <li><strong>Spot-check 20 lines</strong> across categories. If more than two are wrong, refine the category definitions and run again.</li>
+    <li><strong>Pivot.</strong> Spend by category, by supplier within category, and by GL code against category.</li>
+    <li><strong>Look for the stories:</strong> spend coded to Sundry; one category spread across many small suppliers (a chance to consolidate); categories with no contract; month-on-month jumps.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P7 spend classification">Classify each spend line into exactly one of these categories:
+Packaging materials | MHE maintenance &amp; parts | Facility services | Utilities | Temporary labour | Freight &amp; courier | IT &amp; telecoms | PPE &amp; safety | Other
+Use the description and supplier name. Descriptions are messy and may be in capitals or abbreviated (e.g. "FLT" = forklift, "LOLER" = lifting equipment inspection).
+Using code, return: Line_ID, Category, Confidence (High/Low). Then give me:
+1. Total spend by category, largest first.
+2. Total spend currently coded to GL 6999 Sundry, and how it splits across categories.
+3. For each category, the number of suppliers and their share of spend.
+Tell me how many lines you classified and the overall total so I can tie it out.</pre>
+  <div class="callout tip"><span class="tag">Why ask for a total</span><p>Classification can silently drop lines. If the category totals don't add up to the file total, something was missed.</p></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb8" aria-labelledby="pbt8" hidden>
+  <h3>P8 · Inter-warehouse transfer reconciliation</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Make sure stock sent between warehouses arrives, in full</div>
+    <div><span class="label">When</span>Weekly or monthly</div>
+    <div><span class="label">Data</span>Transfer log (<code>transfers.csv</code>) plus count results</div>
+    <div><span class="label">Output</span>Open and short transfers, by route and age</div>
+  </div>
+  <p>With seven warehouses, stock moves around constantly. Each transfer has two halves: the sending site ships it and the receiving site books it in. Problems show up in three ways:</p>
+  <ul>
+    <li><b>Shipped but never received.</b> Stock is "in transit" in the system for weeks. It may be lost, or received physically but not booked.</li>
+    <li><b>Received short.</b> Fewer units booked in than were shipped.</li>
+    <li><b>Moved but never recorded.</b> Someone moves stock without a transfer at all. The counts then show a shortage at one site and a matching surplus at another, for the same SKU, with no transfer record. This is the "opposite variances" pattern from Module 6.</li>
+  </ul>
+  <ol class="steps">
+    <li><strong>Age the open transfers.</strong> Days since ship date for every transfer without a receipt. Anything over your normal transit time (say 7 days) needs chasing; over 14 days is an exception.</li>
+    <li><strong>Compare shipped vs received</strong> quantities for completed transfers.</li>
+    <li><strong>Cross-check counts.</strong> For SKUs short at one site and over at another, check whether a transfer explains it.</li>
+    <li><strong>Summarise by route</strong> (from → to). Repeated problems on one route usually point to one site's receiving process.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P8 transfers">Using code on transfers.csv (snapshot date 31 October 2026):
+1. List transfers with no Receipt_Date that were shipped more than 14 days before the snapshot date, with days outstanding.
+2. List completed transfers where Qty_Received is less than Qty_Shipped, with the shortfall.
+3. Summarise both by route (From_WH to To_WH).
+Then, using cycle_counts.csv: find SKUs that are short in one warehouse and over by a similar quantity in another within 3 days, and say whether a transfer in transfers.csv explains it.</pre>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb9" aria-labelledby="pbt9" hidden>
+  <h3>P9 · Slow-moving, obsolete and excess stock</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Find money tied up in stock that isn't being used</div>
+    <div><span class="label">When</span>Quarterly, and before year end</div>
+    <div><span class="label">Data</span>Stock on hand with last movement date and usage (<code>stock_on_hand.csv</code>)</div>
+    <div><span class="label">Output</span>Ageing by warehouse, obsolete list, excess list, actions</div>
+  </div>
+  <p>Stock that doesn't move costs money: storage space, handling, insurance, and eventually a write-off. It is also a purchasing issue, because excess usually starts with buying too much. Two measures matter:</p>
+  <div class="tbl"><table><thead><tr><th>Measure</th><th>How to calculate</th><th>Typical rule</th></tr></thead><tbody>
+  <tr><td><b>Age since last movement</b></td><td>Snapshot date minus last movement date, in days</td><td>Buckets: 0–90, 91–180, 181–365, over 365 days. Over 365 with no usage is usually treated as obsolete.</td></tr>
+  <tr><td><b>Months of supply</b></td><td>Quantity on hand ÷ average monthly usage</td><td>Over 12 months is usually treated as excess (set your own threshold)</td></tr>
+  </tbody></table></div>
+  <ol class="steps">
+    <li><strong>Add the two calculated columns</strong> (ask AI for the formulas, or have it do it with code).</li>
+    <li><strong>Value each bucket by warehouse.</strong> A PivotTable of Stock_Value by WH and age bucket.</li>
+    <li><strong>List the top items</strong> by value in the over-365 and excess groups.</li>
+    <li><strong>Agree actions</strong> with warehouse and category managers: transfer to a site that uses it, return to supplier, sell, or write off. Also stop re-ordering it.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P9 ageing">Using code on stock_on_hand.csv (snapshot date 31 October 2026):
+1. Add Age_Days (snapshot minus Last_Movement_Date) and Age_Bucket (0-90, 91-180, 181-365, >365).
+2. Add Months_Of_Supply = Qty_On_Hand / Avg_Monthly_Usage (show "No usage" when usage is 0).
+3. Table: Stock_Value by WH and Age_Bucket, with totals.
+4. List lines over 365 days, largest value first, and lines with more than 12 months of supply.
+5. Which warehouse has the most value over 365 days?
+Give me the total Stock_Value so I can tie it out.</pre>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb10" aria-labelledby="pbt10" hidden>
+  <h3>P10 · Supplier delivery performance and price variance</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Know which suppliers deliver as promised, at the agreed price</div>
+    <div><span class="label">When</span>Monthly or quarterly supplier reviews</div>
+    <div><span class="label">Data</span>POs with promised dates, goods receipts, invoices</div>
+    <div><span class="label">Output</span>OTIF by supplier, price variance list, review agenda</div>
+  </div>
+  <p><b>OTIF</b> means "on time, in full": the share of orders delivered by the promised date, in the quantity ordered (and, for this course, in the unit ordered). It's the standard supplier delivery measure. <b>Purchase price variance (PPV)</b> is the difference between what you paid and what you agreed, either the PO price or the contract price.</p>
+  <ol class="steps">
+    <li><strong>Join POs to goods receipts</strong> on PO number. A line is on time if GRN date ≤ promised date, and in full if quantity received ≥ quantity ordered.</li>
+    <li><strong>Calculate OTIF by supplier.</strong> Ignore suppliers with very few orders (fewer than 5), where one late delivery swings the figure.</li>
+    <li><strong>Join invoices to POs</strong> and calculate price variance per line and in total by supplier.</li>
+    <li><strong>Prepare a review agenda</strong> for the worst performers: facts first, then questions.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P10 OTIF and price variance">Using code on po_register.csv, grn_register.csv and invoice_register.csv:
+1. Join POs to GRNs on PO_No. A PO is On_Time if GRN_Date &lt;= Promised_Date, In_Full if Qty_Received &gt;= Qty and the GRN UOM equals Order_UOM.
+2. OTIF % by Vendor_ID for vendors with at least 5 received POs, worst first. Also overall OTIF.
+3. Join invoices to POs and calculate price variance per line ((Invoice Unit_Price − PO Unit_Price) × Qty) and the total by vendor.
+4. For the three worst OTIF vendors, draft a short supplier review agenda with the facts and 5 questions.</pre>
+</div>
+
+<div class="widget" id="w-spend">
+  <div class="w-head"><span class="w-tag">Exercise 9.1</span><span class="w-title">Classify the spend line</span></div>
   <div class="w-body">
-    <p class="w-hint">Fill in the five parts in rough note form (an example is pre-filled). The builder assembles a structured finding and an AI prompt to polish it for your chosen audience.</p>
-    <div class="grid-form">
-      <div><label class="fl" for="fTitle">Short title</label><input type="text" id="fTitle" value="Unit-of-measure errors at WH05 receiving"></div>
-      <div><label class="fl" for="fAud">Audience</label><select id="fAud"><option value="wm">Warehouse manager</option><option value="pm">My manager (purchase manager)</option><option value="exec">Leadership summary</option></select></div>
-    </div>
-    <label class="fl" for="fCond">Condition · what you found</label><textarea id="fCond">38 of 418 Oct count lines at WH05 outside ±2% tolerance (IRA 90.9%)</textarea>
-    <label class="fl" for="fCrit">Criteria · what it should be</label><textarea id="fCrit">Target 98% IRA. SOP 4.2: confirm UOM at receiving</textarea>
-    <label class="fl" for="fCause">Cause · why</label><textarea id="fCause">22 of 38 are case SKUs received as EA. Receiving screen defaults to EA</textarea>
-    <label class="fl" for="fEff">Effect · why it matters</label><textarea id="fEff">Gross variance $14,300. Risk of stock-outs and over-ordering</textarea>
-    <label class="fl" for="fAct">Corrective action · who, what, by when</label><textarea id="fAct">WMS team change default UOM by 30 Nov. WH05 supervisor recount 22 SKUs this week</textarea>
-    <div class="label" style="margin:16px 0 6px">Structured finding</div>
-    <div class="pb-out" id="fOut" style="min-height:0"></div>
-    <div class="label" style="margin:16px 0 6px">Prompt to polish it with AI</div>
-    <div class="pb-out" id="fPrompt" style="min-height:0"></div>
-    <div class="btn-row"><button class="btn" id="fCopy">Copy AI prompt</button><button class="btn ghost" id="fCopy2">Copy finding</button></div>
+    <p class="w-hint">These descriptions come from the practice data. Choose the category for each one. This is the same judgement you'll ask AI to make on hundreds of lines, so you need to be able to check it.</p>
+    <div class="cards" id="spendCards"></div>
+    <div class="score" id="spendScore"></div>
   </div>
 </div>
 
-<div class="prose">
-<h2>One finding, three audiences</h2>
-<p>The facts stay the same; the emphasis changes. Ask AI to rewrite for each audience rather than writing three versions yourself.</p>
-</div>
-<div class="two">
-  <div class="panel"><span class="label">Warehouse manager</span><h4>Specific and practical</h4><p>Which SKUs, which locations, what to do this week. Collaborative tone. Never names individuals as at fault.</p></div>
-  <div class="panel"><span class="label">Your manager</span><h4>Risk and money</h4><p>Value at risk, trend versus last month, what you recommend, what you need from them.</p></div>
-  <div class="panel"><span class="label">Leadership</span><h4>Three lines</h4><p>Network accuracy, the one or two issues that matter, the action under way. Numbers rounded.</p></div>
-</div>
-
-<div class="callout rule prose"><span class="tag">On tone</span><p>Findings describe <b>processes</b>, not people. "Receiving screen defaults to EA" invites a fix. "WH05 staff keep making mistakes" invites defensiveness. Add to any prompt: <code>Use neutral, factual language. Focus on process causes, not individuals.</code></p></div>
-
-<pre class="pr" data-label="Prompt · monthly audit summary">You are helping me write the monthly inventory audit summary for my manager. Here are my notes and results for 7 warehouses:
-[paste IRA by warehouse, this month and last month]
-[paste top 3–5 findings in note form]
-Write:
-1. A 3-sentence headline summary (network accuracy, trend, biggest issue).
-2. A short table: warehouse, IRA this month, change vs last month, status (On target / Watch / Action).
-3. The top findings in Condition / Cause / Effect / Action format, max 4 lines each.
-4. What I need from my manager (decisions or support).
-Plain business English, no jargon, no exaggeration. Use only the numbers I've given you.</pre>
-<pre class="pr" data-label="Prompt · email to a warehouse manager">Draft a short, friendly email to the WH[0X] warehouse manager about this month's count results.
-Facts: [paste].
-I want them to: [recount these SKUs / check receiving UOM settings / reply with explanations by date].
-Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask and deadline.</pre>
-
-<div class="prose">
-<h2>Pick the right chart</h2>
-</div>
-<div class="tbl"><table><thead><tr><th>Your point</th><th>Use</th><th>Avoid</th></tr></thead><tbody>
-<tr><td>Comparing 7 warehouses</td><td>Horizontal bar chart, sorted, with a target line</td><td>Pie charts (hard to compare 7 slices)</td></tr>
-<tr><td>Trend over months</td><td>Line chart, one line per warehouse or just the worst three</td><td>Seven-colour spaghetti charts</td></tr>
-<tr><td>Where the value is</td><td>Sorted bar or Pareto chart of variance value by SKU</td><td>3D effects of any kind</td></tr>
-<tr><td>A list of exceptions</td><td>A table with conditional formatting</td><td>A chart when people need the detail</td></tr>
-</tbody></table></div>
-<div class="prose"><p>Ask AI: <code>I want to show [point] to [audience]. My data has [columns]. What chart should I use and how should I set it up in Excel?</code></p></div>
-
-<div class="takeaways prose"><h2>Summary</h2><ul>
-  <li>Structure every finding: Condition, Criteria, Cause, Effect, Corrective action.</li>
-  <li>Let AI adapt one finding for each audience. You keep the facts fixed.</li>
-  <li>Describe processes, not people.</li>
-  <li>Bar charts for comparing warehouses, lines for trends, tables for exceptions.</li>
+<div class="takeaways"><h2>Summary</h2><ul>
+  <li>Spend analysis: short category list, AI classification with confidence, spot-check, then pivot. Watch the Sundry balance.</li>
+  <li>Transfers have two halves. Age the open ones, and match opposite count variances to transfers.</li>
+  <li>Age since last movement and months of supply find obsolete and excess stock.</li>
+  <li>OTIF and price variance make supplier reviews factual.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Take one real issue from your recent audits. Run it through the finding builder, polish it with AI, and compare it to how you would normally have written it. Use the improved version in your next report.</p>
-</div>
 
-<div class="quiz" data-quiz="m9"><h2>Quick quiz</h2>
-  <div class="q" data-a="2"><p class="qt">Which element answers "why did this happen?"</p><div class="opts">
-    <button class="opt">Condition</button><button class="opt">Effect</button><button class="opt">Cause</button></div>
-    <p class="why" hidden>Cause is the root reason. Effect is the consequence, and Condition is what you observed.</p></div>
-  <div class="q" data-a="0"><p class="qt">Which phrasing is better in a finding?</p><div class="opts">
-    <button class="opt">"Receiving at WH05 does not confirm unit of measure, leading to case/each errors."</button>
-    <button class="opt">"The WH05 receiving team is careless with units."</button>
-    <button class="opt">"Somebody at WH05 is getting UOM wrong."</button></div>
-    <p class="why" hidden>Process-focused language is factual and invites a fix rather than defensiveness.</p></div>
-  <div class="q" data-a="1"><p class="qt">Best chart to compare accuracy across seven warehouses?</p><div class="opts">
-    <button class="opt">A pie chart</button><button class="opt">A sorted bar chart with a target line</button><button class="opt">A 3D column chart</button></div>
-    <p class="why" hidden>Sorted bars make ranking obvious, and the target line shows who is on or off track instantly.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m9"></div>
+<div class="assign" data-assign="m9"></div>
+</section>
 <div class="mod-foot" data-foot="m9"></div>
 </section>

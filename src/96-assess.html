@@ -1,0 +1,268 @@
+<script>
+/* Tests and assignments. Question types:
+   mc {o,a}  multi {o,a:[...]}  tf {a:true|false}  order {o: items in correct order}
+   match {pairs:[[left,right],...]}  num {a, tol, unit}
+   Assignment parts: task {text}  check {q, kind:"num"|"choice", a, tol, o, unit, why}
+   reflect {q, ph}  rubric {items:[...]} */
+(function(){
+const P = window.PRACTICE;
+const DATA = "https://bireshwarchakravarty.github.io/MyAItrainer/data/";
+const money = x => "$" + Number(x).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const PACK = `<a href="${DATA}practice_pack.xlsx" target="_blank" rel="noopener">practice_pack.xlsx</a> (or the <a href="${DATA}practice_pack.zip" target="_blank" rel="noopener">CSV zip</a>)`;
+
+window.TESTS = {
+m1:[
+ {t:"mc",q:"Your WMS raises a replenishment order whenever a bin drops below 50 units. Is that AI?",o:["Yes, because the system makes a decision by itself","No, it is a fixed rule a person configured","Yes, because it uses data"],a:1,why:"A threshold someone typed in is a rule. If the system had worked out the reorder point from demand history, that would be machine learning."},
+ {t:"tf",q:"A chatbot like ChatGPT looks facts up in a database before it answers.",a:false,why:"It generates likely text based on patterns it learned. It only looks things up if it has been given documents, data or a search tool."},
+ {t:"order",q:"Put these in the order they happen for a large language model.",o:["It learns patterns from huge amounts of text","People coach it to follow instructions helpfully","Your message is split into tokens","It predicts the next token, one at a time, to build the answer"],why:"Training (learning patterns, then coaching) happens before you ever use it. When you send a message, it is tokenised and the answer is built one token at a time."},
+ {t:"match",q:"Match each task to the kind of AI that does it.",pairs:[["Forecasting next month's demand per SKU","Predictive AI"],["Drafting an email about missing GRNs","Generative AI"],["Scoring invoices by how unusual they are","Predictive AI"],["Summarising a supplier contract","Generative AI"]],why:"Predictive AI produces numbers, scores and flags from historical data. Generative AI reads and writes language."},
+ {t:"mc",q:"You ask an assistant for Warehouse 4's stock variance last month without giving it any data. What should you expect?",o:["It can't know; any figure it gives would be invented","It will pull the number from your ERP","It will give an accurate industry estimate"],a:0,why:"Unless your company has connected it to your systems, it has no access to your data."},
+ {t:"multi",q:"Which of these are good tasks to give generative AI? Select all that apply.",o:["Drafting a summary of 15 audit exceptions","Writing an Excel formula","Approving a stock write-off","Sorting free-text adjustment reasons into categories","Deciding whether a supplier committed fraud"],a:[0,1,3],why:"Drafting, formulas and classification are language tasks you can check. Approvals and judgements about wrongdoing stay with people."},
+ {t:"mc",q:"For factual audit work, where should the 'creativity' (temperature) setting be?",o:["Low, so the model sticks to the most likely words","High, so it considers more possibilities","It makes no difference"],a:0,why:"Higher creativity makes unlikely words more likely to be chosen. That's fine for brainstorming but not for facts and figures."}
+],
+m2:[
+ {t:"match",q:"Match each example to its layer of AI tools.",pairs:[["ChatGPT, Claude or Gemini in a browser","Chat assistant"],["The Copilot pane inside Excel","AI inside your apps"],["Automatic invoice matching in the AP system","AI in business systems"],["A Power Automate flow that runs every Monday","Automation and agents"]],why:"The four layers move from general and flexible to specialised and automatic."},
+ {t:"mc",q:"You need total variance across 4,000 rows. Which approach gives the most reliable number?",o:["Paste the rows into a chat and ask for the total","Upload the file to an assistant with data analysis, or ask AI for the Excel formula","Ask the assistant to estimate from a sample"],a:1,why:"Both use real calculation (code or a formula), not word prediction."},
+ {t:"mc",q:"What does Agent Mode in Excel do?",o:["Builds and edits a workbook through several steps you describe in plain English","Emails reports to your manager automatically","Connects Excel to every company system"],a:0,why:"It carries out multi-step workbook tasks. You still review what it built."},
+ {t:"tf",q:"The =COPILOT() function is a good way to calculate total variance value per warehouse.",a:false,why:"Microsoft advises against using it where accuracy or reproducibility matter. Use SUMIFS, SUMPRODUCT or a PivotTable."},
+ {t:"multi",q:"Which features matter most when using an assistant for data work? Select all that apply.",o:["File upload with data analysis (it runs code)","Custom instructions or Projects","Image generation","Being able to handle long documents and large tables"],a:[0,1,3],why:"Code-based analysis, saved context and long context make the biggest difference for audit data. Image generation doesn't help here."},
+ {t:"mc",q:"Why use your company-approved AI tool instead of a personal account?",o:["Personal accounts are always less capable","Business versions come with data protections and are covered by company policy","There is no real difference"],a:1,why:"Enterprise versions typically include contractual data protections and admin controls."},
+ {t:"mc",q:"What's the sensible first step before using AI tools on work data?",o:["Try every tool on real data to compare them","Find out which tools are approved and what licences you have","Wait until IT announces an AI programme"],a:1,why:"Knowing what's approved and licensed tells you what you can safely use, and shows initiative."}
+],
+m3:[
+ {t:"order",q:"Put the five 'tie it out' checks in order.",o:["Tie row counts and totals to Excel","Spot-check 5 to 10 rows by hand","Ask the AI how it got the answer","Ask it to review its own answer for errors","Trace findings back to the system of record"],why:"Start with the quickest, strongest check (totals) and finish by tracing to source."},
+ {t:"multi",q:"Which of these are red-light data that should never go into an unapproved tool? Select all that apply.",o:["Supplier contract prices","Bank account details","Warehouse codes WH01 to WH07","Counters' names with their error rates","A published news article about a supplier"],a:[0,1,3],why:"Commercial terms, payment data and personal data linked to performance are red. Warehouse codes are internal (amber); public news is green."},
+ {t:"mc",q:"An AI tool tells you Warehouse 6's total variance is $48,210. What's your first check?",o:["Ask another AI tool if it agrees","Compare it to a SUM of the same data in Excel and check the row count","Accept it if the explanation sounds reasonable"],a:1,why:"An independent calculation is the fastest and most reliable check."},
+ {t:"tf",q:"In the 2024 Air Canada case, the company was held responsible for incorrect information its chatbot gave a customer.",a:true,why:"The tribunal didn't accept 'the chatbot said it' as a defence. You own what your AI tools produce."},
+ {t:"mc",q:"You want to anonymise supplier prices but keep the patterns visible. What's the best approach?",o:["Delete the price column","Replace prices with random numbers","Multiply every price by the same factor"],a:2,why:"Scaling by one factor keeps relative differences, so the AI can still spot outliers, without revealing real prices."},
+ {t:"mc",q:"Which approach to getting formula help is safest?",o:["Paste the real supplier price list into a free chatbot","Describe the columns with made-up sample values, get the formula, apply it yourself","Email the file to a friend who knows Excel"],a:1,why:"AI only needs the structure to write a formula. The real data never leaves your computer."},
+ {t:"mc",q:"What does 'AI drafts, you decide' mean?",o:["Never let AI write anything","AI can produce the first version, but a person checks the facts and owns the conclusion","Only managers may use AI"],a:1,why:"You keep the speed of AI and keep accountability with a person."}
+],
+m4:[
+ {t:"match",q:"Match each part of the Pick Ticket method to an example.",pairs:[["Role","You are an experienced inventory auditor"],["Task","Rank lines outside tolerance by value"],["Context","We run 7 warehouses; tolerance is ±2%"],["Format","A table, then 3 bullet points"],["Checks","Use only this data; say if unsure"]],why:"Role, Task, Context, Format, Checks: the five fields of a complete request."},
+ {t:"mc",q:"An AI gives you a vague, generic answer about improving inventory accuracy. Which part was most likely missing?",o:["Role","Context about your warehouses, data and tolerances","Nothing; AI always gives generic answers"],a:1,why:"Specific background gets specific answers."},
+ {t:"mc",q:"Which line most reduces the chance of a made-up answer?",o:["Be as detailed as possible.","You are a world-class expert.","Use only the data provided. If it can't be determined, say so."],a:2,why:"Restricting it to your data and allowing 'I don't know' are the most effective ways to reduce invented answers."},
+ {t:"mc",q:"The first answer is about 80% right. What should you do?",o:["Say what to change in a follow-up message","Start a new chat and retype everything","Accept it and fix the rest by hand later"],a:0,why:"The AI remembers the conversation. Targeted follow-ups are faster and usually better."},
+ {t:"multi",q:"Which habits improve results? Select all that apply.",o:["Letting the AI ask you questions before it starts","Showing an example of the output you want","Putting six unrelated tasks in one long prompt","Giving it permission to say it doesn't know","Starting a new chat for every follow-up"],a:[0,1,3],why:"Questions first, examples and permission to say 'I don't know' all help. Cramming tasks together and losing the conversation history don't."},
+ {t:"tf",q:"Custom instructions (or a Project) let the assistant remember your role and rules so you don't repeat them in every chat.",a:true,why:"Save your role, warehouses, tolerances and preferred format once."},
+ {t:"mc",q:"You suspect an answer has an error. Which follow-up is most useful?",o:["Are you sure?","What assumptions did you make, and what could be wrong with this answer?","Please try harder."],a:1,why:"Asking for assumptions and weaknesses makes the AI examine its own reasoning."}
+],
+m5:[
+ {t:"mc",q:"What should you ask for first after uploading a data file?",o:["The top 10 insights","Row count, column names and a control total","A chart"],a:1,why:"Confirm it loaded everything before trusting any analysis."},
+ {t:"mc",q:"Why ask for a formula rather than just an answer?",o:["Formulas look more professional","You can check it, reuse it next month and keep sensitive data out of the AI","AI can't do arithmetic at all"],a:1,why:"The method is checkable and repeatable; a number on its own is neither."},
+ {t:"multi",q:"Which of these belong in a clean table? Select all that apply.",o:["One header row","Merged cells for group headings","Subtotal rows between the data","Units stated in column names (Qty_EA)","A column saying which warehouse each row belongs to"],a:[0,3,4],why:"Merged cells and subtotal rows confuse AI, formulas and PivotTables alike."},
+ {t:"mc",q:"You have a 40-row table and a quick question about it. What's the simplest approach?",o:["Paste it into the chat","Build a Power Query connection","Upload it to a data warehouse"],a:0,why:"Small tables can be pasted. Larger ones should be uploaded or kept in Excel."},
+ {t:"mc",q:"SKU '00451' became 451 in the AI's output. What's the fix?",o:["Ignore it","Tell the AI that code columns are text, not numbers","Delete the leading zeros in your system"],a:1,why:"State in the data dictionary which columns are codes."},
+ {t:"tf",q:"A data dictionary describes what each column means, its units and its format.",a:true,why:"It's the most effective way to stop the AI misreading your data."},
+ {t:"mc",q:"The AI says 'Warehouse 3 has a theft problem.' What do you do?",o:["Report it to security","Ask which rows support that, and look at them yourself","Delete the chat"],a:1,why:"Conclusions need evidence. Look at the underlying rows before anything else."}
+],
+m6:[
+ {t:"mc",q:"WH03 shows a shortage of exactly 24 units on a SKU packed 12 to a case. The most likely first explanation?",o:["Theft of two cases","A random counting error","A unit-of-measure mix-up between cases and eaches"],a:2,why:"Variances that are exact multiples of the pack size point to UOM problems."},
+ {t:"mc",q:"A warehouse's net variance is close to zero. Does that mean its records are accurate?",o:["Yes, net variance is the key measure","Not necessarily: overages and shortages can cancel out, so check gross variance too","Yes, if the counts were done on time"],a:1,why:"Offsetting errors hide in net figures."},
+ {t:"num",q:"380 of 418 counted lines at a warehouse are within tolerance. What is its inventory record accuracy, in percent (one decimal place)?",a:90.9,tol:0.1,unit:"%",why:"380 ÷ 418 = 0.909, so 90.9%."},
+ {t:"match",q:"Match each cause to what it looks like in the data.",pairs:[["Unit-of-measure mismatch","Variance is an exact multiple of the case size"],["Unposted transfer","Short at one site, over by the same amount at another"],["Mis-slotting","Short in one location, over in a nearby location, same SKU"],["Timing gap","Variance reverses the next day once postings catch up"]],why:"Rule these innocent causes out before calling something a loss."},
+ {t:"mc",q:"You want to find as many problem invoices as possible with limited time. Which sample?",o:["A random sample","A risk-based sample: high value, unusual and flagged items","The first 25 invoices of the month"],a:1,why:"Random samples estimate the overall error rate; risk-based samples find problems."},
+ {t:"order",q:"Put the procure-to-pay steps in order.",o:["Requisition","Purchase order","Goods receipt","Supplier invoice","Payment"],why:"When a figure looks wrong, ask which of these steps produced it."},
+ {t:"tf",q:"A red flag, such as several POs just under the approval limit, proves wrongdoing.",a:false,why:"Red flags are leads for review. Many turn out to be process errors."}
+],
+m7:[
+ {t:"mc",q:"You want total variance value per warehouse. Which tool is right?",o:["The =COPILOT() function","SUMIFS, SUMPRODUCT or a PivotTable","Ask a chatbot to add up a pasted table"],a:1,why:"Numbers need exact, repeatable calculation."},
+ {t:"mc",q:"What's the main benefit of combining warehouse files with Power Query?",o:["Next month you replace the files and click Refresh; every cleaning step reruns","It makes the files smaller","It uses AI to find fraud"],a:0,why:"Power Query records your steps once and repeats them."},
+ {t:"mc",q:"Why does a gross variance formula use SUMPRODUCT with ABS instead of SUMIFS?",o:["SUMIFS is slower","SUMIFS can't add up absolute values","SUMPRODUCT is newer"],a:1,why:"SUMIFS adds values as they are, so shortages and overages cancel."},
+ {t:"mc",q:"A formula using TAKE returns #NAME?. What's the likely reason?",o:["The data has blanks","Your Excel version doesn't have the function","The file is too large"],a:1,why:"TAKE, FILTER and XLOOKUP need a recent Microsoft 365 version. Tell the AI your version."},
+ {t:"tf",q:"You should save your report workbook in the same folder as the warehouse files Power Query combines.",a:false,why:"Power Query would try to combine the report too. Keep the source folder for source files only."},
+ {t:"order",q:"Put the Power Query steps in order.",o:["Put the warehouse files in one folder","Data → Get Data → From Folder","Combine & Transform","Clean the data in the editor","Close & Load","Next month: replace files and Refresh All"],why:"Set it up once, then refresh each month."},
+ {t:"mc",q:"Which is a good use of =COPILOT()?",o:["Calculating price variance","Sorting 800 free-text adjustment comments into categories, then spot-checking","Summing invoice totals"],a:1,why:"Language tasks like classification are what it's designed for."}
+],
+m8:[
+ {t:"mc",q:"AI flags two invoices from the same supplier for $2,400.00 in consecutive months. What next?",o:["Report a duplicate payment","Check the POs and receipts: it may be a legitimate monthly charge","Ignore it"],a:1,why:"Recurring charges produce identical amounts legitimately."},
+ {t:"multi",q:"Which of these are near-duplicate invoice patterns? Select all that apply.",o:["An invoice number with a letter suffix (4471 / 4471A)","Leading zeros or dashes (INV-00451 / 451)","Two adjacent digits swapped (88213 / 88231)","The same invoice entered under a duplicate supplier record","Different supplier, different amount, different month"],a:[0,1,2,3],why:"The last one has nothing in common, so it isn't a duplicate pattern."},
+ {t:"mc",q:"You have 180 POs for the quarter. Should you rely on a Benford's law test?",o:["Yes, it works on any data","No, the dataset is too small; use threshold banding and clustering","Yes, and a mismatch proves manipulation"],a:1,why:"ISACA guidance: datasets of 500 or fewer are generally unsuitable."},
+ {t:"match",q:"Match each playbook to its goal.",pairs:[["P2 Duplicate invoices","Stop paying the same bill twice"],["P3 Split POs","Find orders broken up to avoid approval"],["P4 Vendor master","Keep the supplier list clean and trustworthy"],["P6 Adjustment reasons","Turn free-text comments into countable causes"]],why:"Each playbook targets one control."},
+ {t:"mc",q:"Which factor would NOT help a risk score for cycle counts?",o:["Past variance count","Item value (ABC class)","The SKU's position in alphabetical order"],a:2,why:"Risk factors should relate to the chance or cost of error."},
+ {t:"tf",q:"Systems usually block exact duplicate invoices; the ones that get paid twice tend to be near-duplicates.",a:true,why:"That's why normalising invoice numbers matters."},
+ {t:"mc",q:"Every playbook follows the same loop. Which?",o:["AI finds and fixes problems automatically","Prepare data → AI finds candidates → you verify → record","Ask AI for a report → send it"],a:1,why:"AI searches and sorts; you confirm."}
+],
+m9:[
+ {t:"mc",q:"What does OTIF measure?",o:["Orders delivered on time and in full","Overall transport and inventory fees","Open transfers in flight"],a:0,why:"On time, in full: the standard supplier delivery measure."},
+ {t:"num",q:"A supplier delivered 40 orders. 30 were on time and in full. What's its OTIF, in percent?",a:75,tol:0.1,unit:"%",why:"30 ÷ 40 = 75%."},
+ {t:"num",q:"A SKU has 600 units on hand and uses 25 a month. How many months of supply is that?",a:24,tol:0.1,unit:"months",why:"600 ÷ 25 = 24 months, well above a 12-month excess threshold."},
+ {t:"mc",q:"A SKU is short 50 at WH02 and over 50 at WH06, with no transfer record. Most likely?",o:["Theft at WH02","Stock moved between sites without a transfer being posted","A unit-of-measure error"],a:1,why:"Opposite variances with no transfer record point to an unposted move."},
+ {t:"mc",q:"A large balance coded to 'Sundry' usually tells you…",o:["Spend is well controlled","Spend is being coded to whatever gets it paid, so nobody really knows what was bought","Suppliers are overcharging"],a:1,why:"Classifying the lines shows what's really in there."},
+ {t:"tf",q:"After AI classifies spend lines, the category totals should add up to the file total.",a:true,why:"If they don't, lines were dropped."},
+ {t:"mc",q:"A transfer shipped 20 days ago still has no receipt. Normal transit is 2 to 3 days. What is it?",o:["Normal","An exception to chase: possibly lost, or received but not booked","A timing gap that will fix itself"],a:1,why:"Anything well beyond normal transit time needs chasing."}
+],
+m10:[
+ {t:"order",q:"Put the month-end audit steps in order.",o:["Collect files, combine and tie out","Stock accuracy review","Purchase-to-pay checks","Vendors, transfers, stock health and suppliers","Prioritise findings and write up"],why:"Tie out first; prioritise last."},
+ {t:"mc",q:"The AI counted 832 rows; Power Query says 829. In the case study, why?",o:["The AI was wrong about the arithmetic","WH04's file had a title row and a blank row above the headers that the AI counted as data","Power Query drops rows"],a:1,why:"Messy layouts trip AI up. Tie out every time."},
+ {t:"mc",q:"A new supplier has no tax ID, a PO box address and $43,950 of invoices with no POs. What do you do?",o:["Include it as item 6 in the monthly pack","Escalate to your manager the same day","Wait for next month's data"],a:1,why:"Several fraud indicators together, with money still going out, need immediate escalation."},
+ {t:"multi",q:"Which criteria were used to rank the findings? Select all that apply.",o:["Money at risk","Control weakness (could it happen again?)","Urgency","Alphabetical order of warehouse"],a:[0,1,2],why:"Money, control weakness and urgency decide what leadership sees first."},
+ {t:"mc",q:"The AI wrote 'possible theft at WH07'. What's the better finding?",o:["Keep it; it's probably right","Four high-value A items short in the same direction; recount and security review recommended","Remove WH07 from the report"],a:1,why:"State what the data shows and what should happen next."},
+ {t:"tf",q:"Gross variance of $181,984 with net variance of −$13,405 suggests much of the variance is stock in the wrong place rather than stock that's gone.",a:true,why:"Large offsetting errors (mis-slots, unposted transfers) inflate gross but cancel in net."},
+ {t:"mc",q:"The duplicate check returned 11 extra pairs that turned out to be repeat orders. Best fix?",o:["Drop the duplicate check","Tighten the rule: same supplier and amount AND the same PO (or no PO)","Report all of them anyway"],a:1,why:"Refine the rule so flags are worth reviewing."}
+],
+m11:[
+ {t:"mc",q:"Which element of a finding answers 'why did this happen?'",o:["Condition","Effect","Cause"],a:2,why:"Cause is the root reason; Effect is the consequence."},
+ {t:"mc",q:"Which phrasing belongs in a finding?",o:["Receiving at WH05 does not confirm the unit of measure, leading to case/each errors.","The WH05 receiving team is careless.","Somebody at WH05 keeps getting units wrong."],a:0,why:"Describe processes, not people."},
+ {t:"mc",q:"Best chart to compare accuracy across seven warehouses?",o:["A pie chart","A sorted bar chart with a target line","A 3D column chart"],a:1,why:"Sorted bars show ranking; the target line shows who's off track."},
+ {t:"order",q:"Put the five parts of a finding in order.",o:["Condition","Criteria","Cause","Effect","Corrective action"],why:"What you found, what it should be, why, why it matters, what to do."},
+ {t:"multi",q:"What belongs in your AI use log? Select all that apply.",o:["Date and tool","The data you used","How you checked the output","Your system password","What you changed in the AI's draft"],a:[0,1,2,4],why:"Never record passwords anywhere like this."},
+ {t:"tf",q:"Well-written AI output can serve as audit evidence on its own.",a:false,why:"Evidence must trace to system records and source documents."},
+ {t:"mc",q:"Writing for leadership, what's the right length?",o:["A full page per finding","Three sentences: the issue, the impact in rounded numbers, the action","Just the raw data"],a:1,why:"Leadership needs the point and the decision."}
+],
+m12:[
+ {t:"mc",q:"Which task is the best first candidate for automation?",o:["Judging whether a warehouse manager's explanation is acceptable","Collecting seven files every Monday and refreshing the same report","A one-off investigation into one supplier"],a:1,why:"Frequent, rule-based, standard-input tasks are ideal."},
+ {t:"mc",q:"An AI agent proposes a stock write-off of $3,200. What should happen?",o:["A person reviews and approves it before it's posted","It posts automatically if the agent is confident","It's ignored"],a:0,why:"Anything that changes records or money needs human approval and an audit trail."},
+ {t:"order",q:"Put the automation ladder in order, from first rung to last.",o:["Saved prompts and templates","Refreshable workbooks (Power Query)","Scheduled flows","AI steps inside flows","Agents with approvals"],why:"Each rung builds on the one before."},
+ {t:"multi",q:"Which guardrails should every automation have? Select all that apply.",o:["Human approval for changes to records or money","Value thresholds","An audit trail","Failure alerts","Permission for the agent to change supplier bank details"],a:[0,1,2,3],why:"Bank detail changes are a classic fraud route and must never be automated without strict controls."},
+ {t:"tf",q:"Automation follows rules you define; AI handles judgement and language.",a:true,why:"The best workflows combine both."},
+ {t:"mc",q:"In the Monday digest, why is the AI summary sent to you first?",o:["Email systems require it","So you can check it before others rely on it","AI can't send email"],a:1,why:"AI drafts, you decide."},
+ {t:"mc",q:"A task is frequent but its input files change layout every week. What first?",o:["Automate it anyway","Standardise the input template with the senders","Give up on it"],a:1,why:"Automation breaks when layouts keep changing."}
+],
+m13:[
+ {t:"num",q:"A tool flags 200 invoices; 10 are real duplicates. What's its precision, in percent?",a:5,tol:0.1,unit:"%",why:"10 ÷ 200 = 5%. 95% of flags are false alarms."},
+ {t:"num",q:"There are 20 real duplicates and the tool catches 16 of them. What's its recall, in percent?",a:80,tol:0.1,unit:"%",why:"16 ÷ 20 = 80%."},
+ {t:"mc",q:"What does RAG let an assistant do?",o:["Run faster","Answer from your company's documents and cite them","Work offline"],a:1,why:"Retrieval-augmented generation grounds answers in your documents."},
+ {t:"mc",q:"A vendor claims '99% accuracy'. Your best response?",o:["Accept it","Ask how it was measured, for precision and recall, and to pilot on your own data","Reject the vendor"],a:1,why:"Evidence on your data is what counts."},
+ {t:"mc",q:"You ask about a regulation introduced this year and the tool hasn't searched the web. The risk?",o:["None","Its knowledge cutoff may predate it, so the answer may be out of date or invented","It will refuse"],a:1,why:"Turn on web search and open the sources."},
+ {t:"mc",q:"When are reasoning ('thinking') modes most useful?",o:["Quick email drafts","Multi-step analysis such as reconciling two files","Translating a single word"],a:1,why:"They're slower but better at working through several steps."},
+ {t:"tf",q:"Asking the same question twice always produces identical numbers.",a:false,why:"Answers can vary. Keep calculations in formulas or saved code."}
+],
+m14:[
+ {t:"mc",q:"What's the most convincing way to show the value of AI in your work?",o:["Say AI is the future","Show measured before-and-after time and issues found, plus how you verify results","Use AI visibly for every task"],a:1,why:"Measured results and a clear control process earn trust."},
+ {t:"multi",q:"Which belong in the capstone audit pack? Select all that apply.",o:["A standard input template for the warehouses","A refreshable workbook","A written verification checklist","A list of every AI product on the market","A one-page report template"],a:[0,1,2,4],why:"The pack is a repeatable system for your monthly audit."},
+ {t:"mc",q:"Which time-savings figure is most credible to a manager?",o:["A vendor's published average","Your own measured times over three months","A rough guess"],a:1,why:"Your own data beats any estimate."},
+ {t:"tf",q:"The 30-60-90 plan builds one habit at a time rather than changing everything at once.",a:true,why:"Gradual change sticks and doesn't feel like a second job."},
+ {t:"mc",q:"Which statement best sums up the course?",o:["AI finds, sorts and drafts quickly; you verify the facts and own the decisions","AI will do the audit for you","AI is too risky for audit work"],a:0,why:"Speed from AI, judgement from you."}
+],
+final:[
+ {t:"mc",q:"Which statement about large language models is correct?",o:["They retrieve verified facts from a database","They generate likely text, so they can be fluent and wrong","They can't make mistakes with numbers"],a:1,why:"Module 1."},
+ {t:"tf",q:"A fixed reorder-point rule in your WMS is an example of machine learning.",a:false,why:"It's a rule a person set. Module 1."},
+ {t:"mc",q:"For calculating totals across thousands of rows, the most reliable option is…",o:["Pasting the rows into a chat","AI data analysis that runs code, or an Excel formula","The =COPILOT() function"],a:1,why:"Module 2."},
+ {t:"multi",q:"Which data should stay out of an unapproved AI tool? Select all that apply.",o:["Supplier contract prices","Bank details","Made-up sample data","Employee names with error rates"],a:[0,1,3],why:"Module 3."},
+ {t:"order",q:"Order the five parts of a Pick Ticket prompt.",o:["Role","Task","Context","Format","Checks"],why:"Module 4."},
+ {t:"mc",q:"After uploading a file, what do you confirm first?",o:["The top insights","Row count, columns and a control total","The chart style"],a:1,why:"Module 5."},
+ {t:"num",q:"A warehouse counted 250 lines; 235 were within tolerance. Accuracy in percent?",a:94,tol:0.1,unit:"%",why:"235 ÷ 250 = 94%. Module 6."},
+ {t:"mc",q:"A variance of exactly 36 units on a SKU packed 12 per case most likely means…",o:["Theft","A case/each unit-of-measure mix-up","A timing gap"],a:1,why:"Module 6."},
+ {t:"mc",q:"Which formula approach gives gross variance for one warehouse?",o:["SUMIFS on the variance column","SUMPRODUCT of a warehouse test times ABS of variance value","COUNTIFS"],a:1,why:"Module 7."},
+ {t:"tf",q:"Power Query reruns every cleaning step when you click Refresh.",a:true,why:"Module 7."},
+ {t:"multi",q:"Which suggest a split purchase? Select all that apply.",o:["Several POs just under the approval limit","Same supplier and requester","Within a few days","Different suppliers months apart"],a:[0,1,2],why:"Module 8."},
+ {t:"mc",q:"Why normalise invoice numbers before checking for duplicates?",o:["To make them shorter","Because duplicates often differ only by dashes, zeros or suffixes","The ERP requires it"],a:1,why:"Module 8."},
+ {t:"num",q:"20 orders delivered, 17 on time and in full. OTIF in percent?",a:85,tol:0.1,unit:"%",why:"17 ÷ 20 = 85%. Module 9."},
+ {t:"mc",q:"Stock with no movement for over a year and no usage is usually treated as…",o:["Fast-moving","Obsolete","Safety stock"],a:1,why:"Module 9."},
+ {t:"mc",q:"In the case study, which finding was escalated immediately?",o:["WH01's scattered errors","A new supplier paid without POs, with no tax ID and a PO box address","The OTIF of V012"],a:1,why:"Module 10."},
+ {t:"mc",q:"Which element of a finding says what should happen, by whom and by when?",o:["Criteria","Effect","Corrective action"],a:2,why:"Module 11."},
+ {t:"tf",q:"Your AI use log should record how you checked the AI's output.",a:true,why:"Module 11."},
+ {t:"mc",q:"An agent wants to change a supplier's bank details. What's required?",o:["Nothing if it's confident","Human approval, with an audit trail","A second agent's approval"],a:1,why:"Module 12."},
+ {t:"num",q:"A tool flags 50 items; 40 are real problems. Precision in percent?",a:80,tol:0.1,unit:"%",why:"40 ÷ 50 = 80%. Module 13."},
+ {t:"mc",q:"Which is the strongest evidence for a finding?",o:["The AI's summary","System records and source documents you have checked","A colleague's opinion"],a:1,why:"Modules 3 and 11."}
+]
+};
+
+window.ASSIGN = {
+m1:{title:"Meet your assistant",intro:"Use your company-approved AI tool. This takes about 15 minutes.",parts:[
+ {t:"task",text:"Ask: <code>Explain three-way matching in procurement as if I'm new to the job, then give me 3 common ways it goes wrong in a company with several warehouses.</code>"},
+ {t:"reflect",q:"Write one thing in the answer that was correct and specific, and one thing that was vague or generic.",ph:"Correct and specific: … Vague or generic: …"},
+ {t:"task",text:"Now ask: <code>What is the latest date your knowledge covers, and can you search the web?</code> Note the answer; it tells you how current its facts are."},
+ {t:"check",q:"You asked the assistant for your company's stock figures without giving it any data. What should a good assistant do?",kind:"choice",o:["Give a reasonable estimate","Say it doesn't have access to that data","Quote an industry average"],a:1,why:"It has no access to your systems unless your company has connected it."},
+ {t:"rubric",items:["I used my company-approved tool, not a personal account","I checked at least one claim against what I already know"]}
+]},
+m2:{title:"Map your toolkit and get the practice data",intro:"Find out what you have, and set up the practice data you'll use from now on.",parts:[
+ {t:"reflect",q:"Which AI tools are approved at your company, and do you have Copilot in Excel? (If you don't know yet, write who you've asked.)",ph:"Approved tools: … Copilot in Excel: yes / no / asked IT on …"},
+ {t:"task",text:"Send the 'what AI tools do we have?' email from this module to IT or your manager, adapted to your company."},
+ {t:"task",text:`Download the practice data: ${PACK}. All of it is fictional, so it's safe in any tool.`},
+ {t:"check",q:"Open the cycle_counts sheet (or CSV). How many data rows does it have, not counting the header row?",kind:"num",a:P.count_rows,tol:0,unit:"rows",why:`It has ${P.count_rows} rows. In Excel, click a cell in the data and look at the Count in the status bar, or use =ROWS() on the table.`},
+ {t:"check",q:"In your AI tool, find the file upload button. Upload invoice_register and ask how many rows it has. What does it say?",kind:"num",a:P.invoice_rows,tol:0,unit:"rows",why:`${P.invoice_rows} rows. If your tool gave a different number, it didn't read the whole file. That's exactly what Module 3 teaches you to catch.`}
+]},
+m3:{title:"Tie out and make a safe practice file",intro:"Practise the first 'tie it out' check, then prepare a safe version of a real report.",parts:[
+ {t:"check",q:"Using Excel only (no AI), what is the total of the Amount column in invoice_register? Round to the cent.",kind:"num",a:P.invoice_total,tol:1,unit:"$",why:`The total is ${money(P.invoice_total)}. This is your control total: any AI analysis of this file should agree with it.`},
+ {t:"task",text:"Upload invoice_register to your AI tool and ask for the total of Amount using code. Compare it with your Excel figure."},
+ {t:"check",q:"If vendor_master were your company's real supplier list (it has tax IDs and bank details), which traffic light applies?",kind:"choice",o:["Green: any tool","Amber: company-approved tool only","Red: not unless policy explicitly allows, and masked"],a:2,why:"Tax IDs and bank details are red-light data."},
+ {t:"task",text:"Find and read your company's AI or acceptable-use policy."},
+ {t:"reflect",q:"Make an anonymised copy of one real report you use. List the columns you removed or replaced, and why.",ph:"Supplier name → Supplier A/B because … Prices × 1.37 because …"}
+]},
+m4:{title:"Rewrite a prompt with the Pick Ticket method",intro:"Turn the way you normally ask into a complete request and compare the results.",parts:[
+ {t:"task",text:"Set up custom instructions (or a Project) in your assistant using the template in this module."},
+ {t:"reflect",q:"Paste a short request you'd normally type for a real task this week.",ph:"e.g. summarise this for my manager"},
+ {t:"reflect",q:"Now rewrite it with all five parts: Role, Task, Context, Format, Checks.",ph:"Role: … Task: … Context: … Format: … Checks: …"},
+ {t:"task",text:"Run both versions in your assistant."},
+ {t:"reflect",q:"What was different about the second answer?",ph:"More specific because … Format was … It still got wrong …"},
+ {t:"rubric",items:["My rewritten request says who the AI should act as","It states the format I want back","It tells the AI to use only my data and say if unsure"]}
+]},
+m5:{title:"Your first AI data analysis",intro:"Upload cycle_counts to your AI tool (or open it in Excel with Copilot). Start by asking for the row count and a control total, as this module showed. Then answer from what you find, checking each figure.",parts:[
+ {t:"task",text:"Give the AI a data dictionary for cycle_counts (use the one in this module as a model) and ask it to confirm the row count."},
+ {t:"check",q:"Using a ±2% tolerance per line (variance = counted minus system, divided by system), how many lines across all warehouses are outside tolerance?",kind:"num",a:P.oot_lines,tol:0,unit:"lines",why:`${P.oot_lines} lines. If you got a slightly different number, check how lines with a system quantity of 0 were treated: they count as outside tolerance if anything was found.`},
+ {t:"check",q:"What is the network's inventory record accuracy (lines within tolerance ÷ all lines), in percent to one decimal place?",kind:"num",a:P.network_ira,tol:0.15,unit:"%",why:`${P.network_ira}%.`},
+ {t:"check",q:"What is the total gross variance value (sum of the absolute value of variance quantity × unit cost)? Round to the dollar.",kind:"num",a:P.gross_total,tol:5,unit:"$",why:`${money(P.gross_total)}. A common mistake is summing the signed values, which gives the net figure (${money(P.net_total)}).`},
+ {t:"reflect",q:"Did the AI's first answers match? What did you have to check or correct?",ph:"It first said … I checked … It corrected …"}
+]},
+m6:{title:"Diagnose the seven warehouses",intro:"Use the practice cycle counts (and your AI tool or Excel) to find out what's going wrong where.",parts:[
+ {t:"check",q:"Which warehouse has the lowest inventory record accuracy?",kind:"choice",o:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"],a:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"].indexOf(P.lowest_wh),why:`${P.lowest_wh}, at ${P.ira[P.lowest_wh]}%.`},
+ {t:"check",q:`What is ${P.lowest_wh}'s accuracy, in percent to one decimal place?`,kind:"num",a:P.ira[P.lowest_wh],tol:0.15,unit:"%",why:`${P.ira[P.lowest_wh]}%.`},
+ {t:"check",q:`Most of ${P.uom_wh}'s errors share a pattern. What is it?`,kind:"choice",o:["They are all on C-class items","The variance is an exact multiple of the case size","They were all counted on one day","They are all overages"],a:1,why:"A unit-of-measure (case versus each) problem."},
+ {t:"check",q:"At WH03, one counter's lines are far more often outside tolerance than anyone else's. Which counter?",kind:"choice",o:["C03","C11","C17","C21"],a:2,why:`C17: ${P.c17_oot} of ${P.c17_lines} lines outside tolerance. A training or process issue, not necessarily a person problem.`},
+ {t:"check",q:`At WH04, ${P.misslot_sku} is short 40 in one location and over 40 in another. What's the most likely cause?`,kind:"choice",o:["Theft","Mis-slotting","A UOM error","A supplier short delivery"],a:1,why:"Stock in the wrong location. Net variance is zero, which is why gross variance matters."},
+ {t:"task",text:"Enter your own warehouses' last count results into the accuracy calculator in this module."},
+ {t:"reflect",q:"Write three questions you'd ask the manager of your lowest-accuracy warehouse (real or practice).",ph:"1. … 2. … 3. …"}
+]},
+m7:{title:"Build the formulas and combine the files",intro:"Hands-on Excel work with the practice data.",parts:[
+ {t:"task",text:"In the cycle_counts sheet of the practice workbook, format the data as a table (Ctrl+T) and add Var_Qty, Var_Pct, Var_Value and Out_Of_Tolerance columns using formulas from the formula exercise."},
+ {t:"check",q:"How many rows show Out_Of_Tolerance = YES?",kind:"num",a:P.oot_lines,tol:0,unit:"rows",why:`${P.oot_lines}. If you have a different number, check your Var_Pct formula handles a system quantity of zero.`},
+ {t:"check",q:"What is WH02's gross variance value (use SUMPRODUCT with ABS)? Round to the dollar.",kind:"num",a:P.gross_var.WH02,tol:2,unit:"$",why:`${money(P.gross_var.WH02)}.`},
+ {t:"check",q:"How many out-of-tolerance lines have a variance that is an exact multiple of the case size (case size above 1)?",kind:"num",a:P.uom_lines,tol:0,unit:"lines",why:`${P.uom_lines}, all in ${P.uom_wh}.`},
+ {t:"task",text:`Download the <a href="${DATA}warehouse_files.zip" target="_blank" rel="noopener">seven warehouse files</a>, unzip them into a folder, and combine them with Power Query (From Folder). Fix WH04's title rows.`},
+ {t:"check",q:"How many rows does your combined Power Query table have?",kind:"num",a:P.count_rows,tol:0,unit:"rows",why:`${P.count_rows}. If you got 832, WH04's title and blank rows are still in.`},
+ {t:"reflect",q:"Which formula or step went wrong first, and how did you fix it?",ph:"My first … returned … I asked the AI … and changed …"}
+]},
+m8:{title:"Run the control playbooks on the practice data",intro:"Use playbooks P2, P3 and P4 with your AI tool on the practice registers. Verify each finding against the rows before answering.",parts:[
+ {t:"check",q:"How many near-duplicate invoice pairs are there?",kind:"num",a:P.dup_pairs,tol:0,unit:"pairs",why:`${P.dup_pairs} pairs: letter suffix, leading zeros, transposed digits, duplicate vendor record, same amount days apart.`},
+ {t:"check",q:"What's the total value of the duplicate invoices (the second invoice of each pair)? Round to the dollar.",kind:"num",a:P.dup_value,tol:2,unit:"$",why:`${money(P.dup_value)}.`},
+ {t:"check",q:"Which requester raised the split-PO clusters?",kind:"choice",o:["R02","R04","R07","R09"],a:2,why:`${P.split_requester}: ${P.split_clusters} clusters, ${P.split_po_count} POs, ${money(P.split_total)} in total.`},
+ {t:"check",q:"How many invoices have no PO number?",kind:"num",a:P.nopo_count,tol:0,unit:"invoices",why:`${P.nopo_count}, totalling ${money(P.nopo_total)}.`},
+ {t:"check",q:"Which supplier is new, has no tax ID, uses a PO box and has been invoiced without POs?",kind:"choice",o:["V009","V022","V044","V051"],a:3,why:`V051: ${money(P.new_vendor_paid)} invoiced. Several red flags together.`},
+ {t:"check",q:"How many duplicate supplier pairs are there in vendor_master?",kind:"num",a:P.vendor_dup_pairs,tol:0,unit:"pairs",why:"Three: V009/V049, V022/V050, V015/V044."},
+ {t:"reflect",q:"Which of these did the AI miss or get wrong on the first try, and how did you catch it?",ph:"The first duplicate run flagged … I tightened the rule to …"}
+]},
+m9:{title:"Spend, transfers, stock health and suppliers",intro:"Run playbooks P7 to P10 on the practice data.",parts:[
+ {t:"check",q:"After classifying spend_lines, which category has the largest spend?",kind:"choice",o:Object.keys(P.spend_by_cat).sort(),a:Object.keys(P.spend_by_cat).sort().indexOf(P.spend_top_cat),why:`${P.spend_top_cat}. Full split: ${Object.entries(P.spend_by_cat).map(([k,v])=>k+" "+money(v)).join("; ")}.`},
+ {t:"check",q:"How much spend is coded to GL 6999 Sundry? Round to the dollar.",kind:"num",a:P.spend_sundry,tol:2,unit:"$",why:`${money(P.spend_sundry)}, a quarter of the total, which is why classification matters.`},
+ {t:"check",q:"How many transfers were shipped more than 14 days before 31 October and still have no receipt?",kind:"num",a:P.transfers_unreceived_14d,tol:0,unit:"transfers",why:`${P.transfers_unreceived_14d}.`},
+ {t:"check",q:"What is the value of stock with no movement for more than 365 days at 31 October 2026? Round to the dollar.",kind:"num",a:P.aged365_value,tol:50,unit:"$",why:`${money(P.aged365_value)} across ${P.aged365_lines} lines.`},
+ {t:"check",q:"Which warehouse holds the most stock value that hasn't moved for over a year?",kind:"choice",o:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"],a:["WH01","WH02","WH03","WH04","WH05","WH06","WH07"].indexOf(P.aged365_top_wh),why:`${P.aged365_top_wh}.`},
+ {t:"check",q:"Which supplier (with at least 5 received POs) has the worst OTIF?",kind:"choice",o:["V008","V012","V018","V026"],a:1,why:`${P.otif_worst} at ${P.otif_worst_pct}%, against ${P.otif_overall}% overall.`},
+ {t:"reflect",q:"Pick one of these four results and write the first two actions you'd take.",ph:"For the obsolete stock in … I would …"}
+]},
+m10:{title:"Write your own month-end summary",intro:"Use what you found in the assignments for modules 5 to 9 (or the case study figures) to produce the deliverable.",parts:[
+ {t:"check",q:"Which of these are real issues in the October practice data?",kind:"multi",o:["Split POs by one requester at WH03","Unit-of-measure errors at WH05","A supplier paid without POs, with no tax ID","Duplicate payments to WH01's cleaning contractor","Transfers shipped but not received"],a:[0,1,2,4],why:"There is no WH01 cleaning duplicate in the data. Don't report what you haven't verified."},
+ {t:"check",q:"Which item should be escalated the same day rather than waiting for the monthly pack?",kind:"choice",o:["WH01's scattered count errors","V051's invoices without POs","V012's late deliveries","The Sundry coding"],a:1,why:"Several fraud indicators together, with money still going out."},
+ {t:"reflect",q:"Write your management summary: two sentences of headline, then your top three findings in one line each.",ph:"October audit, 7 warehouses: … 1. … 2. … 3. …"},
+ {t:"rubric",items:["Every number in my summary ties to the data","My findings describe processes, not people","I stated what decision I need from my manager"]}
+]},
+m11:{title:"Write a finding and log your AI use",intro:"Write a formal finding from the practice data and create your AI use log.",parts:[
+ {t:"check",q:"For the WH05 accuracy finding, which is the best Cause statement?",kind:"choice",o:["WH05 staff are careless","Case-pack items are being counted or received as eaches, and the receiving screen defaults to EA","Accuracy was 87.1%","Stock-outs may result"],a:1,why:"The others are a judgement about people, the Condition and the Effect."},
+ {t:"reflect",q:"Use the finding builder to write the WH05 finding (or one from your real work), polish it with AI, and paste the final version here.",ph:"Condition: … Criteria: … Cause: … Effect: … Corrective action: …"},
+ {t:"task",text:"Create an AI use log (a spreadsheet with the six columns from this module) and add an entry for one piece of work you did with AI this week."},
+ {t:"rubric",items:["My finding has all five parts","Every number in it ties to the data","It names who does what by when"]}
+]},
+m12:{title:"Design your first automation",intro:"Choose a real recurring task and design its automation, ready to discuss with IT.",parts:[
+ {t:"reflect",q:"List your three most repetitive tasks and the score each got in the automation scorer.",ph:"1. … score … 2. … 3. …"},
+ {t:"reflect",q:"For the top scorer, write the flow as numbered steps (trigger, collect, refresh, extract, AI step if any, review).",ph:"Trigger: every Monday 7:00. 1. …"},
+ {t:"check",q:"In your flow, which step must always stay with a person?",kind:"choice",o:["Collecting the files","Refreshing the workbook","Approving anything that changes records or money, or goes to others","Saving the output"],a:2,why:"Human approval, thresholds and an audit trail are non-negotiable."},
+ {t:"rubric",items:["My flow has a failure alert","Anything sent to others is reviewed by me first","I know what access I'd need from IT"]}
+]},
+m13:{title:"Judge AI tools like a buyer",intro:"Apply the advanced concepts to tools at your company.",parts:[
+ {t:"check",q:"A duplicate-detection tool flags 40 invoices; 8 are real duplicates. In total there were 10 real duplicates. What's its precision, in percent?",kind:"num",a:20,tol:0.1,unit:"%",why:"8 ÷ 40 = 20%."},
+ {t:"check",q:"Same tool: what's its recall, in percent?",kind:"num",a:80,tol:0.1,unit:"%",why:"8 ÷ 10 = 80%. It catches most duplicates but wastes a lot of review time."},
+ {t:"task",text:"Ask the owner of your ERP, WMS or AP system which AI features it has, including any that are switched off."},
+ {t:"reflect",q:"Write the five vendor questions you'd ask first about one AI tool your company uses or is considering.",ph:"1. … 2. … 3. … 4. … 5. …"},
+ {t:"task",text:"If your assistant supports it, set up a first version of your audit helper with your data dictionary and finding template (practice versions are fine)."}
+]},
+m14:{title:"Commit to your plan",intro:"Turn the course into a plan you'll follow.",parts:[
+ {t:"task",text:"Fill in the time-savings estimator in this module with your own tasks."},
+ {t:"reflect",q:"Write the three things you'll do in the next 30 days, each with a date.",ph:"1. By … I will … 2. … 3. …"},
+ {t:"reflect",q:"Write the one-paragraph update you'll send your manager (use the prompt in this module).",ph:"Over the last … I …"},
+ {t:"rubric",items:["My plan has dates","I know how I'll measure time before and after","I've booked a check-in with my manager"]}
+]}
+};
+})();
+</script>

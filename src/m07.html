@@ -2,7 +2,7 @@
 <!-- ======================= M7 ======================= -->
 <section class="view" data-route="m7" id="view-m7" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 7 of 12 · Part 3: AI for your audit work</p>
+  <p class="kicker">Module 7 of 14 · Part 3: AI for your audit work</p>
   <h1>Excel and AI</h1>
   <p class="lede">Most audit work happens in Excel. This module covers where AI fits in: writing formulas, using Copilot, and combining warehouse files with Power Query.</p>
   <p class="meta-row">About 40 minutes. Level: Intermediate.</p>
@@ -62,6 +62,7 @@ Explain why it fails in plain English, then give me the corrected formula.</pre>
   <li><strong>Close &amp; Load.</strong> You now have one table of all seven warehouses.</li>
   <li><strong>Next month: refresh.</strong> Replace the files in the folder, open the workbook and click <b>Data → Refresh All</b>. Every cleaning step reruns automatically.</li>
 </ol>
+<div class="callout good"><span class="tag">Practise on the training files first</span><p>The <a href="https://bireshwarchakravarty.github.io/MyAItrainer/data/warehouse_files.zip" target="_blank" rel="noopener">warehouse files download</a> contains seven count files, one per warehouse, like the ones you receive each month. One of them (WH04) has a title row and a blank row above the headers, which is common in real files. In the Power Query editor, fix it in the sample-file query with <b>Remove Rows → Remove Top Rows</b> and <b>Use First Row as Headers</b>, or ask AI how to handle a file that's laid out differently from the rest. The combined table should have 829 rows.</p></div>
 <pre class="pr" data-label="Prompt · help with Power Query">I'm combining 7 warehouse stock files in Excel Power Query (From Folder). Each file has the same columns: [list].
 Problems: [e.g. WH04's file has 2 header rows / dates are text / SKU codes lose leading zeros].
 Give me step-by-step clicks in the Power Query editor to fix each problem. If a step needs M code, give me the exact code and tell me where to paste it.</pre>
@@ -90,26 +91,10 @@ Give me step-by-step clicks in the Power Query editor to fix each problem. If a 
   <li>Power Query combines seven warehouse files into one table that refreshes in one click.</li>
   <li>Conditional formatting, PivotTables and FILTER turn data into an exception report.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Set up a Power Query folder combine for at least two of your warehouse files (anonymised copies are fine). Add Var_Pct and Out_Of_Tolerance columns using formulas from the lab, then build a PivotTable of out-of-tolerance lines by warehouse.</p>
-</div>
 
-<div class="quiz" data-quiz="m7"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">You want to calculate total variance value per warehouse. Which tool is right?</p><div class="opts">
-    <button class="opt">The <code>=COPILOT()</code> function</button>
-    <button class="opt">A native formula like SUMIFS, or a PivotTable</button>
-    <button class="opt">Ask a chatbot to add it up from a pasted table</button></div>
-    <p class="why" hidden>Numerical work needs exact, repeatable calculation. Microsoft specifically advises against <code>=COPILOT()</code> for this.</p></div>
-  <div class="q" data-a="0"><p class="qt">What is the main benefit of combining warehouse files with Power Query?</p><div class="opts">
-    <button class="opt">Next month, you drop in new files and click Refresh. All cleaning steps rerun</button>
-    <button class="opt">It makes the files smaller</button>
-    <button class="opt">It uses AI to find fraud</button></div>
-    <p class="why" hidden>Power Query records your steps once and repeats them every refresh. That's what makes monthly audits fast and consistent.</p></div>
-  <div class="q" data-a="2"><p class="qt">A good use of <code>=COPILOT()</code> is…</p><div class="opts">
-    <button class="opt">Calculating unit price variance</button>
-    <button class="opt">Summing invoice totals</button>
-    <button class="opt">Sorting 800 free-text adjustment comments into five categories, then spot-checking</button></div>
-    <p class="why" hidden>Language tasks like classification are what it's designed for. Always spot-check a sample of results.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m7"></div>
+<div class="assign" data-assign="m7"></div>
+</section>
 <div class="mod-foot" data-foot="m7"></div>
 </section>

@@ -1,125 +1,110 @@
 
-<!-- ======================= M11 ======================= -->
+<!-- ======================= M9 ======================= -->
 <section class="view" data-route="m11" id="view-m11" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 11 of 12 · Part 5: Going further</p>
-  <h1>Advanced AI</h1>
-  <p class="lede">You don't need to build any of these systems, but you'll be in conversations about them with IT, vendors and your managers. This module gives you enough background to ask good questions.</p>
-  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
+  <p class="kicker">Module 11 of 14 · Part 4: Reporting and automation</p>
+  <h1>Reporting findings</h1>
+  <p class="lede">This module covers writing up what you find: structuring a finding, adapting it for different readers, and picking the right chart.</p>
+  <p class="meta-row">About 30 minutes. Level: Intermediate.</p>
 </header>
 <div class="outcomes"><h2>After this module you should be able to:</h2><ul>
-  <li>Explain anomaly detection, forecasting, document AI and retrieval (RAG) in plain terms</li>
-  <li>Judge an AI tool's accuracy using precision and recall</li>
-  <li>Ask vendors the questions that reveal whether a tool will really work for you</li>
+  <li>Write an audit finding using the five-part structure auditors use</li>
+  <li>Adapt the same finding for a warehouse manager, your manager and leadership</li>
+  <li>Choose the right chart for the point you're making</li>
 </ul></div>
 
 <div class="prose">
-<h2>Six technologies worth understanding</h2>
+<h2>The five parts of a finding</h2>
+<p>Internal auditors structure findings around five elements. Using them makes your findings complete, fair and hard to argue with.</p>
 </div>
-<div class="two">
-  <div class="panel"><span class="label">Predictive</span><h4>Anomaly detection</h4><p>The system learns what "normal" looks like (typical receipts per day, typical adjustments per shift, a supplier's usual invoice pattern) and flags what deviates. No one writes a rule for each case. Good tools present flags as <b>leads for review</b>, not accusations.</p></div>
-  <div class="panel"><span class="label">Predictive</span><h4>Demand forecasting</h4><p>Learns patterns such as seasonality, trends and promotions from sales history to predict future demand per SKU and warehouse. Directly affects purchasing quantities and safety stock.</p></div>
-  <div class="panel"><span class="label">Vision &amp; documents</span><h4>Document AI (OCR+)</h4><p>Reads scanned invoices, delivery notes and GRNs, and extracts fields like invoice number, date, lines and totals. This powers automatic three-way matching.</p></div>
-  <div class="panel"><span class="label">Vision</span><h4>Computer vision counting</h4><p>Cameras, drones or robots scan racks and count stock continuously rather than in periodic cycle counts. Gives a near-live view of inventory, mostly in large or high-value sites.</p></div>
-  <div class="panel"><span class="label">Generative</span><h4>RAG: AI that reads your documents</h4><p>"Retrieval-augmented generation": before answering, the AI searches your company documents (SOPs, contracts, policies) and answers from them, citing sources. This is how "ask our procurement policy" assistants work, and it greatly reduces made-up answers.</p></div>
-  <div class="panel"><span class="label">Generative</span><h4>Custom assistants and agents</h4><p>An assistant preconfigured with your instructions and files (a Custom GPT, Claude Project, Copilot agent or Gemini Gem). For example, an "Audit helper" loaded with your SOPs, data dictionary and report template.</p></div>
-</div>
+<div class="tbl"><table><thead><tr><th>Element</th><th>Question</th><th>Example</th></tr></thead><tbody>
+<tr><td><b>Condition</b></td><td>What did you find?</td><td>38 of 418 count lines at WH05 (9.1%) were outside ±2% tolerance in October.</td></tr>
+<tr><td><b>Criteria</b></td><td>What should it be?</td><td>Network target is 98% accuracy; company SOP requires UOM confirmation at receiving.</td></tr>
+<tr><td><b>Cause</b></td><td>Why did it happen?</td><td>22 of the 38 lines were case-pack SKUs received as eaches; WH05's receiving screen defaults to EA.</td></tr>
+<tr><td><b>Effect</b></td><td>Why does it matter?</td><td>Gross variance of $14,300; risk of stock-outs and over-ordering on affected SKUs.</td></tr>
+<tr><td><b>Corrective action</b></td><td>What should happen, by whom, by when?</td><td>WMS team to change default UOM by 30 Nov; WH05 supervisor to recount the 22 SKUs this week.</td></tr>
+</tbody></table></div>
 
-<div class="prose">
-<h2>How to judge whether an AI tool is accurate</h2>
-<p>Vendors often quote one accuracy figure. For audit tools that flag problems, you need two:</p>
-</div>
-<div class="two">
-  <div class="panel accent"><h4>Precision</h4><p><b>Of everything it flagged, how much was really a problem?</b> Low precision means your team wastes time on false alarms and starts ignoring the tool.</p></div>
-  <div class="panel accent"><h4>Recall</h4><p><b>Of all the real problems, how many did it catch?</b> Low recall means real issues slip through while everyone assumes they're covered.</p></div>
-</div>
-
-<div class="widget" id="w-pr">
-  <div class="w-head"><span class="w-tag">Exercise 11.1</span><span class="w-title">Precision vs recall: tune a duplicate-invoice detector</span></div>
+<div class="widget" id="w-finding">
+  <div class="w-head"><span class="w-tag">Exercise 9.1</span><span class="w-title">Finding builder</span></div>
   <div class="w-body">
-    <p class="w-hint">Imagine 1,000 invoices, of which 20 are true duplicates. Move the sensitivity slider. A more sensitive tool flags more invoices, catching more duplicates but raising more false alarms.</p>
-    <label class="fl" for="prSens">Detector sensitivity: <span id="prSensV"></span></label>
-    <input type="range" id="prSens" min="1" max="9" value="5">
-    <div class="stat-row">
-      <div class="stat"><div class="n" id="prFlag">0</div><div class="l">Invoices flagged</div></div>
-      <div class="stat"><div class="n" id="prTP">0</div><div class="l">Real duplicates caught (of 20)</div></div>
-      <div class="stat"><div class="n" id="prPrec">0%</div><div class="l">Precision</div></div>
-      <div class="stat"><div class="n" id="prRec">0%</div><div class="l">Recall</div></div>
+    <p class="w-hint">Fill in the five parts in rough note form (an example is pre-filled). The builder assembles a structured finding and an AI prompt to polish it for your chosen audience.</p>
+    <div class="grid-form">
+      <div><label class="fl" for="fTitle">Short title</label><input type="text" id="fTitle" value="Unit-of-measure errors at WH05 receiving"></div>
+      <div><label class="fl" for="fAud">Audience</label><select id="fAud"><option value="wm">Warehouse manager</option><option value="pm">My manager (purchase manager)</option><option value="exec">Leadership summary</option></select></div>
     </div>
-    <div class="fb info" id="prOut"></div>
+    <label class="fl" for="fCond">Condition · what you found</label><textarea id="fCond">38 of 418 Oct count lines at WH05 outside ±2% tolerance (IRA 90.9%)</textarea>
+    <label class="fl" for="fCrit">Criteria · what it should be</label><textarea id="fCrit">Target 98% IRA. SOP 4.2: confirm UOM at receiving</textarea>
+    <label class="fl" for="fCause">Cause · why</label><textarea id="fCause">22 of 38 are case SKUs received as EA. Receiving screen defaults to EA</textarea>
+    <label class="fl" for="fEff">Effect · why it matters</label><textarea id="fEff">Gross variance $14,300. Risk of stock-outs and over-ordering</textarea>
+    <label class="fl" for="fAct">Corrective action · who, what, by when</label><textarea id="fAct">WMS team change default UOM by 30 Nov. WH05 supervisor recount 22 SKUs this week</textarea>
+    <div class="label" style="margin:16px 0 6px">Structured finding</div>
+    <div class="pb-out" id="fOut" style="min-height:0"></div>
+    <div class="label" style="margin:16px 0 6px">Prompt to polish it with AI</div>
+    <div class="pb-out" id="fPrompt" style="min-height:0"></div>
+    <div class="btn-row"><button class="btn" id="fCopy">Copy AI prompt</button><button class="btn ghost" id="fCopy2">Copy finding</button></div>
   </div>
 </div>
 
 <div class="prose">
-<h2>Questions to ask any AI vendor</h2>
-<p>Whether it's a new procurement platform, a WMS add-on or an AP automation tool, these questions separate real capability from marketing:</p>
+<h2>One finding, three audiences</h2>
+<p>The facts stay the same; the emphasis changes. Ask AI to rewrite for each audience rather than writing three versions yourself.</p>
 </div>
 <div class="two">
-  <div class="panel"><h4>Accuracy</h4><ul>
-    <li>What are the precision and recall on data like ours? How was it measured?</li>
-    <li>How much historical data does it need? (Some invoice-matching tools cite 6–12 months.)</li>
-    <li>Can we run a pilot on our own data before committing?</li>
-  </ul></div>
-  <div class="panel"><h4>Explainability &amp; control</h4><ul>
-    <li>When it flags something, does it show why?</li>
-    <li>Can we set thresholds and approval rules?</li>
-    <li>Is every automated action logged in an audit trail?</li>
-  </ul></div>
-  <div class="panel"><h4>Data &amp; security</h4><ul>
-    <li>Where is our data stored? Is it used to train models for other customers?</li>
-    <li>What security certifications do you hold?</li>
-    <li>Who can access our data on your side?</li>
-  </ul></div>
-  <div class="panel"><h4>Fit</h4><ul>
-    <li>Does it integrate with our ERP and WMS? How?</li>
-    <li>What does our team have to do differently day to day?</li>
-    <li>What does it cost in year two and three, not just year one?</li>
-  </ul></div>
+  <div class="panel"><span class="label">Warehouse manager</span><h4>Specific and practical</h4><p>Which SKUs, which locations, what to do this week. Collaborative tone. Never names individuals as at fault.</p></div>
+  <div class="panel"><span class="label">Your manager</span><h4>Risk and money</h4><p>Value at risk, trend versus last month, what you recommend, what you need from them.</p></div>
+  <div class="panel"><span class="label">Leadership</span><h4>Three lines</h4><p>Network accuracy, the one or two issues that matter, the action under way. Numbers rounded.</p></div>
 </div>
-<div class="callout warn prose"><span class="tag">Be careful with vendor figures</span><p>Much of what's written about AI in procurement comes from vendors. Figures like "99% detection" or "60% less counting labour" are often unverified or measured in ideal conditions. Ask for the source, and test on your own data.</p></div>
+
+<div class="callout rule prose"><span class="tag">On tone</span><p>Findings describe <b>processes</b>, not people. "Receiving screen defaults to EA" invites a fix. "WH05 staff keep making mistakes" invites defensiveness. Add to any prompt: <code>Use neutral, factual language. Focus on process causes, not individuals.</code></p></div>
+
+<pre class="pr" data-label="Prompt · monthly audit summary">You are helping me write the monthly inventory audit summary for my manager. Here are my notes and results for 7 warehouses:
+[paste IRA by warehouse, this month and last month]
+[paste top 3–5 findings in note form]
+Write:
+1. A 3-sentence headline summary (network accuracy, trend, biggest issue).
+2. A short table: warehouse, IRA this month, change vs last month, status (On target / Watch / Action).
+3. The top findings in Condition / Cause / Effect / Action format, max 4 lines each.
+4. What I need from my manager (decisions or support).
+Plain business English, no jargon, no exaggeration. Use only the numbers I've given you.</pre>
+<pre class="pr" data-label="Prompt · email to a warehouse manager">Draft a short, friendly email to the WH[0X] warehouse manager about this month's count results.
+Facts: [paste].
+I want them to: [recount these SKUs / check receiving UOM settings / reply with explanations by date].
+Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask and deadline.</pre>
 
 <div class="prose">
-<h2>Build your own audit helper</h2>
-<p>A practical advanced step: create a custom assistant (if your tool supports Projects, GPTs, Gems or Copilot agents) that already knows your audit work.</p>
+<h2>Pick the right chart</h2>
 </div>
-<ol class="steps prose">
-  <li><strong>Gather files</strong> (anonymised where needed): your data dictionary, audit SOPs, tolerance rules, finding template, a good past report.</li>
-  <li><strong>Write instructions</strong> combining your Module 4 custom instructions with: "Answer from the attached documents where possible and say which document. If the documents don't cover it, say so."</li>
-  <li><strong>Test it</strong> with 5 questions you already know the answers to. Fix the instructions where it goes wrong.</li>
-  <li><strong>Share it</strong> with colleagues if your tool allows. Consistent methods across the team are valuable.</li>
-</ol>
+<div class="tbl"><table><thead><tr><th>Your point</th><th>Use</th><th>Avoid</th></tr></thead><tbody>
+<tr><td>Comparing 7 warehouses</td><td>Horizontal bar chart, sorted, with a target line</td><td>Pie charts (hard to compare 7 slices)</td></tr>
+<tr><td>Trend over months</td><td>Line chart, one line per warehouse or just the worst three</td><td>Seven-colour spaghetti charts</td></tr>
+<tr><td>Where the value is</td><td>Sorted bar or Pareto chart of variance value by SKU</td><td>3D effects of any kind</td></tr>
+<tr><td>A list of exceptions</td><td>A table with conditional formatting</td><td>A chart when people need the detail</td></tr>
+</tbody></table></div>
+<div class="prose"><p>Ask AI: <code>I want to show [point] to [audience]. My data has [columns]. What chart should I use and how should I set it up in Excel?</code></p></div>
 
-<div class="prose">
-<h2>Where things are heading</h2>
-<ul>
-  <li><b>Adoption is broad but shallow.</b> EFESO's 2026 research found only about 5% of procurement organisations have truly scaled generative AI. People who can turn experiments into reliable routines are in demand.</li>
-  <li><b>Agents are arriving in procurement.</b> Gartner forecasts agentic AI spending in supply chain software rising from under $2 billion in 2025 to about $53 billion by 2030 (as reported in trade press).</li>
-  <li><b>Roles are shifting.</b> In a Gartner survey of supply chain leaders, 55% expect agentic AI to reduce hiring for entry-level positions. Routine checking will be automated; supervising, verifying and interpreting will be valued more.</li>
-</ul>
-</div>
-
+<h2>Recording your use of AI</h2>
+<p>When AI helps with audit work, someone may later ask how a number or a conclusion was reached. "The AI said so" isn't an answer an auditor can give. Keep a simple log and make sure every finding traces back to system records, not to AI output.</p>
+<div class="tbl"><table><thead><tr><th>Record</th><th>Example</th></tr></thead><tbody>
+<tr><td>Date, tool and version</td><td>4 Nov 2026, Microsoft 365 Copilot (company licence)</td></tr>
+<tr><td>Data used</td><td>October cycle counts, 829 rows, anonymised supplier names</td></tr>
+<tr><td>What you asked</td><td>The prompt, or a link to where it's saved</td></tr>
+<tr><td>What AI produced</td><td>Exception list of 54 lines; draft summary</td></tr>
+<tr><td>How you checked it</td><td>Row count and gross variance tied to Excel; 10 lines checked against the WMS</td></tr>
+<tr><td>What you changed</td><td>Removed "possible theft" wording; corrected WH04 row count</td></tr>
+</tbody></table></div>
+<p>A spreadsheet with these six columns is enough. It protects you, helps a reviewer, and makes the same work quicker to repeat next month. Follow your company's policy on whether to state in reports that AI was used; when in doubt, a short line such as "Analysis prepared with AI assistance and verified against system records" is honest and sufficient.</p>
+<pre class="pr" data-label="Prompt · end-of-task log entry">Summarise what we did in this conversation as a log entry with these fields: Date, Tool, Data used (file names, row counts), What I asked, What you produced, Checks I should record, Anything you were unsure about. Keep it short and factual.</pre>
 <div class="takeaways prose"><h2>Summary</h2><ul>
-  <li>Know the main technologies: anomaly detection, forecasting, document AI, vision counting, RAG, custom assistants.</li>
-  <li>Judge flagging tools on both precision (false alarms) and recall (missed issues).</li>
-  <li>Ask vendors for evidence on your own data, explainability, audit trails and data handling.</li>
-  <li>The skills that grow in value are supervising, verifying and interpreting AI.</li>
+  <li>Structure every finding: Condition, Criteria, Cause, Effect, Corrective action.</li>
+  <li>Let AI adapt one finding for each audience. You keep the facts fixed.</li>
+  <li>Describe processes, not people.</li>
+  <li>Bar charts for comparing warehouses, lines for trends, tables for exceptions.</li>
 </ul></div>
-<div class="tryit prose"><h2>This week at work</h2>
-  <p>Find out which AI features your ERP, WMS or AP system already has, perhaps switched off. Ask the system owner two questions from the vendor list above. If your assistant supports it, set up a first version of your audit helper with your data dictionary and finding template.</p>
-</div>
 
-<div class="quiz" data-quiz="m11"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">A tool flags 200 invoices; 10 are real duplicates. What is the problem?</p><div class="opts">
-    <button class="opt">Low recall</button><button class="opt">Low precision: 95% of flags are false alarms</button><button class="opt">Nothing; more flags are always safer</button></div>
-    <p class="why" hidden>Precision = 10 ÷ 200 = 5%. Your team would waste time and soon stop trusting the tool.</p></div>
-  <div class="q" data-a="2"><p class="qt">What does RAG let an AI assistant do?</p><div class="opts">
-    <button class="opt">Run faster</button><button class="opt">Work offline</button><button class="opt">Answer from your company's documents and cite them</button></div>
-    <p class="why" hidden>Retrieval-augmented generation searches your documents first and grounds the answer in them, reducing made-up answers.</p></div>
-  <div class="q" data-a="0"><p class="qt">A vendor claims "99% accuracy". What's the best response?</p><div class="opts">
-    <button class="opt">Ask how it was measured, what precision and recall are, and whether you can pilot on your data</button>
-    <button class="opt">Accept it; vendors are regulated</button>
-    <button class="opt">Reject the vendor</button></div>
-    <p class="why" hidden>A single accuracy figure can hide a lot. Evidence on your own data is what counts.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m11"></div>
+<div class="assign" data-assign="m11"></div>
+</section>
 <div class="mod-foot" data-foot="m11"></div>
 </section>

@@ -1,114 +1,99 @@
 
-<!-- ======================= M12 ======================= -->
+<!-- ======================= M10 ======================= -->
 <section class="view" data-route="m12" id="view-m12" hidden>
 <header class="mod-head">
-  <p class="kicker">Module 12 of 12 · Part 5: Going further</p>
-  <h1>Your 90-day plan</h1>
-  <p class="lede">The last module turns the course into a plan: what to measure, what to do over the next 90 days, and a final project you can show your manager.</p>
-  <p class="meta-row">About 30 minutes. Suitable for all levels.</p>
+  <p class="kicker">Module 12 of 14 · Part 4: Reporting and automation</p>
+  <h1>Automation</h1>
+  <p class="lede">Once a check works and you trust the results, you can stop doing it by hand. This module covers what's worth automating, how to go about it, and where AI agents fit in.</p>
+  <p class="meta-row">About 35 minutes. Level: Advanced.</p>
 </header>
 <div class="outcomes"><h2>After this module you should be able to:</h2><ul>
-  <li>Estimate the hours AI can save you each month, task by task</li>
-  <li>Follow a 30-60-90 day plan that builds habits without overload</li>
-  <li>Deliver a capstone: a repeatable monthly seven-warehouse audit pack</li>
+  <li>Tell the difference between automation and AI, and when you need each</li>
+  <li>Score a task to decide whether it's worth automating</li>
+  <li>Sketch a simple weekly automated workflow and the guardrails it needs</li>
 </ul></div>
 
 <div class="prose">
-<h2>Step 1 · Measure the prize</h2>
-<p>Managers respond to time and money. Estimate how long your recurring tasks take today and what share AI and automation could realistically save. Be conservative; under-promising builds credibility.</p>
+<h2>Automation and AI are different things</h2>
+<p><b>Automation</b> follows rules you define: "every Monday, copy these files, refresh this report, email it". It is exact and predictable. <b>AI</b> handles judgement and language: "classify these comments", "summarise these exceptions". The most useful workflows combine both: automation moves and calculates the data, AI handles the parts that need reading or writing, and you review the result.</p>
+
+<h2>The automation ladder</h2>
+<p>Climb one rung at a time. Each rung is valuable on its own, and each one makes the next easier.</p>
 </div>
-<div class="widget" id="w-time">
-  <div class="w-head"><span class="w-tag">Exercise 12.1</span><span class="w-title">Time-savings estimator</span></div>
+<ol class="steps prose">
+  <li><strong>Saved prompts and templates.</strong> Your best prompts saved and reused (the prompt library is a start). Zero setup.</li>
+  <li><strong>Refreshable workbooks.</strong> Power Query combine plus formulas and PivotTables. Monthly work drops from hours to a refresh and a review.</li>
+  <li><strong>Scheduled flows.</strong> Power Automate (or similar) moves files, triggers refreshes and sends emails on a schedule or when a file arrives.</li>
+  <li><strong>AI steps inside flows.</strong> A flow that also asks AI to classify, summarise or draft, such as writing the first draft of the weekly exception email.</li>
+  <li><strong>Agents with approvals.</strong> AI that plans and carries out several steps toward a goal, pausing for your approval before anything important happens.</li>
+</ol>
+
+<div class="widget" id="w-auto">
+  <div class="w-head"><span class="w-tag">Exercise 10.1</span><span class="w-title">Should I automate this task?</span></div>
   <div class="w-body">
-    <p class="w-hint">Example figures are filled in. Edit hours per month and the % you expect to save. The suggested savings are deliberately modest.</p>
-    <div class="ts-row ts-head"><span>Task</span><span>Hrs / month</span><span>% saved</span></div>
-    <div id="tsRows"></div>
-    <div class="stat-row">
-      <div class="stat"><div class="n" id="tsMonth">0</div><div class="l">Hours saved per month</div></div>
-      <div class="stat"><div class="n" id="tsYear">0</div><div class="l">Hours saved per year</div></div>
-      <div class="stat"><div class="n" id="tsDays">0</div><div class="l">Working days freed per year (8 hrs)</div></div>
-    </div>
-    <div class="fb info" id="tsNote"></div>
+    <p class="w-hint">Think of one recurring task. Move the sliders to describe it. The score suggests which rung of the ladder fits.</p>
+    <label class="fl" for="auFreq">How often do you do it? <span id="auFreqV"></span></label><input type="range" id="auFreq" min="1" max="5" value="4">
+    <label class="fl" for="auTime">How long does it take each time? <span id="auTimeV"></span></label><input type="range" id="auTime" min="1" max="5" value="3">
+    <label class="fl" for="auRule">How rule-based is it? <span id="auRuleV"></span></label><input type="range" id="auRule" min="1" max="5" value="4">
+    <label class="fl" for="auStd">How standard is the input data? <span id="auStdV"></span></label><input type="range" id="auStd" min="1" max="5" value="3">
+    <label class="fl" for="auRisk">How bad is a mistake? <span id="auRiskV"></span></label><input type="range" id="auRisk" min="1" max="5" value="3">
+    <div class="stat-row"><div class="stat"><div class="n" id="auScore">0</div><div class="l">Automation score / 100</div></div><div class="stat"><div class="n" id="auHours">0</div><div class="l">Approx. hours per year spent on it</div></div></div>
+    <div class="fb info" id="auOut"></div>
   </div>
 </div>
 
 <div class="prose">
-<h2>Step 2 · The 30-60-90 day plan</h2>
-<p>Tick items as you go; your progress is saved in this browser. The plan builds one habit at a time so it never feels like a second job.</p>
+<h2>Example: the Monday variance digest</h2>
+<p>Here is a realistic first automation for a multi-warehouse auditor. Each box is one step in Power Automate.</p>
 </div>
-<div class="two" id="planWrap">
-  <div class="panel"><span class="label">Days 1–30</span><h4>Build the habit</h4><div class="plan-col" data-plan="p30"></div></div>
-  <div class="panel"><span class="label">Days 31–60</span><h4>Build the routines</h4><div class="plan-col" data-plan="p60"></div></div>
-  <div class="panel"><span class="label">Days 61–90</span><h4>Scale and show results</h4><div class="plan-col" data-plan="p90"></div></div>
+<ol class="flow" aria-label="Monday variance digest flow">
+  <li><span class="mono">Trigger</span><b>Monday 7:00</b>Scheduled start</li>
+  <li><span class="mono">Step 1</span><b>Collect</b>Check the SharePoint folder has all 7 warehouse files<span class="risk" style="color:var(--warn)">If any missing → email that site</span></li>
+  <li><span class="mono">Step 2</span><b>Refresh</b>Refresh the Power Query workbook</li>
+  <li><span class="mono">Step 3</span><b>Extract</b>Read the exceptions table (out of tolerance, over $X)</li>
+  <li><span class="mono">Step 4 (uses AI)</span><b>Draft</b>AI writes a 5-line summary of the exceptions</li>
+  <li><span class="mono">Step 5</span><b>Review</b>Email draft to you, not to others<span class="risk" style="color:var(--good)">You approve before sending on</span></li>
+</ol>
+<pre class="pr" data-label="Prompt · design your first flow">I want to automate a weekly task using Microsoft Power Automate. I'm a beginner.
+Task: [describe, e.g. collect 7 warehouse stock files from a SharePoint folder each Monday, refresh my Excel report, and email me a summary of exceptions].
+Files are in: [SharePoint / OneDrive / email attachments].
+Give me: 1) the flow design as numbered steps, 2) the exact Power Automate actions to use for each step, 3) what could go wrong and how to handle it, 4) what I need to ask IT for (permissions, connectors).</pre>
+
+<div class="prose">
+<h2>AI agents: what they are and what's coming</h2>
+<p>An <b>AI agent</b> is AI that doesn't just answer a question but works toward a goal: it plans steps, uses tools (files, systems, email), checks results and continues. Excel's Agent Mode, which builds a workbook in several steps, is a simple example you can use today.</p>
+<p>Analysts expect agents to spread quickly in procurement. Gartner's 2026 outlook describes procurement moving toward an "AI-first" model in which agents carry out tasks such as compliance checks and payments within strict governance guardrails. It also forecasts that by 2030, half of cross-functional supply chain management solutions will use intelligent agents to execute decisions autonomously. Treat such forecasts as direction, not certainty, but the direction is clear: knowing how to supervise AI will become part of your job.</p>
+
+<h3>Guardrails for any automation or agent</h3>
+</div>
+<div class="two">
+  <div class="panel"><h4>Human approval for anything that changes records</h4><p>Stock adjustments, payments, vendor changes and emails to suppliers always need a person to approve. Inventory specialists specifically caution against autonomous adjustments without policy controls.</p></div>
+  <div class="panel"><h4>Thresholds</h4><p>Let automation handle small, clear-cut items; route anything above a value or below a confidence level to a person.</p></div>
+  <div class="panel"><h4>Audit trail</h4><p>Every automated action should be logged: what it did, when, on what data, and who approved. As an auditor, you will appreciate this more than most.</p></div>
+  <div class="panel"><h4>Failure alerts</h4><p>A flow that silently stops is worse than no flow. Make sure failures email you.</p></div>
 </div>
 
 <div class="prose">
-<h2>Step 3 · Capstone: your monthly seven-warehouse audit pack</h2>
-<p>Bring the whole course together into one deliverable. When it's done, you will have a repeatable system rather than a collection of tips.</p>
+<h2>Working with IT</h2>
+<p>For anything beyond your own workbooks, involve IT early. They will want to know: what data, which systems, who has access, and what happens if it fails. Have AI help you write a clear one-page request.</p>
 </div>
-<div class="tbl"><table><thead><tr><th>Component</th><th>What it is</th><th>From module</th></tr></thead><tbody>
-<tr><td><b>1. Standard input template</b></td><td>One layout all seven warehouses use for count and receiving data</td><td>5, 7</td></tr>
-<tr><td><b>2. Refreshable workbook</b></td><td>Power Query combine, variance formulas, exception flags, PivotTables</td><td>7</td></tr>
-<tr><td><b>3. Accuracy dashboard</b></td><td>IRA, gross variance and trend by warehouse, with target line</td><td>6, 9</td></tr>
-<tr><td><b>4. Playbook prompts</b></td><td>Your adapted versions of at least three playbooks (P1 plus two others)</td><td>8</td></tr>
-<tr><td><b>5. Verification checklist</b></td><td>Your tie-out steps, written down, done every month</td><td>3</td></tr>
-<tr><td><b>6. Report template</b></td><td>One-page monthly summary in the five-part finding format</td><td>9</td></tr>
-<tr><td><b>7. Before/after note</b></td><td>Time taken before vs after, issues found, one improvement idea for automation</td><td>10, 12</td></tr>
-</tbody></table></div>
-
-<pre class="pr" data-label="Prompt · present your results to your manager">Help me write a one-page update for my manager on how I've used AI in my warehouse audit work over the last 90 days.
-Before: [time per month on audit tasks, main pain points].
-What I built: [workbook, playbooks, templates].
-After: [time per month now, issues found, accuracy trend].
-Risks I manage: [data handling approach, verification steps].
-Next: [what I'd automate next and what I need, e.g. Power Automate access].
-Tone: factual and modest, numbers first. Under 300 words with a short table of before vs after.</pre>
-
-<div class="prose">
-<h2>Keep learning</h2>
-<ul>
-  <li><b>Microsoft Learn</b> has free, short courses on Copilot in Excel, Power Query and Power Automate. Search "Copilot Excel" or "Power Automate fundamentals" at <a href="https://learn.microsoft.com/training/" target="_blank" rel="noopener">learn.microsoft.com/training</a>.</li>
-  <li><b>Your AI assistant itself</b> is a patient tutor. Try: <code>Teach me [topic] in 5 short lessons, one at a time. Quiz me after each one before moving on.</code></li>
-  <li><b>Professional bodies</b> such as CIPS, ISM and ASCM (APICS) publish material on digital procurement and inventory practice.</li>
-  <li><b>Revisit this course.</b> The prompt library and glossary are designed as references you come back to.</li>
-</ul>
-</div>
-
-<div class="widget" id="w-cert">
-  <div class="w-head"><span class="w-tag">Certificate</span><span class="w-title">Course completion</span></div>
-  <div class="w-body">
-    <p class="w-hint" id="certHint"></p>
-    <label class="fl" for="certName">Your name, as it should appear</label>
-    <input type="text" id="certName" placeholder="Type your name" autocomplete="name">
-    <div class="cert" id="certBox" hidden>
-      <div class="label">Certificate of completion</div>
-      <h3>AI for Procurement &amp; Warehouse Auditing</h3>
-      <p style="margin:.4rem 0">This confirms that</p>
-      <div class="nm" id="certNm">Your name</div>
-      <p style="margin:.6rem 0 0;color:var(--ink-2)">completed all 12 modules: AI foundations, safe use, prompting, data work, audit playbooks, reporting, automation and advanced AI.</p>
-      <p class="label" style="margin-top:14px" id="certDate"></p>
-    </div>
-  </div>
-</div>
+<pre class="pr" data-label="Prompt · automation request for IT">Help me write a one-page automation request for our IT team.
+What I do now: [task, frequency, time taken].
+What I want automated: [steps].
+Systems and data involved: [ERP/WMS/SharePoint, file types, sensitivity].
+Who uses the output: [people].
+Include sections: Business problem, Proposed solution, Data and access needed, Risks and controls (approvals, audit log, failure alerts), Expected time saved, Success measure. Keep it under 400 words.</pre>
 
 <div class="takeaways prose"><h2>Summary</h2><ul>
-  <li>Measure time before and after. It turns learning into a result your manager can see.</li>
-  <li>Build one habit at a time over 90 days.</li>
-  <li>The capstone audit pack turns techniques into a repeatable monthly system.</li>
-  <li>Keep verifying, keep the human in charge, and keep learning.</li>
+  <li>Automation follows rules; AI handles judgement and language. Combine them.</li>
+  <li>Climb the ladder: saved prompts → refreshable workbooks → scheduled flows → AI steps → agents.</li>
+  <li>Automate frequent, rule-based tasks with standard inputs first.</li>
+  <li>Approvals, thresholds, audit trails and failure alerts are non-negotiable.</li>
 </ul></div>
 
-<div class="quiz" data-quiz="m12"><h2>Quick quiz</h2>
-  <div class="q" data-a="1"><p class="qt">What is the most convincing way to show the value of AI in your work?</p><div class="opts">
-    <button class="opt">Tell people AI is the future</button>
-    <button class="opt">Show before-and-after time and issues found, plus how you verify results</button>
-    <button class="opt">Use AI for every task, visibly</button></div>
-    <p class="why" hidden>Measured results and a clear control process earn trust much faster than enthusiasm.</p></div>
-  <div class="q" data-a="0"><p class="qt">Which statement best sums up this course?</p><div class="opts">
-    <button class="opt">AI finds, sorts and drafts quickly; you verify the facts and own the decisions</button>
-    <button class="opt">AI will do the audit for you</button>
-    <button class="opt">AI is too risky to use for audit work</button></div>
-    <p class="why" hidden>That's the approach the whole course is built on.</p></div>
-</div>
+<section class="assess" aria-label="Test and assignment">
+<div class="test" data-test="m12"></div>
+<div class="assign" data-assign="m12"></div>
+</section>
 <div class="mod-foot" data-foot="m12"></div>
 </section>
