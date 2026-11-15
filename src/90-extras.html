@@ -1,0 +1,85 @@
+
+<!-- ======================= LIBRARY ======================= -->
+<section class="view" data-route="library" id="view-library" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Reference · Prompt library</div>
+  <h1>Prompt library</h1>
+  <p class="lede">Ready-to-use prompts for procurement and warehouse audit work. Copy one, replace the <b>[brackets]</b> with your details, and paste it into your approved AI tool. Remember Module 3: anonymise sensitive data first.</p>
+</header>
+<div class="lib-tools">
+  <label class="sr" for="libSearch">Search prompts</label>
+  <input type="text" id="libSearch" placeholder="Search, e.g. duplicate, email, formula">
+  <div class="chips" id="libFilters"></div>
+</div>
+<div class="lib-list" id="libList"></div>
+<p class="score" id="libCount"></p>
+</section>
+
+<!-- ======================= GLOSSARY ======================= -->
+<section class="view" data-route="glossary" id="view-glossary" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Reference · Glossary</div>
+  <h1>Glossary</h1>
+  <p class="lede">Every AI and audit term used in the course, in plain English. The tag shows the module where it is explained in depth.</p>
+</header>
+<div class="lib-tools"><label class="sr" for="glSearch">Search glossary</label><input type="text" id="glSearch" placeholder="Search terms"></div>
+<dl class="gl-list" id="glList"></dl>
+</section>
+
+<!-- ======================= SOURCES ======================= -->
+<section class="view" data-route="sources" id="view-sources" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Reference · Sources</div>
+  <h1>Sources and further reading</h1>
+  <p class="lede">The facts and figures in this course come from the sources below, researched in November 2026. Where a figure comes from a vendor or a secondary report, the course says so. AI products change quickly, so check the official pages for current features in your licence.</p>
+</header>
+<div class="prose">
+<h2>AI adoption in procurement</h2>
+<ul class="src-list">
+  <li><a href="https://www.efeso.com/insights-events/from-hype-to-reality-selective-industrialization-of-genai-begin/" target="_blank" rel="noopener">EFESO: From hype to reality, selective industrialisation of GenAI</a> <span class="mono">· 2026 CPO Pulse; 5% scaled, use cases</span></li>
+  <li><a href="https://www.sdcexec.com/software-technology/ai-ar/news/22960027/efeso-management-consultants-only-5-of-procurement-organizations-have-truly-scaled-genai" target="_blank" rel="noopener">SDCExec: Only 5% of procurement organisations have truly scaled GenAI</a></li>
+  <li><a href="https://artofprocurement.com/blog/state-of-ai-in-procurement" target="_blank" rel="noopener">Art of Procurement: State of AI in procurement</a></li>
+  <li><a href="https://levelpath.com/analyst-report/gartner-predicts-2026-procurement-taking-steps-to-become-ai-first" target="_blank" rel="noopener">Gartner Predicts 2026: Procurement taking steps to become AI-first (via Levelpath)</a></li>
+  <li><a href="https://aimagazine.com/news/robots-ai-and-agents-key-in-gartners-supply-chain-trends" target="_blank" rel="noopener">AI Magazine: Gartner supply chain technology trends 2026</a></li>
+  <li><a href="https://procurementmag.com/news/agentic-ai-in-procurement-gartner-bain-unilever-revolut" target="_blank" rel="noopener">Procurement Magazine: Agentic AI in procurement</a> <span class="mono">· agentic spend forecast, workforce survey</span></li>
+</ul>
+<h2>Microsoft Excel and Copilot</h2>
+<ul class="src-list">
+  <li><a href="https://techcommunity.microsoft.com/blog/excelblog/agent-mode-in-excel-is-now-generally-available-on-desktop/4457408" target="_blank" rel="noopener">Microsoft Excel Blog: Agent Mode in Excel generally available on desktop</a></li>
+  <li><a href="https://techcommunity.microsoft.com/blog/excelblog/whats-new-in-excel-february-2026/4496014" target="_blank" rel="noopener">Microsoft Excel Blog: What's new in Excel, February 2026</a></li>
+  <li><a href="https://support.microsoft.com/en-us/Excel/functions/copilot-function" target="_blank" rel="noopener">Microsoft Support: COPILOT function</a> <span class="mono">· accuracy and reproducibility warning</span></li>
+  <li><a href="https://www.pcgamer.com/software/ai/microsoft-launches-copilot-ai-function-in-excel-but-warns-not-to-use-it-in-any-task-requiring-accuracy-or-reproducibility" target="_blank" rel="noopener">PC Gamer: Microsoft warns against using COPILOT for tasks needing accuracy</a></li>
+  <li><a href="https://support.microsoft.com/en-au/excel/import-data-from-a-folder-with-multiple-files-power-query" target="_blank" rel="noopener">Microsoft Support: Import data from a folder with multiple files (Power Query)</a></li>
+</ul>
+<h2>Inventory accuracy and warehouse audit</h2>
+<ul class="src-list">
+  <li><a href="https://www.cleverence.com/articles/for-business/kpi-inventory-accuracy-4937/" target="_blank" rel="noopener">Cleverence: Inventory accuracy KPI, formula and benchmarks</a></li>
+  <li><a href="https://www.buske.com/blog/inventory-accuracy" target="_blank" rel="noopener">Buske Logistics: Inventory accuracy</a> <span class="mono">· 99%+ customer expectation</span></li>
+  <li><a href="https://racklify.com/encyclopedia/inventory-reconciliation-core-metrics-and-kpis-warehouse-teams-should-track/" target="_blank" rel="noopener">Racklify: Inventory reconciliation metrics and KPIs</a></li>
+  <li><a href="https://sysgenpro.com/ai/how-distribution-ai-solves-inventory-inaccuracies-across-multi-site-networks" target="_blank" rel="noopener">SysGenPro: Inventory inaccuracies across multi-site networks</a> <span class="mono">· root causes, governance</span></li>
+  <li><a href="https://blogs.oracle.com/futurestate/a-day-in-the-life-of-an-inventory-manager-7-oracle-ai-agents-that-revolutionize-the-role" target="_blank" rel="noopener">Oracle: AI agents for inventory managers</a> <span class="mono">· risk-based cycle counting</span></li>
+  <li><a href="https://www.supplychain247.com/article/beyond_the_barcode_how_ai_and_computer_vision_are_redefining_inventory_management" target="_blank" rel="noopener">Supply Chain 24/7: Computer vision in inventory management</a></li>
+</ul>
+<h2>Procure-to-pay controls and red flags</h2>
+<ul class="src-list">
+  <li><a href="https://www.lleverage.ai/blog/three-way-matching-automation" target="_blank" rel="noopener">Lleverage: Three-way matching automation</a></li>
+  <li><a href="https://peakflo.co/blog/ai-agents-three-way-matching-purchase-order-reconciliation-guide" target="_blank" rel="noopener">Peakflo: AI agents in three-way matching</a> <span class="mono">· vendor claims, data needs</span></li>
+  <li><a href="https://weaver.com/resources/how-companies-can-spot-procurement-fraud-minimize-risk" target="_blank" rel="noopener">Weaver: Top procurement fraud schemes and red flags</a></li>
+  <li><a href="https://www2.deloitte.com/content/dam/Deloitte/sg/Documents/risk/sea-risk-sap-governance-risk-compliance-red-flag-brochure.pdf" target="_blank" rel="noopener">Deloitte: SAP governance, risk and compliance red flags</a> <span class="mono">· split PO example</span></li>
+  <li><a href="https://www.dfinsolutions.com/knowledge-hub/blog/what-is-procurement-fraud" target="_blank" rel="noopener">DFIN: What is procurement fraud</a></li>
+  <li><a href="https://www.isaca.org/resources/isaca-journal/past-issues/2011/understanding-and-applying-benfords-law" target="_blank" rel="noopener">ISACA Journal: Understanding and applying Benford's law</a></li>
+  <li><a href="https://bdo.com.au/en-au/insights/forensic-services/worn-book-pages-in-1881-used-to-uncover-purchase-order-splitting-in-2021" target="_blank" rel="noopener">BDO: Benford's law used to uncover purchase order splitting</a></li>
+</ul>
+<h2>AI risk, privacy and accountability</h2>
+<ul class="src-list">
+  <li><a href="https://breached.company/data-privacy-week-2026-why-77-of-employees-are-leaking-corporate-data-through-ai-tools/" target="_blank" rel="noopener">Breached: Data Privacy Week 2026, employees and AI data leakage</a> <span class="mono">· cites TELUS Digital and LayerX surveys</span></li>
+  <li><a href="https://witness.ai/blog/is-chatgpt-safe-for-business-use/" target="_blank" rel="noopener">WitnessAI: Is ChatGPT safe for business use?</a></li>
+  <li><a href="https://nhimg.org/articles/llm-hallucinations-can-mimic-data-leaks-in-enterprise-ai/" target="_blank" rel="noopener">NHIMG: LLM hallucinations in enterprise AI</a> <span class="mono">· Air Canada ruling context</span></li>
+</ul>
+<div class="callout tip"><span class="tag">A note on figures</span><p>Many statistics about AI in procurement come from vendors with a commercial interest. This course uses them to show direction, labels them where relevant, and does not present vendor performance claims as fact. Your own before-and-after measurements (Module 12) are the figures that matter most.</p></div>
+</div>
+</section>
+
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>

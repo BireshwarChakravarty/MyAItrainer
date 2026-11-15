@@ -177,12 +177,13 @@ Return a table: Row_ID, Reason, Category, Confidence (High/Low).
 
 <div class="prose">
 <h2>Audit lab: find the problems</h2>
-<p>Below is a sample of purchase-to-pay records from seven warehouses. The data is invented for practice. <b>Six rows have a real issue; the rest are clean.</b> Tick every row you would flag, then check your answers. Approval limit: <b>$5,000</b>. Pack size for SKU P-210: <b>12 per case</b>.</p>
+<p>Below is a sample of purchase-to-pay records from seven warehouses. The data is invented for practice. <b>Seven rows have a real issue; the rest are clean.</b> Tick every row you would flag, then check your answers. Approval limit: <b>$5,000</b>. Pack size for SKU P-210: <b>12 per case</b>.</p>
 </div>
 <div class="widget" id="w-lab">
   <div class="w-head"><span class="w-tag">LAB 8.1</span><span class="w-title">Purchase-to-pay audit sample · November</span></div>
   <div class="w-body">
     <p class="w-hint">Look across PO, GRN and invoice columns. Think: duplicates, splits, mismatches, missing documents, odd suppliers.</p>
+    <p class="w-hint mobile-only"><b>On a phone:</b> swipe the table sideways to see all columns.</p>
     <div class="tbl lab"><table id="labTable"></table></div>
     <div class="btn-row"><button class="btn" id="labCheck">Check my answers</button><button class="btn ghost" id="labReset">Reset</button></div>
     <div id="labScore"></div>

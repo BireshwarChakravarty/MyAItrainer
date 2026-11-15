@@ -1,0 +1,621 @@
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const el=(tag,attrs={},html)=>{const e=document.createElement(tag);for(const k in attrs){if(k==="class")e.className=attrs[k];else if(k==="text")e.textContent=attrs[k];else e.setAttribute(k,attrs[k]);}if(html!=null)e.innerHTML=html;return e;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------------- storage ---------------- */
+const KEY="ai-proc-audit-course.v1";
+let S={done:{},quiz:{},plan:{},name:"",theme:""};
+try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
+Object.keys(S.done).forEach(k=>{if(!/^m([1-9]|1[0-2])$/.test(k))delete S.done[k];});
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+
+/* ---------------- toast & copy ---------------- */
+let tT;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>t.classList.remove("show"),2200);}
+function copyText(text,btn){
+  const done=()=>{toast("Copied to clipboard");if(btn){const o=btn.textContent;btn.textContent="Copied";btn.classList.add("ok");setTimeout(()=>{btn.textContent=o;btn.classList.remove("ok");},1600);}};
+  const fallback=()=>{const ta=el("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand("copy");}catch(e){}ta.remove();ok?done():toast("Select the text and copy it manually");};
+  try{navigator.clipboard.writeText(text).then(done,fallback);}catch(e){fallback();}
+}
+
+/* ---------------- theme ---------------- */
+const root=document.documentElement;
+if(S.theme)root.setAttribute("data-theme",S.theme);
+$("#themeBtn").addEventListener("click",()=>{
+  const cur=root.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  const next=cur==="dark"?"light":"dark";root.setAttribute("data-theme",next);S.theme=next;save();
+});
+
+/* ---------------- course structure ---------------- */
+const ZONES=[
+  {z:"A",name:"Foundations",desc:"What AI is, the tools, and safe use"},
+  {z:"B",name:"Talking to AI",desc:"Prompts that get useful answers"},
+  {z:"C",name:"AI for your audit work",desc:"Audit essentials, Excel, playbooks"},
+  {z:"D",name:"Communicate & automate",desc:"Reporting and automation"},
+  {z:"E",name:"Going further",desc:"Advanced AI and your 90-day plan"}
+];
+const MODS=[
+  {id:"m1",z:"A",t:"What AI actually is",s:"How chatbots work, and why they can be confidently wrong",min:20},
+  {id:"m2",z:"A",t:"Your AI toolbox",s:"Four layers of tools and which to use when",min:20},
+  {id:"m3",z:"A",t:"Using AI safely",s:"Data privacy, accuracy checks, accountability",min:25},
+  {id:"m4",z:"B",t:"Writing good prompts",s:"The five-part Pick Ticket method",min:30},
+  {id:"m5",z:"B",t:"Working with data",s:"Tables, files, data dictionaries, checking numbers",min:30},
+  {id:"m6",z:"C",t:"Audit essentials",s:"Flows, accuracy measures and red flags",min:35},
+  {id:"m7",z:"C",t:"Excel and AI",s:"Formulas, Copilot, Power Query",min:40},
+  {id:"m8",z:"C",t:"Audit playbooks",s:"Six step-by-step routines and an audit lab",min:45},
+  {id:"m9",z:"D",t:"Reporting findings",s:"Five-part findings for every audience",min:30},
+  {id:"m10",z:"D",t:"Automation",s:"What to automate and how, safely",min:35},
+  {id:"m11",z:"E",t:"Advanced AI",s:"Anomaly detection, RAG, judging vendors",min:35},
+  {id:"m12",z:"E",t:"Your 90-day plan",s:"Time savings, plan, capstone, certificate",min:30}
+];
+MODS.forEach((m,i)=>{m.n=i+1;m.code=m.z+"-"+String(i+1).padStart(2,"0");});
+const ROUTES=["home",...MODS.map(m=>m.id),"library","glossary","sources"];
+
+/* sidebar */
+function buildSide(){
+  const side=$("#side");let h=`<a href="#home" data-r="home"><span class="code">HOME</span><span>Course overview</span><span></span></a><div class="side-sep"></div>`;
+  ZONES.forEach(z=>{
+    h+=`<div class="side-group"><div class="side-zone"><span>Zone ${z.z}</span><span>${esc(z.name)}</span></div>`;
+    MODS.filter(m=>m.z===z.z).forEach(m=>{h+=`<a href="#${m.id}" data-r="${m.id}" class="${S.done[m.id]?"is-done":""}"><span class="code">${m.code}</span><span>${esc(m.t)}</span><span class="tick" aria-label="${S.done[m.id]?"Completed":"Not completed"}"></span></a>`;});
+    h+=`</div>`;
+  });
+  h+=`<div class="side-sep"></div><div class="side-zone"><span>Reference</span><span></span></div>
+  <a href="#library" data-r="library"><span class="code">LIB</span><span>Prompt library</span><span></span></a>
+  <a href="#glossary" data-r="glossary"><span class="code">GLO</span><span>Glossary</span><span></span></a>
+  <a href="#sources" data-r="sources"><span class="code">SRC</span><span>Sources</span><span></span></a>`;
+  side.innerHTML=h;
+}
+function buildFloor(){
+  const fp=$("#floorPlan");let h="";
+  ZONES.forEach(z=>{
+    const ms=MODS.filter(m=>m.z===z.z);
+    h+=`<div class="zone"><div class="zone-label"><span class="z">ZONE ${z.z}</span><b>${esc(z.name)}</b><small>${esc(z.desc)}</small></div><div class="bays">`;
+    ms.forEach(m=>{h+=`<a class="bay ${S.done[m.id]?"is-done":""}" href="#${m.id}"><span class="bc"><span>AISLE ${m.code}</span><span>${m.min} min</span></span><b>${esc(m.t)}</b><small>${esc(m.s)}</small><span class="st tick" aria-hidden="true"></span></a>`;});
+    for(let i=ms.length;i<3;i++)h+=`<div class="bay-fill" aria-hidden="true"></div>`;
+    h+=`</div></div>`;
+  });
+  fp.innerHTML=h;
+}
+function updateProgress(){
+  const n=MODS.filter(m=>S.done[m.id]).length;
+  $("#progLabel").textContent=`${n} of 12 modules`;
+  $("#progBar").style.width=(n/12*100)+"%";
+  const next=MODS.find(m=>!S.done[m.id]);
+  const sb=$("#startBtn");
+  if(n===0){sb.textContent="Start Module 1";sb.href="#m1";}
+  else if(next){sb.textContent=`Continue: Module ${next.n}`;sb.href="#"+next.id;}
+  else{sb.textContent="Course complete: view certificate";sb.href="#m12";}
+  updateCert();
+}
+function buildFoots(){
+  $$(".mod-foot").forEach(f=>{
+    const id=f.dataset.foot, i=MODS.findIndex(m=>m.id===id), m=MODS[i];
+    const prev=MODS[i-1], next=MODS[i+1];
+    const done=!!S.done[id];
+    f.innerHTML=`<div class="status">${done?`<b>Aisle complete.</b> Nice work.`:`Finished reading and tried the labs?`}</div>
+    <div class="btn-row" style="margin:0">
+      ${prev?`<a class="btn ghost" href="#${prev.id}">Back: ${esc(prev.t)}</a>`:""}
+      <button class="btn ${done?"ghost":"accent"}" data-complete="${id}">${done?"Mark as not complete":"Mark aisle complete"}</button>
+      ${next?`<a class="btn" href="#${next.id}">Next: ${esc(next.t)}</a>`:`<a class="btn" href="#home">Back to course overview</a>`}
+    </div>`;
+  });
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-complete]");if(!b)return;
+  const id=b.dataset.complete;S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();
+  buildSide();buildFloor();buildFoots();updateProgress();markNav(current);
+  const mm=MODS.find(x=>x.id===id);if(S.done[id]&&mm){const m=mm;toast(m.n===12&&MODS.every(x=>S.done[x.id])?"Course complete. Congratulations!":`Module ${m.n} complete`);}
+});
+
+/* router */
+let current="home";
+function markNav(r){$$("#side a").forEach(a=>{if(a.dataset.r===r)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});}
+function route(){
+  let r=(location.hash||"#home").slice(1);if(!ROUTES.includes(r))r="home";
+  current=r;
+  $$(".view").forEach(v=>v.hidden=v.dataset.route!==r);
+  markNav(r);closeNav();
+  window.scrollTo(0,0);
+  const m=MODS.find(x=>x.id===r);
+  const base="AI for Procurement & Warehouse Auditing";
+  document.title=m?`${m.n}. ${m.t} · ${base}`:(r==="home"?base:`${r[0].toUpperCase()+r.slice(1)} · ${base}`);
+}
+window.addEventListener("hashchange",route);
+
+/* mobile nav */
+const body=document.body;
+function closeNav(){body.classList.remove("nav-open");$("#menuBtn").setAttribute("aria-expanded","false");}
+$("#menuBtn").addEventListener("click",()=>{const o=body.classList.toggle("nav-open");$("#menuBtn").setAttribute("aria-expanded",String(o));});
+$("#scrim").addEventListener("click",closeNav);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeNav();});
+
+/* ---------------- prompt blocks ---------------- */
+function wrapPrompts(scope=document){
+  $$("pre.pr",scope).forEach(p=>{
+    const w=el("div",{class:"prompt"});
+    const head=el("div",{class:"ph"});head.appendChild(el("span",{text:p.dataset.label||"Prompt"}));
+    const b=el("button",{class:"copy",type:"button",text:"Copy"});head.appendChild(b);
+    const pre=el("pre");pre.textContent=p.textContent;
+    w.appendChild(head);w.appendChild(pre);p.replaceWith(w);
+    b.addEventListener("click",()=>copyText(pre.textContent,b));
+  });
+}
+
+/* ---------------- quizzes ---------------- */
+function initQuizzes(){
+  $$(".quiz").forEach(qz=>{
+    const qid=qz.dataset.quiz;S.quiz[qid]=S.quiz[qid]||{};
+    $$(".q",qz).forEach((q,qi)=>{
+      const qt=$(".qt",q);qt.insertAdjacentHTML("afterbegin",`<span class="qn">Q${qi+1}</span>`);
+      const a=+q.dataset.a, opts=$$(".opt",q), why=$(".why",q);
+      const show=(chosen)=>{opts.forEach((o,i)=>{o.disabled=true;if(i===a)o.classList.add("correct");if(i===chosen&&i!==a)o.classList.add("incorrect");});
+        why.hidden=false;why.innerHTML=(chosen===a?"<b>Correct.</b> ":"<b>Not quite.</b> ")+why.dataset.base;};
+      why.dataset.base=why.innerHTML;
+      opts.forEach((o,i)=>{o.type="button";o.addEventListener("click",()=>{show(i);S.quiz[qid][qi]=i;save();});});
+      if(S.quiz[qid][qi]!=null)show(S.quiz[qid][qi]);
+    });
+    const reset=el("button",{class:"btn ghost",type:"button",text:"Reset quiz"});reset.style.marginTop="6px";
+    reset.addEventListener("click",()=>{S.quiz[qid]={};save();$$(".q",qz).forEach(q=>{$$(".opt",q).forEach(o=>{o.disabled=false;o.classList.remove("correct","incorrect");});const w=$(".why",q);w.hidden=true;});});
+    qz.appendChild(reset);
+  });
+}
+
+/* ---------------- generic choice-card game ---------------- */
+function cardGame(container,scoreEl,items,choices){
+  let answered=0,right=0;
+  items.forEach(it=>{
+    const c=el("div",{class:"gcard"});c.appendChild(el("p",{},it.q));
+    const row=el("div",{class:choices.tl?"tl":"chips"});
+    choices.list.forEach(ch=>{
+      const b=el("button",{type:"button",class:choices.tl?ch.k:"chip","aria-pressed":"false"},choices.tl?`<i></i>${esc(ch.label)}`:esc(ch.label));
+      b.addEventListener("click",()=>{
+        if(c.dataset.done)return;c.dataset.done="1";answered++;
+        b.setAttribute("aria-pressed","true");
+        const ok=ch.k===it.a;if(ok)right++;
+        c.classList.add(ok?"right":"wrong");
+        const correct=choices.list.find(x=>x.k===it.a).label;
+        c.appendChild(el("p",{class:"why"},(ok?"<b>Right.</b> ":`<b>Answer: ${esc(correct)}.</b> `)+it.why));
+        scoreEl.textContent=`Score: ${right} of ${answered} answered (${items.length} total)`+(answered===items.length?(right===items.length?" · Perfect.":" · Review the explanations above."):"");
+      });
+      row.appendChild(b);
+    });
+    c.appendChild(row);container.appendChild(c);
+  });
+}
+
+/* ---------------- LAB 1.1 next word ---------------- */
+(function(){
+  const base="The cycle count at Warehouse 3 found that SKU 4471 was";
+  const S1=[["short",.40],["over",.18],["missing",.16],["miscounted",.12],["damaged",.08],["purple",.006]];
+  const S2=[["by",.46],["again",.2],["after",.14],["because",.12],["yesterday",.06],["delicious",.004]];
+  const S3={by:[["12 units.",.38],["a full case.",.24],["3%.",.18],["$480.",.12],["a banana.",.004]],
+    again:[["this month.",.42],["after recount.",.3],["at receiving.",.15],["on Tuesday.",.1],["in Narnia.",.003]],
+    after:[["the recount.",.4],["receiving.",.28],["a transfer.",.2],["lunch.",.08],["the moon landing.",.003]],
+    because:[["of a UOM error.",.34],["of a timing gap.",.28],["of mis-slotting.",.22],["of damage.",.12],["it was Tuesday.",.01]],
+    yesterday:[["afternoon.",.5],["morning.",.4],["evening.",.09],["in a dream.",.004]],
+    delicious:[["(the sentence has gone off the rails)",1]]};
+  const txt=$("#nwText"),cands=$("#nwCands"),temp=$("#nwTemp"),tv=$("#nwTempV"),note=$("#nwNote");
+  let picks=[];
+  const silly=new Set(["purple","delicious","a banana.","in Narnia.","the moon landing.","it was Tuesday.","in a dream.","(the sentence has gone off the rails)"]);
+  const curList=()=>picks.length===0?S1:picks.length===1?S2:picks.length===2?S3[picks[1]]:null;
+  const dist=list=>{const T=+temp.value;const w=list.map(([,p])=>Math.pow(p,1/T));const s=w.reduce((a,b)=>a+b,0);return list.map(([t],i)=>[t,w[i]/s]);};
+  function render(){
+    tv.textContent=(+temp.value).toFixed(1);
+    txt.innerHTML=esc(base)+" "+picks.map(p=>`<span class="gen">${esc(p)}</span>`).join(" ")+(picks.length<3?'<span class="cursor"></span>':"");
+    cands.innerHTML="";const list=curList();
+    if(!list){
+      note.hidden=false;const odd=picks.some(p=>silly.has(p));
+      note.innerHTML=`<b>Sentence complete.</b> It reads fluently, but the model never checked a single stock record. It only chose words that commonly follow each other. ${odd?"You (or the dice) picked an unlikely word, which is what happens more often at high creativity. ":""}That is why AI can sound right while being wrong, and why factual work needs low creativity and your verification.`;
+      $("#nwAuto").disabled=true;return;}
+    note.hidden=true;$("#nwAuto").disabled=false;
+    dist(list).forEach(([t,p])=>{
+      const b=el("button",{class:"nw-c",type:"button"});
+      b.innerHTML=`<span>${esc(t)}</span><span class="nw-bar"><span style="width:${(p*100).toFixed(1)}%"></span></span><span class="p">${(p*100).toFixed(1)}%</span>`;
+      b.addEventListener("click",()=>{picks.push(t);render();});cands.appendChild(b);
+    });
+  }
+  $("#nwAuto").addEventListener("click",()=>{const list=curList();if(!list)return;const d=dist(list);let r=Math.random(),acc=0;for(const [t,p] of d){acc+=p;if(r<=acc){picks.push(t);break;}}if(picks.length===0||curList()===list)picks.push(d[0][0]);render();});
+  $("#nwReset").addEventListener("click",()=>{picks=[];render();});
+  temp.addEventListener("input",render);render();
+})();
+
+/* ---------------- LAB 1.2 sorter ---------------- */
+cardGame($("#sorterCards"),$("#sorterScore"),[
+  {q:"The WMS creates a replenishment order whenever a bin falls below 200 units.",a:"rule",why:"Someone set the 200-unit threshold. The system follows it exactly; it didn't learn it."},
+  {q:"A system predicts next month's demand per SKU by learning seasonal patterns from three years of sales.",a:"ai",why:"It learned the pattern from data rather than following a formula a person wrote. That's machine learning."},
+  {q:"Excel turns any variance above 5% red.",a:"rule",why:"Conditional formatting applies a rule you defined. Useful, but not AI."},
+  {q:"A tool reads scanned supplier invoices and pulls out the invoice number, date and line totals.",a:"ai",why:"Reading varied document layouts requires learned pattern recognition (document AI / OCR)."},
+  {q:"An assistant drafts an email to a warehouse manager about missing goods receipts.",a:"ai",why:"Generating new text is generative AI."},
+  {q:"A system flags an invoice as unusual because it differs from that supplier's normal pattern, though nobody wrote a rule for that case.",a:"ai",why:"Learning 'normal' and flagging deviations is anomaly detection, a form of machine learning."},
+  {q:"A handheld scanner decodes a barcode on a pallet label.",a:"rule",why:"Barcode decoding is a fixed, exact process. No learning or judgement involved."}
+],{list:[{k:"rule",label:"Fixed rule"},{k:"ai",label:"Real AI"}]});
+
+/* ---------------- LAB 2.1 picker ---------------- */
+(function(){
+  let where=null,what=null;const out=$("#pkOut");
+  const W={excel:"Excel / Microsoft 365",google:"Google Sheets",erp:"your ERP / WMS",none:"no data"};
+  function rec(){
+    if(!where||!what){out.hidden=true;return;}
+    let r="";
+    const tool=where==="excel"?"Microsoft Copilot (or your approved assistant)":where==="google"?"Gemini (or your approved assistant)":"your company-approved chat assistant";
+    switch(what){
+      case "learn":r=`<b>Use ${tool} in chat.</b> Ask it to explain like you're new, with a warehouse example, then ask follow-up questions. Pick Ticket prompts (Module 4) help.`;break;
+      case "formula":r=where==="excel"?`<b>Use Copilot in Excel</b> (side pane) if licensed: "Add a column that…". Otherwise describe your columns to a chat assistant and ask for the formula. Test it on 3 rows you know the answer to (Module 7).`
+        :where==="google"?`<b>Use Gemini in Sheets</b>, or describe your columns to a chat assistant. Mention you're using Google Sheets; some functions differ from Excel.`
+        :where==="erp"?`<b>Export the report to Excel first</b>, then ask a chat assistant for the formula using your column names. Formulas need the data in a spreadsheet.`
+        :`<b>Use a chat assistant with made-up column names.</b> You'll get the formula without sharing any data.`;break;
+      case "analyse":r=where==="excel"?`<b>Use Copilot in Excel or Agent Mode</b> if licensed. If not, upload an anonymised copy to your approved assistant's data-analysis feature. Ask for row counts and control totals first (Module 5).`
+        :where==="google"?`<b>Use Gemini in Sheets</b>, or upload an anonymised copy to your approved assistant's data analysis. Confirm row counts first.`
+        :where==="erp"?`<b>Export to Excel or CSV</b>, then use Copilot in Excel or upload to your approved assistant. Also ask IT whether your ERP has built-in analytics or AI features (Module 2).`
+        :`<b>You'll need data first.</b> Export the relevant report, clean it (Module 5), then come back.`;break;
+      case "write":r=`<b>Use ${tool}</b>${where==="excel"?", or Copilot in Word/Outlook":""}. Give it your facts in note form and the audience. The finding builder in Module 9 structures this for you. Check every number before sending.`;break;
+      case "repeat":r=where==="excel"?`<b>Climb the automation ladder.</b> First Power Query to combine and clean (Module 7), then Power Automate to schedule it (Module 10). AI helps you design both.`
+        :where==="google"?`<b>Use Google Sheets' import and query functions plus scheduled scripts</b>. Ask an assistant to write the Apps Script for you, and check with IT first.`
+        :where==="erp"?`<b>Ask IT about scheduled reports</b> from your ERP into a shared folder. Then Power Query and Power Automate can take over (Modules 7 and 10).`
+        :`<b>Start by saving your best prompt as a template</b> (rung 1 of the automation ladder, Module 10).`;break;
+    }
+    out.hidden=false;out.innerHTML=`<span class="label">Recommendation · ${esc(W[where])}</span><br>${r}`;
+  }
+  const bind=(id,set)=>$$("#"+id+" .chip").forEach(b=>b.addEventListener("click",()=>{$$("#"+id+" .chip").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");set(b.dataset.v);rec();}));
+  bind("pkWhere",v=>where=v);bind("pkWhat",v=>what=v);
+})();
+
+/* ---------------- LAB 3.1 safe ---------------- */
+cardGame($("#safeCards"),$("#safeScore"),[
+  {q:"\"What's a good Excel formula to compare two columns and flag differences?\"",a:"g",why:"A general question with no company data. Fine anywhere approved."},
+  {q:"Monthly variance totals by warehouse code (WH01–WH07). No supplier names, no people.",a:"a",why:"Internal data, not highly sensitive. Keep it inside your company-approved tool."},
+  {q:"A supplier contract showing negotiated unit prices and rebate terms.",a:"r",why:"Commercially sensitive and often under confidentiality terms. Don't share unless policy explicitly allows."},
+  {q:"A 10-row table you invented to test a formula.",a:"g",why:"Made-up data carries no risk."},
+  {q:"A list of stock counters' names and their individual error rates.",a:"r",why:"Personal data linked to performance. Anonymise (Counter 1, 2, 3) or keep it out of AI entirely."},
+  {q:"Your company's internal cycle-count SOP document.",a:"a",why:"Internal but generally not sensitive. Fine in the approved tool; not in a personal account."},
+  {q:"A vendor master extract including bank account numbers and tax IDs.",a:"r",why:"Payment and identity data is red-light. Mask bank numbers and use only approved tools, or ask for formulas instead."},
+  {q:"A published news article about a supplier's factory fire.",a:"g",why:"Public information. Fine to summarise with any approved tool."}
+],{tl:true,list:[{k:"g",label:"Green"},{k:"a",label:"Amber"},{k:"r",label:"Red"}]});
+
+/* ---------------- LAB 4.1 prompt builder ---------------- */
+(function(){
+  const P={
+    variance:{role:"You are an experienced inventory audit analyst for a distributor with 7 warehouses.",task:"Review the cycle count data below. Find every line outside tolerance, rank by variance value, and suggest the most likely cause and first check for the top 10.",ctx:"Columns: WH, SKU, UOM, Sys_Qty, Cnt_Qty, Unit_Cost. Variance = counted minus system. Tolerance is ±2% per line. Some SKUs are in cases of 12. This is October data.",fmt:"A table: SKU, WH, Variance %, Variance value, Likely cause, First check. Then a 3-bullet summary for my manager.",chk:"Use only the data provided. State how many rows you analysed. If a cause can't be determined from the data, say 'unclear' rather than guessing."},
+    email:{role:"You are a procurement professional writing to a colleague.",task:"Draft an email to the WH05 warehouse manager asking them to recount 12 SKUs and check their receiving unit-of-measure settings.",ctx:"WH05's accuracy dropped from 97.8% to 90.9% this month. 22 of 38 exceptions are case-pack SKUs received as eaches. We have a good working relationship.",fmt:"Under 150 words. Subject line, short greeting, the facts, a clear ask with a deadline of Friday.",chk:"Friendly and collaborative. No blame on individuals. Don't invent facts beyond these."},
+    formula:{role:"You are an Excel expert who explains things simply.",task:"Write a formula that flags invoice lines where the invoice unit price is more than 2% above the PO unit price.",ctx:"Microsoft 365. Excel Table named Invoices with columns PO_Price and Inv_Price. Some PO_Price cells may be blank.",fmt:"The formula, then one sentence per part explaining what it does.",chk:"Handle blanks without errors. Tell me how to test it on a few rows."},
+    contract:{role:"You are a procurement analyst reviewing a supplier agreement.",task:"Summarise the key commercial terms of the attached (anonymised) supply contract.",ctx:"I need to check whether invoices match agreed terms. Focus on pricing, price-change rules, payment terms, delivery and penalty clauses.",fmt:"A table: Term, What the contract says, Clause number. Then a list of anything unusual or risky.",chk:"Quote clause numbers. If a term isn't in the document, write 'Not stated'. Don't give legal advice."},
+    blank:{role:"",task:"",ctx:"",fmt:"",chk:""}
+  };
+  const f={role:$("#pbRole"),task:$("#pbTask"),ctx:$("#pbCtx"),fmt:$("#pbFmt"),chk:$("#pbChk")};
+  const out=$("#pbOut");let plain="";
+  function render(){
+    const parts=[["role","",f.role.value],["task","",f.task.value],["ctx","Context: ",f.ctx.value],["fmt","Format: ",f.fmt.value],["chk","Rules: ",f.chk.value]];
+    const filled=parts.filter(p=>p[2].trim());
+    plain=filled.map(p=>p[1]+p[2].trim()).join("\n\n");
+    out.innerHTML=filled.length?filled.map(p=>(p[1]?`<span class="k">${p[1]}</span>`:"")+esc(p[2].trim())).join("\n\n"):'<span style="color:var(--ink-3)">Start typing in the fields to build your prompt.</span>';
+    const n=filled.length;$$("#pbSegs i").forEach((s,i)=>s.classList.toggle("on",i<n));
+    $("#pbStr").textContent=["Empty","Basic","Getting there","Good","Strong","Excellent: complete Pick Ticket"][n];
+    const tip=$("#pbTip");
+    if(n&&!f.ctx.value.trim()){tip.hidden=false;tip.textContent="Tip: add CONTEXT. It's the field that most often turns a generic answer into a useful one.";}
+    else if(n&&!f.fmt.value.trim()){tip.hidden=false;tip.textContent="Tip: add FORMAT so the answer comes back ready to use (a table, bullet points, a word limit).";}
+    else if(n>=3&&!f.chk.value.trim()){tip.hidden=false;tip.textContent="Tip: add CHECKS such as 'use only the data provided' and 'say if you're unsure' to reduce made-up answers.";}
+    else tip.hidden=true;
+  }
+  function load(k){const p=P[k];for(const x in f)f[x].value=p[x];render();}
+  $$("#pbPresets .chip").forEach(b=>b.addEventListener("click",()=>{$$("#pbPresets .chip").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");load(b.dataset.p);}));
+  Object.values(f).forEach(i=>i.addEventListener("input",render));
+  $("#pbCopy").addEventListener("click",e=>{if(!plain){toast("Nothing to copy yet");return;}copyText(plain,e.currentTarget);});
+  load("variance");
+})();
+
+/* ---------------- LAB 5.1 fix prompt ---------------- */
+(function(){
+  const items=[
+    {q:"<code>Find the errors in my data.</code> (followed by 3,000 pasted rows)",a:"b",opts:{a:"Add \"please\" and \"thank you\"",b:"Upload it as a file instead, and ask for row count and a code-based analysis",c:"Ask it to be more creative"},why:"Thousands of pasted rows risk truncation and guessed arithmetic. A file plus code-based analysis gives checkable results."},
+    {q:"<code>Write a formula to flag big variances.</code>",a:"a",opts:{a:"Define \"big\" (e.g. beyond ±2%) and give the column names",b:"Ask for three formulas instead of one",c:"Say it's urgent"},why:"\"Big\" means nothing to the AI. A threshold and column names make the formula correct first time."},
+    {q:"<code>Summarise this file for my boss.</code>",a:"c",opts:{a:"Paste the file twice",b:"Use capital letters for emphasis",c:"Say what your boss cares about, and the format and length you want"},why:"Audience and format are the missing fields. \"5 bullets on risk and value for a purchase manager\" gets a usable result."},
+    {q:"<code>Which warehouse is the worst?</code>",a:"b",opts:{a:"Ask it to answer quickly",b:"Define \"worst\": lowest accuracy, highest gross variance value, or most exceptions",c:"Remove the question mark"},why:"\"Worst\" can be measured several ways, and each gives a different answer. Say which measure matters."}
+  ];
+  const c=$("#fixCards"),sc=$("#fixScore");let ans=0,ok=0;
+  items.forEach(it=>{
+    const card=el("div",{class:"gcard"});card.appendChild(el("p",{},it.q));
+    const row=el("div",{class:"opts"});
+    Object.entries(it.opts).forEach(([k,label])=>{
+      const b=el("button",{class:"opt",type:"button"},esc(label));
+      b.addEventListener("click",()=>{if(card.dataset.done)return;card.dataset.done=1;ans++;const good=k===it.a;if(good)ok++;
+        $$(".opt",row).forEach(x=>x.disabled=true);b.classList.add(good?"correct":"incorrect");
+        if(!good)$$(".opt",row)[Object.keys(it.opts).indexOf(it.a)].classList.add("correct");
+        card.appendChild(el("p",{class:"why"},it.why));sc.textContent=`Score: ${ok} of ${ans} answered (${items.length} total)`;});
+      row.appendChild(b);
+    });
+    card.appendChild(row);c.appendChild(card);
+  });
+})();
+
+/* ---------------- LAB 6.1 IRA ---------------- */
+(function(){
+  const WH=[["WH01","Central DC",420,412],["WH02","North",310,301],["WH03","East",290,279],["WH04","South",350,345],["WH05","Port",418,380],["WH06","West",260,250],["WH07","Cold store",180,176]];
+  const box=$("#iraIn");
+  WH.forEach(([c,n,cnt,acc],i)=>{box.insertAdjacentHTML("beforeend",`<div class="cell"><b>${c} · ${esc(n)}</b><label class="sr" for="iraC${i}">${c} lines counted</label><input type="number" id="iraC${i}" min="0" value="${cnt}"><small>lines counted</small><label class="sr" for="iraA${i}">${c} lines within tolerance</label><input type="number" id="iraA${i}" min="0" value="${acc}"><small>within tolerance</small></div>`);});
+  function calc(){
+    const tgt=Math.min(100,Math.max(50,+$("#iraTarget").value||98));
+    const rows=WH.map((w,i)=>{const c=Math.max(0,+$("#iraC"+i).value||0),a=Math.min(c,Math.max(0,+$("#iraA"+i).value||0));return{code:w[0],name:w[1],c,a,ira:c?a/c*100:null};});
+    const valid=rows.filter(r=>r.ira!=null);
+    const floor=Math.max(0,Math.min(80,Math.floor((Math.min(...valid.map(r=>r.ira),tgt)-2)/5)*5));
+    const pos=v=>((v-floor)/(100-floor)*100);
+    const sorted=[...rows].sort((x,y)=>(y.ira??-1)-(x.ira??-1));
+    $("#iraBars").innerHTML=sorted.map(r=>{
+      if(r.ira==null)return`<div class="bar-row"><span class="nm">${r.code} ${esc(r.name)}</span><div class="bar-track"></div><span class="v">n/a</span></div>`;
+      const col=r.ira>=tgt?"var(--good)":r.ira>=tgt-3?"var(--warn)":"var(--bad)";
+      return`<div class="bar-row"><span class="nm" title="${esc(r.name)}">${r.code} ${esc(r.name)}</span><div class="bar-track"><span class="fill" style="width:${Math.max(0,pos(r.ira))}%;background:${col}"></span><span class="target" style="left:${pos(tgt)}%"></span></div><span class="v">${r.ira.toFixed(1)}%</span></div>`;
+    }).join("")+`<div class="legend" style="margin-top:2px"><span>Scale starts at ${floor}% so differences are visible</span></div>`;
+    const tc=valid.reduce((s,r)=>s+r.c,0),ta=valid.reduce((s,r)=>s+r.a,0);
+    const net=tc?ta/tc*100:0, below=valid.filter(r=>r.ira<tgt);
+    const best=sorted[0], worst=[...valid].sort((x,y)=>x.ira-y.ira)[0];
+    $("#iraStats").innerHTML=`<div class="stat"><div class="n">${net.toFixed(1)}%</div><div class="l">Network accuracy (all lines)</div></div><div class="stat"><div class="n">${below.length} / ${valid.length}</div><div class="l">Warehouses below ${tgt}% target</div></div><div class="stat"><div class="n">${tc-ta}</div><div class="l">Lines outside tolerance</div></div>`;
+    $("#iraNote").innerHTML=worst?`<b>Reading this:</b> ${worst.code} (${esc(worst.name)}) is lowest at ${worst.ira.toFixed(1)}%, ${(tgt-worst.ira>0?(tgt-worst.ira).toFixed(1)+" points below target":"but still on target")}. ${best&&best.ira!=null?`${best.code} is highest at ${best.ira.toFixed(1)}%. `:""}Next step: filter ${worst.code}'s exceptions and check them against the usual causes (timing, unit of measure, transfers, mis-slotting) before drawing conclusions. Compare with last month: is it a blip or a trend?`:"Enter counts to see results.";
+  }
+  box.addEventListener("input",calc);$("#iraTarget").addEventListener("input",calc);calc();
+})();
+
+/* ---------------- LAB 7.1 formulas ---------------- */
+(function(){
+  const F=[
+    {n:"Calculate variance % safely (no #DIV/0! errors)",f:'=IF([@Sys_Qty]=0, IF([@Cnt_Qty]=0, 0, 1), ([@Cnt_Qty]-[@Sys_Qty])/[@Sys_Qty])',h:"If system quantity is zero, it returns 0 when nothing was counted, or 100% when something was found. Otherwise it divides the difference by the system quantity. Format the column as %.",p:"Write a formula for variance % between Cnt_Qty and Sys_Qty that won't error when Sys_Qty is zero."},
+    {n:"Flag lines outside ±2% tolerance",f:'=IF(ABS([@Var_Pct])>2%, "YES", "NO")',h:"ABS turns negative variances positive so shortages and overages are both caught. Change 2% to your tolerance.",p:"Flag YES if absolute Var_Pct is above 2%, else NO."},
+    {n:"Flag variances that are an exact multiple of the case size (possible UOM error)",f:'=AND([@Var_Qty]<>0, MOD(ABS([@Var_Qty]), [@Case_Size])=0)',h:"MOD returns the remainder after dividing by the case size. A remainder of zero means the variance is a whole number of cases, a classic sign of case/each confusion.",p:"Flag rows where Var_Qty is non-zero and an exact multiple of Case_Size."},
+    {n:"Total gross variance value for one warehouse",f:'=SUMPRODUCT((Counts[WH]="WH05") * ABS(Counts[Var_Value]))',h:"SUMIFS can't add absolute values, so SUMPRODUCT does it: it multiplies a TRUE/FALSE test for the warehouse by the absolute variance value, then adds up. Gross variance stops overages hiding shortages.",p:"Sum the absolute value of Var_Value for rows where WH is WH05. Explain why SUMIFS won't work."},
+    {n:"Look up the PO price for each invoice line",f:'=XLOOKUP([@PO_No]&"|"&[@SKU], POs[PO_No]&"|"&POs[SKU], POs[Unit_Price], "No PO line")',h:"Joins PO number and SKU into one key on both sides, finds the match in the POs table and returns its unit price. If nothing matches, it says 'No PO line' instead of an error.",p:"Look up Unit_Price from the POs table matching both PO_No and SKU. Return 'No PO line' if not found."},
+    {n:"Flag invoice price more than 2% above PO price",f:'=IF([@PO_Price]="", "NO PO PRICE", IF(([@Inv_Price]-[@PO_Price])/[@PO_Price] > 2%, "CHECK", "OK"))',h:"First handles blanks, then compares the price difference as a percentage of the PO price.",p:"Flag CHECK when Inv_Price is more than 2% above PO_Price; handle a blank PO_Price."},
+    {n:"Find possible duplicate invoices (same supplier, amount and date)",f:'=COUNTIFS(Inv[Supplier], [@Supplier], Inv[Amount], [@Amount], Inv[Inv_Date], [@Inv_Date]) > 1',h:"Counts how many rows share this row's supplier, amount and date. TRUE means at least one other row matches: a candidate duplicate to review.",p:"Return TRUE when another row has the same Supplier, Amount and Inv_Date."},
+    {n:"Clean invoice numbers before matching",f:'=UPPER(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TRIM([@Inv_No]), "-", ""), " ", ""), "/", ""))',h:"Removes spaces, dashes and slashes and converts to upper case, so 'inv-4471' and 'INV 4471' compare as equal. Ask AI to extend it to strip leading zeros or letter suffixes.",p:"Normalise Inv_No by removing spaces, dashes and slashes and making it upper case. Then extend it to remove a trailing letter suffix."},
+    {n:"Find invoices with no matching PO",f:'=IF(COUNTIF(POs[PO_No], [@PO_No])=0, "NO PO", "")',h:"Counts how many times this invoice's PO number appears in the PO list. Zero means no PO exists: a compliance exception.",p:"Mark NO PO when the invoice's PO_No doesn't exist in the POs table."},
+    {n:"Flag POs just under an approval limit (split-PO check)",f:'=AND([@PO_Value] >= 4500, [@PO_Value] < 5000)',h:"TRUE for POs between 90% and 100% of a $5,000 limit. Pivot by supplier and requester to look for clusters.",p:"Flag POs between 90% and 100% of a $5,000 approval limit."},
+    {n:"Show a live list of exceptions only",f:'=FILTER(Counts, ABS(Counts[Var_Pct]) > 2%, "No exceptions")',h:"Returns every row of the Counts table where variance is beyond tolerance. It updates automatically as data changes. Put it on a separate sheet.",p:"Create a FILTER formula that lists all rows from the Counts table with absolute Var_Pct above 2%."},
+    {n:"Top 10 lines by absolute variance value",f:'=TAKE(SORTBY(Counts, ABS(Counts[Var_Value]), -1), 10)',h:"SORTBY orders the table by absolute variance value, largest first; TAKE keeps the first 10 rows. Needs a recent Microsoft 365 version; ask AI for an alternative if you get #NAME?.",p:"Return the 10 rows of Counts with the largest absolute Var_Value. Give an alternative if TAKE isn't available."}
+  ];
+  const sel=$("#ftSel");F.forEach((x,i)=>sel.insertAdjacentHTML("beforeend",`<option value="${i}">${esc(x.n)}</option>`));
+  function show(){const x=F[+sel.value];$("#ftOut").innerHTML=`<div class="label">Formula</div><div class="formula">${esc(x.f)}</div><div class="btn-row" style="margin:6px 0 10px"><button class="copy" type="button" id="ftCopy">Copy formula</button></div><div class="label">How it works</div><p style="margin:.3rem 0 .9rem">${esc(x.h)}</p><div class="label">Prompt that would get you this</div><p style="margin:.3rem 0 0;font-family:var(--f-mono);font-size:.85rem">${esc(x.p)} I'm on Microsoft 365, using an Excel Table. Explain each part.</p>`;
+    $("#ftCopy").addEventListener("click",e=>copyText(x.f,e.currentTarget));}
+  sel.addEventListener("change",show);show();
+})();
+
+/* ---------------- playbook tabs ---------------- */
+(function(){
+  const tabs=$$("#pbTabs [role=tab]");
+  function sel(t){tabs.forEach(x=>{const on=x===t;x.setAttribute("aria-selected",on);x.tabIndex=on?0:-1;$("#"+x.getAttribute("aria-controls")).hidden=!on;});}
+  tabs.forEach((t,i)=>{t.addEventListener("click",()=>sel(t));t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight")j=(i+1)%tabs.length;if(e.key==="ArrowLeft")j=(i-1+tabs.length)%tabs.length;if(j!=null){e.preventDefault();tabs[j].focus();sel(tabs[j]);}});});
+  sel(tabs[0]);
+})();
+
+/* ---------------- LAB 8.1 audit lab ---------------- */
+(function(){
+  const cols=["","#","WH","Supplier","PO no.","PO date","PO qty","PO price","GRN qty","Invoice no.","Inv date","Inv qty","Inv amount"];
+  const R=[
+    [1,"WH01","Supplier A","PO-1001","03-Nov","200","12.50","200","A-5521","05-Nov","200","2,500.00"],
+    [2,"WH02","Supplier B","PO-1002","04-Nov","100","49.50","100","B-9910","06-Nov","100","4,950.00"],
+    [3,"WH02","Supplier B","PO-1003","04-Nov","100","49.80","100","B-9911","07-Nov","100","4,980.00"],
+    [4,"WH03","Supplier C","PO-1004","05-Nov","80","31.00","80","C-3307","08-Nov","80","2,480.00"],
+    [5,"WH03","Supplier C","PO-1004","05-Nov","80","31.00","80","C-3307A","12-Nov","80","2,480.00"],
+    [6,"WH04","Supplier D","PO-1006","06-Nov","500","3.20","500","D-2214","09-Nov","500","1,600.00"],
+    [7,"WH04","Supplier E","PO-1007","06-Nov","150","22.00","140","E-0712","10-Nov","150","3,300.00"],
+    [8,"WH05","Supplier D","PO-1008","07-Nov","300","8.00","300","D-2290","11-Nov","300","2,580.00"],
+    [9,"WH05","Supplier F","PO-1009","08-Nov","70","32.00","70","F-1162","12-Nov","70","2,240.00"],
+    [10,"WH06","Supplier F","—","—","—","—","—","F-1180","13-Nov","—","3,750.00"],
+    [11,"WH07","Supplier G","PO-1011","09-Nov","10 CS","54.00","120 EA","G-4410","14-Nov","10 CS","540.00"],
+    [12,"WH07","Supplier G","PO-1012","10-Nov","60","75.00","60","G-4431","15-Nov","60","4,500.00"],
+    [13,"WH03","Supplier H","PO-1013","01-Nov","1","2,400.00","1","H-0911","02-Nov","1","2,400.00"],
+    [14,"WH06","Supplier C","PO-1014","11-Nov","40","31.00","40","C-3342","16-Nov","40","1,240.00"]
+  ];
+  const ISSUE={
+    2:"<b>Split PO.</b> Rows 2 and 3: same supplier, same warehouse, same day, $4,950 and $4,980, each just under the $5,000 limit. Together $9,930 should have needed higher approval.",
+    3:"<b>Split PO.</b> Partner of row 2. Both orders sit just under the approval limit on the same day.",
+    5:"<b>Duplicate invoice.</b> C-3307A repeats C-3307 (row 4): same PO, same quantity and amount, number with a letter suffix. A classic near-duplicate that slips past exact-match checks.",
+    7:"<b>Invoice quantity exceeds goods received.</b> 140 received but 150 invoiced. Paying this means paying $220 for goods never delivered. A three-way match exception.",
+    8:"<b>Price above PO.</b> PO price 8.00 × 300 = $2,400, but invoiced $2,580 (8.60 per unit, 7.5% higher). Needs a price variance check against the contract.",
+    10:"<b>Invoice with no PO or goods receipt.</b> Nothing to match against. Either maverick spend or a missing document, and it can't pass a three-way match.",
+    11:"<b>Unit-of-measure mismatch.</b> PO and invoice are 10 cases, but the GRN was posted as 120 eaches (10 × 12). Stock may be overstated twelvefold, and matching will fail or mislead."
+  };
+  const OK={4:"Row 4 is the original invoice that row 5 duplicates. Flagging it as part of the pair is reasonable."};
+  const CLEAN={1:"Clean: quantities and amount agree.",6:"Clean: PO, GRN and invoice agree.",9:"Clean: everything matches.",12:"Clean: $4,500 is below the limit, and it's a single order. Being close to a limit alone isn't a red flag.",13:"Clean: a one-line service charge that matches its PO. Recurring fees produce round numbers legitimately.",14:"Clean: matches. Same supplier as rows 4–5, but nothing wrong here."};
+  const tbl=$("#labTable");
+  tbl.innerHTML=`<thead><tr>${cols.map((c,i)=>`<th class="${i>5&&i!==9&&i!==10?"num":""}">${c||'<span class="sr">Flag</span>'}</th>`).join("")}</tr></thead><tbody>${R.map(r=>`<tr data-row="${r[0]}"><td><input type="checkbox" aria-label="Flag row ${r[0]}" id="lab${r[0]}"></td>${r.map((v,i)=>`<td class="${i>4&&i!==8&&i!==9?"num":""}">${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody>`;
+  tbl.addEventListener("change",e=>{const cb=e.target;if(cb.type==="checkbox")cb.closest("tr").classList.toggle("sel",cb.checked);});
+  $("#labCheck").addEventListener("click",()=>{
+    let hit=0,miss=0,fp=0;const res=[];
+    R.forEach(r=>{const n=r[0],tr=$(`tr[data-row="${n}"]`,tbl),on=$("#lab"+n).checked;tr.classList.remove("sel","hit","miss","fp");
+      if(ISSUE[n]){if(on){hit++;tr.classList.add("hit");res.push([n,"Found",ISSUE[n]]);}else{miss++;tr.classList.add("miss");res.push([n,"Missed",ISSUE[n]]);}}
+      else if(OK[n]){if(on)res.push([n,"Fine",OK[n]]);}
+      else if(on){fp++;tr.classList.add("fp");res.push([n,"False alarm",CLEAN[n]]);}
+    });
+    const total=Object.keys(ISSUE).length;
+    $("#labScore").innerHTML=`<div class="fb ${hit===total&&fp===0?"good":hit>=4?"warn":"bad"}"><b>You found ${hit} of ${total} issue rows</b> with ${fp} false alarm${fp===1?"":"s"}. ${hit===total&&fp===0?"Excellent audit eye.":"Green rows are found issues, amber are missed, red are false alarms. Read the notes below."}</div>`;
+    $("#labRes").innerHTML=res.sort((a,b)=>a[0]-b[0]).map(([n,s,t])=>`<div><b class="mono">Row ${n} · ${s}</b><br>${t}</div>`).join("")+`<div><b class="mono">How AI helps</b><br>On a real register of thousands of rows, the P2 and P3 prompts surface these same patterns in minutes. Your job is exactly what you just did: confirm each one against the documents.</div>`;
+  });
+  $("#labReset").addEventListener("click",()=>{$$("input[type=checkbox]",tbl).forEach(c=>c.checked=false);$$("tr",tbl).forEach(t=>t.classList.remove("sel","hit","miss","fp"));$("#labScore").innerHTML="";$("#labRes").innerHTML="";});
+})();
+
+/* ---------------- LAB 9.1 finding ---------------- */
+(function(){
+  const ids=["fTitle","fAud","fCond","fCrit","fCause","fEff","fAct"];let plainF="",plainP="";
+  const AUD={wm:"the warehouse manager responsible. Keep it practical and specific, say what to do this week, collaborative tone, under 150 words",pm:"my manager, the purchase manager. Lead with risk and value, include the trend if known, state my recommendation and what I need from them, under 200 words",exec:"senior leadership. Three sentences maximum: the issue, the impact in rounded numbers, and the action under way"};
+  function render(){
+    const v=Object.fromEntries(ids.map(i=>[i,$("#"+i).value.trim()]));
+    plainF=`FINDING: ${v.fTitle||"[title]"}\n\nCondition: ${v.fCond||"[what you found]"}\nCriteria: ${v.fCrit||"[what it should be]"}\nCause: ${v.fCause||"[why it happened]"}\nEffect: ${v.fEff||"[why it matters]"}\nCorrective action: ${v.fAct||"[who, what, by when]"}`;
+    plainP=`Rewrite the audit finding below as a clear, professional message for ${AUD[v.fAud]}.\nKeep all facts and numbers exactly as given. Do not add facts. Use neutral language that focuses on process causes, not individuals.\n\n${plainF}`;
+    $("#fOut").textContent=plainF;$("#fPrompt").textContent=plainP;
+  }
+  ids.forEach(i=>$("#"+i).addEventListener("input",render));
+  $("#fCopy").addEventListener("click",e=>copyText(plainP,e.currentTarget));
+  $("#fCopy2").addEventListener("click",e=>copyText(plainF,e.currentTarget));
+  render();
+})();
+
+/* ---------------- LAB 10.1 automate ---------------- */
+(function(){
+  const L={auFreq:["Yearly","Quarterly","Monthly","Weekly","Daily"],auTime:["Under 15 min","About 30 min","About 1 hour","2–3 hours","Half a day"],auRule:["Mostly judgement","More judgement than rules","Half and half","Mostly rules","Fully rule-based"],auStd:["Different every time","Often changes","Somewhat consistent","Mostly the same","Same template every time"],auRisk:["Trivial","Minor","Moderate","Serious","Severe"]};
+  const OCC=[1,4,12,52,250],HRS=[.25,.5,1,2.5,4];
+  function calc(){
+    const v={};for(const k in L){v[k]=+$("#"+k).value;$("#"+k+"V").textContent="· "+L[k][v[k]-1];}
+    const score=Math.round((v.auFreq-1)/4*30+(v.auTime-1)/4*20+(v.auRule-1)/4*25+(v.auStd-1)/4*25);
+    const hrs=OCC[v.auFreq-1]*HRS[v.auTime-1];
+    $("#auScore").textContent=score;$("#auHours").textContent=hrs>=10?Math.round(hrs):hrs.toFixed(1);
+    let t;
+    if(score<35)t="<b>Keep it manual for now.</b> Save a good prompt or template for it (rung 1). The effort to automate would outweigh the benefit.";
+    else if(score<60)t="<b>Rung 2: make it refreshable.</b> Build a Power Query workbook or a reusable template so most of the work happens on refresh.";
+    else if(score<80)t="<b>Rung 3: a scheduled flow is worth it.</b> Design it with the prompt below and take it to IT.";
+    else t="<b>Strong automation candidate.</b> A scheduled flow, possibly with an AI step, will pay back quickly.";
+    if(v.auStd<=2&&score>=35)t+=" <b>First, standardise the input.</b> Automation breaks when the data layout keeps changing.";
+    if(v.auRule<=2&&v.auFreq>=3)t+=" Because it needs judgement, consider an <b>AI step with your review</b> (classification or a draft summary) rather than full automation.";
+    if(v.auRisk>=4)t+=" <b>High stakes:</b> keep human approval, thresholds and an audit trail on every run.";
+    $("#auOut").innerHTML=t;
+  }
+  Object.keys(L).forEach(k=>$("#"+k).addEventListener("input",calc));calc();
+})();
+
+/* ---------------- LAB 11.1 precision/recall ---------------- */
+(function(){
+  const REC=[.35,.5,.6,.7,.8,.85,.9,.95,1],FP=[1,2,4,7,12,20,35,60,110];
+  const LAB=["Very cautious","Cautious","Fairly cautious","Moderate-low","Balanced","Moderate-high","Fairly sensitive","Sensitive","Very sensitive"];
+  function calc(){const s=+$("#prSens").value-1;const tp=Math.round(20*REC[s]),fp=FP[s],fl=tp+fp,pr=tp/fl,rc=tp/20;
+    $("#prSensV").textContent=LAB[s];$("#prFlag").textContent=fl;$("#prTP").textContent=tp;$("#prPrec").textContent=Math.round(pr*100)+"%";$("#prRec").textContent=Math.round(rc*100)+"%";
+    $("#prOut").innerHTML=s<=2?`<b>High precision, low recall.</b> Almost every flag is real, but ${20-tp} duplicates slip through unnoticed. Comfortable, and risky.`:s>=7?`<b>High recall, low precision.</b> You catch ${tp===20?"every":"nearly every"} duplicate, but ${fp} of ${fl} flags are false alarms. Reviewers get tired and start ignoring flags.`:`<b>A workable balance.</b> ${tp} of 20 caught with ${fp} false alarms. In audit, choose the balance deliberately: what costs more, a missed duplicate payment or an hour of reviewing false alarms?`;}
+  $("#prSens").addEventListener("input",calc);calc();
+})();
+
+/* ---------------- LAB 12.1 time savings ---------------- */
+(function(){
+  const T=[["Consolidating the 7 warehouse files",8,70],["Variance calculations and checks",6,40],["Invoice / PO exception review",10,25],["Writing reports and findings",6,40],["Emails and follow-ups with warehouses",5,30],["Vendor master and data clean-up",3,30]];
+  const box=$("#tsRows");
+  T.forEach(([n,h,p],i)=>box.insertAdjacentHTML("beforeend",`<div class="ts-row"><label for="tsH${i}">${esc(n)}</label><input type="number" id="tsH${i}" min="0" step="0.5" value="${h}" aria-label="${esc(n)} hours per month"><input type="number" id="tsP${i}" min="0" max="100" step="5" value="${p}" aria-label="${esc(n)} percent saved"></div>`));
+  function calc(){let m=0;T.forEach((t,i)=>{m+=(+$("#tsH"+i).value||0)*Math.min(100,Math.max(0,+$("#tsP"+i).value||0))/100;});
+    $("#tsMonth").textContent=m.toFixed(1);$("#tsYear").textContent=Math.round(m*12);$("#tsDays").textContent=Math.round(m*12/8);
+    $("#tsNote").innerHTML=`<b>How to use this number:</b> about ${Math.round(m*12)} hours a year is time you can redirect into deeper investigation, supplier follow-up and process fixes, which is where an auditor adds the most value. Measure your actual times before and after for three months; real data beats estimates.`;}
+  box.addEventListener("input",calc);calc();
+})();
+
+/* ---------------- 30-60-90 plan ---------------- */
+(function(){
+  const P={p30:["Read your company's AI policy","Set up custom instructions with your role and 7 warehouses","Use AI daily for one small task (an email, an explanation)","Create an anonymised practice file","Complete Modules 1–6"],
+    p60:["Combine all 7 warehouse files with Power Query","Run Playbook P1 for the monthly variance review","Run one more playbook (P2–P6) on real data","Write findings in the five-part format","Record your time before vs after"],
+    p90:["Agree a standard input template with the warehouses","Design your first automation (e.g. the Monday digest)","Set up your audit helper assistant","Present your results to your manager","Complete the capstone audit pack"]};
+  $$("[data-plan]").forEach(col=>{const k=col.dataset.plan;P[k].forEach((t,i)=>{const id=k+"_"+i;const lab=el("label");lab.innerHTML=`<input type="checkbox" id="pl_${id}" ${S.plan[id]?"checked":""}><span>${esc(t)}</span>`;$("input",lab).addEventListener("change",e=>{S.plan[id]=e.target.checked;save();});col.appendChild(lab);});});
+})();
+
+/* ---------------- certificate ---------------- */
+const certName=$("#certName");certName.value=S.name||"";
+certName.addEventListener("input",()=>{S.name=certName.value;save();updateCert();});
+function updateCert(){
+  const n=MODS.filter(m=>S.done[m.id]).length, all=n===12;
+  $("#certHint").innerHTML=all?"<b>All 12 modules complete.</b> Add your name below. You can take a screenshot of the certificate to keep or share.":`Mark all 12 modules complete to unlock your certificate. Progress so far: <b>${n} of 12</b>.`;
+  $("#certBox").hidden=!all;
+  $("#certNm").textContent=certName.value.trim()||"Your name";
+  $("#certDate").textContent="Completed "+new Date().toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"});
+}
+
+/* ---------------- prompt library ---------------- */
+const LIB=[
+  {c:"Learn",t:"Explain a concept simply",p:"Explain [concept, e.g. three-way matching / safety stock / Benford's law] as if I'm new to procurement. Use an example from a company with 7 warehouses. Then give me 3 questions to test my understanding."},
+  {c:"Learn",t:"Teach me in short lessons",p:"Teach me [topic] in 5 short lessons, one at a time. After each lesson, ask me one question and wait for my answer before continuing."},
+  {c:"Learn",t:"What could go wrong here?",p:"I'm auditing [process, e.g. goods receiving at a warehouse]. List the 10 most common errors or control failures in this process, how each shows up in the data, and one check I can run for each."},
+  {c:"Data & Excel",t:"Write a formula",p:"I'm on Microsoft 365 with an Excel Table named [Table] and columns [list]. Write a formula that [what you need]. Handle blanks and zeros without errors. Explain each part in one sentence."},
+  {c:"Data & Excel",t:"Fix a broken formula",p:"This formula returns [error / wrong result]:\n[formula]\nColumn [X] contains [describe]. Explain why it fails in plain English and give me the corrected version."},
+  {c:"Data & Excel",t:"Explain an inherited formula",p:"Explain this formula step by step as if I'm new to Excel. What does each part do, and in what situations would it return a wrong answer?\n[formula]"},
+  {c:"Data & Excel",t:"Start a file analysis safely",p:"Use code to analyse the attached file. Don't estimate. First tell me the sheet names, the number of rows and columns loaded, and the column names. Wait for me to confirm before analysing."},
+  {c:"Data & Excel",t:"Control totals for tie-out",p:"Give me control totals for the attached data: row count per [warehouse/supplier], and the sum of [column] per group and overall, so I can tie them to my Excel file."},
+  {c:"Data & Excel",t:"Power Query help",p:"I'm combining [7] files in Excel Power Query using From Folder. Each has columns [list]. Problem: [describe]. Give me step-by-step clicks in the Power Query editor to fix it, and any M code with where to paste it."},
+  {c:"Data & Excel",t:"Design a standard template",p:"Here are the column layouts our warehouses use for [stock count / receiving] reports:\n[layout 1]\n[layout 2]\nDesign one standard template with clear column names, data types, allowed values and a short instruction sheet for warehouse staff."},
+  {c:"Audit checks",t:"Variance pattern finding (P1)",p:"You are an inventory audit analyst. Attached are this month's cycle counts for 7 warehouses. Tolerance ±[2]%. Using code: confirm row counts per warehouse; calculate IRA, net and gross variance value per warehouse; find patterns in out-of-tolerance lines by SKU, ABC class, UOM, date, counter and zone; flag exact multiples of pack size and opposite variances across warehouses; list the top 15 exceptions by value. Show supporting row counts. Don't infer causes the data can't support."},
+  {c:"Audit checks",t:"Near-duplicate invoices (P2)",p:"Using code, flag possible duplicate invoices: (a) same supplier and amount within 30 days; (b) invoice numbers identical after removing spaces, dashes, leading zeros and trailing letters; (c) numbers differing by one character or with swapped adjacent digits; (d) same amount and number under different supplier IDs. Exclude credit notes. Show each pair side by side with the rule triggered, highest amount first."},
+  {c:"Audit checks",t:"Split PO clusters (P3)",p:"Our approval limits are [$X, $Y]. Using code on the PO register: compare POs within 90–100% of each limit vs 80–90%, by requester and warehouse; find clusters of same supplier and requester within 7 days that together exceed a limit; rank requesters by number of clusters. These are leads for review."},
+  {c:"Audit checks",t:"Vendor master duplicates (P4)",p:"Using code on this anonymised vendor master: create a standardised name (upper case, no punctuation, remove LTD/INC/PVT/CO); flag duplicates by name, tax ID, masked bank account or very similar names; flag missing tax ID/address/phone; flag vendors dormant 18+ months and new vendors with payments above [$X]. One table per check plus summary counts."},
+  {c:"Audit checks",t:"Risk-based count list (P5)",p:"Design a simple 0–100 risk score to prioritise cycle counts using: ABC_Class, Unit_Cost, Txn_Count_30d, Variance_Count_6m, Adj_Count_6m, Days_Since_Last_Count. Suggest weights with reasons, give the Excel formula, and a formula to list the top [40] locations per warehouse. Keep it explainable in two sentences."},
+  {c:"Audit checks",t:"Classify adjustment reasons (P6)",p:"Classify each stock adjustment reason into exactly one category: Damage | Count error | Mis-slot found | UOM error | Transfer timing | Receiving error | Unknown. If vague, use Unknown; don't guess. Return Row_ID, Reason, Category, Confidence (High/Low).\n[rows]"},
+  {c:"Audit checks",t:"Three-way match exceptions",p:"Using code, compare the attached PO lines, goods receipts and invoice lines on PO number and SKU. Flag: invoice qty > received qty; invoice price more than [2]% above PO price; invoices with no PO; POs fully received but not invoiced after [30] days. Summarise counts and value by warehouse and supplier."},
+  {c:"Audit checks",t:"Benford first-two-digit test",p:"Run a first-two-digit Benford's law test on the [PO value / invoice amount] column of the attached data. Exclude values under [$10]. Show actual vs expected frequencies in a table and a chart, highlight the biggest deviations, and remind me of the limitations of the test for this data."},
+  {c:"Audit checks",t:"Questions for a warehouse manager",p:"Warehouse [WH0X] has inventory accuracy of [X]% vs a [Y]% target, with these patterns: [paste]. Give me 10 neutral, open questions to ask the warehouse manager to find the root cause, grouped by receiving, storage, picking, counting and systems."},
+  {c:"Reporting",t:"Monthly audit summary",p:"Write my monthly inventory audit summary for my manager from these notes: [IRA by warehouse this and last month] [top findings]. Include: a 3-sentence headline; a table of warehouse, IRA, change, status (On target/Watch/Action); top findings in Condition/Cause/Effect/Action format; what I need from my manager. Use only my numbers."},
+  {c:"Reporting",t:"Polish a finding",p:"Rewrite this audit finding for [audience]. Keep every fact and number exactly. Use neutral, process-focused language, not blame on individuals. Structure: Condition, Criteria, Cause, Effect, Corrective action.\n[finding notes]"},
+  {c:"Reporting",t:"Choose a chart",p:"I want to show [point] to [audience]. My data has columns [list]. What chart should I use, why, and how do I set it up in Excel step by step?"},
+  {c:"Reporting",t:"Results to my manager",p:"Help me write a one-page update on how I've used AI in audit work over [90 days]. Before: [time, pain points]. Built: [items]. After: [time, issues found, trend]. Controls: [data handling, verification]. Next: [plans and needs]. Factual and modest, numbers first, under 300 words with a before/after table."},
+  {c:"Communication",t:"Email to a warehouse manager",p:"Draft a short, friendly email to the [WH0X] manager about this month's count results. Facts: [paste]. I want them to: [ask]. Collaborative, specific, no blame, under 150 words, clear deadline."},
+  {c:"Communication",t:"Email to a supplier about a discrepancy",p:"Draft a polite, firm email to [Supplier] about invoice [number]: [describe discrepancy, e.g. invoiced 150 units, 140 received]. Ask for a credit note or corrected invoice by [date]. Professional tone, under 120 words."},
+  {c:"Communication",t:"Summarise a long email thread",p:"Summarise this email thread: the issue, what has been agreed, open questions, and who owes what by when. Then draft my reply that [goal].\n[thread]"},
+  {c:"Communication",t:"Meeting notes to actions",p:"Turn these rough meeting notes into: a 3-line summary, decisions made, and an action table (Action, Owner, Due date). Flag anything ambiguous.\n[notes]"},
+  {c:"Automation",t:"Design a Power Automate flow",p:"I want to automate a weekly task in Microsoft Power Automate. I'm a beginner. Task: [describe]. Files are in: [location]. Give me the flow as numbered steps, the exact actions for each, what could go wrong and how to handle it, and what to ask IT for."},
+  {c:"Automation",t:"Automation request for IT",p:"Help me write a one-page automation request for IT. Current task: [task, frequency, time]. Want automated: [steps]. Systems and data: [details, sensitivity]. Users: [who]. Sections: Business problem, Proposed solution, Data and access, Risks and controls, Time saved, Success measure. Under 400 words."},
+  {c:"Automation",t:"Turn a chat into a reusable template",p:"Turn what we just did in this conversation into a reusable prompt template. Use [brackets] for the parts that change each time, and add a one-line note on when to use it."},
+  {c:"Productivity",t:"Custom instructions",p:"I'm an assistant purchase manager auditing inventory, purchasing and invoice data across 7 warehouses (WH01–WH07). Variance = system qty minus count; line tolerance ±[2]%. Systems: [ERP], [WMS]; I work mainly in Excel (Microsoft 365). When I share data, confirm the row count, use only the data given, and say clearly if something can't be determined. Prefer tables and short bullet summaries in plain business English."},
+  {c:"Productivity",t:"Check your own answer",p:"Review your previous answer critically. List any calculations I should verify, any assumptions you made, anything you're unsure about, and anything that might be wrong."},
+  {c:"Productivity",t:"Ask me first",p:"Before you start, ask me up to 3 questions about anything unclear in this request. Then wait for my answers."},
+  {c:"Productivity",t:"Vendor evaluation questions",p:"We're evaluating [tool] for [use, e.g. invoice matching]. Give me 15 questions to ask the vendor covering accuracy (precision and recall on our data), data needs, explainability, audit trail, security, integration with [ERP/WMS], and total cost over 3 years."}
+];
+(function(){
+  const cats=["All",...new Set(LIB.map(x=>x.c))];let cat="All";
+  const fbox=$("#libFilters");
+  cats.forEach(c=>{const b=el("button",{class:"chip",type:"button","aria-pressed":String(c==="All")},esc(c));b.addEventListener("click",()=>{cat=c;$$(".chip",fbox).forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render();});fbox.appendChild(b);});
+  const list=$("#libList");
+  function render(){
+    const q=$("#libSearch").value.trim().toLowerCase();
+    const items=LIB.filter(x=>(cat==="All"||x.c===cat)&&(!q||(x.t+" "+x.p+" "+x.c).toLowerCase().includes(q)));
+    list.innerHTML="";
+    items.forEach(x=>{const d=el("div",{class:"panel lib-item"});d.innerHTML=`<span class="label">${esc(x.c)}</span><h3>${esc(x.t)}</h3>`;
+      const pre=el("pre",{class:"pr","data-label":"Prompt"});pre.textContent=x.p;d.appendChild(pre);list.appendChild(d);});
+    wrapPrompts(list);
+    $("#libCount").textContent=`${items.length} of ${LIB.length} prompts`;
+  }
+  $("#libSearch").addEventListener("input",render);render();
+})();
+
+/* ---------------- glossary ---------------- */
+const GL=[
+  ["ABC classification","Ranking items by annual value (or velocity or risk) so the most important ones get counted and checked most often.","M6"],
+  ["Agent (AI agent)","AI that works toward a goal by planning steps, using tools and checking results, rather than just answering one question.","M10"],
+  ["Agent Mode","A Copilot feature in Excel that builds and edits workbooks through multi-step, plain-English requests.","M2"],
+  ["Anomaly detection","Machine learning that learns what normal looks like and flags things that deviate from it.","M11"],
+  ["Anonymise","Replace sensitive details (names, prices, IDs) with codes or scaled values before sharing data.","M3"],
+  ["Audit trail","A record of who did what, when and to which data. Essential for any automation.","M10"],
+  ["Benford's law","The pattern that leading digits follow in many natural datasets. Used as a screening test for unusual financial data.","M8"],
+  ["Context window","How much text an AI model can consider at once, including your prompt, files and its answer.","M2"],
+  ["Copilot","Microsoft's AI assistant, available as a chat app and inside Excel, Word, Outlook and Teams.","M2"],
+  ["=COPILOT() function","An Excel function that runs a plain-English prompt on cell data. Good for text; not for calculations needing accuracy.","M7"],
+  ["Custom instructions","Standing information you save in an AI assistant so every chat starts knowing your role and preferences.","M4"],
+  ["Cycle count","Counting a subset of inventory on a rolling schedule instead of a full stock-take.","M6"],
+  ["Data dictionary","A short description of each column in a dataset: what it means, its units and format.","M5"],
+  ["Deep learning","Machine learning using large neural networks. Powers image recognition, speech and modern language models.","M1"],
+  ["Document AI / OCR","AI that reads scanned or PDF documents, such as invoices, and extracts structured data.","M11"],
+  ["Few-shot prompting","Including a few examples of the answer you want in your prompt so the AI copies the pattern.","M5"],
+  ["Generative AI","AI that creates new content: text, tables, code or images.","M1"],
+  ["GRN (goods receipt note)","The record that goods have been received at the warehouse.","M6"],
+  ["Gross variance","The sum of absolute variances, so overages and shortages don't cancel out.","M6"],
+  ["Hallucination","When AI produces confident but false or made-up information.","M3"],
+  ["Inventory record accuracy (IRA)","Share of counted lines where the system quantity matches the physical count within tolerance.","M6"],
+  ["Large language model (LLM)","The type of AI behind chat assistants: trained on huge amounts of text to predict and generate language.","M1"],
+  ["Machine learning (ML)","AI that learns patterns from data rather than following hand-written rules.","M1"],
+  ["Maverick spend","Buying outside approved suppliers, contracts or processes.","M6"],
+  ["Near-duplicate","Two records that are the same in reality but differ slightly in the data, such as an invoice number with a suffix.","M8"],
+  ["Power Automate","Microsoft's tool for building automated workflows that run on a schedule or trigger.","M10"],
+  ["Power Query","Excel's built-in tool for importing, combining and cleaning data with repeatable steps.","M7"],
+  ["Precision","Of everything a tool flagged, the share that was really a problem.","M11"],
+  ["Predictive AI","AI that learns from historical data to forecast or score, such as demand forecasts or risk scores.","M1"],
+  ["Prompt","The instruction you give an AI tool.","M4"],
+  ["RAG (retrieval-augmented generation)","AI that searches your documents first and answers from them, citing sources.","M11"],
+  ["Recall","Of all the real problems, the share a tool caught.","M11"],
+  ["Shrink","Inventory lost to theft, damage or error, usually measured as a share of inventory value.","M6"],
+  ["Split purchase order","Breaking one purchase into several smaller POs to stay under an approval limit.","M6"],
+  ["Temperature","A setting that controls how random or creative an AI's word choices are. Lower is more predictable.","M1"],
+  ["Three-way match","Checking that PO, goods receipt and invoice agree before paying.","M6"],
+  ["Tie out","Confirming a figure by tracing it back to an independent source, such as matching totals to Excel.","M3"],
+  ["Token","A chunk of text (roughly three-quarters of a word) that AI models read and write. Usage is measured in tokens.","M1"],
+  ["Unit of measure (UOM)","The unit a quantity is recorded in, such as each (EA) or case (CS). Mismatches are a common source of variances.","M6"],
+  ["Vendor master","The list of approved suppliers and their details in the ERP.","M6"]
+];
+(function(){
+  const list=$("#glList");
+  function render(){const q=$("#glSearch").value.trim().toLowerCase();
+    list.innerHTML=GL.filter(([t,d])=>!q||(t+" "+d).toLowerCase().includes(q)).map(([t,d,m])=>`<div class="gl-item"><dt>${esc(t)}</dt><dd>${esc(d)} <a class="mono" href="#${m.toLowerCase()}">Module ${m.slice(1)}</a></dd></div>`).join("")||'<div class="gl-item"><dd>No matching terms.</dd></div>';}
+  $("#glSearch").addEventListener("input",render);render();
+})();
+
+/* ---------------- boot ---------------- */
+wrapPrompts();initQuizzes();buildSide();buildFloor();buildFoots();updateProgress();route();
+})();
+</script>
