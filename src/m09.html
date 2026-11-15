@@ -1,0 +1,110 @@
+
+<!-- ======================= M9 ======================= -->
+<section class="view" data-route="m9" id="view-m9" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Zone D · Communicate &amp; automate · Aisle 09</div>
+  <h1>Reporting findings that people act on</h1>
+  <p class="lede">An audit is only worth what changes because of it. AI is excellent at turning your notes into clear, well-structured findings and messages. You supply the facts and the judgement.</p>
+  <div class="meta-row"><span>Time <b>30 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 builder + quiz</b></span></div>
+</header>
+<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+  <li>Write an audit finding using the five-part structure auditors use</li>
+  <li>Adapt the same finding for a warehouse manager, your manager and leadership</li>
+  <li>Choose the right chart for the point you're making</li>
+</ul></div>
+
+<div class="prose">
+<h2>The five parts of a finding</h2>
+<p>Internal auditors structure findings around five elements. Using them makes your findings complete, fair and hard to argue with.</p>
+</div>
+<div class="tbl"><table><thead><tr><th>Element</th><th>Question</th><th>Example</th></tr></thead><tbody>
+<tr><td><b>Condition</b></td><td>What did you find?</td><td>38 of 418 count lines at WH05 (9.1%) were outside ±2% tolerance in October.</td></tr>
+<tr><td><b>Criteria</b></td><td>What should it be?</td><td>Network target is 98% accuracy; company SOP requires UOM confirmation at receiving.</td></tr>
+<tr><td><b>Cause</b></td><td>Why did it happen?</td><td>22 of the 38 lines were case-pack SKUs received as eaches; WH05's receiving screen defaults to EA.</td></tr>
+<tr><td><b>Effect</b></td><td>Why does it matter?</td><td>Gross variance of $14,300; risk of stock-outs and over-ordering on affected SKUs.</td></tr>
+<tr><td><b>Corrective action</b></td><td>What should happen, by whom, by when?</td><td>WMS team to change default UOM by 30 Nov; WH05 supervisor to recount the 22 SKUs this week.</td></tr>
+</tbody></table></div>
+
+<div class="widget" id="w-finding">
+  <div class="w-head"><span class="w-tag">LAB 9.1</span><span class="w-title">Finding builder</span></div>
+  <div class="w-body">
+    <p class="w-hint">Fill in the five parts in rough note form (an example is pre-filled). The builder assembles a structured finding and an AI prompt to polish it for your chosen audience.</p>
+    <div class="grid-form">
+      <div><label class="fl" for="fTitle">Short title</label><input type="text" id="fTitle" value="Unit-of-measure errors at WH05 receiving"></div>
+      <div><label class="fl" for="fAud">Audience</label><select id="fAud"><option value="wm">Warehouse manager</option><option value="pm">My manager (purchase manager)</option><option value="exec">Leadership summary</option></select></div>
+    </div>
+    <label class="fl" for="fCond">Condition · what you found</label><textarea id="fCond">38 of 418 Oct count lines at WH05 outside ±2% tolerance (IRA 90.9%)</textarea>
+    <label class="fl" for="fCrit">Criteria · what it should be</label><textarea id="fCrit">Target 98% IRA. SOP 4.2: confirm UOM at receiving</textarea>
+    <label class="fl" for="fCause">Cause · why</label><textarea id="fCause">22 of 38 are case SKUs received as EA. Receiving screen defaults to EA</textarea>
+    <label class="fl" for="fEff">Effect · why it matters</label><textarea id="fEff">Gross variance $14,300. Risk of stock-outs and over-ordering</textarea>
+    <label class="fl" for="fAct">Corrective action · who, what, by when</label><textarea id="fAct">WMS team change default UOM by 30 Nov. WH05 supervisor recount 22 SKUs this week</textarea>
+    <div class="label" style="margin:16px 0 6px">Structured finding</div>
+    <div class="pb-out" id="fOut" style="min-height:0"></div>
+    <div class="label" style="margin:16px 0 6px">Prompt to polish it with AI</div>
+    <div class="pb-out" id="fPrompt" style="min-height:0"></div>
+    <div class="btn-row"><button class="btn" id="fCopy">Copy AI prompt</button><button class="btn ghost" id="fCopy2">Copy finding</button></div>
+  </div>
+</div>
+
+<div class="prose">
+<h2>One finding, three audiences</h2>
+<p>The facts stay the same; the emphasis changes. Ask AI to rewrite for each audience rather than writing three versions yourself.</p>
+</div>
+<div class="two">
+  <div class="panel"><span class="label">Warehouse manager</span><h4>Specific and practical</h4><p>Which SKUs, which locations, what to do this week. Collaborative tone. Never names individuals as at fault.</p></div>
+  <div class="panel"><span class="label">Your manager</span><h4>Risk and money</h4><p>Value at risk, trend versus last month, what you recommend, what you need from them.</p></div>
+  <div class="panel"><span class="label">Leadership</span><h4>Three lines</h4><p>Network accuracy, the one or two issues that matter, the action under way. Numbers rounded.</p></div>
+</div>
+
+<div class="callout rule prose"><span class="tag">Tone matters</span><p>Findings describe <b>processes</b>, not people. "Receiving screen defaults to EA" invites a fix. "WH05 staff keep making mistakes" invites defensiveness. Add to any prompt: <code>Use neutral, factual language. Focus on process causes, not individuals.</code></p></div>
+
+<pre class="pr" data-label="Prompt · monthly audit summary">You are helping me write the monthly inventory audit summary for my manager. Here are my notes and results for 7 warehouses:
+[paste IRA by warehouse, this month and last month]
+[paste top 3–5 findings in note form]
+Write:
+1. A 3-sentence headline summary (network accuracy, trend, biggest issue).
+2. A short table: warehouse, IRA this month, change vs last month, status (On target / Watch / Action).
+3. The top findings in Condition / Cause / Effect / Action format, max 4 lines each.
+4. What I need from my manager (decisions or support).
+Plain business English, no jargon, no exaggeration. Use only the numbers I've given you.</pre>
+<pre class="pr" data-label="Prompt · email to a warehouse manager">Draft a short, friendly email to the WH[0X] warehouse manager about this month's count results.
+Facts: [paste].
+I want them to: [recount these SKUs / check receiving UOM settings / reply with explanations by date].
+Tone: collaborative, specific, no blame. Under 150 words. End with a clear ask and deadline.</pre>
+
+<div class="prose">
+<h2>Pick the right chart</h2>
+</div>
+<div class="tbl"><table><thead><tr><th>Your point</th><th>Use</th><th>Avoid</th></tr></thead><tbody>
+<tr><td>Comparing 7 warehouses</td><td>Horizontal bar chart, sorted, with a target line</td><td>Pie charts (hard to compare 7 slices)</td></tr>
+<tr><td>Trend over months</td><td>Line chart, one line per warehouse or just the worst three</td><td>Seven-colour spaghetti charts</td></tr>
+<tr><td>Where the value is</td><td>Sorted bar or Pareto chart of variance value by SKU</td><td>3D effects of any kind</td></tr>
+<tr><td>A list of exceptions</td><td>A table with conditional formatting</td><td>A chart when people need the detail</td></tr>
+</tbody></table></div>
+<div class="prose"><p>Ask AI: <code>I want to show [point] to [audience]. My data has [columns]. What chart should I use and how should I set it up in Excel?</code></p></div>
+
+<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+  <li>Structure every finding: Condition, Criteria, Cause, Effect, Corrective action.</li>
+  <li>Let AI adapt one finding for each audience. You keep the facts fixed.</li>
+  <li>Describe processes, not people.</li>
+  <li>Bar charts for comparing warehouses, lines for trends, tables for exceptions.</li>
+</ul></div>
+<div class="tryit prose"><h2>Try it this week</h2>
+  <p>Take one real issue from your recent audits. Run it through the finding builder, polish it with AI, and compare it to how you would normally have written it. Use the improved version in your next report.</p>
+</div>
+
+<div class="quiz" data-quiz="m9"><h2>Check your understanding</h2>
+  <div class="q" data-a="2"><p class="qt">Which element answers "why did this happen?"</p><div class="opts">
+    <button class="opt">Condition</button><button class="opt">Effect</button><button class="opt">Cause</button></div>
+    <p class="why" hidden>Cause is the root reason. Effect is the consequence, and Condition is what you observed.</p></div>
+  <div class="q" data-a="0"><p class="qt">Which phrasing is better in a finding?</p><div class="opts">
+    <button class="opt">"Receiving at WH05 does not confirm unit of measure, leading to case/each errors."</button>
+    <button class="opt">"The WH05 receiving team is careless with units."</button>
+    <button class="opt">"Somebody at WH05 is getting UOM wrong."</button></div>
+    <p class="why" hidden>Process-focused language is factual and invites a fix rather than defensiveness.</p></div>
+  <div class="q" data-a="1"><p class="qt">Best chart to compare accuracy across seven warehouses?</p><div class="opts">
+    <button class="opt">A pie chart</button><button class="opt">A sorted bar chart with a target line</button><button class="opt">A 3D column chart</button></div>
+    <p class="why" hidden>Sorted bars make ranking obvious, and the target line shows who is on or off track instantly.</p></div>
+</div>
+<div class="mod-foot" data-foot="m9"></div>
+</section>

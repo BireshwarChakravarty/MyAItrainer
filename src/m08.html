@@ -1,0 +1,221 @@
+
+<!-- ======================= M8 ======================= -->
+<section class="view" data-route="m8" id="view-m8" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Zone C · AI for your audit work · Aisle 08</div>
+  <h1>Audit playbooks: step-by-step AI routines</h1>
+  <p class="lede">This is the heart of the course. Six routines that cover the core of a multi-warehouse audit, each with the data you need, the steps, copy-ready prompts and how to verify. Then you get to practise on a sample dataset.</p>
+  <div class="meta-row"><span>Time <b>45 min</b></span><span>Level <b>Intermediate → Advanced</b></span><span>Hands-on <b>Audit lab + quiz</b></span></div>
+</header>
+<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+  <li>Run a monthly variance review across all seven warehouses with AI support</li>
+  <li>Hunt for duplicate invoices, split POs and vendor master problems</li>
+  <li>Build a risk-based cycle count list and classify free-text adjustment reasons</li>
+</ul></div>
+
+<div class="prose">
+<p>Each playbook follows the same shape so you can learn the pattern: <b>prepare the data → let AI find candidates → verify each one → record the finding</b>. AI does the searching and sorting; you do the confirming.</p>
+</div>
+
+<div class="tabs" role="tablist" id="pbTabs">
+  <button role="tab" aria-selected="true" aria-controls="pb1" id="pbt1"><span class="mono">P1</span>Monthly variance review</button>
+  <button role="tab" aria-selected="false" aria-controls="pb2" id="pbt2"><span class="mono">P2</span>Duplicate invoices</button>
+  <button role="tab" aria-selected="false" aria-controls="pb3" id="pbt3"><span class="mono">P3</span>Split POs</button>
+  <button role="tab" aria-selected="false" aria-controls="pb4" id="pbt4"><span class="mono">P4</span>Vendor master</button>
+  <button role="tab" aria-selected="false" aria-controls="pb5" id="pbt5"><span class="mono">P5</span>Risk-based counts</button>
+  <button role="tab" aria-selected="false" aria-controls="pb6" id="pbt6"><span class="mono">P6</span>Adjustment reasons</button>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb1" aria-labelledby="pbt1">
+  <h3>P1 · Monthly multi-warehouse variance review</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Find where stock records are least reliable and why</div>
+    <div><span class="label">When</span>Monthly, after cycle counts close</div>
+    <div><span class="label">Data</span>Cycle count results for all 7 warehouses (combined via Power Query)</div>
+    <div><span class="label">Output</span>One-page summary + exception list per warehouse</div>
+  </div>
+  <ol class="steps">
+    <li><strong>Refresh and tie out.</strong> Refresh your Power Query table. Check row counts per warehouse against what each site says it counted.</li>
+    <li><strong>Calculate the measures.</strong> Var_Qty, Var_Pct, Var_Value, Out_Of_Tolerance per line (formulas from Module 7). PivotTable: IRA, net and gross variance value by warehouse.</li>
+    <li><strong>Ask AI to find patterns.</strong> Upload the anonymised result, or use Copilot in the workbook, with the prompt below.</li>
+    <li><strong>Verify the top patterns.</strong> For each pattern AI suggests, filter the rows yourself. Does it hold? Is there an innocent cause (timing, UOM, transfer)?</li>
+    <li><strong>Compare to last month.</strong> Which warehouses improved or worsened? Trend matters more than one month.</li>
+    <li><strong>Draft the summary</strong> with AI (Module 9), then edit.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P1 pattern finding">You are an inventory audit analyst. Attached are this month's cycle count results for 7 warehouses (data dictionary below). Tolerance is ±2% per line.
+Using code:
+1. Confirm row count per warehouse and total gross variance value.
+2. For each warehouse: IRA %, net variance value, gross variance value.
+3. Find patterns in out-of-tolerance lines: by SKU, ABC class, UOM, count date, counter, location zone.
+4. Flag variances that are exact multiples of pack sizes (possible UOM errors) and SKUs with opposite variances in two warehouses on similar dates (possible transfers in transit).
+5. List the 15 highest-value exceptions.
+Present results as tables. For each pattern, show the supporting row count. Don't draw conclusions about causes the data can't support.
+[data dictionary]</pre>
+  <div class="callout warn"><span class="tag">Verify</span><p>Tie AI's totals to your PivotTable. Open 5 of the top exceptions in the WMS to confirm system quantities at the count date.</p></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb2" aria-labelledby="pbt2" hidden>
+  <h3>P2 · Duplicate and near-duplicate invoice hunt</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Catch invoices paid, or about to be paid, twice</div>
+    <div><span class="label">When</span>Monthly, or before a payment run</div>
+    <div><span class="label">Data</span>Invoice register: supplier ID, invoice no., date, amount, PO no., warehouse</div>
+    <div><span class="label">Output</span>List of suspected duplicates with evidence</div>
+  </div>
+  <p>Exact duplicates (same supplier and invoice number) are usually blocked by the system. The ones that slip through are <b>near-duplicates</b>: an invoice number with a suffix or extra character, digits swapped, the same amount on a slightly different date, or the same invoice entered under two supplier records.</p>
+  <ol class="steps">
+    <li><strong>Exact pass in Excel.</strong> COUNTIFS on Supplier + Amount + Date. Anything over 1 is a candidate (see the Module 7 formula lab).</li>
+    <li><strong>Normalise invoice numbers.</strong> Ask AI for a formula that strips spaces, dashes, leading zeros and letter suffixes, so "INV-04471-A" and "4471" compare as equal.</li>
+    <li><strong>Fuzzy pass with AI.</strong> Upload the anonymised register with the prompt below.</li>
+    <li><strong>Review each candidate</strong> against the actual invoice documents. Credit notes and genuine repeat orders explain many matches.</li>
+    <li><strong>Record and escalate</strong> confirmed duplicates to AP for recovery or blocking.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P2 near-duplicate detection">Using code, analyse this invoice register for possible duplicate invoices. Flag pairs where ANY of these is true:
+a) Same supplier and same amount within 30 days
+b) Invoice numbers identical after removing spaces, dashes, leading zeros and trailing letters
+c) Invoice numbers that differ by one character or have two adjacent digits swapped, same supplier
+d) Same amount and invoice number but different supplier IDs (possible duplicate vendor)
+Exclude negative amounts (credit notes). For each flagged pair, show both rows side by side and which rule triggered. Sort by amount, highest first. Tell me how many rows you analysed.</pre>
+  <div class="callout warn"><span class="tag">Verify</span><p>Expect false positives: monthly fixed fees and standing orders produce identical amounts legitimately. Check each against the PO and GRN.</p></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb3" aria-labelledby="pbt3" hidden>
+  <h3>P3 · Split purchase order and threshold test</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Find orders split to stay under approval limits</div>
+    <div><span class="label">When</span>Quarterly</div>
+    <div><span class="label">Data</span>PO register: PO no., date, supplier, requester, warehouse, value. Your approval limits</div>
+    <div><span class="label">Output</span>Clusters of suspicious POs with requester and approver</div>
+  </div>
+  <ol class="steps">
+    <li><strong>List your approval thresholds</strong> (for example $5,000 / $20,000 / $50,000).</li>
+    <li><strong>Band the POs.</strong> Flag POs between 90% and 100% of each threshold.</li>
+    <li><strong>Cluster.</strong> Same supplier + same requester (or warehouse) within 7 days, whose combined value exceeds the threshold.</li>
+    <li><strong>Optional: first-digit test.</strong> See the note below.</li>
+    <li><strong>Review</strong> each cluster: was there a business reason for separate orders?</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P3 split PO clusters">Our PO approval limits are [$5,000, $20,000, $50,000]. Using code on the attached PO register:
+1. Count POs falling within 90–100% of each limit, by warehouse and requester. Compare to POs within 80–90% (a much higher count just under a limit is suspicious).
+2. Find clusters: same supplier AND same requester, POs within 7 days of each other, each below a limit but together above it.
+3. For each cluster, list the POs, dates, values, combined total and the limit avoided.
+4. Rank requesters by number of clusters.
+Present as tables. These are leads for review, not conclusions.</pre>
+  <div class="callout tip"><span class="tag">About Benford's law</span><p>In many natural financial datasets, leading digits follow a known pattern (1 appears about 30% of the time, 9 under 5%). Auditors test purchase data against it. In one published case, BDO's first-two-digit test found one person processing an unusual number of POs starting 15–19, just under their $20,000 authority limit. Caveats from ISACA: use it on large datasets (sets of 500 or fewer are generally unsuitable), it doesn't fit data with built-in minimums or maximums, and a mismatch is a reason to look, not proof. Ask AI: <code>Run a first-two-digit Benford test on PO values and chart actual vs expected.</code></p></div>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb4" aria-labelledby="pbt4" hidden>
+  <h3>P4 · Vendor master health check</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>A clean, trustworthy supplier list</div>
+    <div><span class="label">When</span>Twice a year, and after any system migration</div>
+    <div><span class="label">Data</span>Vendor master: ID, name, address, tax ID, bank (masked), created date, status, last transaction</div>
+    <div><span class="label">Output</span>Duplicates, incomplete records, dormant vendors, risk flags</div>
+  </div>
+  <div class="callout rule"><span class="tag">Data sensitivity</span><p>Vendor master data is often red-light data (bank details, tax IDs). Mask bank accounts to the last 4 digits and use only your company-approved tool, or ask AI for the formulas and run them yourself.</p></div>
+  <ol class="steps">
+    <li><strong>Standardise names.</strong> Remove "Ltd", "Inc", "Pvt", punctuation and extra spaces, convert to upper case. AI can write this formula.</li>
+    <li><strong>Find duplicates</strong> on standardised name, tax ID, address, phone and masked bank account.</li>
+    <li><strong>Check completeness:</strong> missing tax ID, address or contact.</li>
+    <li><strong>Find dormant vendors</strong> with no transactions in 12–18 months. Candidates for blocking.</li>
+    <li><strong>Cross-check</strong> vendor addresses and bank details against the employee list (with HR or Internal Audit, given sensitivity).</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P4 vendor duplicates">Using code, check this anonymised vendor master for data quality:
+1. Create a standardised name (upper case, remove punctuation and words like LTD, LIMITED, INC, PVT, CO, CORP).
+2. Flag likely duplicates: same standardised name, OR same tax ID, OR same masked bank account, OR very similar names (e.g. "NORTHLINE PALLETS" vs "NORTH LINE PALLET").
+3. Flag records missing tax ID, address or phone.
+4. Flag vendors with no transaction in 18 months, and vendors created in the last 90 days with total payments above [$X].
+Return one table per check with vendor IDs, and a summary count for each.</pre>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb5" aria-labelledby="pbt5" hidden>
+  <h3>P5 · Risk-based cycle count plan</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Count where errors are most likely and most costly</div>
+    <div><span class="label">When</span>Monthly planning</div>
+    <div><span class="label">Data</span>SKU list with value, movement, past variance history, adjustment count, location</div>
+    <div><span class="label">Output</span>Prioritised count list per warehouse</div>
+  </div>
+  <p>Instead of counting on a fixed rotation, give each SKU-location a <b>risk score</b>. AI-powered inventory systems do this automatically, using variance history, transaction volume and item value. You can build a simple version yourself.</p>
+  <ol class="steps">
+    <li><strong>Pick 4–5 risk factors:</strong> ABC value class, number of transactions last month, past variance count, adjustments, days since last count.</li>
+    <li><strong>Ask AI to design a scoring formula</strong> (prompt below). Keep it simple enough to explain to warehouse managers.</li>
+    <li><strong>Sort and select</strong> the top N per warehouse based on counting capacity.</li>
+    <li><strong>Review after 2–3 months.</strong> Are risk-based counts finding more variances than random ones? Adjust weights.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P5 risk score">Help me design a simple risk score (0–100) to prioritise cycle counts across 7 warehouses. I have these columns per SKU-location: ABC_Class, Unit_Cost, Txn_Count_30d, Variance_Count_6m, Adj_Count_6m, Days_Since_Last_Count.
+1. Suggest weights for each factor with a one-line reason.
+2. Give me the Excel formula for the score (Microsoft 365, Excel Table named Items).
+3. Give me a formula to list the top 40 locations per warehouse.
+Keep it explainable to a warehouse manager in two sentences.</pre>
+</div>
+
+<div class="tabpanel" role="tabpanel" id="pb6" aria-labelledby="pbt6" hidden>
+  <h3>P6 · Classify free-text adjustment reasons</h3>
+  <div class="pbook-meta">
+    <div><span class="label">Goal</span>Turn messy comments into categories you can count</div>
+    <div><span class="label">When</span>Monthly, alongside P1</div>
+    <div><span class="label">Data</span>Stock adjustment log with a free-text reason column</div>
+    <div><span class="label">Output</span>Adjustments by root-cause category, by warehouse</div>
+  </div>
+  <p>Adjustment comments like "dmgd in rack", "recount - found in A-12", "case/each issue" are hard to analyse. Language is exactly what AI is good at.</p>
+  <ol class="steps">
+    <li><strong>Agree categories</strong> such as Damage, Count error, Mis-slot found, UOM, Transfer timing, Receiving error, Unknown.</li>
+    <li><strong>Classify.</strong> Use <code>=COPILOT()</code> in a new column, or upload the log to an assistant with the prompt below.</li>
+    <li><strong>Spot-check 30 rows.</strong> Adjust categories or instructions if the AI is confused.</li>
+    <li><strong>Pivot</strong> category by warehouse. "Unknown" and "Count error" concentration point to where the process needs attention.</li>
+  </ol>
+  <pre class="pr" data-label="Prompt · P6 classification">Classify each stock adjustment reason below into exactly one category:
+Damage | Count error | Mis-slot found | UOM error | Transfer timing | Receiving error | Unknown
+Rules: if the reason is vague (e.g. "adj", "per mgr"), use Unknown. Don't guess.
+Examples:
+"dmgd forklift" → Damage
+"found in B-04 not A-04" → Mis-slot found
+"cs vs ea" → UOM error
+Return a table: Row_ID, Reason, Category, Confidence (High/Low).
+[paste rows or attach file]</pre>
+</div>
+
+<div class="prose">
+<h2>Audit lab: find the problems</h2>
+<p>Below is a sample of purchase-to-pay records from seven warehouses. The data is invented for practice. <b>Six rows have a real issue; the rest are clean.</b> Tick every row you would flag, then check your answers. Approval limit: <b>$5,000</b>. Pack size for SKU P-210: <b>12 per case</b>.</p>
+</div>
+<div class="widget" id="w-lab">
+  <div class="w-head"><span class="w-tag">LAB 8.1</span><span class="w-title">Purchase-to-pay audit sample · November</span></div>
+  <div class="w-body">
+    <p class="w-hint">Look across PO, GRN and invoice columns. Think: duplicates, splits, mismatches, missing documents, odd suppliers.</p>
+    <div class="tbl lab"><table id="labTable"></table></div>
+    <div class="btn-row"><button class="btn" id="labCheck">Check my answers</button><button class="btn ghost" id="labReset">Reset</button></div>
+    <div id="labScore"></div>
+    <div class="lab-res" id="labRes"></div>
+  </div>
+</div>
+
+<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+  <li>Every playbook follows the same loop: prepare → AI finds candidates → you verify → record.</li>
+  <li>Near-duplicates and threshold clustering are where AI adds most beyond basic system checks.</li>
+  <li>Language tasks like classifying adjustment reasons are a perfect fit for AI.</li>
+  <li>Treat every AI flag as a lead. Confirm against source documents before calling it a finding.</li>
+</ul></div>
+<div class="tryit prose"><h2>Try it this week</h2>
+  <p>Pick the one playbook that matches your most time-consuming task. Run it once on real (anonymised where needed) data. Note how long it took compared to your usual method, and what AI got wrong. That note is the start of your Module 12 business case.</p>
+</div>
+
+<div class="quiz" data-quiz="m8"><h2>Check your understanding</h2>
+  <div class="q" data-a="1"><p class="qt">AI flags two invoices from the same supplier for $2,400.00 in consecutive months. What next?</p><div class="opts">
+    <button class="opt">Report a duplicate payment immediately</button>
+    <button class="opt">Check the POs and GRNs: it may be a legitimate monthly fee or standing order</button>
+    <button class="opt">Ignore it; AI is often wrong</button></div>
+    <p class="why" hidden>Recurring charges produce identical amounts legitimately. Verify against source documents before calling it a finding.</p></div>
+  <div class="q" data-a="0"><p class="qt">Why is the "normalise invoice numbers" step important?</p><div class="opts">
+    <button class="opt">Duplicates often slip through with small differences like dashes, leading zeros or suffixes</button>
+    <button class="opt">It makes the spreadsheet look tidier</button>
+    <button class="opt">The ERP requires it</button></div>
+    <p class="why" hidden>Systems usually block exact duplicates. Near-duplicates with formatting differences are the ones that get paid twice.</p></div>
+  <div class="q" data-a="2"><p class="qt">You have 180 POs for the quarter. Should you rely on a Benford's law test?</p><div class="opts">
+    <button class="opt">Yes, it works on any size dataset</button>
+    <button class="opt">Yes, and a mismatch proves manipulation</button>
+    <button class="opt">No, the dataset is too small for reliable results. Use threshold banding and clustering instead</button></div>
+    <p class="why" hidden>Guidance published by ISACA says datasets of 500 or fewer are generally unsuitable. Even on large sets, a mismatch only signals where to look.</p></div>
+</div>
+<div class="mod-foot" data-foot="m8"></div>
+</section>

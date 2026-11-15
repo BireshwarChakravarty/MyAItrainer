@@ -1,0 +1,131 @@
+
+<!-- ======================= M3 ======================= -->
+<section class="view" data-route="m3" id="view-m3" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Zone A · Foundations · Aisle 03</div>
+  <h1>Using AI safely: data, accuracy and your reputation</h1>
+  <p class="lede">An auditor's credibility rests on two things: protecting sensitive data and getting numbers right. This aisle gives you simple, repeatable habits for both.</p>
+  <div class="meta-row"><span>Time <b>25 min</b></span><span>Level <b>Beginner</b></span><span>Hands-on <b>1 lab + quiz</b></span></div>
+</header>
+<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+  <li>Decide in seconds whether data is safe to share with an AI tool</li>
+  <li>Anonymise a dataset so you can still get help without exposing anything sensitive</li>
+  <li>Use a five-step check to catch AI mistakes before they reach a report</li>
+</ul></div>
+
+<div class="prose">
+<h2>Why this comes before everything else</h2>
+<p>Two real-world facts set the scene:</p>
+<ul>
+  <li>In a January 2025 survey of employees at large US companies (TELUS Digital), <b>57% admitted entering confidential company data</b> into public AI tools. Many used personal accounts their employers couldn't see or control.</li>
+  <li>In February 2024, a Canadian tribunal ruled that <b>Air Canada was responsible</b> for incorrect refund information its website chatbot invented. "The AI said it" was not accepted as a defence.</li>
+</ul>
+<p>The lesson for you: <b>you are responsible for what you put into AI, and for what you take out of it.</b> Neither is hard to manage once you have the habits.</p>
+
+<h2>Part 1 · What data is safe to share?</h2>
+<p>Use a simple traffic-light system. Always check your company's own AI policy first; it overrides anything here.</p>
+</div>
+<div class="two">
+  <div class="panel good"><h4><span class="label" style="color:var(--good)">Green</span><br>Fine for any approved tool</h4><ul>
+    <li>General questions ("what is a GRN?")</li>
+    <li>Formula help using made-up column names</li>
+    <li>Fake or sample data you invented</li>
+    <li>Public information (published prices, news)</li>
+    <li>Your own writing to polish, with no sensitive details</li>
+  </ul></div>
+  <div class="panel" style="border-top:3px solid var(--warn)"><h4><span class="label" style="color:var(--warn)">Amber</span><br>Only in your company-approved tool</h4><ul>
+    <li>Internal stock or variance data</li>
+    <li>Warehouse codes, SKU lists, internal reports</li>
+    <li>Aggregated spend by category</li>
+    <li>Anonymised supplier data</li>
+    <li>Internal SOPs and process documents</li>
+  </ul></div>
+  <div class="panel bad"><h4><span class="label" style="color:var(--bad)">Red</span><br>Never, unless policy explicitly allows</h4><ul>
+    <li>Supplier contract prices and terms</li>
+    <li>Bank details, tax IDs, payment info</li>
+    <li>Employee names linked to performance or errors</li>
+    <li>Personal data of any person</li>
+    <li>Passwords, system logins</li>
+    <li>Anything under NDA, unreleased financials, suspected-fraud details</li>
+  </ul></div>
+</div>
+
+<div class="callout rule prose"><span class="tag">The rule</span><p>If you would not email it to someone outside the company, do not paste it into a tool your company has not approved.</p></div>
+
+<div class="prose">
+<h3>Anonymise: get the help without the risk</h3>
+<p>Most of the time AI only needs the <b>structure</b> of your data (the columns and the kind of values) to help you. Replace the sensitive parts before you share.</p>
+</div>
+<div class="two">
+  <div class="panel bad"><span class="label">Before · real data</span>
+  <div class="tbl" style="margin:.6rem 0 0"><table><thead><tr><th>Supplier</th><th class="num">Unit price</th><th>Approver</th></tr></thead><tbody>
+  <tr><td>Apex Packaging Ltd</td><td class="num">4.37</td><td>R. Mehta</td></tr>
+  <tr><td>Northline Pallets</td><td class="num">11.90</td><td>S. Iyer</td></tr></tbody></table></div></div>
+  <div class="panel good"><span class="label">After · safe to share</span>
+  <div class="tbl" style="margin:.6rem 0 0"><table><thead><tr><th>Supplier</th><th class="num">Unit price</th><th>Approver</th></tr></thead><tbody>
+  <tr><td>Supplier A</td><td class="num">10.00</td><td>Approver 1</td></tr>
+  <tr><td>Supplier B</td><td class="num">27.23</td><td>Approver 2</td></tr></tbody></table></div>
+  <p style="font-size:.86rem;color:var(--ink-2);margin:.6rem 0 0">Names replaced with codes; prices scaled by the same factor so patterns still show.</p></div>
+</div>
+<div class="prose">
+<p>Even better: ask AI for the <b>method</b> (a formula, a set of steps) using fake data, then apply it yourself to the real data in Excel. The sensitive data never leaves your machine.</p>
+
+<h2>Part 2 · Catching AI mistakes</h2>
+<p>AI errors in data work usually look like one of these:</p>
+<ul>
+  <li><b>Invented numbers</b>: a total or percentage that doesn't match your data</li>
+  <li><b>Dropped rows</b>: it quietly analysed only part of a large table</li>
+  <li><b>Invented functions</b>: an Excel function that doesn't exist, or exists only in newer versions</li>
+  <li><b>Confident policy claims</b>: "standard practice is…" with nothing to back it</li>
+  <li><b>Made-up sources</b>: references or links that don't exist</li>
+</ul>
+<p>Use this five-step check every time AI output will feed into something other people see. We call it <b>"Tie it out"</b>, the same way an auditor ties a figure back to source.</p>
+</div>
+<ol class="steps prose">
+  <li><strong>Tie the totals.</strong> Does the row count match? Does the grand total match what Excel's SUM gives you? This alone catches most errors.</li>
+  <li><strong>Spot-check 5–10 rows by hand.</strong> Pick a few at random, plus the biggest and smallest. Are they right?</li>
+  <li><strong>Ask "how did you get this?"</strong> Make the AI show its method or formula. Vague answers are a warning sign.</li>
+  <li><strong>Ask it to check itself.</strong> "Review your answer for errors and list anything you are unsure about." It finds a surprising number of its own mistakes.</li>
+  <li><strong>Trace to the system of record.</strong> Audit evidence must come from the ERP, WMS or source documents, never from the AI's output alone.</li>
+</ol>
+
+<div class="callout warn prose"><span class="tag">Golden rule</span><p><b>AI drafts, you decide.</b> AI can find, sort, suggest and write. A person confirms the facts and owns the conclusion. Put this on a sticky note.</p></div>
+
+<div class="widget" id="w-safe">
+  <div class="w-head"><span class="w-tag">LAB 3.1</span><span class="w-title">Safe to paste? Make the call</span></div>
+  <div class="w-body">
+    <p class="w-hint">Assume you have a company-approved AI tool and a personal free account. For each item, choose the light that fits the <b>most open</b> place it could safely go.</p>
+    <div class="cards" id="safeCards"></div>
+    <div class="score" id="safeScore"></div>
+  </div>
+</div>
+
+<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+  <li>Use the traffic light: green anywhere approved, amber only in the company tool, red never.</li>
+  <li>Anonymise or use fake data. AI usually only needs the structure.</li>
+  <li>Before anything goes into a report, tie it out: totals, spot-checks, method, self-review, source.</li>
+  <li>AI drafts, you decide. You own every number you present.</li>
+</ul></div>
+<div class="tryit prose"><h2>Try it this week</h2>
+  <p>Find and read your company's AI or acceptable-use policy (ask IT if you can't find it). Then take one real report you use and make an anonymised copy: replace supplier names, people and exact prices. Save it as your <b>practice file</b>. You will use it in the next modules.</p>
+</div>
+
+<div class="quiz" data-quiz="m3"><h2>Check your understanding</h2>
+  <div class="q" data-a="2"><p class="qt">An AI tool gives you a total variance of $48,210 for Warehouse 6. What is your first check?</p><div class="opts">
+    <button class="opt">Ask a different AI tool if it agrees</button>
+    <button class="opt">Trust it if the explanation sounds reasonable</button>
+    <button class="opt">Compare it to a SUM of the same data in Excel and check the row count</button></div>
+    <p class="why" hidden>Tying totals to an independent calculation is the fastest, most reliable check. Two AIs agreeing doesn't make a number correct.</p></div>
+  <div class="q" data-a="0"><p class="qt">You want help building a formula for supplier price variance. Which is the safest approach?</p><div class="opts">
+    <button class="opt">Describe the columns with fake supplier names and sample values, get the formula, apply it to the real file yourself</button>
+    <button class="opt">Paste the full supplier price list into a free personal chatbot</button>
+    <button class="opt">Email the file to a friend who is good at Excel</button></div>
+    <p class="why" hidden>AI only needs the structure to write a formula. The real prices never leave your computer.</p></div>
+  <div class="q" data-a="1"><p class="qt">What does "AI drafts, you decide" mean in practice?</p><div class="opts">
+    <button class="opt">Never let AI write anything</button>
+    <button class="opt">AI can produce the first version, but a person verifies facts and owns the conclusion</button>
+    <button class="opt">Only managers can use AI</button></div>
+    <p class="why" hidden>It keeps the speed benefits of AI while keeping accountability with a person.</p></div>
+</div>
+<div class="mod-foot" data-foot="m3"></div>
+</section>

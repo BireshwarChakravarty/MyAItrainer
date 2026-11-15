@@ -1,0 +1,157 @@
+
+<!-- ======================= M1 ======================= -->
+<section class="view" data-route="m1" id="view-m1" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Zone A · Foundations · Aisle 01</div>
+  <h1>What AI actually is, in plain English</h1>
+  <p class="lede">Before using any tool, you need an accurate picture of what is going on inside it. Ten minutes on this saves you months of being either over-impressed or under-impressed.</p>
+  <div class="meta-row"><span>Time <b>20 min</b></span><span>Level <b>Beginner</b></span><span>Hands-on <b>2 labs + quiz</b></span></div>
+</header>
+<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+  <li>Explain the difference between AI, machine learning and generative AI to a colleague</li>
+  <li>Describe how a chatbot like ChatGPT produces an answer, and why that sometimes goes wrong</li>
+  <li>Tell the difference between a fixed rule and real AI in the systems you already use</li>
+</ul></div>
+
+<div class="prose">
+<h2>Start with a working definition</h2>
+<p><strong>Artificial intelligence (AI)</strong> is software that does tasks we normally think need human judgement: recognising patterns, understanding language, making predictions, or producing writing.</p>
+<p>The important word is <em>judgement</em>. A spreadsheet formula that adds a column is not AI. It follows an exact instruction someone wrote. AI is different because it has <strong>learned</strong> how to do something from examples, rather than being told every step.</p>
+
+<h3>The family tree</h3>
+<p>You will hear several terms used as if they mean the same thing. They are nested, like boxes inside boxes:</p>
+</div>
+
+<div class="nest prose" aria-label="Nested diagram of AI terms">
+  <div><span class="nl">Artificial Intelligence</span><span class="nd">The whole field: any software that mimics human judgement.</span>
+    <div><span class="nl">Machine Learning (ML)</span><span class="nd">AI that learns patterns from data instead of following hand-written rules. Example: a demand forecast that learns seasonality from three years of sales.</span>
+      <div><span class="nl">Deep Learning</span><span class="nd">ML using large "neural networks". Powers image recognition, voice and reading scanned invoices.</span>
+        <div><span class="nl">Generative AI &amp; Large Language Models (LLMs)</span><span class="nd" style="margin-bottom:0">Deep learning that <b>creates</b> new text, tables, code or images. ChatGPT, Claude, Gemini and Microsoft Copilot are all built on LLMs.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="prose">
+<h2>Two kinds of AI you will meet at work</h2>
+<p>For a procurement and audit role, almost everything falls into one of two groups. Knowing which one you are dealing with tells you what to expect from it.</p>
+</div>
+<div class="tbl"><table>
+  <thead><tr><th></th><th>Predictive AI</th><th>Generative AI</th></tr></thead>
+  <tbody>
+  <tr><td><b>What it does</b></td><td>Learns from historical numbers and predicts or scores something</td><td>Reads and writes language: text, tables, formulas, code</td></tr>
+  <tr><td><b>Typical output</b></td><td>A number, a score, a flag</td><td>A draft, a summary, an explanation, a formula</td></tr>
+  <tr><td><b>Examples in your world</b></td><td>Demand forecasting · flagging unusual invoices · predicting supplier late delivery · scoring which stock locations to count next</td><td>Writing a variance summary · drafting an email to a warehouse manager · writing an Excel formula · summarising a contract clause</td></tr>
+  <tr><td><b>Where you find it</b></td><td>Usually built into ERP, WMS, or procurement software</td><td>Chat assistants and the Copilot / Gemini buttons inside Office and Google apps</td></tr>
+  <tr><td><b>Main risk</b></td><td>Wrong if the history it learned from was wrong or unusual</td><td>Sounds confident even when it is wrong ("hallucination")</td></tr>
+  </tbody>
+</table></div>
+<div class="prose">
+<p>Most of this course focuses on <strong>generative AI</strong>, because it is the kind you can start using tomorrow, on your own, without an IT project. Module 11 covers predictive AI so you can talk to vendors and IT about it.</p>
+
+<h2>How a chatbot actually produces an answer</h2>
+<p>This is the single most useful thing to understand. A large language model works in four steps:</p>
+</div>
+<ol class="steps prose">
+  <li><strong>It read an enormous amount of text.</strong> During training, the model processed a large share of the public internet, books and other documents. It did not memorise them like a database. It learned the patterns of how words, ideas and facts tend to go together.</li>
+  <li><strong>It breaks your message into "tokens".</strong> A token is a chunk of text, roughly three-quarters of a word. "Reconciliation" might be two or three tokens. This is also how usage and limits are measured.</li>
+  <li><strong>It predicts the next token, over and over.</strong> Given everything so far, it calculates which token is most likely to come next, picks one, adds it, and repeats. A whole answer is built one small piece at a time.</li>
+  <li><strong>It was coached to be helpful.</strong> After the initial training, people rated its answers so it learned to follow instructions, be polite and refuse harmful requests. That is why it behaves like an assistant rather than an autocomplete.</li>
+</ol>
+<div class="prose"><p>Try it yourself. The lab below imitates step 3.</p></div>
+
+<div class="widget" id="w-nextword">
+  <div class="w-head"><span class="w-tag">LAB 1.1</span><span class="w-title">Be the language model: predict the next word</span></div>
+  <div class="w-body">
+    <p class="w-hint">Click a word to add it, or press <b>Let the AI pick</b>. The bars show how likely each word is. Move the <b>creativity</b> slider (called "temperature") and watch the odds change.</p>
+    <div class="nw-sentence" id="nwText" aria-live="polite"></div>
+    <div class="nw-cands" id="nwCands"></div>
+    <label class="fl" for="nwTemp">Creativity (temperature): <span id="nwTempV">1.0</span></label>
+    <input type="range" id="nwTemp" min="0.2" max="2" step="0.1" value="1">
+    <div class="btn-row"><button class="btn" id="nwAuto">Let the AI pick</button><button class="btn ghost" id="nwReset">Start over</button></div>
+    <div class="fb info" id="nwNote" hidden></div>
+  </div>
+</div>
+
+<div class="prose">
+<h2>Why this matters for your work</h2>
+<p>Once you see that the model is predicting likely words, three practical consequences follow. Keep these in mind every time you use AI.</p>
+</div>
+<div class="two">
+  <div class="panel accent"><h4>1. Fluent is not the same as correct</h4><p>The model is optimised to produce text that <em>sounds</em> right. If it doesn't know, it often still produces a confident, plausible answer. This is called a <b>hallucination</b>. Module 3 shows you how to catch them.</p></div>
+  <div class="panel accent"><h4>2. It only knows what you give it</h4><p>It has never seen your ERP, your stock ledger or your supplier contracts. Unless you paste or upload data, or your company connects it to internal systems, it is guessing about your business.</p></div>
+  <div class="panel accent"><h4>3. Words are its strength, sums are not</h4><p>It is excellent at language, structure and explaining things. Exact arithmetic across many rows is weaker, unless the tool <b>writes and runs code</b> to do the maths (Module 5 explains how to make it do that).</p></div>
+</div>
+
+<div class="analogy prose">
+  <span class="glyph">≈</span>
+  <div><p><b>The best mental model: a brilliant new hire on their first day.</b></p>
+  <p>They have read every textbook and work very fast. But they know nothing about your company, your seven warehouses or your suppliers. They rarely say "I don't know" unless you tell them it is allowed. They need clear instructions, and you check their work before it goes to your manager. Treat AI exactly like that and you will rarely be caught out.</p></div>
+</div>
+
+<div class="prose">
+<h2>What AI is good and bad at, for an auditor</h2>
+</div>
+<div class="two">
+  <div class="panel good"><h4>Hand these to AI</h4><ul>
+    <li>Writing and explaining Excel formulas</li>
+    <li>Turning a messy list of findings into a clear report</li>
+    <li>Summarising long documents (SOPs, contracts, policies)</li>
+    <li>Suggesting what to check and where errors usually hide</li>
+    <li>Classifying free-text fields, such as adjustment reasons</li>
+    <li>Drafting emails, agendas and meeting notes</li>
+    <li>Explaining a concept you don't understand yet</li>
+  </ul></div>
+  <div class="panel bad"><h4>Keep these with you</h4><ul>
+    <li>Final numbers that go in a report (verify every one)</li>
+    <li>Deciding whether something is fraud or an error</li>
+    <li>Approving stock adjustments or payments</li>
+    <li>Anything involving confidential data in an unapproved tool</li>
+    <li>Judgement calls about people</li>
+    <li>Knowing your company's actual policies (unless you give them)</li>
+  </ul></div>
+</div>
+
+<div class="widget" id="w-sorter">
+  <div class="w-head"><span class="w-tag">LAB 1.2</span><span class="w-title">Fixed rule or real AI?</span></div>
+  <div class="w-body">
+    <p class="w-hint">Many "smart" features at work are simple rules someone set up. Sort each example. The test: did a person write the exact logic, or did the system <b>learn</b> it from data?</p>
+    <div class="cards" id="sorterCards"></div>
+    <div class="score" id="sorterScore"></div>
+  </div>
+</div>
+
+<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+  <li>AI is software that has <b>learned</b> to do tasks needing judgement. Generative AI (chatbots) is one branch of it.</li>
+  <li>A chatbot builds answers by predicting likely next words. That makes it fluent, fast and sometimes confidently wrong.</li>
+  <li>It knows nothing about your company unless you give it information.</li>
+  <li>Treat it like a brilliant new hire: give clear instructions and always check the work.</li>
+</ul></div>
+<div class="tryit prose"><h2>Try it this week</h2>
+  <p>Open your company's approved AI assistant and type: <code>Explain three-way matching in procurement as if I'm new to the job, then give me 3 common ways it goes wrong in a multi-warehouse company.</code> Read the answer critically. Which parts do you already know are right? Is anything vague or generic? Noticing this is the core skill.</p>
+</div>
+
+<div class="quiz" data-quiz="m1"><h2>Check your understanding</h2>
+  <div class="q" data-a="1"><p class="qt">Your WMS automatically raises a replenishment order when a bin drops below 50 units. Is this AI?</p><div class="opts">
+    <button class="opt">Yes, because the system makes a decision on its own</button>
+    <button class="opt">No, it is a fixed rule a person configured</button>
+    <button class="opt">Yes, because it uses data</button></div>
+    <p class="why" hidden>A threshold someone typed in is a rule, not learning. If the system had worked out the right reorder point from demand history by itself, that would be machine learning.</p></div>
+  <div class="q" data-a="2"><p class="qt">Why can a chatbot give a confident but wrong answer?</p><div class="opts">
+    <button class="opt">It is deliberately trying to mislead you</button>
+    <button class="opt">It looks up facts in a database that has errors</button>
+    <button class="opt">It generates the most likely-sounding text, which is not always the true answer</button></div>
+    <p class="why" hidden>LLMs predict plausible text. They do not check facts against a source unless they are given documents, data or a search tool.</p></div>
+  <div class="q" data-a="0"><p class="qt">You ask an AI assistant "What was Warehouse 4's stock variance last month?" without giving it any data. What should you expect?</p><div class="opts">
+    <button class="opt">It cannot know. Any number it gives would be invented</button>
+    <button class="opt">It will pull the figure from your ERP</button>
+    <button class="opt">It will give an accurate industry-average estimate</button></div>
+    <p class="why" hidden>Unless your company has connected it to your systems, it has no access to your data. A good assistant will say so; a careless one may make something up.</p></div>
+  <div class="q" data-a="1"><p class="qt">Which task is the best fit for generative AI?</p><div class="opts">
+    <button class="opt">Deciding whether a supplier committed fraud</button>
+    <button class="opt">Drafting a clear summary of 15 audit exceptions for your manager</button>
+    <button class="opt">Approving a write-off of missing stock</button></div>
+    <p class="why" hidden>Drafting and summarising are language tasks where AI shines, and you review the result. Judgement calls and approvals stay with people.</p></div>
+</div>
+<div class="mod-foot" data-foot="m1"></div>
+</section>

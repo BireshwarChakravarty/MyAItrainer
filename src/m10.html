@@ -1,0 +1,115 @@
+
+<!-- ======================= M10 ======================= -->
+<section class="view" data-route="m10" id="view-m10" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Zone D · Communicate &amp; automate · Aisle 10</div>
+  <h1>Automation: make the routine run itself</h1>
+  <p class="lede">Once a check works and you trust it, the next step is to stop doing it by hand. This aisle shows you what to automate, how, and where AI agents fit, safely.</p>
+  <div class="meta-row"><span>Time <b>35 min</b></span><span>Level <b>Advanced</b></span><span>Hands-on <b>1 scorer + quiz</b></span></div>
+</header>
+<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+  <li>Tell the difference between automation and AI, and when you need each</li>
+  <li>Score a task to decide whether it's worth automating</li>
+  <li>Sketch a simple weekly automated workflow and the guardrails it needs</li>
+</ul></div>
+
+<div class="prose">
+<h2>Automation and AI are different things</h2>
+<p><b>Automation</b> follows rules you define: "every Monday, copy these files, refresh this report, email it". It is exact and predictable. <b>AI</b> handles judgement and language: "classify these comments", "summarise these exceptions". The most useful workflows combine both: automation moves and calculates the data, AI handles the parts that need reading or writing, and you review the result.</p>
+
+<h2>The automation ladder</h2>
+<p>Climb one rung at a time. Each rung is valuable on its own, and each one makes the next easier.</p>
+</div>
+<ol class="steps prose">
+  <li><strong>Saved prompts and templates.</strong> Your best prompts saved and reused (the prompt library is a start). Zero setup.</li>
+  <li><strong>Refreshable workbooks.</strong> Power Query combine plus formulas and PivotTables. Monthly work drops from hours to a refresh and a review.</li>
+  <li><strong>Scheduled flows.</strong> Power Automate (or similar) moves files, triggers refreshes and sends emails on a schedule or when a file arrives.</li>
+  <li><strong>AI steps inside flows.</strong> A flow that also asks AI to classify, summarise or draft, such as writing the first draft of the weekly exception email.</li>
+  <li><strong>Agents with approvals.</strong> AI that plans and carries out several steps toward a goal, pausing for your approval before anything important happens.</li>
+</ol>
+
+<div class="widget" id="w-auto">
+  <div class="w-head"><span class="w-tag">LAB 10.1</span><span class="w-title">Should I automate this task?</span></div>
+  <div class="w-body">
+    <p class="w-hint">Think of one recurring task. Move the sliders to describe it. The score suggests which rung of the ladder fits.</p>
+    <label class="fl" for="auFreq">How often do you do it? <span id="auFreqV"></span></label><input type="range" id="auFreq" min="1" max="5" value="4">
+    <label class="fl" for="auTime">How long does it take each time? <span id="auTimeV"></span></label><input type="range" id="auTime" min="1" max="5" value="3">
+    <label class="fl" for="auRule">How rule-based is it? <span id="auRuleV"></span></label><input type="range" id="auRule" min="1" max="5" value="4">
+    <label class="fl" for="auStd">How standard is the input data? <span id="auStdV"></span></label><input type="range" id="auStd" min="1" max="5" value="3">
+    <label class="fl" for="auRisk">How bad is a mistake? <span id="auRiskV"></span></label><input type="range" id="auRisk" min="1" max="5" value="3">
+    <div class="stat-row"><div class="stat"><div class="n" id="auScore">0</div><div class="l">Automation score / 100</div></div><div class="stat"><div class="n" id="auHours">0</div><div class="l">Approx. hours per year spent on it</div></div></div>
+    <div class="fb info" id="auOut"></div>
+  </div>
+</div>
+
+<div class="prose">
+<h2>Example: the Monday variance digest</h2>
+<p>Here is a realistic first automation for a multi-warehouse auditor. Each box is one step in Power Automate.</p>
+</div>
+<ol class="flow" aria-label="Monday variance digest flow">
+  <li><span class="mono">TRIGGER</span><b>Monday 7:00</b>Scheduled start</li>
+  <li><span class="mono">STEP 1</span><b>Collect</b>Check the SharePoint folder has all 7 warehouse files<span class="risk" style="color:var(--warn)">If any missing → email that site</span></li>
+  <li><span class="mono">STEP 2</span><b>Refresh</b>Refresh the Power Query workbook</li>
+  <li><span class="mono">STEP 3</span><b>Extract</b>Read the exceptions table (out of tolerance, over $X)</li>
+  <li><span class="mono">STEP 4 · AI</span><b>Draft</b>AI writes a 5-line summary of the exceptions</li>
+  <li><span class="mono">STEP 5</span><b>Review</b>Email draft to you, not to others<span class="risk" style="color:var(--good)">You approve before sending on</span></li>
+</ol>
+<pre class="pr" data-label="Prompt · design your first flow">I want to automate a weekly task using Microsoft Power Automate. I'm a beginner.
+Task: [describe, e.g. collect 7 warehouse stock files from a SharePoint folder each Monday, refresh my Excel report, and email me a summary of exceptions].
+Files are in: [SharePoint / OneDrive / email attachments].
+Give me: 1) the flow design as numbered steps, 2) the exact Power Automate actions to use for each step, 3) what could go wrong and how to handle it, 4) what I need to ask IT for (permissions, connectors).</pre>
+
+<div class="prose">
+<h2>AI agents: what they are and what's coming</h2>
+<p>An <b>AI agent</b> is AI that doesn't just answer a question but works toward a goal: it plans steps, uses tools (files, systems, email), checks results and continues. Excel's Agent Mode, which builds a workbook in several steps, is a simple example you can use today.</p>
+<p>Analysts expect agents to spread quickly in procurement. Gartner's 2026 outlook describes procurement moving toward an "AI-first" model in which agents carry out tasks such as compliance checks and payments within strict governance guardrails. It also forecasts that by 2030, half of cross-functional supply chain management solutions will use intelligent agents to execute decisions autonomously. Treat such forecasts as direction, not certainty, but the direction is clear: knowing how to supervise AI will become part of your job.</p>
+
+<h3>Guardrails for any automation or agent</h3>
+</div>
+<div class="two">
+  <div class="panel"><h4>Human approval for anything that changes records</h4><p>Stock adjustments, payments, vendor changes and emails to suppliers always need a person to approve. Inventory specialists specifically caution against autonomous adjustments without policy controls.</p></div>
+  <div class="panel"><h4>Thresholds</h4><p>Let automation handle small, clear-cut items; route anything above a value or below a confidence level to a person.</p></div>
+  <div class="panel"><h4>Audit trail</h4><p>Every automated action should be logged: what it did, when, on what data, and who approved. As an auditor, you will appreciate this more than most.</p></div>
+  <div class="panel"><h4>Failure alerts</h4><p>A flow that silently stops is worse than no flow. Make sure failures email you.</p></div>
+</div>
+
+<div class="prose">
+<h2>Working with IT</h2>
+<p>For anything beyond your own workbooks, involve IT early. They will want to know: what data, which systems, who has access, and what happens if it fails. Have AI help you write a clear one-page request.</p>
+</div>
+<pre class="pr" data-label="Prompt · automation request for IT">Help me write a one-page automation request for our IT team.
+What I do now: [task, frequency, time taken].
+What I want automated: [steps].
+Systems and data involved: [ERP/WMS/SharePoint, file types, sensitivity].
+Who uses the output: [people].
+Include sections: Business problem, Proposed solution, Data and access needed, Risks and controls (approvals, audit log, failure alerts), Expected time saved, Success measure. Keep it under 400 words.</pre>
+
+<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+  <li>Automation follows rules; AI handles judgement and language. Combine them.</li>
+  <li>Climb the ladder: saved prompts → refreshable workbooks → scheduled flows → AI steps → agents.</li>
+  <li>Automate frequent, rule-based tasks with standard inputs first.</li>
+  <li>Approvals, thresholds, audit trails and failure alerts are non-negotiable.</li>
+</ul></div>
+<div class="tryit prose"><h2>Try it this week</h2>
+  <p>Score your three most repetitive tasks in the lab above. For the highest scorer, use the "design your first flow" prompt and write down the steps. You don't need to build it yet; having the design ready is what makes the conversation with IT easy.</p>
+</div>
+
+<div class="quiz" data-quiz="m10"><h2>Check your understanding</h2>
+  <div class="q" data-a="1"><p class="qt">Which task is the best first candidate for automation?</p><div class="opts">
+    <button class="opt">Deciding whether a warehouse manager's explanation is acceptable</button>
+    <button class="opt">Collecting seven files every Monday and refreshing the same report</button>
+    <button class="opt">A one-off investigation into a supplier</button></div>
+    <p class="why" hidden>Frequent, rule-based, standard-input tasks are ideal. Judgement calls and one-offs are not.</p></div>
+  <div class="q" data-a="0"><p class="qt">An AI agent proposes a stock write-off of $3,200. What should happen?</p><div class="opts">
+    <button class="opt">A person reviews and approves it before it is posted</button>
+    <button class="opt">It posts automatically if the agent is confident</button>
+    <button class="opt">It is ignored</button></div>
+    <p class="why" hidden>Anything that changes records or money needs human approval and an audit trail.</p></div>
+  <div class="q" data-a="2"><p class="qt">In the Monday digest, why is the AI summary emailed to you first, not straight to managers?</p><div class="opts">
+    <button class="opt">Email systems require it</button>
+    <button class="opt">AI cannot send emails</button>
+    <button class="opt">So you can check the AI-written summary before others rely on it</button></div>
+    <p class="why" hidden>AI drafts, you decide. The review step keeps accuracy and accountability with you.</p></div>
+</div>
+<div class="mod-foot" data-foot="m10"></div>
+</section>

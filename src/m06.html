@@ -1,0 +1,157 @@
+
+<!-- ======================= M6 ======================= -->
+<section class="view" data-route="m6" id="view-m6" hidden>
+<header class="mod-head">
+  <div class="eyebrow">Zone C · AI for your audit work · Aisle 06</div>
+  <h1>Audit essentials for a seven-warehouse network</h1>
+  <p class="lede">AI is only as useful as the questions you ask it. This aisle sharpens the audit knowledge behind those questions: where data goes wrong, which measures matter, and which red flags to hunt.</p>
+  <div class="meta-row"><span>Time <b>35 min</b></span><span>Level <b>Intermediate</b></span><span>Hands-on <b>1 calculator + quiz</b></span></div>
+</header>
+<div class="outcomes"><h2>By the end of this aisle you will be able to</h2><ul>
+  <li>Map where errors enter the procure-to-pay and inventory flow</li>
+  <li>Calculate and compare inventory record accuracy across warehouses</li>
+  <li>Recognise the common red flags in purchase, invoice and stock data</li>
+</ul></div>
+
+<div class="prose">
+<h2>Follow the flow: where errors creep in</h2>
+<p>Every number you audit was created at a step in this chain. When a figure looks wrong, ask <b>which step produced it</b>.</p>
+</div>
+<ol class="flow" aria-label="Procure to pay and inventory flow">
+  <li><span class="mono">01</span><b>Requisition</b>Someone asks to buy<span class="risk">Unapproved or split requests</span></li>
+  <li><span class="mono">02</span><b>Purchase order</b>Approved order to supplier<span class="risk">Wrong price, PO after invoice</span></li>
+  <li><span class="mono">03</span><b>Goods receipt</b>GRN posted at the dock<span class="risk">Late posting, wrong qty or UOM</span></li>
+  <li><span class="mono">04</span><b>Putaway &amp; stock</b>Stored in a location<span class="risk">Mis-slotting, transfers in transit</span></li>
+  <li><span class="mono">05</span><b>Invoice</b>Supplier bills you<span class="risk">Duplicates, price or qty mismatch</span></li>
+  <li><span class="mono">06</span><b>Payment</b>Money goes out<span class="risk">Paying without a match</span></li>
+</ol>
+<div class="prose">
+<p>Running alongside this flow are <b>cycle counts</b> and <b>stock adjustments</b>, <b>inter-warehouse transfers</b>, and <b>returns</b>. With seven warehouses, transfers and timing differences are a major source of apparent discrepancies that aren't real losses.</p>
+
+<h3>The three-way match</h3>
+<p>The core control in procurement: before paying, check that three documents agree.</p>
+</div>
+<div class="two">
+  <div class="panel"><span class="label">Document 1</span><h4>Purchase order</h4><p>What we <b>agreed</b> to buy, at what price</p></div>
+  <div class="panel"><span class="label">Document 2</span><h4>Goods receipt (GRN)</h4><p>What we actually <b>received</b></p></div>
+  <div class="panel"><span class="label">Document 3</span><h4>Supplier invoice</h4><p>What we're being <b>asked to pay</b></p></div>
+</div>
+<div class="prose">
+<p>If quantity and price agree within tolerance, the invoice is paid. If not, it becomes an <b>exception</b> for someone to resolve. Many AP systems now use AI to read invoices and match them automatically, routing only exceptions to people. Your audit job is to check that the matching is working and that exceptions are resolved properly, not waved through.</p>
+
+<h2>Measures that matter</h2>
+<p>These are the numbers you should be able to calculate and explain for each warehouse.</p>
+</div>
+<div class="tbl"><table>
+<thead><tr><th>Measure</th><th>Formula</th><th>What it tells you</th></tr></thead>
+<tbody>
+<tr><td><b>Inventory record accuracy (IRA)</b></td><td>Lines within tolerance ÷ lines counted</td><td>How far you can trust the system's stock figures</td></tr>
+<tr><td><b>Value-weighted variance</b></td><td>Σ |variance qty × unit cost| ÷ total value counted</td><td>Whether errors are on cheap or expensive items</td></tr>
+<tr><td><b>Net vs gross variance</b></td><td>Net = Σ variance; Gross = Σ |variance|</td><td>A small net figure can hide large offsetting errors</td></tr>
+<tr><td><b>Shrink rate</b></td><td>Value lost (theft, damage, error) ÷ beginning inventory value</td><td>Real loss over a period</td></tr>
+<tr><td><b>Cycle count completion</b></td><td>Counts done ÷ counts scheduled</td><td>Whether the counting programme is actually happening</td></tr>
+<tr><td><b>Adjustment rate</b></td><td>Adjustment lines ÷ total lines (or by user, by SKU)</td><td>Frequent manual corrections are a risk signal</td></tr>
+<tr><td><b>Match exception rate</b></td><td>Invoices failing 3-way match ÷ invoices processed</td><td>Health of the purchase-to-pay process</td></tr>
+<tr><td><b>PO compliance</b></td><td>Spend with a valid PO ÷ total spend</td><td>How much buying bypasses the process</td></tr>
+</tbody></table></div>
+
+<div class="callout tip prose"><span class="tag">Benchmarks</span><p>Many customers in distribution, retail, CPG and healthcare expect inventory accuracy of <b>99% or higher</b>, and disciplined cycle-counting programmes commonly reach above 98–99%. There is no single official standard, so set targets by warehouse and item class, then track each warehouse against its own trend.</p></div>
+
+<div class="widget" id="w-ira">
+  <div class="w-head"><span class="w-tag">LAB 6.1</span><span class="w-title">Seven-warehouse accuracy calculator</span></div>
+  <div class="w-body">
+    <p class="w-hint">Example figures are filled in. Replace them with your own last cycle count results to see how your network compares. The black line marks your target.</p>
+    <div class="ira-in" id="iraIn"></div>
+    <div class="grid-form" style="margin-top:6px">
+      <div><label class="fl" for="iraTarget">Target accuracy %</label><input type="number" id="iraTarget" value="98" min="50" max="100" step="0.5"></div>
+    </div>
+    <div class="bars" id="iraBars" aria-live="polite"></div>
+    <div class="legend"><span><i style="background:var(--good)"></i>At or above target</span><span><i style="background:var(--warn)"></i>Within 3 points</span><span><i style="background:var(--bad)"></i>More than 3 points below</span></div>
+    <div class="stat-row" id="iraStats"></div>
+    <div class="fb info" id="iraNote"></div>
+  </div>
+</div>
+
+<div class="prose">
+<h2>Why stock records and counts disagree</h2>
+<p>Before calling something a loss, rule out the common, innocent causes. These are the usual suspects in multi-site networks:</p>
+</div>
+<div class="tbl"><table><thead><tr><th>Cause</th><th>What it looks like in data</th></tr></thead><tbody>
+<tr><td><b>Timing gaps</b></td><td>Count taken before a receipt or pick was posted. Variance reverses the next day.</td></tr>
+<tr><td><b>System sync delays</b></td><td>WMS and ERP disagree for the same SKU and date.</td></tr>
+<tr><td><b>Unit-of-measure mismatch</b></td><td>Variance is an exact multiple (×6, ×12, ×24): cases counted as eaches or vice versa.</td></tr>
+<tr><td><b>Transfers in transit</b></td><td>Stock leaves WH02 but hasn't been received at WH05. One shows a loss, the other a gain.</td></tr>
+<tr><td><b>Inconsistent receiving</b></td><td>Over- or under-receipts at one dock, often the same supplier or shift.</td></tr>
+<tr><td><b>Mis-slotting</b></td><td>Shortage in one location, matching surplus in a nearby one for the same SKU.</td></tr>
+<tr><td><b>Returns processing</b></td><td>Returned items not put back, or put back without a system transaction.</td></tr>
+<tr><td><b>Genuine loss</b></td><td>Damage, theft or unrecorded scrap. Persistent, one-directional, often high-value items.</td></tr>
+</tbody></table></div>
+
+<div class="prose">
+<h3>Count smarter with ABC classification</h3>
+<p>Not all items deserve equal attention. <b>ABC classification</b> ranks SKUs by annual value (cost × usage). Typically a small share of SKUs (the A items, often around 20%) make up most of the value (often around 80%). A common pattern is to count A items most often (for example monthly), B items less often, and C items least. Some teams also rank by velocity or risk, not just value. Module 8 shows how AI helps build a risk-based count list.</p>
+
+<h2>The red flag checklist</h2>
+<p>These patterns are widely cited by audit and fraud specialists. A red flag is a reason to look closer, <b>not proof</b> of wrongdoing. Most turn out to be process errors.</p>
+</div>
+<div class="two">
+  <div class="panel"><h4>Invoices &amp; payments</h4><ul>
+    <li>Same supplier, amount and date on two invoices</li>
+    <li>Near-duplicates: invoice number with a suffix ("4471-A"), or digits transposed</li>
+    <li>Invoices without a PO</li>
+    <li>Invoice quantity higher than goods received</li>
+    <li>Round-number invoices from service suppliers</li>
+    <li>PO created after the invoice date</li>
+  </ul></div>
+  <div class="panel"><h4>Purchasing</h4><ul>
+    <li><b>Split POs</b>: several orders just under an approval limit, same supplier, close dates</li>
+    <li>Spend with non-approved suppliers ("maverick spend")</li>
+    <li>Prices above contract or above the last PO</li>
+    <li>Repeated awards to one supplier without justification</li>
+    <li>Frequent change orders on the same supplier</li>
+  </ul></div>
+  <div class="panel"><h4>Vendor master</h4><ul>
+    <li>Duplicate suppliers (same name, address, tax ID or bank account)</li>
+    <li>Missing tax ID or contact details</li>
+    <li>Supplier address or phone matching an employee's</li>
+    <li>PO box-only addresses</li>
+    <li>Recently created supplier with large, fast payments</li>
+  </ul></div>
+  <div class="panel"><h4>Stock &amp; adjustments</h4><ul>
+    <li>Repeated adjustments on the same SKU or by the same user</li>
+    <li>Adjustments just before or after a count</li>
+    <li>Adjustments outside working hours</li>
+    <li>Negative stock balances</li>
+    <li>Write-offs concentrated on high-value, portable items</li>
+  </ul></div>
+</div>
+
+<div class="takeaways prose"><h2>Key takeaways</h2><ul>
+  <li>Trace every odd number back to the step that created it: PO, GRN, putaway, invoice, payment, count.</li>
+  <li>Track IRA, value-weighted and gross variance per warehouse, against each warehouse's own trend.</li>
+  <li>Rule out timing, UOM, transfers and mis-slotting before calling anything a loss.</li>
+  <li>Red flags are leads, not conclusions.</li>
+</ul></div>
+<div class="tryit prose"><h2>Try it this week</h2>
+  <p>Put your last cycle count results into the calculator above. Then ask your AI assistant: <code>I audit 7 warehouses. [Paste anonymised IRA by warehouse.] What questions should I ask the two lowest-performing warehouse managers to find the root cause? Group them by: receiving, storage, picking, counting, system.</code></p>
+</div>
+
+<div class="quiz" data-quiz="m6"><h2>Check your understanding</h2>
+  <div class="q" data-a="2"><p class="qt">WH03 shows a shortage of exactly 24 units on a SKU sold in cases of 12. What is the most likely first explanation?</p><div class="opts">
+    <button class="opt">Theft of two cases</button>
+    <button class="opt">A random counting error</button>
+    <button class="opt">A unit-of-measure mismatch between cases and eaches</button></div>
+    <p class="why" hidden>Variances that are exact multiples of a pack size strongly suggest a UOM problem. Check before assuming loss.</p></div>
+  <div class="q" data-a="0"><p class="qt">Net variance for a warehouse is close to zero. Does that mean its records are accurate?</p><div class="opts">
+    <button class="opt">Not necessarily: large overages and shortages can cancel out. Check gross variance too</button>
+    <button class="opt">Yes, net variance is the definitive measure</button>
+    <button class="opt">Yes, as long as the count was done on time</button></div>
+    <p class="why" hidden>Offsetting errors hide in net figures. Gross variance and line-level accuracy show the real picture.</p></div>
+  <div class="q" data-a="1"><p class="qt">Four POs to one supplier on the same day, each between $4,900 and $4,990, with a $5,000 approval limit. What is this?</p><div class="opts">
+    <button class="opt">Normal ordering behaviour</button>
+    <button class="opt">A possible split purchase to avoid higher approval: a red flag worth investigating</button>
+    <button class="opt">Proof of fraud</button></div>
+    <p class="why" hidden>Clustering just under a limit is a classic split-PO pattern. Investigate, but it may have an innocent explanation.</p></div>
+</div>
+<div class="mod-foot" data-foot="m6"></div>
+</section>
